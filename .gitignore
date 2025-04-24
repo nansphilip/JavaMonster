@@ -1,6 +1,6 @@
 target/
 .DS_Store
 **/.DS_Store
-.idea
-.vscode
-.metadata
+.metadata/
+.idea/
+.vscode/
