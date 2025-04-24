@@ -1,4 +1,6 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.maladies;
+
+import com.fantasyhospital.model.Maladie;
 
 public class DRS extends Maladie {
     public DRS(int niveauMax) {

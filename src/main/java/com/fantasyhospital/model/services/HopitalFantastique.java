@@ -1,7 +1,9 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fantasyhospital.model.creatures.Medecin;
 
 public class HopitalFantastique {
     private String nom;

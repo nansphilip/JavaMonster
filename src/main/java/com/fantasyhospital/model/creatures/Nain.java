@@ -1,4 +1,8 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.creatures;
+
+import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.Maladie;
+import com.fantasyhospital.model.interfaces.VIP;
 
 public class Nain extends Creature implements VIP {
     public Nain(String nom, String sexe, double poids, double taille, int age) {

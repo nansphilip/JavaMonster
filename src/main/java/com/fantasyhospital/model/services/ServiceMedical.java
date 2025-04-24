@@ -1,7 +1,9 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fantasyhospital.model.Creature;
 
 public abstract class ServiceMedical {
     protected String nom;

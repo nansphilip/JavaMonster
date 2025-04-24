@@ -1,4 +1,6 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.services;
+
+import com.fantasyhospital.model.Creature;
 
 public class CentreQuarantaine extends ServiceMedical {
     private boolean isolation;

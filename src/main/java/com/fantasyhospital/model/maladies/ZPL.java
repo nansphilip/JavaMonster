@@ -1,4 +1,6 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.maladies;
+
+import com.fantasyhospital.model.Maladie;
 
 public class ZPL extends Maladie {
     public ZPL(int niveauMax) {

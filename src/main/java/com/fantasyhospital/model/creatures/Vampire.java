@@ -1,4 +1,11 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.creatures;
+
+import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.Maladie;
+import com.fantasyhospital.model.interfaces.Bestial;
+import com.fantasyhospital.model.interfaces.Contagieux;
+import com.fantasyhospital.model.interfaces.Regenerant;
+import com.fantasyhospital.model.interfaces.VIP;
 
 public class Vampire extends Creature implements Bestial, Regenerant, Contagieux, VIP {
     public Vampire(String nom, String sexe, double poids, double taille, int age) {

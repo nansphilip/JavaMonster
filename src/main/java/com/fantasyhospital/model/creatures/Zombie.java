@@ -1,4 +1,9 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.creatures;
+
+import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.Maladie;
+import com.fantasyhospital.model.interfaces.Contagieux;
+import com.fantasyhospital.model.interfaces.Regenerant;
 
 public class Zombie extends Creature implements Regenerant, Contagieux {
     public Zombie(String nom, String sexe, double poids, double taille, int age) {

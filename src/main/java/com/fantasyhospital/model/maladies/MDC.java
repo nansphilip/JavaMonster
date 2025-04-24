@@ -1,4 +1,6 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.maladies;
+
+import com.fantasyhospital.model.Maladie;
 
 public class MDC extends Maladie {
     public MDC(int niveauMax) {
