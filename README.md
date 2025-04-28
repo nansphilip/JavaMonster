@@ -22,6 +22,15 @@
   sudo apt install openjdk-17-jdk maven
   ```
 
+### Installer Java extension pour VSCode/Cursor
+
+- Installer [Java](https://marketplace.visualstudio.com/items?itemName=Oracle.oracle-java)
+- Pour Mac, ajouter le chemin de Java à `settings.json`
+
+```json
+"jdk.jdkhome": "/opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
+```
+
 ### Installer SceneBuilder
 - Télécharger SceneBuilder : [https://gluonhq.com/products/scene-builder/](https://gluonhq.com/products/scene-builder/)
 - Installer la version adaptée à votre système (Windows, Mac, Linux)
