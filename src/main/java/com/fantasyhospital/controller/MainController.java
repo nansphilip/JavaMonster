@@ -1,4 +1,4 @@
-package com.fantasyhospital;
+package com.fantasyhospital.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

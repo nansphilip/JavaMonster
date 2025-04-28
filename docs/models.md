@@ -8,10 +8,12 @@ Ce dossier contient toutes les classes, interfaces et héritages principaux du p
 model/
 │
 ├── Creature.java           # Classe abstraite de base pour toutes les créatures
-├── Maladie.java            # Classe abstraite de base pour toutes les maladies
-├── README.md               # Ce fichier de documentation
+├── Maladie.java           # Classe abstraite de base pour toutes les maladies
+├── Service.java           # Classe abstraite de base pour tous les services
+├── Hopital.java          # Classe principale de l'hôpital
+├── Medecin.java           # Classe médecin (hérite de Creature)
 │
-├── creatures/              # Toutes les créatures concrètes et le médecin
+├── creatures/             # Toutes les créatures concrètes
 │   ├── Elfe.java
 │   ├── Nain.java
 │   ├── Orque.java
@@ -19,10 +21,9 @@ model/
 │   ├── Zombie.java
 │   ├── Vampire.java
 │   ├── Lycanthrope.java
-│   ├── Reptilien.java
-│   └── Medecin.java
+│   └── Reptilien.java
 │
-├── maladies/               # Toutes les maladies concrètes
+├── maladies/             # Toutes les maladies concrètes
 │   ├── MDC.java
 │   ├── FOMO.java
 │   ├── DRS.java
@@ -30,13 +31,12 @@ model/
 │   ├── ZPL.java
 │   └── NDMAD.java
 │
-├── services/               # Tous les services médicaux et l'hôpital
-│   ├── ServiceMedical.java
+├── services/             # Services médicaux concrets
+│   ├── ServiceClassique.java
 │   ├── CentreQuarantaine.java
-│   ├── Crypte.java
-│   └── HopitalFantastique.java
+│   └── Crypte.java
 │
-└── interfaces/             # Interfaces pour comportements spécifiques
+└── interfaces/           # Interfaces pour comportements spécifiques
     ├── Bestial.java
     ├── Regenerant.java
     ├── Contagieux.java
@@ -66,14 +66,15 @@ Maladie (abstraite)
 ├── ZPL
 └── NDMAD
 
-ServiceMedical (abstraite)
+Service (abstraite)
 │
+├── ServiceClassique
 ├── CentreQuarantaine
 └── Crypte
 
 Medecin (hérite de Creature)
 
-HopitalFantastique
+Hopital
 
 // Interfaces
 Bestial, Regenerant, Contagieux, VIP
@@ -81,10 +82,13 @@ Bestial, Regenerant, Contagieux, VIP
 
 ## Explications
 
-- **creatures/** : toutes les créatures concrètes (patients et médecins), héritent de `Creature`.
-- **maladies/** : toutes les maladies concrètes, héritent de `Maladie`.
-- **services/** : tous les services médicaux, héritent de `ServiceMedical` ou sont liés à l'hôpital.
-- **interfaces/** : comportements spécifiques (contamination, régénération, VIP, etc.).
-- **README.md** : ce fichier explicatif.
+- **Creature.java** : classe abstraite de base pour toutes les créatures
+- **Maladie.java** : classe abstraite de base pour toutes les maladies
+- **Service.java** : classe abstraite de base pour tous les services
+- **Hopital.java** : classe principale gérant l'hôpital
+- **creatures/** : toutes les créatures concrètes (patients et médecins)
+- **maladies/** : toutes les maladies concrètes
+- **services/** : tous les services médicaux concrets
+- **interfaces/** : comportements spécifiques (contamination, régénération, VIP, etc.)
 
 Chaque classe concrète hérite de la classe abstraite appropriée et implémente les interfaces correspondant à ses comportements spécifiques.

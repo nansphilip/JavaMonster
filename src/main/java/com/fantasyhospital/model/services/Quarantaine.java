@@ -1,11 +1,12 @@
 package com.fantasyhospital.model.services;
 
 import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.Service;
 
-public class CentreQuarantaine extends ServiceMedical {
+public class Quarantaine extends Service {
     private boolean isolation;
 
-    public CentreQuarantaine(String nom, double superficie, int capaciteMax, String budget, boolean isolation) {
+    public Quarantaine(String nom, double superficie, int capaciteMax, String budget, boolean isolation) {
         super(nom, superficie, capaciteMax, budget);
         this.isolation = isolation;
     }

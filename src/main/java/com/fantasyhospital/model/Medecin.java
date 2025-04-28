@@ -1,8 +1,4 @@
-package com.fantasyhospital.model.creatures;
-
-import com.fantasyhospital.model.Creature;
-import com.fantasyhospital.model.Maladie;
-import com.fantasyhospital.model.services.ServiceMedical;
+package com.fantasyhospital.model;
 
 public class Medecin extends Creature {
     public Medecin(String nom, String sexe, double poids, double taille, int age) {
@@ -25,8 +21,8 @@ public class Medecin extends Creature {
     public void trepasser() { /* ... */ }
 
     // Méthodes spécifiques : examiner, soigner, réviser budget, transférer créature
-    public void examiner(ServiceMedical service) { /* ... */ }
-    public void soignerService(ServiceMedical service) { /* ... */ }
-    public void reviserBudget(ServiceMedical service) { /* ... */ }
-    public void transferer(Creature creature, ServiceMedical from, ServiceMedical to) { /* ... */ }
+    public void examiner(Service service) { /* ... */ }
+    public void soignerService(Service service) { /* ... */ }
+    public void reviserBudget(Service service) { /* ... */ }
+    public void transferer(Creature creature, Service from, Service to) { /* ... */ }
 } 

@@ -52,9 +52,10 @@ L'application s'ouvre dans une fenêtre native.
 - `src/main/resources/` : fichiers FXML et ressources graphiques
 
 ### Documentation et ressources
-- [README du modèle (classes, héritages, interfaces...)](src/main/java/com/fantasyhospital/model/README.md)
+- [README du modèle (classes, héritages, interfaces...)](docs/models.md)
 - [Sujet et consignes détaillées](docs/consigne.md)
 - [Exigences et barème](docs/exigences.md)
+- [Règles du jeu](docs/regles.md)
 
 ## JavaFX, FXML et Scene Builder
 

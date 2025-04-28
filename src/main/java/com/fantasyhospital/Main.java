@@ -1,19 +1,17 @@
 package com.fantasyhospital;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/fantasyhospital/MainView.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, 460, 440);
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainView.fxml"));
         primaryStage.setTitle("Fantasy Hospital");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

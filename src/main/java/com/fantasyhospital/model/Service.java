@@ -1,18 +1,16 @@
-package com.fantasyhospital.model.services;
+package com.fantasyhospital.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fantasyhospital.model.Creature;
-
-public abstract class ServiceMedical {
+public abstract class Service {
     protected String nom;
     protected double superficie;
     protected int capaciteMax;
     protected List<Creature> creatures = new ArrayList<>();
     protected String budget; // inexistant, médiocre, insuffisant, faible
 
-    public ServiceMedical(String nom, double superficie, int capaciteMax, String budget) {
+    public Service(String nom, double superficie, int capaciteMax, String budget) {
         this.nom = nom;
         this.superficie = superficie;
         this.capaciteMax = capaciteMax;

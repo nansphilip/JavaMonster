@@ -1,8 +1,9 @@
 package com.fantasyhospital.model.services;
 
 import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.Service;
 
-public class Crypte extends ServiceMedical {
+public class Crypte extends Service {
     private int ventilation;
     private double temperature;
 
