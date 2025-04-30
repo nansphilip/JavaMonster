@@ -9,6 +9,14 @@ import java.util.List;
 
 public class HommeBete extends HabitantTriage implements Contaminant {
 
+    public HommeBete() {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+    }
+
+    public HommeBete(List<Maladie> maladies) {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+    }
+
     public HommeBete(String nom, String sexe, int poids, int taille, int age, int moral, List<Maladie> maladies) {
         super(nom, sexe, poids, taille, age, moral, maladies);
     }

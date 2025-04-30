@@ -28,4 +28,9 @@ public class Medecin extends Bete {
     public void reviserBudget(int valeur) { /* ... */ }
 
     public void transferer(Creature creature, ServiceMedical to) { /* ... */ }
+
+    @Override
+    public String toString() {
+        return "[Médecin] nom='" + nomComplet + "', sexe='" + sexe + "', âge=" + age + ", moral=" + moral + ", poids=" + poids + ", taille=" + taille + "]";
+    }
 } 

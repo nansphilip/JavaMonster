@@ -9,6 +9,14 @@ import java.util.List;
 
 public class Orque extends HabitantTriage implements Contaminant {
 
+    public Orque() {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+    }
+
+    public Orque(List<Maladie> maladies) {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+    }
+
     public Orque(String nom, String sexe, int poids, int taille, int age, int moral, List<Maladie> maladies) {
         super(nom, sexe, poids, taille, age, moral, maladies);
     }

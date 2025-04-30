@@ -9,6 +9,14 @@ import java.util.List;
 
 public class Lycanthrope extends HabitantTriage implements Contaminant {
 
+    public Lycanthrope() {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+    }
+
+    public Lycanthrope(List<Maladie> maladies) {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+    }
+
     public Lycanthrope(String nom, String sexe, int poids, int taille, int age, int moral, List<Maladie> maladies) {
         super(nom, sexe, poids, taille, age, moral, maladies);
     }

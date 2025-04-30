@@ -11,6 +11,14 @@ import java.util.List;
 
 public class Vampire extends ClientVIP implements Regenerant, Contaminant, Demoralisant {
 
+    public Vampire() {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+    }
+
+    public Vampire(List<Maladie> maladies) {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+    }
+
     public Vampire(String nomComplet, String sexe, int poids, int taille, int age, int moral, List<Maladie> maladies) {
         super(nomComplet, sexe, poids, taille, age, moral, maladies);
     }

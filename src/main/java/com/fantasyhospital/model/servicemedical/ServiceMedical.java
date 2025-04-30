@@ -22,7 +22,7 @@ public class ServiceMedical {
     }
 
     public void afficherInfosService(){
-
+        System.out.println(this);
     }
 
     public void afficherInfosCreatures(){
@@ -38,6 +38,21 @@ public class ServiceMedical {
     }
 
     public boolean ajouterCreature(Creature creature){
+        if (creatures.size() >= NB_MAX_CREATURE) {
+            return false;
+        }
+
+        if (creatures.isEmpty()) {
+            creatures.add(creature);
+            return true;
+        }
+
+        String raceAutorisee = creatures.get(0).getRace();
+        if (creature.getRace().equals(raceAutorisee)) {
+            creatures.add(creature);
+            return true;
+        }
+
         return false;
     }
 
@@ -54,4 +69,33 @@ public class ServiceMedical {
     }
 
     // Getters et setters omis pour la clarté
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n--- Service : ").append(nom).append(" ---\n");
+        sb.append("Superficie : ").append(superficie).append(" m²\n");
+        sb.append("Nombre de créatures maximale : ").append(NB_MAX_CREATURE).append("\n");
+        sb.append("Budget : ").append(budget).append("\n");
+
+        sb.append("\n🧍 Médecins :\n");
+        if (medecins.isEmpty()) {
+            sb.append("  Aucun médecin dans ce service.\n");
+        } else {
+            for (Medecin m : medecins) {
+                sb.append("  - ").append(m.toString()).append("\n");
+            }
+        }
+
+        sb.append("\n👾 Créatures :\n");
+        if (creatures.isEmpty()) {
+            sb.append("  Aucune créature dans ce service.\n");
+        } else {
+            for (Creature c : creatures) {
+                sb.append("  - ").append(c).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
 } 
