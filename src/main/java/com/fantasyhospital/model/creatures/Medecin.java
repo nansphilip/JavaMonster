@@ -1,8 +1,15 @@
-package com.fantasyhospital.model;
+package com.fantasyhospital.model.creatures;
 
-public class Medecin extends Creature {
-    public Medecin(String nom, String sexe, double poids, double taille, int age) {
-        super(nom, sexe, poids, taille, age);
+import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.maladie.Maladie;
+
+public class Medecin extends Bete {
+
+    protected Race race;
+
+    public Medecin(String nomComplet, String sexe, double poids, double taille, int age, int moral) {
+        super(nom, sexe, poids, taille, age, moral);
+        this.race = race;
     }
 
     @Override

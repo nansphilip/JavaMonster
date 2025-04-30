@@ -1,11 +1,10 @@
 package com.fantasyhospital.model.creatures;
 
 import com.fantasyhospital.model.Creature;
-import com.fantasyhospital.model.Maladie;
+import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.model.interfaces.Bestial;
-import com.fantasyhospital.model.interfaces.Contagieux;
 
-public class Lycanthrope extends Creature implements Bestial, Contagieux {
+public class Lycanthrope extends Creature implements Bestial {
     public Lycanthrope(String nom, String sexe, double poids, double taille, int age) {
         super(nom, sexe, poids, taille, age);
     }

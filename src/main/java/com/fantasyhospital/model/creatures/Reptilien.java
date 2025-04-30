@@ -1,7 +1,7 @@
 package com.fantasyhospital.model.creatures;
 
 import com.fantasyhospital.model.Creature;
-import com.fantasyhospital.model.Maladie;
+import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.model.interfaces.VIP;
 
 public class Reptilien extends Creature implements VIP {
