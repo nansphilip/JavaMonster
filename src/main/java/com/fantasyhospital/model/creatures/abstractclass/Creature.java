@@ -57,12 +57,16 @@ public abstract class Creature extends Bete {
     }
 
     // Getters et setters omis pour la clarté
-    public int getMoral() {
-        return moral;
-    }
-
     public String getRace() {
         return this.getClass().getSimpleName();
+    }
+
+    public List<Maladie> getMaladies() {
+        return maladies;
+    }
+
+    public void setMaladies(List<Maladie> maladies) {
+        this.maladies = maladies;
     }
 
     @Override

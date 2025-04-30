@@ -35,4 +35,24 @@ public class Hopital {
     public void simulation() { /* ... */ }
 
     // Getters et setters omis pour la clarté
-} 
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public int getNB_MAX_SERVICE() {
+        return NB_MAX_SERVICE;
+    }
+
+    public List<ServiceMedical> getServices() {
+        return services;
+    }
+
+    public void setServices(List<ServiceMedical> services) {
+        this.services = services;
+    }
+}

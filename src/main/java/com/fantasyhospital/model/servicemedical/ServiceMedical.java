@@ -56,8 +56,8 @@ public class ServiceMedical {
         return false;
     }
 
-    public boolean enleverCreature(Creature creature){
-        return false;
+    public void enleverCreature(Creature creature){
+        this.creatures.remove(creature);
     }
 
     public void soignerCreatures(Medecin medecin, Creature creature){
@@ -69,6 +69,51 @@ public class ServiceMedical {
     }
 
     // Getters et setters omis pour la clarté
+
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public double getSuperficie() {
+        return superficie;
+    }
+
+    public void setSuperficie(double superficie) {
+        this.superficie = superficie;
+    }
+
+    public int getNB_MAX_CREATURE() {
+        return NB_MAX_CREATURE;
+    }
+
+    public List<Creature> getCreatures() {
+        return creatures;
+    }
+
+    public void setCreatures(List<Creature> creatures) {
+        this.creatures = creatures;
+    }
+
+    public List<Medecin> getMedecins() {
+        return medecins;
+    }
+
+    public void setMedecins(List<Medecin> medecins) {
+        this.medecins = medecins;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
 
     @Override
     public String toString() {

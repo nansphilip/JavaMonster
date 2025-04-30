@@ -4,6 +4,8 @@ import com.fantasyhospital.model.creatures.abstractclass.Bete;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.servicemedical.ServiceMedical;
 
+import java.util.List;
+
 public class Medecin extends Bete {
 
     protected String race; //type du médecin, à voir si on créé une classe Race par exemple
@@ -27,7 +29,26 @@ public class Medecin extends Bete {
 
     public void reviserBudget(int valeur) { /* ... */ }
 
-    public void transferer(Creature creature, ServiceMedical to) { /* ... */ }
+    public void transferer(Creature creature, ServiceMedical serviceDestination) {
+        this.serviceMedical.enleverCreature(creature);
+        serviceDestination.ajouterCreature(creature);
+    }
+
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
+    }
+
+    public ServiceMedical getServiceMedical() {
+        return serviceMedical;
+    }
+
+    public void setServiceMedical(ServiceMedical serviceMedical) {
+        this.serviceMedical = serviceMedical;
+    }
 
     @Override
     public String toString() {

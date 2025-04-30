@@ -20,14 +20,20 @@ public class Simulation {
             Creature creature = Game.randomCreature();
             creatures.add(creature);
 
-            if (creature != null && creature.getMoral() > 50) {
-                urgence.ajouterCreature(creature);
-            }
+//            if (creature != null && creature.getMoral() > 50) {
+//                urgence.ajouterCreature(creature);
+//            }
         }
         for(Creature creature : creatures){
             System.out.println(creature.toString());
         }
         urgence.ajouterMedecin(docTest);
+        urgence.ajouterCreature(creatures.get(0));
+        urgence.afficherInfosService();
+        psychologie.afficherInfosService();
+
+        docTest.transferer(urgence.getCreatures().get(0),psychologie);
+
         urgence.afficherInfosService();
         psychologie.afficherInfosService();
     }

@@ -65,7 +65,39 @@ public class Maladie {
     public boolean estLethale() {
         return niveauActuel == NIVEAU_MAX;
     }
+
     // Getters et setters omis pour la clarté
+    public String getNomComplet() {
+        return nomComplet;
+    }
+
+    public void setNomComplet(String nomComplet) {
+        this.nomComplet = nomComplet;
+    }
+
+    public String getNomAbrege() {
+        return nomAbrege;
+    }
+
+    public void setNomAbrege(String nomAbrege) {
+        this.nomAbrege = nomAbrege;
+    }
+
+    public int getNIVEAU_MAX() {
+        return NIVEAU_MAX;
+    }
+
+    public void setNIVEAU_MAX(int NIVEAU_MAX) {
+        this.NIVEAU_MAX = NIVEAU_MAX;
+    }
+
+    public int getNiveauActuel() {
+        return niveauActuel;
+    }
+
+    public void setNiveauActuel(int niveauActuel) {
+        this.niveauActuel = niveauActuel;
+    }
 
     public String toString() {
         return this.getClass().getSimpleName() +
