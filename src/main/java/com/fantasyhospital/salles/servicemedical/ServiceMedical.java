@@ -1,42 +1,22 @@
-package com.fantasyhospital.model.servicemedical;
+package com.fantasyhospital.salles.servicemedical;
 
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.Medecin;
+import com.fantasyhospital.salles.Salle;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceMedical {
-    protected String nom;
-    protected double superficie;
-    protected final int NB_MAX_CREATURE;
-    protected List<Creature> creatures = new ArrayList<>();
+public class ServiceMedical extends Salle  {
     protected List<Medecin> medecins = new ArrayList<>();
     protected String budget; // inexistant, médiocre, insuffisant, faible
 
     public ServiceMedical(String nom, double superficie, int NB_MAX_CREATURE, String budget) {
-        this.nom = nom;
-        this.superficie = superficie;
-        this.NB_MAX_CREATURE = NB_MAX_CREATURE;
+        super(nom, superficie, NB_MAX_CREATURE);
         this.budget = budget;
     }
 
-    public void afficherInfosService(){
-        System.out.println(this);
-    }
-
-    public void afficherInfosCreatures(){
-
-    }
-
-    public void ajouterMedecin(Medecin medecin){
-        this.medecins.add(medecin);
-    }
-
-    public void retirerMedecin(Medecin medecin){
-        this.medecins.remove(medecin);
-    }
-
+    @Override
     public boolean ajouterCreature(Creature creature){
         if (creatures.size() >= NB_MAX_CREATURE) {
             return false;
@@ -56,8 +36,12 @@ public class ServiceMedical {
         return false;
     }
 
-    public void enleverCreature(Creature creature){
-        this.creatures.remove(creature);
+    public void ajouterMedecin(Medecin medecin){
+        this.medecins.add(medecin);
+    }
+
+    public void retirerMedecin(Medecin medecin){
+        this.medecins.remove(medecin);
     }
 
     public void soignerCreatures(Medecin medecin, Creature creature){
@@ -69,36 +53,6 @@ public class ServiceMedical {
     }
 
     // Getters et setters omis pour la clarté
-
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public double getSuperficie() {
-        return superficie;
-    }
-
-    public void setSuperficie(double superficie) {
-        this.superficie = superficie;
-    }
-
-    public int getNB_MAX_CREATURE() {
-        return NB_MAX_CREATURE;
-    }
-
-    public List<Creature> getCreatures() {
-        return creatures;
-    }
-
-    public void setCreatures(List<Creature> creatures) {
-        this.creatures = creatures;
-    }
-
     public List<Medecin> getMedecins() {
         return medecins;
     }

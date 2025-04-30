@@ -1,7 +1,6 @@
 package com.fantasyhospital.model;
 
-import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.model.servicemedical.ServiceMedical;
+import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
 import java.util.ArrayList;
 import java.util.List;

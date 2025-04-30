@@ -2,9 +2,8 @@ package com.fantasyhospital.model.creatures;
 
 import com.fantasyhospital.model.creatures.abstractclass.Bete;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.servicemedical.ServiceMedical;
-
-import java.util.List;
+import com.fantasyhospital.salles.Salle;
+import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
 public class Medecin extends Bete {
 
@@ -31,6 +30,11 @@ public class Medecin extends Bete {
 
     public void transferer(Creature creature, ServiceMedical serviceDestination) {
         this.serviceMedical.enleverCreature(creature);
+        serviceDestination.ajouterCreature(creature);
+    }
+
+    public void transferer(Creature creature,Salle salle,  ServiceMedical serviceDestination) {
+        salle.enleverCreature(creature);
         serviceDestination.ajouterCreature(creature);
     }
 
