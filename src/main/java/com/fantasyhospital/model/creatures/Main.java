@@ -1,6 +1,6 @@
 package com.fantasyhospital.model.creatures;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
+import com.fantasyhospital.model.creatures.races.Orque;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.fantasyhospital.model.creatures;
+package com.fantasyhospital.model.creatures.abstractclass;
 
 public abstract class Bete {
 

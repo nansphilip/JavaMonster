@@ -1,5 +1,7 @@
 package com.fantasyhospital.model.creatures;
 
+import com.fantasyhospital.model.creatures.abstractclass.Bete;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.servicemedical.ServiceMedical;
 
 public class Medecin extends Bete {

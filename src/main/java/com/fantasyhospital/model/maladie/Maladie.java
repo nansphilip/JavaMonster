@@ -32,7 +32,7 @@ public class Maladie {
     }
 
     public boolean estLethale() {
-        return niveauActuel == niveauMax;
+        return niveauActuel == NIVEAU_MAX;
     }
     // Getters et setters omis pour la clarté
 } 

@@ -1,5 +1,6 @@
 package com.fantasyhospital.model.creatures;
 
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
 
 import java.util.List;

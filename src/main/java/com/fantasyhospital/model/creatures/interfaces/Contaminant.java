@@ -1,6 +1,6 @@
-package com.fantasyhospital.model.interfaces;
+package com.fantasyhospital.model.creatures.interfaces;
 
-import com.fantasyhospital.model.creatures.Creature;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 public interface Contaminant {
 
