@@ -2,8 +2,8 @@ package com.fantasyhospital.model.interfaces;
 
 import java.util.List;
 
-import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.creatures.Creature;
 
-public interface Demoralisateur {
+public interface Demoralisant {
     void demoraliser(List<Creature> cibles);
 }

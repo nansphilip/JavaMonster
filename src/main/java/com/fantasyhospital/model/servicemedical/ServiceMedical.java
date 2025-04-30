@@ -1,6 +1,6 @@
-package com.fantasyhospital.model.service;
+package com.fantasyhospital.model.servicemedical;
 
-import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.creatures.Creature;
 import com.fantasyhospital.model.creatures.Medecin;
 
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ public class ServiceMedical {
     protected double superficie;
     protected final int NB_MAX_CREATURE;
     protected List<Creature> creatures = new ArrayList<>();
+    protected List<Medecin> medecins = new ArrayList<>();
     protected String budget; // inexistant, médiocre, insuffisant, faible
 
     public ServiceMedical(String nom, double superficie, int NB_MAX_CREATURE, String budget) {
@@ -26,6 +27,14 @@ public class ServiceMedical {
 
     public void afficherInfosCreatures(){
 
+    }
+
+    public void ajouterMedecin(Medecin medecin){
+        this.medecins.add(medecin);
+    }
+
+    public void retirerMedecin(Medecin medecin){
+        this.medecins.remove(medecin);
     }
 
     public boolean ajouterCreature(Creature creature){

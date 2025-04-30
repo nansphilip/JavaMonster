@@ -1,29 +1,12 @@
 package com.fantasyhospital.model.creatures;
 
-import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.interfaces.Contaminant;
 import com.fantasyhospital.model.maladie.Maladie;
-import com.fantasyhospital.model.interfaces.Bestial;
 
-public class Orque extends Creature implements Bestial {
-    public Orque(String nom, String sexe, double poids, double taille, int age) {
-        super(nom, sexe, poids, taille, age);
+import java.util.List;
+
+public class Orque extends HabitantTriage implements Contaminant {
+    public Orque(String nom, String sexe, int poids, int taille, int age, int moral, List<Maladie> maladies) {
+        super(nom, sexe, poids, taille, age, moral, maladies);
     }
-
-    @Override
-    public void attendre() { /* ... */ }
-    @Override
-    public void hurler() { /* ... */ }
-    @Override
-    public void semporter() { /* ... */ }
-    @Override
-    public void tomberMalade(Maladie maladie) { /* ... */ }
-    @Override
-    public void soigner() { /* ... */ }
-    @Override
-    public void trepasser() { /* ... */ }
-
-    @Override
-    public void contaminer(Creature cible) { /* ... */ }
-    @Override
-    public boolean estContagieux() { return true; }
-} 
+}

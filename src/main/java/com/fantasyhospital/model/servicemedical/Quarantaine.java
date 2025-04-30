@@ -1,6 +1,4 @@
-package com.fantasyhospital.model.service;
-
-import com.fantasyhospital.model.Creature;
+package com.fantasyhospital.model.servicemedical;
 
 public class Quarantaine extends ServiceMedical {
     private final boolean isolation;

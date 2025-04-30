@@ -1,10 +1,9 @@
 package com.fantasyhospital.model.creatures;
 
-import com.fantasyhospital.model.Creature;
+import com.fantasyhospital.model.interfaces.Contaminant;
 import com.fantasyhospital.model.maladie.Maladie;
-import com.fantasyhospital.model.interfaces.Bestial;
 
-public class HommeBete extends Creature implements Bestial {
+public class HommeBete extends Creature implements Contaminant {
     public HommeBete(String nom, String sexe, double poids, double taille, int age) {
         super(nom, sexe, poids, taille, age);
     }
