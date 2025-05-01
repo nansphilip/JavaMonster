@@ -1,12 +1,15 @@
 package com.fantasyhospital.salles;
 
-import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Salle {
+    private static final Logger logger = LoggerFactory.getLogger(Salle.class);
 
     protected String nom;
     protected double superficie;
@@ -33,7 +36,7 @@ public class Salle {
     }
 
     public void afficherInfosService(){
-        System.out.println(this);
+        logger.info("\n{}", this);
     }
 
     public void afficherInfosCreatures(){
