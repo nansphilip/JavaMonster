@@ -8,7 +8,14 @@ import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 public class Simulation {
+
+    private static final Logger logger = LoggerFactory.getLogger(Simulation.class);
+
     public static void main(String[] args) {
         List<Creature> creatures = new ArrayList<>();
 
@@ -28,7 +35,7 @@ public class Simulation {
             //salleAttente.ajouterCreature(creature);
         }
         for(Creature creature : creatures){
-            System.out.println(creature.toString());
+            logger.info("Créature générée : {}", creature);
         }
         salleAttente.setCreatures(creatures);
 

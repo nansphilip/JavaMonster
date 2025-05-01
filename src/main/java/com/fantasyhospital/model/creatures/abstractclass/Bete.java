@@ -1,6 +1,12 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
+import com.fantasyhospital.salles.Salle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class Bete {
+
+    private static final Logger logger = LoggerFactory.getLogger(Bete.class);
 
     protected String nomComplet;
     protected String sexe;
@@ -22,7 +28,7 @@ public abstract class Bete {
 
     public void trepasser(){
         //mourir
-        System.out.println("je suis mort");
+        logger.info("je suis mort");
     }
 
     public String getNomComplet() {
