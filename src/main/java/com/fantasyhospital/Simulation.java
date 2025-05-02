@@ -2,6 +2,7 @@ package com.fantasyhospital;
 
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
@@ -41,18 +42,24 @@ public class Simulation {
 
         //salleAttente.ajouterCreature(creatures.get(1));
         urgence.ajouterMedecin(docTest);
-        urgence.afficherInfosService();
+        //urgence.afficherInfosService();
         //psychologie.afficherInfosService();
         salleAttente.afficherInfosService();
 
-        docTest.transferer(salleAttente.getCreatures().get(0),salleAttente, urgence);
         //docTest.transferer(salleAttente.getCreatures().get(0),salleAttente, urgence);
-        docTest.transferer(urgence.getCreatures().get(0),psychologie);
+        //docTest.transferer(salleAttente.getCreatures().get(0),salleAttente, urgence);
+        //urgence.afficherInfosService();
+        //docTest.transferer(urgence.getCreatures().get(0),psychologie);
 
 
-        urgence.afficherInfosService();
-        psychologie.afficherInfosService();
+        //urgence.afficherInfosService();
+        //psychologie.afficherInfosService();
+        //salleAttente.afficherInfosService();
+
+        salleAttente.getCreatures().get(0).tomberMalade(new Maladie());
+
         salleAttente.afficherInfosService();
+
 
     }
 }

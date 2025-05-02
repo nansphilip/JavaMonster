@@ -29,11 +29,25 @@ public class Medecin extends Bete {
     public void reviserBudget(int valeur) { /* ... */ }
 
     public void transferer(Creature creature, ServiceMedical serviceDestination) {
+        if(!serviceDestination.getCreatures().isEmpty()) {
+            String typeServiceDestination = serviceDestination.getCreatures().get(0).getClass().getSimpleName();
+            if(!creature.getClass().getSimpleName().equals(typeServiceDestination)) {
+                System.out.println("Transfert impossible, le service de destination n'est pas du bon type.");
+                return;
+            }
+        }
         this.serviceMedical.enleverCreature(creature);
         serviceDestination.ajouterCreature(creature);
     }
 
-    public void transferer(Creature creature,Salle salle,  ServiceMedical serviceDestination) {
+    public void transferer(Creature creature,Salle salle, ServiceMedical serviceDestination) {
+        if(!serviceDestination.getCreatures().isEmpty()) {
+            String typeServiceDestination = serviceDestination.getCreatures().get(0).getClass().getSimpleName();
+            if(!creature.getClass().getSimpleName().equals(typeServiceDestination)) {
+                System.out.println("Transfert impossible, le service de destination n'est pas du bon type.");
+                return;
+            }
+        }
         salle.enleverCreature(creature);
         serviceDestination.ajouterCreature(creature);
     }

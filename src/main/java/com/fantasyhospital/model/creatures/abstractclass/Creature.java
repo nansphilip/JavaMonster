@@ -3,23 +3,17 @@ package com.fantasyhospital.model.creatures.abstractclass;
 import com.fantasyhospital.model.maladie.Maladie;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
 public abstract class Creature extends Bete {
-    protected List<Maladie> maladies = new ArrayList<>();
+    protected HashSet<Maladie> maladies = new HashSet<>();
     public static Random random = new Random();
 
-    public Creature(String nomComplet, String sexe, int poids, int taille, int age, int moral, List<Maladie> maladies) {
+    public Creature(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
         super(nomComplet, sexe, poids, taille, age, moral);
         this.maladies = maladies;
-    }
-
-    public static String genererNomAleatoire() {
-        String[] prefix = {"Kra", "Zor", "El", "Thra", "Gor", "Vel", "Mor", "Sha", "Lun", "Dra"};
-        String[] suffix = {"gor", "nax", "iel", "dor", "vak", "mir", "thar", "dil", "rak", "zul"};
-
-        return prefix[random.nextInt(prefix.length)] + suffix[random.nextInt(suffix.length)];
     }
 
     public static String genererSexeAleatoire() {
@@ -50,8 +44,15 @@ public abstract class Creature extends Bete {
 
     }
     public void tomberMalade(Maladie maladie){
-
+        if(!this.maladies.add(maladie)){
+            for(Maladie maladieAModifier : this.maladies){
+                if(maladieAModifier.equals(maladie)){
+                    maladieAModifier.augmenterNiveau();
+                }
+            }
+        }
     }
+
     public void etreSoigne(){
 
     }
@@ -61,11 +62,11 @@ public abstract class Creature extends Bete {
         return this.getClass().getSimpleName();
     }
 
-    public List<Maladie> getMaladies() {
+    public HashSet<Maladie> getMaladies() {
         return maladies;
     }
 
-    public void setMaladies(List<Maladie> maladies) {
+    public void setMaladies(HashSet<Maladie> maladies) {
         this.maladies = maladies;
     }
 

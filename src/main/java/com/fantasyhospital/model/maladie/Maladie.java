@@ -5,7 +5,7 @@ import java.util.*;
 public class Maladie {
     protected String nomComplet;
     protected String nomAbrege;
-    protected int NIVEAU_MAX;
+    protected final int NIVEAU_MAX;
     protected int niveauActuel;
 
     public static Random random = new Random();
@@ -87,9 +87,9 @@ public class Maladie {
         return NIVEAU_MAX;
     }
 
-    public void setNIVEAU_MAX(int NIVEAU_MAX) {
-        this.NIVEAU_MAX = NIVEAU_MAX;
-    }
+//    public void setNIVEAU_MAX(int NIVEAU_MAX) {
+//        this.NIVEAU_MAX = NIVEAU_MAX;
+//    }
 
     public int getNiveauActuel() {
         return niveauActuel;
@@ -97,6 +97,18 @@ public class Maladie {
 
     public void setNiveauActuel(int niveauActuel) {
         this.niveauActuel = niveauActuel;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Maladie maladie = (Maladie) o;
+        return Objects.equals(nomComplet, maladie.nomComplet) && Objects.equals(nomAbrege, maladie.nomAbrege);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nomComplet, nomAbrege);
     }
 
     public String toString() {
