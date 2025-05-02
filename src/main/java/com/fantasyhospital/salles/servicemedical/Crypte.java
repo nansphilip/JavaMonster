@@ -1,4 +1,4 @@
-package com.fantasyhospital.model.servicemedical;
+package com.fantasyhospital.salles.servicemedical;
 
 public class Crypte extends ServiceMedical {
     private final int ventilation;

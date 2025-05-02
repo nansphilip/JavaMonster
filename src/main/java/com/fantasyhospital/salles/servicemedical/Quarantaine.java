@@ -1,4 +1,4 @@
-package com.fantasyhospital.model.servicemedical;
+package com.fantasyhospital.salles.servicemedical;
 
 public class Quarantaine extends ServiceMedical {
     private final boolean isolation;

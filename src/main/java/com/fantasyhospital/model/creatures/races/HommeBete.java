@@ -5,11 +5,20 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Contaminant;
 import com.fantasyhospital.model.maladie.Maladie;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class HommeBete extends HabitantTriage implements Contaminant {
 
-    public HommeBete(String nom, String sexe, int poids, int taille, int age, int moral, List<Maladie> maladies) {
+    public HommeBete() {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+    }
+
+    public HommeBete(HashSet<Maladie> maladies) {
+        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+    }
+
+    public HommeBete(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
         super(nom, sexe, poids, taille, age, moral, maladies);
     }
 

@@ -1,4 +1,4 @@
-# Fantasy Hospital
+# Fantasy Hospital V1
 
 > [!WARNING]  
 > En cours de rédaction. A revérifier.
@@ -62,6 +62,10 @@ Types de monstres et comportements :
   - Vampire : VIP prioritaire, démoralise à sa mort, peut contaminer, régénère
   - Zombie : attend mieux en groupe, régénère
 
+Status de monstres :
+  - VIP
+  - 
+
 Actions possibles :
   - Attendre (baisse le moral)
   - Hurler (si moral bas)
@@ -90,3 +94,129 @@ Les médecins sont des créatures magiques avec un type aussi.
 Ils n'ont accès qu'aux services du même type que le leur.
 Caractéristiques : nom, sexe, âge
 Immunité aux maladies
+
+# Nombres
+
+Médecins
+  - Moral : de 0 à 100% -> se suicide à 0%
+  - Dépression : lorsqu'un patient meurt, le médecin le plus fragile perd 40 pts (%) de moral VICTIME
+  - Soigne : gagne 15 points de moral par patient soigné
+
+Monstres
+  - Moral : de 0 à 100%, hurle à chaque tour à partir de 0%
+  - Attendre : 
+    - si Triage : si autre triage, perd 5 points moral. Sinon, 10 points. Perd 10 point moral par maladie
+    - si VIP : au bout de 4 tours, moral = 0%
+  - Hurlement : compteur jusqu'à 3 fois avant de s'emporter
+  - S'emporter : a 15% chance de contaminer une autre créature à proximité
+  - Tomber malade :
+    - échelle de maladie sur 10
+    - état maladie (à l'arrivée à l'hopital) aléatoire entre 0 et 7 max (ex: 7 sur 10pts)
+    - son état s'agrave de 1pts par tour
+  - Etre soigne :
+    - redonne 50 pts (%) de moral et supprime une maladie
+  - Trepasser :
+    -  si maladie niveau max
+    -  si > 4 maladies
+    -  30% chance par tour quand il s'emporte
+    - Regénérants : quand meurt, si il avait une seule maladie, revit et a 50% de chance de reprendre une maladie ou sortir de l'hosto
+    - Contaminants : 
+    - Demoralisants : démoralise 2 des créatures de leur service, 10 points moral
+
+Maladies :
+  - Moral : reduit de 5 points par tour et par maladie
+
+Services :
+selon budget du service ? 
+- Quarantaine :
+  - Isolation : Nbr places (2), elligible après 3 tours d'hurlement
+- Crypte : 
+  - Nbr places (2), autogestion
+
+Ecoulement du jeu, modifications aléatoires
+- Modifier l'état de certaines créatures : 
+  - ajouter maladies : Les créatures ont toutes 5% de chance de contracter une nouvelle maladie à chaque tour
+- Modifier l'état de services : A voir random modification du budget d'un service
+- 
+
+(Enum : budget)
+
+# Écoulement du jeu
+
+Initialisation
+  - récupération des paramètres du jeu choisis par l'utilisateur
+    - nombre de services max
+    - nombre nouveaux médecins par tour
+    - nombre nouvelles créatures par tour
+  - créer l'hopital
+  - créer 5 créatures aléatoire avec une maladie aléatoire
+  - créer la salle d'attente et y mettre les monstres
+  - affecter les créatures à la salle d'attente
+  - créer 3 médecins
+  - créer les services adaptés aux monstres et les ajouter à l'hopital
+  - affecter les médecins aux services
+  - commencer le 1er tour
+
+Boucles
+  - attendre : moral -> hurelement -> emportement
+  - évolution 
+  - logs
+
+
+
+
+
+
+
+
+tant que la partie n'est pas terminée
+//modifier aléatoirement l'état de certaines créatures
+//(ajout maladie, évoluer maladie, évoluer moral)
+//pour chaque évolution maladie, doit vérifier si créature meurt
+prendre une liste de créatures random
+leur ajouter une maladie random
+si créature a déjà cette maladie, on augmente le niveau de la maladie de 1
+si maladie foudroyante ou si créature a trop de maladies (plus de 5 par ex ?)
+créature meurt (maladie niveau max, dépend si niveau actuel maladie random quand on créé une maladie random)
+ajouter créature stats
+fin si  
+prendre une liste de créatures random
+augmenter d'un niveau une de leur maladie (random aussi ? plusieurs niveau à la fois ? plusieurs maladies en même temps ?)
+si maladie passe au niveau max
+1 chance sur 2 que créature meurt instant, sinon fin du tour (laisse 1 chance que médecin soigne)
+fin si
+pour toutes les créatures, suivant paramètres, faire baisser leur moral à cause maladies
+
+//modifier aléatoirement l'état de certains services médicaux (budget, isolation, temp…)
+prendre liste services médicaux random
+baisser ou augmenter leur budget random
+pour services spéciaux, modifier random leur attribut
+créer random des médecins ?
+
+//actions des créatures
+pour toutes les créatures
+si moral au plus bas
+hurler
+fin si
+s'emporter (définir cette méthode ?)
+fin pour tout
+
+//actions de tous les médecins
+//suivant paramètres (privilégier soin créature ou isolation créature presque morte?)
+soigner une maladie d'une créature (ce qui redonne du moral à la créature et au médecin)
+déplacer des créatures
+déplacer créatures salle attente vers service
+ajuster budget services médicaux
+
+//vérifier si des créatures meurent (maladie niveau max)
+pour toutes les créatures
+pour toutes leurs maladies
+si maladie est au niveau max
+créature meurt (dans méthode trepasser, suivant si implémente interface méthode appelée de l'interface)
+moral des médecins du service baisse
+fin si
+fin pour tout
+fin pour tout
+
+
+fin
