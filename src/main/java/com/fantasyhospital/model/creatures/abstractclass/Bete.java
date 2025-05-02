@@ -17,7 +17,7 @@ public abstract class Bete {
     public static final String[] arrayNomMasculin = {"Lucien", "Jacques", "Marcel", "Fernand", "Albert", "Léon", "Raymond", "Gaston", "Henri", "Maurice", "Roger", "René", "André", "Georges", "Paul", "Émile", "Ernest", "Eugène", "Armand", "Anatole", "Gustave", "Alphonse", "Achille", "Aimé", "Félix", "Théophile", "Léopold", "Désiré", "Jules", "Joseph", "Clément", "Baptiste", "Philibert", "Basile", "Constant", "Léonard", "Prosper", "Anatole", "Honoré", "Octave"};
     public static final ArrayList<String> nomsMasculins = new ArrayList<>(Arrays.asList(arrayNomMasculin));
     public static final String[] arrayNomFeminin = {"Germaine", "Georgette", "Yvonne", "Paulette", "Raymonde", "Lucienne", "Andrée", "Marcelle", "Henriette", "Simone", "Denise", "Suzanne", "Renée", "Fernande", "Berthe", "Jeanne", "Marguerite", "Augustine", "Albertine", "Léontine", "Émilienne", "Antoinette", "Clémentine", "Eugénie", "Philomène", "Odette", "Colette", "Huguette", "Pierrette", "Thérèse", "Joséphine", "Amélie", "Irène", "Bertille", "Hortense", "Édith", "Noëlie", "Armande", "Honorine", "Cunégonde"};
-    public static final ArrayList<String> nomsFeminin = new ArrayList<>(Arrays.asList(arrayNomFeminin));
+    public static final ArrayList<String> nomsFeminins = new ArrayList<>(Arrays.asList(arrayNomFeminin));
     public static Random random = new Random();
 
     public Bete(String nomComplet, String sexe, int poids, int taille, int age, int moral) {
