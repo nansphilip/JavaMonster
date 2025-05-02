@@ -1,5 +1,6 @@
 package com.fantasyhospital.model;
 
+import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class Hopital {
     private String nom;
     private final int NB_MAX_SERVICE;
     private List<ServiceMedical> services = new ArrayList<>();
+    private List<Medecin> medecins = new ArrayList<>();
 
     public Hopital(String nom, int NB_MAX_SERVICE) {
         this.nom = nom;
