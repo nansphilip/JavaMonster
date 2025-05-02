@@ -136,3 +136,34 @@ Nombre de créatures maximale : 100
   - [Orque] nom='Dragor', sexe='M', âge=66, moral=83, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
   - [Nain] nom='Shadil', sexe='F', âge=19, moral=94, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
 
+2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Désiré', sexe='F', âge=76, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
+2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Raymond', sexe='M', âge=62, moral=80, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
+2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Prosper', sexe='F', âge=52, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
+2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Anatole', sexe='F', âge=35, moral=72, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
+2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Maurice', sexe='F', âge=59, moral=89, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+2025-05-02 15:34:02 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Elfe] nom='Désiré', sexe='F', âge=76, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
+  - [Reptilien] nom='Raymond', sexe='M', âge=62, moral=80, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
+  - [Nain] nom='Prosper', sexe='F', âge=52, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
+  - [Orque] nom='Anatole', sexe='F', âge=35, moral=72, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
+  - [Vampire] nom='Maurice', sexe='F', âge=59, moral=89, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+
+2025-05-02 15:34:02 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Elfe] nom='Désiré', sexe='F', âge=76, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/9]]
+  - [Reptilien] nom='Raymond', sexe='M', âge=62, moral=80, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
+  - [Nain] nom='Prosper', sexe='F', âge=52, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
+  - [Orque] nom='Anatole', sexe='F', âge=35, moral=72, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
+  - [Vampire] nom='Maurice', sexe='F', âge=59, moral=89, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+
