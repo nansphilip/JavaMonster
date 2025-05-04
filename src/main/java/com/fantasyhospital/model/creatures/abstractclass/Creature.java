@@ -55,7 +55,7 @@ public abstract class Creature extends Bete {
             }
             Maladie maladie = this.getRandomMaladie();
             creature.tomberMalade(maladie);
-            logger.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNomAbrege());
+            logger.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
         }
     }
 
