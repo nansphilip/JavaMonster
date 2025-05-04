@@ -7,6 +7,7 @@ import com.fantasyhospital.model.creatures.interfaces.Demoralisant;
 import com.fantasyhospital.model.creatures.interfaces.Regenerant;
 import com.fantasyhospital.model.maladie.Maladie;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class Vampire extends ClientVIP implements Regenerant, Contaminant, Demoralisant {
@@ -15,11 +16,11 @@ public class Vampire extends ClientVIP implements Regenerant, Contaminant, Demor
         super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
     }
 
-    public Vampire(List<Maladie> maladies) {
+    public Vampire(HashSet<Maladie> maladies) {
         super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
     }
 
-    public Vampire(String nomComplet, String sexe, int poids, int taille, int age, int moral, List<Maladie> maladies) {
+    public Vampire(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
         super(nomComplet, sexe, poids, taille, age, moral, maladies);
     }
 

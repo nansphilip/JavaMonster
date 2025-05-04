@@ -5,6 +5,7 @@ import com.fantasyhospital.model.creatures.races.*;
 import com.fantasyhospital.model.maladie.Maladie;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -16,7 +17,7 @@ public class Game {
         String[] races = {"Elfe", "Orque", "Lycanthrope", "Nain", "Reptilien", "Vampire", "Zombie", "HommeBete"};
         String race = races[randomCreature.nextInt(races.length)];
 
-        List<Maladie> maladie = new ArrayList<>();
+        HashSet<Maladie> maladie = new HashSet<>();
         maladie.add(new Maladie());
 
         switch (race) {

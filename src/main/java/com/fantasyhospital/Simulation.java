@@ -2,10 +2,12 @@ package com.fantasyhospital;
 
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,13 +19,13 @@ public class Simulation {
     private static final Logger logger = LoggerFactory.getLogger(Simulation.class);
 
     public static void main(String[] args) {
-        List<Creature> creatures = new ArrayList<>();
+        LinkedHashSet<Creature> creatures = new LinkedHashSet<>();
 
         ServiceMedical urgence = new ServiceMedical("Urgence", 50.0, 10, "Mediocre");
         ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
         Salle salleAttente = new Salle("Salle d'attente", 70, 100);
 
-        Medecin docTest = new Medecin("Dr. Zoidberg", "H", 70, 175, 45, 100, "Lycanthrope", urgence);
+        Medecin medecin = new Medecin("Dr. Zoidberg", "H", 70, 175, 45, 100, "Lycanthrope", urgence);
 
         for (int i = 0; i < 5; i++) {
             Creature creature = Game.randomCreature();
@@ -40,19 +42,36 @@ public class Simulation {
         salleAttente.setCreatures(creatures);
 
         //salleAttente.ajouterCreature(creatures.get(1));
-        urgence.ajouterMedecin(docTest);
-        urgence.afficherInfosService();
-        //psychologie.afficherInfosService();
+        urgence.ajouterMedecin(medecin);
+        Creature creature = salleAttente.getRandomCreature();
+        creature.setMoral(0);
+        for(int i = 0; i < 50; i++){
+            creature.verifierMoral(salleAttente);
+        }
+
         salleAttente.afficherInfosService();
 
-        docTest.transferer(salleAttente.getCreatures().get(0),salleAttente, urgence);
+//        medecin.transferer(salleAttente.getCreatures().iterator().next(), salleAttente, urgence);
+//        urgence.afficherInfosService();
+//        medecin.transferer(urgence.getCreatures().iterator().next(), urgence, psychologie);
+//        urgence.afficherInfosService();
+//        psychologie.afficherInfosService();
+        salleAttente.afficherInfosService();
+
         //docTest.transferer(salleAttente.getCreatures().get(0),salleAttente, urgence);
-        docTest.transferer(urgence.getCreatures().get(0),psychologie);
+        //docTest.transferer(salleAttente.getCreatures().get(0),salleAttente, urgence);
+        //urgence.afficherInfosService();
+        //docTest.transferer(urgence.getCreatures().get(0),psychologie);
 
 
-        urgence.afficherInfosService();
-        psychologie.afficherInfosService();
-        salleAttente.afficherInfosService();
+        //urgence.afficherInfosService();
+        //psychologie.afficherInfosService();
+        //salleAttente.afficherInfosService();
+
+        //salleAttente.getCreatures().getFirst().tomberMalade(new Maladie());
+
+        //salleAttente.afficherInfosService();
+
 
     }
 }
