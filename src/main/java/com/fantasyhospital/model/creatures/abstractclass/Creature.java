@@ -1,19 +1,23 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
+import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.salles.Salle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public abstract class Creature extends Bete {
     protected HashSet<Maladie> maladies = new HashSet<>();
     public static Random random = new Random();
+    private static final Logger logger = LoggerFactory.getLogger(Creature.class);
+    private int nbHurlements;
 
     public Creature(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
         super(nomComplet, sexe, poids, taille, age, moral);
         this.maladies = maladies;
+        this.nbHurlements = 0;
     }
 
     public static String genererSexeAleatoire() {
@@ -38,11 +42,33 @@ public abstract class Creature extends Bete {
     }
 
     public void hurler(){
-
+        logger.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.nomComplet);
     }
-    public void semporter(){
 
+    public void semporter(Salle salle){
+        Random random = new Random();
+        double rnd = random.nextDouble();
+        if(rnd < 0.15){
+            Creature creature = salle.getRandomCreature();
+            while(creature.equals(this)){
+                creature = salle.getRandomCreature();
+            }
+            Maladie maladie = this.getRandomMaladie();
+            creature.tomberMalade(maladie);
+            logger.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNomAbrege());
+        }
     }
+
+    public void verifierMoral(Salle salle){
+        if(this.moral == 0){
+            hurler();
+            this.nbHurlements++;
+        }
+        if(this.nbHurlements > 2){
+            semporter(salle);
+        }
+    }
+
     public void tomberMalade(Maladie maladie){
         if(!this.maladies.add(maladie)){
             for(Maladie maladieAModifier : this.maladies){
@@ -53,8 +79,8 @@ public abstract class Creature extends Bete {
         }
     }
 
-    public void etreSoigne(){
-
+    public boolean etreSoigne(Maladie maladie){
+        return this.maladies.remove(maladie);
     }
 
     // Getters et setters omis pour la clarté
@@ -68,6 +94,21 @@ public abstract class Creature extends Bete {
 
     public void setMaladies(HashSet<Maladie> maladies) {
         this.maladies = maladies;
+    }
+
+    public Maladie getRandomMaladie(){
+        Random random = new Random();
+        return (Maladie) this.maladies.toArray()[random.nextInt(this.maladies.size())];
+    }
+
+    public Maladie getHighLevelMaladie(){
+        Maladie maladieWithHighLevel = this.maladies.iterator().next();
+        for(Maladie maladie : this.maladies){
+            if(maladie.getNiveauActuel() > maladieWithHighLevel.getNiveauActuel()){
+                maladieWithHighLevel = maladie;
+            }
+        }
+        return maladieWithHighLevel;
     }
 
     @Override

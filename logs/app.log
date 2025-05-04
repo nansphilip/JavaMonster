@@ -1,9 +1,40 @@
-2025-05-01 09:29:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Lunnax', sexe='M', âge=64, moral=71, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
-2025-05-01 09:29:00 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Mordor', sexe='F', âge=35, moral=81, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5]]
-2025-05-01 09:29:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Lundor', sexe='F', âge=44, moral=72, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9]]
-2025-05-01 09:29:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Lundil', sexe='M', âge=29, moral=96, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/7]]
-2025-05-01 09:29:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Kranax', sexe='F', âge=74, moral=72, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
-2025-05-01 09:29:00 INFO  com.fantasyhospital.salles.Salle - 
+2025-05-02 18:19:21 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Antoinette', sexe='M', âge=75, moral=65, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/7]]
+2025-05-02 18:19:21 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Renée', sexe='F', âge=51, moral=85, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-02 18:19:21 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Eugénie', sexe='M', âge=34, moral=90, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/6]]
+2025-05-02 18:19:21 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Huguette', sexe='M', âge=75, moral=63, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/7]]
+2025-05-02 18:19:21 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Augustine', sexe='F', âge=77, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/7]]
+2025-05-02 18:19:21 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 60 de moral.
+2025-05-02 18:19:21 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 20 de moral.
+2025-05-02 18:19:21 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 0 de moral.
+2025-05-02 18:19:21 INFO  c.f.model.creatures.Medecin - Le médecin [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=0, poids=70, taille=175] en a fini.
+2025-05-02 18:19:21 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 0 de moral.
+2025-05-02 18:19:21 INFO  c.f.model.creatures.Medecin - Le médecin [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=0, poids=70, taille=175] en a fini.
+2025-05-02 18:20:55 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Amélie', sexe='M', âge=39, moral=75, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+2025-05-02 18:20:55 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Marguerite', sexe='M', âge=34, moral=99, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+2025-05-02 18:20:55 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Hortense', sexe='M', âge=39, moral=65, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+2025-05-02 18:20:55 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Bertille', sexe='F', âge=68, moral=87, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/5]]
+2025-05-02 18:20:55 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Georgette', sexe='F', âge=59, moral=88, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9]]
+2025-05-02 18:20:55 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 60 de moral.
+2025-05-02 18:20:55 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 20 de moral.
+2025-05-02 18:20:55 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 0 de moral.
+2025-05-02 18:20:55 INFO  c.f.model.creatures.Medecin - Le médecin [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=0, poids=70, taille=175] en a fini.
+2025-05-02 18:20:55 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 0 de moral.
+2025-05-02 18:20:55 INFO  c.f.model.creatures.Medecin - Le médecin [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=0, poids=70, taille=175] en a fini.
+2025-05-03 10:56:22 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Denise', sexe='M', âge=41, moral=72, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9]]
+2025-05-03 10:56:22 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Clémentine', sexe='F', âge=41, moral=67, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+2025-05-03 10:56:22 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Léontine', sexe='F', âge=42, moral=85, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+2025-05-03 10:56:22 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Henriette', sexe='M', âge=27, moral=91, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
+2025-05-03 10:56:22 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Bertille', sexe='M', âge=44, moral=99, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/6]]
+2025-05-03 10:56:22 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 60 de moral.
+2025-05-03 10:56:22 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 20 de moral.
+2025-05-03 10:56:22 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 0 de moral.
+2025-05-03 10:56:22 INFO  c.f.model.creatures.Medecin - Le médecin [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=0, poids=70, taille=175] en a fini.
+2025-05-03 10:57:17 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Germaine', sexe='F', âge=58, moral=72, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+2025-05-03 10:57:17 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Joséphine', sexe='M', âge=63, moral=71, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/7]]
+2025-05-03 10:57:17 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Clémentine', sexe='F', âge=28, moral=69, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/6]]
+2025-05-03 10:57:17 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Colette', sexe='F', âge=24, moral=68, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+2025-05-03 10:57:17 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Yvonne', sexe='M', âge=20, moral=93, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+2025-05-03 10:57:17 INFO  com.fantasyhospital.salles.Salle - 
 
 --- Service : Urgence ---
 Superficie : 50.0 m²
@@ -16,20 +47,29 @@ Budget : Mediocre
 👾 Créatures :
   Aucune créature dans ce service.
 
-2025-05-01 09:29:00 INFO  com.fantasyhospital.salles.Salle - 
+2025-05-03 10:57:17 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 60 de moral.
+2025-05-03 10:57:17 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 20 de moral.
+2025-05-03 10:57:17 INFO  c.f.model.creatures.Medecin - Dépression, médecin a maintenant 0 de moral.
+2025-05-03 10:57:17 INFO  c.f.model.creatures.Medecin - Le médecin [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=0, poids=70, taille=175] en a fini.
+2025-05-03 10:57:17 INFO  com.fantasyhospital.salles.Salle - 
 
---- Salle : Salle d'attente ---
-Superficie : 70.0 m²
-Nombre de créatures maximale : 100
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
 
-🏥 Salle :
-  - [Vampire] nom='Lunnax', sexe='M', âge=64, moral=71, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
-  - [HommeBete] nom='Mordor', sexe='F', âge=35, moral=81, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5]]
-  - [Nain] nom='Lundor', sexe='F', âge=44, moral=72, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9]]
-  - [Reptilien] nom='Lundil', sexe='M', âge=29, moral=96, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/7]]
-  - [Reptilien] nom='Kranax', sexe='F', âge=74, moral=72, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+🧍 Médecins :
+  Aucun médecin dans ce service.
 
-2025-05-01 09:29:00 INFO  com.fantasyhospital.salles.Salle - 
+👾 Créatures :
+  Aucune créature dans ce service.
+
+2025-05-03 11:05:06 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Édith', sexe='M', âge=65, moral=98, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+2025-05-03 11:05:06 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Honorine', sexe='M', âge=34, moral=95, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/5]]
+2025-05-03 11:05:06 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Joséphine', sexe='M', âge=64, moral=79, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/5]]
+2025-05-03 11:05:06 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Noëlie', sexe='M', âge=53, moral=72, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
+2025-05-03 11:05:06 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Lucienne', sexe='F', âge=55, moral=69, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/8]]
+2025-05-03 11:05:06 INFO  com.fantasyhospital.salles.Salle - 
 
 --- Service : Urgence ---
 Superficie : 50.0 m²
@@ -42,7 +82,33 @@ Budget : Mediocre
 👾 Créatures :
   Aucune créature dans ce service.
 
-2025-05-01 09:29:00 INFO  com.fantasyhospital.salles.Salle - 
+2025-05-03 11:05:06 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  - [Orque] nom='Édith', sexe='M', âge=65, moral=98, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+
+2025-05-03 11:05:06 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  - [Orque] nom='Édith', sexe='M', âge=65, moral=98, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+
+2025-05-03 11:05:06 INFO  com.fantasyhospital.salles.Salle - 
 
 --- Service : Psychologie ---
 Superficie : 100.0 m²
@@ -53,26 +119,14 @@ Budget : Moyen
   Aucun médecin dans ce service.
 
 👾 Créatures :
-  - [Vampire] nom='Lunnax', sexe='M', âge=64, moral=71, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+  - [Nain] nom='Honorine', sexe='M', âge=34, moral=95, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/5]]
 
-2025-05-01 09:29:00 INFO  com.fantasyhospital.salles.Salle - 
-
---- Salle : Salle d'attente ---
-Superficie : 70.0 m²
-Nombre de créatures maximale : 100
-
-🏥 Salle :
-  - [HommeBete] nom='Mordor', sexe='F', âge=35, moral=81, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5]]
-  - [Nain] nom='Lundor', sexe='F', âge=44, moral=72, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9]]
-  - [Reptilien] nom='Lundil', sexe='M', âge=29, moral=96, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/7]]
-  - [Reptilien] nom='Kranax', sexe='F', âge=74, moral=72, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
-
-2025-05-01 09:30:07 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Shadil', sexe='M', âge=29, moral=74, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/7]]
-2025-05-01 09:30:07 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Dravak', sexe='F', âge=75, moral=99, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
-2025-05-01 09:30:07 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Shamir', sexe='M', âge=51, moral=71, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
-2025-05-01 09:30:07 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Dragor', sexe='M', âge=66, moral=83, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
-2025-05-01 09:30:07 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Shadil', sexe='F', âge=19, moral=94, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
-2025-05-01 09:30:07 INFO  com.fantasyhospital.salles.Salle - 
+2025-05-03 11:06:41 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Hortense', sexe='M', âge=71, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 11:06:41 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Clémentine', sexe='F', âge=64, moral=66, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+2025-05-03 11:06:41 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Thérèse', sexe='M', âge=56, moral=69, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
+2025-05-03 11:06:41 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Renée', sexe='M', âge=27, moral=80, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/7]]
+2025-05-03 11:06:41 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Georgette', sexe='F', âge=62, moral=78, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
+2025-05-03 11:06:41 INFO  com.fantasyhospital.salles.Salle - 
 
 --- Service : Urgence ---
 Superficie : 50.0 m²
@@ -85,20 +139,20 @@ Budget : Mediocre
 👾 Créatures :
   Aucune créature dans ce service.
 
-2025-05-01 09:30:07 INFO  com.fantasyhospital.salles.Salle - 
+2025-05-03 11:06:41 INFO  com.fantasyhospital.salles.Salle - 
 
---- Salle : Salle d'attente ---
-Superficie : 70.0 m²
-Nombre de créatures maximale : 100
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
 
-🏥 Salle :
-  - [Orque] nom='Shadil', sexe='M', âge=29, moral=74, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/7]]
-  - [Nain] nom='Dravak', sexe='F', âge=75, moral=99, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
-  - [Elfe] nom='Shamir', sexe='M', âge=51, moral=71, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
-  - [Orque] nom='Dragor', sexe='M', âge=66, moral=83, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
-  - [Nain] nom='Shadil', sexe='F', âge=19, moral=94, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
 
-2025-05-01 09:30:07 INFO  com.fantasyhospital.salles.Salle - 
+👾 Créatures :
+  - [HommeBete] nom='Hortense', sexe='M', âge=71, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+
+2025-05-03 11:06:41 INFO  com.fantasyhospital.salles.Salle - 
 
 --- Service : Urgence ---
 Superficie : 50.0 m²
@@ -111,7 +165,7 @@ Budget : Mediocre
 👾 Créatures :
   Aucune créature dans ce service.
 
-2025-05-01 09:30:07 INFO  com.fantasyhospital.salles.Salle - 
+2025-05-03 11:06:41 INFO  com.fantasyhospital.salles.Salle - 
 
 --- Service : Psychologie ---
 Superficie : 100.0 m²
@@ -122,48 +176,705 @@ Budget : Moyen
   Aucun médecin dans ce service.
 
 👾 Créatures :
-  - [Orque] nom='Shadil', sexe='M', âge=29, moral=74, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/7]]
+  - [HommeBete] nom='Hortense', sexe='M', âge=71, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
 
-2025-05-01 09:30:07 INFO  com.fantasyhospital.salles.Salle - 
+2025-05-03 11:16:48 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Léontine', sexe='M', âge=24, moral=74, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+2025-05-03 11:16:48 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Antoinette', sexe='F', âge=69, moral=88, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+2025-05-03 11:16:48 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Denise', sexe='M', âge=41, moral=61, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9]]
+2025-05-03 11:16:48 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Paulette', sexe='F', âge=49, moral=73, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/7]]
+2025-05-03 11:16:48 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Amélie', sexe='M', âge=23, moral=91, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 11:16:48 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  Aucune créature dans ce service.
+
+2025-05-03 11:16:48 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  - [Nain] nom='Léontine', sexe='M', âge=24, moral=74, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+
+2025-05-03 11:16:48 INFO  c.f.model.creatures.Medecin - La créature à transférer n'est pas présente dans la salle d'origine.
+2025-05-03 11:16:48 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  - [Nain] nom='Léontine', sexe='M', âge=24, moral=74, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+
+2025-05-03 11:16:48 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Psychologie ---
+Superficie : 100.0 m²
+Nombre de créatures maximale : 10
+Budget : Moyen
+
+🧍 Médecins :
+  Aucun médecin dans ce service.
+
+👾 Créatures :
+  Aucune créature dans ce service.
+
+2025-05-03 11:17:36 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Honorine', sexe='F', âge=64, moral=85, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+2025-05-03 11:17:36 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Andrée', sexe='F', âge=58, moral=81, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 11:17:36 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Édith', sexe='M', âge=47, moral=91, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/8]]
+2025-05-03 11:17:36 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Émilienne', sexe='F', âge=63, moral=67, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+2025-05-03 11:17:36 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Simone', sexe='M', âge=77, moral=71, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+2025-05-03 11:17:36 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  - [Zombie] nom='Honorine', sexe='F', âge=64, moral=85, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+
+2025-05-03 11:17:36 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  Aucune créature dans ce service.
+
+2025-05-03 11:17:36 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Psychologie ---
+Superficie : 100.0 m²
+Nombre de créatures maximale : 10
+Budget : Moyen
+
+🧍 Médecins :
+  Aucun médecin dans ce service.
+
+👾 Créatures :
+  - [Zombie] nom='Honorine', sexe='F', âge=64, moral=85, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+
+2025-05-03 11:22:46 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Noëlie', sexe='F', âge=75, moral=77, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/7]]
+2025-05-03 11:22:46 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Fernande', sexe='M', âge=60, moral=78, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/8]]
+2025-05-03 11:22:46 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Henriette', sexe='F', âge=29, moral=73, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+2025-05-03 11:22:46 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Émilienne', sexe='F', âge=28, moral=60, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/7]]
+2025-05-03 11:22:46 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Germaine', sexe='F', âge=44, moral=68, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+2025-05-03 11:23:13 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Irène', sexe='M', âge=24, moral=78, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+2025-05-03 11:23:13 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Amélie', sexe='M', âge=53, moral=67, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 11:23:13 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Léontine', sexe='M', âge=69, moral=75, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/8]]
+2025-05-03 11:23:13 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Clémentine', sexe='M', âge=45, moral=62, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+2025-05-03 11:23:13 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Paulette', sexe='M', âge=71, moral=67, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/7]]
+2025-05-03 11:23:13 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  - [HommeBete] nom='Irène', sexe='M', âge=24, moral=78, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+
+2025-05-03 11:23:13 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  Aucune créature dans ce service.
+
+2025-05-03 11:23:13 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Psychologie ---
+Superficie : 100.0 m²
+Nombre de créatures maximale : 10
+Budget : Moyen
+
+🧍 Médecins :
+  Aucun médecin dans ce service.
+
+👾 Créatures :
+  - [HommeBete] nom='Irène', sexe='M', âge=24, moral=78, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+
+2025-05-03 11:28:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Marguerite', sexe='F', âge=51, moral=64, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
+2025-05-03 11:28:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Thérèse', sexe='M', âge=54, moral=69, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/8]]
+2025-05-03 11:28:05 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Colette', sexe='F', âge=22, moral=88, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/7]]
+2025-05-03 11:28:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Irène', sexe='F', âge=52, moral=72, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+2025-05-03 11:28:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Eugénie', sexe='F', âge=42, moral=88, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/8]]
+2025-05-03 11:28:05 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  - [Nain] nom='Marguerite', sexe='F', âge=51, moral=64, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
+
+2025-05-03 11:28:05 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  Aucune créature dans ce service.
+
+2025-05-03 11:28:05 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Psychologie ---
+Superficie : 100.0 m²
+Nombre de créatures maximale : 10
+Budget : Moyen
+
+🧍 Médecins :
+  Aucun médecin dans ce service.
+
+👾 Créatures :
+  - [Nain] nom='Marguerite', sexe='F', âge=51, moral=64, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
+
+2025-05-03 11:29:29 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Pierrette', sexe='M', âge=23, moral=89, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
+2025-05-03 11:29:29 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Amélie', sexe='F', âge=39, moral=66, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+2025-05-03 11:29:29 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Léontine', sexe='M', âge=44, moral=97, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/8]]
+2025-05-03 11:29:29 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Eugénie', sexe='M', âge=54, moral=77, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/7]]
+2025-05-03 11:29:29 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Cunégonde', sexe='F', âge=18, moral=61, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/7]]
+2025-05-03 11:29:29 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  - [Orque] nom='Pierrette', sexe='M', âge=23, moral=89, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
+
+2025-05-03 11:29:29 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Urgence ---
+Superficie : 50.0 m²
+Nombre de créatures maximale : 10
+Budget : Mediocre
+
+🧍 Médecins :
+  - [Médecin] nom='Dr. Zoidberg', sexe='H', âge=45, moral=100, poids=70, taille=175]
+
+👾 Créatures :
+  Aucune créature dans ce service.
+
+2025-05-03 11:29:29 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Service : Psychologie ---
+Superficie : 100.0 m²
+Nombre de créatures maximale : 10
+Budget : Moyen
+
+🧍 Médecins :
+  Aucun médecin dans ce service.
+
+👾 Créatures :
+  - [Orque] nom='Pierrette', sexe='M', âge=23, moral=89, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
+
+2025-05-03 11:59:34 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Lucienne', sexe='M', âge=36, moral=67, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+2025-05-03 11:59:34 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Simone', sexe='F', âge=31, moral=64, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/6]]
+2025-05-03 11:59:34 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Armande', sexe='F', âge=62, moral=80, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5]]
+2025-05-03 11:59:34 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Irène', sexe='F', âge=70, moral=94, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
+2025-05-03 11:59:34 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Denise', sexe='F', âge=29, moral=72, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/6]]
+2025-05-03 11:59:34 INFO  c.f.model.creatures.Medecin - La maladie Syndrome fear of missing out vient d'être soignée pour la créature Lucienne !
+2025-05-03 11:59:53 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Pierrette', sexe='F', âge=77, moral=85, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 11:59:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Huguette', sexe='F', âge=69, moral=89, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+2025-05-03 11:59:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Albertine', sexe='M', âge=18, moral=90, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+2025-05-03 11:59:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Clémentine', sexe='M', âge=71, moral=65, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/5]]
+2025-05-03 11:59:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Berthe', sexe='F', âge=31, moral=76, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/7]]
+2025-05-03 11:59:53 INFO  c.f.model.creatures.Medecin - La maladie Dépendance aux réseaux sociaux vient d'être soignée pour la créature Pierrette !
+2025-05-03 11:59:53 INFO  com.fantasyhospital.salles.Salle - 
 
 --- Salle : Salle d'attente ---
 Superficie : 70.0 m²
 Nombre de créatures maximale : 100
 
 🏥 Salle :
-  - [Nain] nom='Dravak', sexe='F', âge=75, moral=99, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
-  - [Elfe] nom='Shamir', sexe='M', âge=51, moral=71, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
-  - [Orque] nom='Dragor', sexe='M', âge=66, moral=83, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
-  - [Nain] nom='Shadil', sexe='F', âge=19, moral=94, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+  - [HommeBete] nom='Pierrette', sexe='F', âge=77, moral=85, maladie(s) : []
+  - [Reptilien] nom='Huguette', sexe='F', âge=69, moral=89, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+  - [Elfe] nom='Albertine', sexe='M', âge=18, moral=90, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+  - [Vampire] nom='Clémentine', sexe='M', âge=71, moral=65, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/5]]
+  - [Vampire] nom='Berthe', sexe='F', âge=31, moral=76, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/7]]
 
-2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Désiré', sexe='F', âge=76, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
-2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Raymond', sexe='M', âge=62, moral=80, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
-2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Prosper', sexe='F', âge=52, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
-2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Anatole', sexe='F', âge=35, moral=72, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
-2025-05-02 15:34:02 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Maurice', sexe='F', âge=59, moral=89, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
-2025-05-02 15:34:02 INFO  com.fantasyhospital.salles.Salle - 
-
---- Salle : Salle d'attente ---
-Superficie : 70.0 m²
-Nombre de créatures maximale : 100
-
-🏥 Salle :
-  - [Elfe] nom='Désiré', sexe='F', âge=76, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/9]]
-  - [Reptilien] nom='Raymond', sexe='M', âge=62, moral=80, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
-  - [Nain] nom='Prosper', sexe='F', âge=52, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
-  - [Orque] nom='Anatole', sexe='F', âge=35, moral=72, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
-  - [Vampire] nom='Maurice', sexe='F', âge=59, moral=89, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
-
-2025-05-02 15:34:02 INFO  com.fantasyhospital.salles.Salle - 
+2025-05-03 12:03:24 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Noëlie', sexe='F', âge=69, moral=70, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 12:03:24 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Irène', sexe='M', âge=25, moral=69, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/8]]
+2025-05-03 12:03:24 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Germaine', sexe='F', âge=28, moral=88, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+2025-05-03 12:03:24 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Renée', sexe='F', âge=63, moral=93, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+2025-05-03 12:03:24 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Denise', sexe='F', âge=35, moral=68, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/6]]
+2025-05-03 12:03:24 INFO  com.fantasyhospital.salles.Salle - 
 
 --- Salle : Salle d'attente ---
 Superficie : 70.0 m²
 Nombre de créatures maximale : 100
 
 🏥 Salle :
-  - [Elfe] nom='Désiré', sexe='F', âge=76, moral=65, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/9]]
-  - [Reptilien] nom='Raymond', sexe='M', âge=62, moral=80, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/6]]
-  - [Nain] nom='Prosper', sexe='F', âge=52, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/8]]
-  - [Orque] nom='Anatole', sexe='F', âge=35, moral=72, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
-  - [Vampire] nom='Maurice', sexe='F', âge=59, moral=89, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+  - [Elfe] nom='Noëlie', sexe='F', âge=69, moral=70, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/8], Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 2/9], Maladie (NDMAD) - XXX [niveau: 2/6], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 2/8], Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+  - [Nain] nom='Irène', sexe='M', âge=25, moral=69, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/8]]
+  - [Vampire] nom='Germaine', sexe='F', âge=28, moral=88, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+  - [HommeBete] nom='Renée', sexe='F', âge=63, moral=93, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+  - [Elfe] nom='Denise', sexe='F', âge=35, moral=68, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/6]]
+
+2025-05-03 12:03:24 INFO  c.f.model.creatures.Medecin - La maladie Dépendance aux réseaux sociaux vient d'être soignée pour la créature Noëlie !
+2025-05-03 12:03:24 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Elfe] nom='Noëlie', sexe='F', âge=69, moral=70, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 2/9], Maladie (NDMAD) - XXX [niveau: 2/6], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 2/8], Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+  - [Nain] nom='Irène', sexe='M', âge=25, moral=69, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/8]]
+  - [Vampire] nom='Germaine', sexe='F', âge=28, moral=88, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+  - [HommeBete] nom='Renée', sexe='F', âge=63, moral=93, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+  - [Elfe] nom='Denise', sexe='F', âge=35, moral=68, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/6]]
+
+2025-05-03 12:31:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Henriette', sexe='M', âge=59, moral=61, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+2025-05-03 12:31:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Jeanne', sexe='M', âge=75, moral=97, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+2025-05-03 12:31:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Huguette', sexe='F', âge=37, moral=83, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+2025-05-03 12:31:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Marcelle', sexe='F', âge=26, moral=77, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+2025-05-03 12:31:05 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Clémentine', sexe='F', âge=59, moral=87, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+2025-05-03 12:31:05 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:31:05 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:31:05 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:31:05 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle s'emporte et contamine Clémentine avec Syndrome fear of missing out dans la bagarre.
+2025-05-03 12:31:05 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Zombie] nom='Henriette', sexe='M', âge=59, moral=61, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+  - [Orque] nom='Jeanne', sexe='M', âge=75, moral=97, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+  - [Zombie] nom='Huguette', sexe='F', âge=37, moral=83, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+  - [Reptilien] nom='Marcelle', sexe='F', âge=26, moral=0, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+  - [Zombie] nom='Clémentine', sexe='F', âge=59, moral=87, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 2/8]]
+
+2025-05-03 12:31:05 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:31:05 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Zombie] nom='Henriette', sexe='M', âge=59, moral=61, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+  - [Orque] nom='Jeanne', sexe='M', âge=75, moral=97, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+  - [Zombie] nom='Huguette', sexe='F', âge=37, moral=83, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+  - [Reptilien] nom='Marcelle', sexe='F', âge=26, moral=0, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+  - [Zombie] nom='Clémentine', sexe='F', âge=59, moral=87, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 2/8]]
+
+2025-05-03 12:31:05 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Zombie] nom='Henriette', sexe='M', âge=59, moral=61, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+  - [Orque] nom='Jeanne', sexe='M', âge=75, moral=97, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+  - [Zombie] nom='Huguette', sexe='F', âge=37, moral=83, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/9]]
+  - [Reptilien] nom='Marcelle', sexe='F', âge=26, moral=0, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+  - [Zombie] nom='Clémentine', sexe='F', âge=59, moral=87, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 2/8]]
+
+2025-05-03 12:33:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Berthe', sexe='F', âge=69, moral=71, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/7]]
+2025-05-03 12:33:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Eugénie', sexe='M', âge=44, moral=82, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+2025-05-03 12:33:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Noëlie', sexe='M', âge=72, moral=83, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 12:33:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Marcelle', sexe='F', âge=30, moral=95, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+2025-05-03 12:33:00 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Fernande', sexe='M', âge=73, moral=73, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+2025-05-03 12:33:00 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:00 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:00 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:00 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:00 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:00 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:00 INFO  c.f.m.c.abstractclass.Creature - La créature Marcelle a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:00 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Elfe] nom='Berthe', sexe='F', âge=69, moral=71, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/7]]
+  - [Vampire] nom='Eugénie', sexe='M', âge=44, moral=82, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+  - [Zombie] nom='Noëlie', sexe='M', âge=72, moral=83, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+  - [Reptilien] nom='Marcelle', sexe='F', âge=30, moral=0, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+  - [Orque] nom='Fernande', sexe='M', âge=73, moral=73, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+
+2025-05-03 12:33:00 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Elfe] nom='Berthe', sexe='F', âge=69, moral=71, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/7]]
+  - [Vampire] nom='Eugénie', sexe='M', âge=44, moral=82, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+  - [Zombie] nom='Noëlie', sexe='M', âge=72, moral=83, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+  - [Reptilien] nom='Marcelle', sexe='F', âge=30, moral=0, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+  - [Orque] nom='Fernande', sexe='M', âge=73, moral=73, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+
+2025-05-03 12:33:13 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Paulette', sexe='F', âge=55, moral=79, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+2025-05-03 12:33:13 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Clémentine', sexe='M', âge=75, moral=63, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+2025-05-03 12:33:13 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Germaine', sexe='F', âge=63, moral=75, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+2025-05-03 12:33:13 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Berthe', sexe='M', âge=65, moral=89, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+2025-05-03 12:33:13 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Georgette', sexe='M', âge=45, moral=85, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:13 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Reptilien] nom='Paulette', sexe='F', âge=55, moral=79, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+  - [Orque] nom='Clémentine', sexe='M', âge=75, moral=0, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+  - [Lycanthrope] nom='Germaine', sexe='F', âge=63, moral=75, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+  - [Elfe] nom='Berthe', sexe='M', âge=65, moral=89, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+  - [Reptilien] nom='Georgette', sexe='M', âge=45, moral=85, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+
+2025-05-03 12:33:13 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Reptilien] nom='Paulette', sexe='F', âge=55, moral=79, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/6]]
+  - [Orque] nom='Clémentine', sexe='M', âge=75, moral=0, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+  - [Lycanthrope] nom='Germaine', sexe='F', âge=63, moral=75, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+  - [Elfe] nom='Berthe', sexe='M', âge=65, moral=89, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+  - [Reptilien] nom='Georgette', sexe='M', âge=45, moral=85, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/8]]
+
+2025-05-03 12:33:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Simone', sexe='M', âge=33, moral=70, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+2025-05-03 12:33:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Marcelle', sexe='M', âge=47, moral=63, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+2025-05-03 12:33:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Denise', sexe='M', âge=40, moral=67, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5]]
+2025-05-03 12:33:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Marguerite', sexe='F', âge=53, moral=89, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+2025-05-03 12:33:53 INFO  com.fantasyhospital.Simulation - Créature générée : [Zombie] nom='Clémentine', sexe='F', âge=31, moral=98, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/5]]
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise s'emporte et contamine Marcelle en lui donnant DRS dans la bagarre.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  c.f.m.c.abstractclass.Creature - La créature Denise a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:33:53 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Lycanthrope] nom='Simone', sexe='M', âge=33, moral=70, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+  - [Orque] nom='Marcelle', sexe='M', âge=47, moral=63, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+  - [Lycanthrope] nom='Denise', sexe='M', âge=40, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5]]
+  - [Elfe] nom='Marguerite', sexe='F', âge=53, moral=89, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+  - [Zombie] nom='Clémentine', sexe='F', âge=31, moral=98, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/5]]
+
+2025-05-03 12:33:53 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Lycanthrope] nom='Simone', sexe='M', âge=33, moral=70, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+  - [Orque] nom='Marcelle', sexe='M', âge=47, moral=63, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/6]]
+  - [Lycanthrope] nom='Denise', sexe='M', âge=40, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5]]
+  - [Elfe] nom='Marguerite', sexe='F', âge=53, moral=89, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/5]]
+  - [Zombie] nom='Clémentine', sexe='F', âge=31, moral=98, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/5]]
+
+2025-05-03 12:34:12 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Irène', sexe='F', âge=26, moral=90, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+2025-05-03 12:34:12 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Jeanne', sexe='F', âge=30, moral=79, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
+2025-05-03 12:34:12 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Huguette', sexe='F', âge=50, moral=88, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+2025-05-03 12:34:12 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Paulette', sexe='F', âge=58, moral=95, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+2025-05-03 12:34:12 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Eugénie', sexe='F', âge=27, moral=84, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie s'emporte et contamine Eugénie en lui transmettant DRS dans la bagarre.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie s'emporte et contamine Irène en lui transmettant DRS dans la bagarre.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  c.f.m.c.abstractclass.Creature - La créature Eugénie a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:34:12 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Reptilien] nom='Irène', sexe='F', âge=26, moral=90, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/8], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+  - [Nain] nom='Jeanne', sexe='F', âge=30, moral=79, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
+  - [HommeBete] nom='Huguette', sexe='F', âge=50, moral=88, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+  - [Vampire] nom='Paulette', sexe='F', âge=58, moral=95, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+  - [Lycanthrope] nom='Eugénie', sexe='F', âge=27, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/8]]
+
+2025-05-03 12:34:12 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Reptilien] nom='Irène', sexe='F', âge=26, moral=90, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/8], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+  - [Nain] nom='Jeanne', sexe='F', âge=30, moral=79, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/5]]
+  - [HommeBete] nom='Huguette', sexe='F', âge=50, moral=88, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+  - [Vampire] nom='Paulette', sexe='F', âge=58, moral=95, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/9]]
+  - [Lycanthrope] nom='Eugénie', sexe='F', âge=27, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/8]]
+
+2025-05-03 12:36:43 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Irène', sexe='M', âge=64, moral=77, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/8]]
+2025-05-03 12:36:43 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Marguerite', sexe='F', âge=76, moral=87, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/7]]
+2025-05-03 12:36:43 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Denise', sexe='F', âge=21, moral=87, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/6]]
+2025-05-03 12:36:43 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Simone', sexe='M', âge=69, moral=71, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/8]]
+2025-05-03 12:36:43 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Lucienne', sexe='F', âge=59, moral=71, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/5]]
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone s'emporte et contamine Denise en lui transmettant ZPL dans la bagarre.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone s'emporte et contamine Irène en lui transmettant ZPL dans la bagarre.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone s'emporte et contamine Denise en lui transmettant ZPL dans la bagarre.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone s'emporte et contamine Denise en lui transmettant ZPL dans la bagarre.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone s'emporte et contamine Marguerite en lui transmettant ZPL dans la bagarre.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone s'emporte et contamine Irène en lui transmettant ZPL dans la bagarre.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  c.f.m.c.abstractclass.Creature - La créature Simone a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:36:43 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Vampire] nom='Irène', sexe='M', âge=64, moral=77, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 4/8], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/8]]
+  - [Lycanthrope] nom='Marguerite', sexe='F', âge=76, moral=87, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 2/7]]
+  - [Nain] nom='Denise', sexe='F', âge=21, moral=87, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/6], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 4/8]]
+  - [Reptilien] nom='Simone', sexe='M', âge=69, moral=0, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 4/8]]
+  - [Orque] nom='Lucienne', sexe='F', âge=59, moral=71, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/5]]
+
+2025-05-03 12:36:43 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Vampire] nom='Irène', sexe='M', âge=64, moral=77, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 4/8], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/8]]
+  - [Lycanthrope] nom='Marguerite', sexe='F', âge=76, moral=87, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 2/7]]
+  - [Nain] nom='Denise', sexe='F', âge=21, moral=87, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/6], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 4/8]]
+  - [Reptilien] nom='Simone', sexe='M', âge=69, moral=0, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 4/8]]
+  - [Orque] nom='Lucienne', sexe='F', âge=59, moral=71, maladie(s) : [Maladie (NDMAD) - XXX [niveau: 1/5]]
+
+2025-05-03 12:37:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=94, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 12:37:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Vampire] nom='Henriette', sexe='M', âge=40, moral=91, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+2025-05-03 12:37:28 INFO  com.fantasyhospital.Simulation - Créature générée : [HommeBete] nom='Suzanne', sexe='M', âge=37, moral=89, maladie(s) : [Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+2025-05-03 12:37:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Yvonne', sexe='F', âge=31, moral=96, maladie(s) : [Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+2025-05-03 12:37:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Germaine', sexe='M', âge=35, moral=85, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/5]]
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine s'emporte et contamine Germaine en lui transmettant DRS dans la bagarre.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]] et [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine s'emporte et contamine Suzanne en lui transmettant DRS dans la bagarre.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine s'emporte et contamine Henriette en lui transmettant DRS dans la bagarre.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]] et [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine s'emporte et contamine Germaine en lui transmettant DRS dans la bagarre.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine s'emporte et contamine Yvonne en lui transmettant DRS dans la bagarre.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine s'emporte et contamine Yvonne en lui transmettant DRS dans la bagarre.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine s'emporte et contamine Germaine en lui transmettant DRS dans la bagarre.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/8]] et [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 2/8]]
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine s'emporte et contamine Henriette en lui transmettant DRS dans la bagarre.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  c.f.m.c.abstractclass.Creature - La créature Clémentine a le moral dans les chaussettes, elle hurle.
+2025-05-03 12:37:28 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8]]
+  - [Vampire] nom='Henriette', sexe='M', âge=40, moral=91, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8], Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+  - [HommeBete] nom='Suzanne', sexe='M', âge=37, moral=89, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8], Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+  - [Elfe] nom='Yvonne', sexe='F', âge=31, moral=96, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+  - [Nain] nom='Germaine', sexe='M', âge=35, moral=85, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 4/5]]
+
+2025-05-03 12:37:28 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Reptilien] nom='Clémentine', sexe='M', âge=72, moral=0, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8]]
+  - [Vampire] nom='Henriette', sexe='M', âge=40, moral=91, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8], Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/5]]
+  - [HommeBete] nom='Suzanne', sexe='M', âge=37, moral=89, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8], Maladie (FOMO) - Syndrome fear of missing out [niveau: 1/9]]
+  - [Elfe] nom='Yvonne', sexe='F', âge=31, moral=96, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
+  - [Nain] nom='Germaine', sexe='M', âge=35, moral=85, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 4/5]]
 

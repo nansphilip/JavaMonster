@@ -3,7 +3,9 @@ package com.fantasyhospital.salles;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +16,7 @@ public class Salle {
     protected String nom;
     protected double superficie;
     protected final int NB_MAX_CREATURE;
-    protected List<Creature> creatures = new ArrayList<>();
+    protected LinkedHashSet<Creature> creatures = new LinkedHashSet<>();
 
     public Salle(String nom, double superficie, int NB_MAX_CREATURE) {
         this.nom = nom;
@@ -31,8 +33,8 @@ public class Salle {
         }
     }
 
-    public void enleverCreature(Creature creature){
-        this.creatures.remove(creature);
+    public boolean enleverCreature(Creature creature){
+        return this.creatures.remove(creature);
     }
 
     public void afficherInfosService(){
@@ -63,11 +65,33 @@ public class Salle {
         return NB_MAX_CREATURE;
     }
 
-    public List<Creature> getCreatures() {
+    public LinkedHashSet<Creature> getCreatures() {
         return creatures;
     }
 
-    public void setCreatures(List<Creature> creatures) {
+    public Creature getFirstCreature() {
+        return creatures.iterator().next();
+    }
+
+    public Creature getLastCreature() {
+        return (Creature) creatures.toArray()[ creatures.size()-1 ];
+    }
+
+    public Creature getCreatureByName(String creatureName){
+        for(Creature creature : creatures){
+            if(creature.getNomComplet().equals(creatureName)){
+                return creature;
+            }
+        }
+        return null;
+    }
+
+    public Creature getRandomCreature(){
+        Random random = new Random();
+        return (Creature) this.creatures.toArray()[random.nextInt(this.creatures.size())];
+    }
+
+    public void setCreatures(LinkedHashSet<Creature> creatures) {
         this.creatures = creatures;
     }
 

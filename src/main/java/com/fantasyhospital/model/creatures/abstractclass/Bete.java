@@ -32,9 +32,18 @@ public abstract class Bete {
 //        String[] suffix = {"gor", "nax", "iel", "dor", "vak", "mir", "thar", "dil", "rak", "zul"};
 //
 //        return prefix[random.nextInt(prefix.length)] + suffix[random.nextInt(suffix.length)];
-        int i = random.nextInt(Bete.nomsMasculins.size());
-        String nom = Bete.nomsMasculins.get(i);
-        Bete.nomsMasculins.remove(i);
+        String nom ="";
+        String sexe = "M";
+        switch (sexe) {
+            case "M":
+                int i = random.nextInt(Bete.nomsMasculins.size());
+                nom = Bete.nomsMasculins.get(i);
+                Bete.nomsMasculins.remove(i);
+            case "F":
+                i = random.nextInt(Bete.nomsFeminins.size());
+                nom = Bete.nomsFeminins.get(i);
+                Bete.nomsFeminins.remove(i);
+        }
         return nom;
     }
 
