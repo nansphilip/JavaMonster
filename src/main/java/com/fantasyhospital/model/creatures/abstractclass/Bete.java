@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Bete {
 
@@ -55,7 +56,7 @@ public abstract class Bete {
 
     public abstract void attendre();
 
-    public void trepasser(LinkedHashSet<Creature> creatures) {
+    public void trepasser(CopyOnWriteArrayList<Creature> creatures) {
         //mourir
         logger.info("La créature {} se meurt.", this.nomComplet);
     }

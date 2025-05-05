@@ -1,13 +1,14 @@
 package com.fantasyhospital.model;
 
-import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.salles.Salle;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fantasyhospital.model.creatures.Medecin;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.salles.Salle;
 
 public class Hopital {
     private String nom;
@@ -28,7 +29,13 @@ public class Hopital {
     }
     public void afficherNombreCreatures() { /* ... */ }
 
-    public void afficherToutesCreatures() { /* ... */ }
+    public void afficherToutesCreatures() {
+        for(Salle salle : this.services) {
+            for(Creature creature : salle.getCreatures()){
+                logger.info("{}", creature);
+            }
+        }
+    }
 
     public void modifierRandomCreatures(){
 

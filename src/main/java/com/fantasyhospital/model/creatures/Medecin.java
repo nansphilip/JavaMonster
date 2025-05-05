@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Medecin extends Bete {
 
@@ -49,12 +50,12 @@ public class Medecin extends Bete {
 
     public boolean transferer(Creature creature,Salle salleFrom, Salle salleTo) {
         //Vérification que la creature est bien dans la salle
-        LinkedHashSet<Creature> creaturesSalle = salleFrom.getCreatures();
+        CopyOnWriteArrayList<Creature> creaturesSalle = salleFrom.getCreatures();
         if(!creaturesSalle.contains(creature)) {
             logger.info("La créature à transférer n'est pas présente dans la salle d'origine.");
             return false;
         }
-        LinkedHashSet<Creature> creaturesDest = salleTo.getCreatures();
+        CopyOnWriteArrayList<Creature> creaturesDest = salleTo.getCreatures();
         Iterator<Creature> iterator = creaturesSalle.iterator();
         if(!creaturesDest.isEmpty()) {
             String typeServiceDestination = iterator.next().getClass().getSimpleName();

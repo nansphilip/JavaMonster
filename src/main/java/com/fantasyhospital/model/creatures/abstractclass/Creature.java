@@ -1,12 +1,15 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
-import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.model.maladie.Maladie;
-import com.fantasyhospital.salles.Salle;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Random;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.salles.Salle;
 
 public abstract class Creature extends Bete {
     protected HashSet<Maladie> maladies = new HashSet<>();
@@ -78,11 +81,13 @@ public abstract class Creature extends Bete {
     public boolean verifierSante(Salle salle){
         for(Maladie maladie : this.maladies){
             if(maladie.estLethale()){
+                logger.info("La maladie {} de {} était à son apogée.", maladie.getNomAbrege(), this.nomComplet);
                 trepasser(salle.getCreatures());
                 return true;
             }
         }
         if(this.maladies.size() >= 4){
+            logger.info("{} a contracté trop de maladies.", this.nomComplet);
             trepasser(salle.getCreatures());
             return true;
         }
@@ -153,6 +158,6 @@ public abstract class Creature extends Bete {
 
     @Override
     public int hashCode() {
-        return Objects.hash(maladies, nbHurlements);
+        return Objects.hash(nomComplet, taille, poids);
     }
 }

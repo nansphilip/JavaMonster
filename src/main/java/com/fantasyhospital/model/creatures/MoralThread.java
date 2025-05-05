@@ -22,26 +22,19 @@ public class MoralThread implements Runnable {
     public void run() {
         //Checker le moral
         while(hopital.getSalleOfCreature(creature) != null){
-            logger.info("creature {} moral : {} ; salle : {}", this.creature.getNomComplet(), this.creature.getMoral(), this.hopital.getSalleOfCreature(creature).getNom());
+            //logger.info("creature {} moral : {} ; salle : {}", this.creature.getNomComplet(), this.creature.getMoral(), this.hopital.getSalleOfCreature(creature).getNom());
             this.creature.verifierMoral(this.hopital.getSalleOfCreature(creature));
             if(this.creature.verifierSante(this.hopital.getSalleOfCreature(creature))){
-                logger.info("salle creature : {}", this.hopital.getSalleOfCreature(creature).getNom());
-                if(!this.hopital.getSalleOfCreature(creature).enleverCreature(this.creature)){
-                    logger.info("return false");
-                }
-                for(Creature creature : this.hopital.getSalleOfCreature(creature).getCreatures()){
-                    if(creature.equals(this.creature)){
-                        logger.info("creature : {}", creature.getNomComplet());
-                    }
-                }
+                this.hopital.getSalleOfCreature(creature).enleverCreature(this.creature);
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                this.hopital.afficherServices();
+                this.hopital.afficherToutesCreatures();
                 break;
             }
         }
+        logger.info("fin du while");
     }
 }

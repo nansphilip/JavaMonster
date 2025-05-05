@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ public class Salle {
     protected String nom;
     protected double superficie;
     protected final int NB_MAX_CREATURE;
-    protected LinkedHashSet<Creature> creatures = new LinkedHashSet<>();
+    protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
     public Salle(String nom, double superficie, int NB_MAX_CREATURE) {
         this.nom = nom;
@@ -65,7 +66,7 @@ public class Salle {
         return NB_MAX_CREATURE;
     }
 
-    public LinkedHashSet<Creature> getCreatures() {
+    public CopyOnWriteArrayList<Creature> getCreatures() {
         return creatures;
     }
 
@@ -91,7 +92,7 @@ public class Salle {
         return (Creature) this.creatures.toArray()[random.nextInt(this.creatures.size())];
     }
 
-    public void setCreatures(LinkedHashSet<Creature> creatures) {
+    public void setCreatures(CopyOnWriteArrayList<Creature> creatures) {
         this.creatures = creatures;
     }
 
