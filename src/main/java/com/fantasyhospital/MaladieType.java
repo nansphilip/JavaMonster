@@ -1,6 +1,8 @@
 package com.fantasyhospital;
 
-public enum MaladieType {
+import lombok.Getter;
+
+@Getter public enum MaladieType {
     MDC("Maladie débilitante chronique", -5),
     FOMO("Syndrome fear of missing out", -5),
     DRS("Dépendance aux réseaux sociaux", -5),
@@ -16,11 +18,4 @@ public enum MaladieType {
         this.impactMoral = impactMoral;
     }
 
-    public String getNomComplet() {
-        return nomComplet;
-    }
-
-    public int getImpactMoral() {
-        return impactMoral;
-    }
 }

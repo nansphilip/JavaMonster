@@ -13,8 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
+@Getter @Slf4j
 public class Salle {
-    private static final Logger logger = LoggerFactory.getLogger(Salle.class);
 
     protected String nom;
     protected double superficie;
@@ -41,38 +44,22 @@ public class Salle {
     }
 
     public void afficherInfosService(){
-        logger.info("\n{}", this);
+        log.info("\n{}", this);
     }
 
     public void afficherInfosCreatures(){
 
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
+	public void setNom(String nom) {
         this.nom = nom;
     }
 
-    public double getSuperficie() {
-        return superficie;
-    }
-
-    public void setSuperficie(double superficie) {
+	public void setSuperficie(double superficie) {
         this.superficie = superficie;
     }
 
-    public int getNB_MAX_CREATURE() {
-        return NB_MAX_CREATURE;
-    }
-
-    public LinkedHashSet<Creature> getCreatures() {
-        return creatures;
-    }
-
-    public Creature getFirstCreature() {
+	public Creature getFirstCreature() {
         return creatures.iterator().next();
     }
 

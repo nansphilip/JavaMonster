@@ -1,44 +1,32 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.model.creatures.Races;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.races.*;
 import com.fantasyhospital.model.maladie.Maladie;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 public class Game {
-
+    static Random randomCreature = new Random();
     public static Creature randomCreature() {
-        Random randomCreature = new Random();
-
-        String[] races = {"Elfe", "Orque", "Lycanthrope", "Nain", "Reptilien", "Vampire", "Zombie", "HommeBete"};
-        String race = races[randomCreature.nextInt(races.length)];
+        Races race = Races.values()[randomCreature.nextInt(Races.values().length)];
 
         HashSet<Maladie> maladie = new HashSet<>();
         maladie.add(new Maladie());
 
-        switch (race) {
-            case "Elfe":
-                return new Elfe(maladie);
-            case "Orque":
-                return new Orque(maladie);
-            case "Lycanthrope":
-                return new Lycanthrope(maladie);
-            case "Nain":
-                return new Nain(maladie);
-            case "Reptilien":
-                return new Reptilien(maladie);
-            case "Vampire":
-                return new Vampire(maladie);
-            case "Zombie":
-                return new Zombie(maladie);
-            case "HommeBete":
-                return new HommeBete(maladie);
-            default:
-                return null;
-        }
+        Creature creature = switch (race) {
+            case ELFE -> new Elfe();
+            case ORQUE-> new Orque();
+            case LYCANTHROPE -> new Lycanthrope();
+            case NAIN -> new Nain();
+            case REPTILIEN -> new Reptilien();
+            case VAMPIRE -> new Vampire();
+            case ZOMBIE -> new Zombie();
+            case HOMME_BETE -> new HommeBete();
+        };
+        creature.setMaladies(maladie);
+        return creature;
     }
 }

@@ -2,14 +2,14 @@ package com.fantasyhospital.model.maladie;
 
 import com.fantasyhospital.MaladieType;
 
-import java.util.*;
+import static com.fantasyhospital.model.maladie.MaladieUtils.getRandomType;
+import static com.fantasyhospital.model.maladie.MaladieUtils.genererNiveauMaxAleatoire;
+
 
 public class Maladie {
     protected MaladieType type;
     protected final int NIVEAU_MAX;
     protected int niveauActuel;
-
-    public static Random random = new Random();
 
     public Maladie(){
         this.type = getRandomType();
@@ -23,10 +23,6 @@ public class Maladie {
         this.niveauActuel = niveauActuel;
     }
 
-    public static MaladieType getRandomType() {
-        MaladieType[] values = MaladieType.values();
-        return values[random.nextInt(values.length)];
-    }
 
     public int getImpactMoral() {
         return type.getImpactMoral();
@@ -38,10 +34,6 @@ public class Maladie {
 
     public String getNomComplet() {
         return type.getNomComplet();
-    }
-
-    public int genererNiveauMaxAleatoire() {
-        return 5 + random.nextInt(5);
     }
 
     public void augmenterNiveau(){

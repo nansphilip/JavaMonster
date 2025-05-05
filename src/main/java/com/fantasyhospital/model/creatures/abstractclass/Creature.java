@@ -8,46 +8,26 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class Creature extends Bete {
     protected HashSet<Maladie> maladies = new HashSet<>();
-    public static Random random = new Random();
-    private static final Logger logger = LoggerFactory.getLogger(Creature.class);
+    protected static final Random RANDOM = new Random();
     private int nbHurlements;
 
-    public Creature(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nomComplet, sexe, poids, taille, age, moral);
+    public Creature( HashSet<Maladie> maladies) {
+        super();
         this.maladies = maladies;
         this.nbHurlements = 0;
     }
 
-    public static String genererSexeAleatoire() {
-        String[] sexes = {"M", "F"};
-        return sexes[random.nextInt(sexes.length)];
-    }
-
-    public static int genererPoids(){
-        return (int) (Math.round((50.0 + random.nextDouble() * 50.0) * 10.0) / 10.0);
-    }
-
-    public static int genererTaille(){
-        return (int) ((int) Math.round((150.0 + random.nextDouble() * 50.0) * 10.0) / 10.0);
-    }
-
-    public static int genererAge(){
-        return 18 + random.nextInt(60);
-    }
-
-    public static int genererMoral(){
-        return 60 + random.nextInt(40);
-    }
-
     public void hurler(){
-        logger.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.nomComplet);
+        log.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.nomComplet);
     }
 
     public void semporter(Salle salle){
-        Random random = new Random();
-        double rnd = random.nextDouble();
+        double rnd = RANDOM.nextDouble();
         if(rnd < 0.15){
             Creature creature = salle.getRandomCreature();
             while(creature.equals(this)){
@@ -55,7 +35,7 @@ public abstract class Creature extends Bete {
             }
             Maladie maladie = this.getRandomMaladie();
             creature.tomberMalade(maladie);
-            logger.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
+            log.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
         }
     }
 

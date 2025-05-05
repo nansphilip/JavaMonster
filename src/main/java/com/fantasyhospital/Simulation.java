@@ -1,19 +1,16 @@
 package com.fantasyhospital;
 
+import java.util.LinkedHashSet;
+
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
-import java.util.LinkedHashSet;
+import lombok.extern.slf4j.Slf4j;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
+@Slf4j
 public class Simulation {
-
-    private static final Logger logger = LoggerFactory.getLogger(Simulation.class);
 
     public static void main(String[] args) {
         LinkedHashSet<Creature> creatures = new LinkedHashSet<>();
@@ -34,7 +31,7 @@ public class Simulation {
             //salleAttente.ajouterCreature(creature);
         }
         for(Creature creature : creatures){
-            logger.info("Créature générée : {}", creature);
+            log.info("Créature générée : {}", creature);
         }
         salleAttente.setCreatures(creatures);
 
