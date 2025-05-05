@@ -878,3 +878,91 @@ Nombre de créatures maximale : 100
   - [Elfe] nom='Yvonne', sexe='F', âge=31, moral=96, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 3/8], Maladie (MDC) - Maladie débilitante chronique [niveau: 1/9]]
   - [Nain] nom='Germaine', sexe='M', âge=35, moral=85, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 4/5]]
 
+2025-05-05 09:13:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Orque] nom='Raymonde', sexe='F', âge=74, moral=62, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+2025-05-05 09:13:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Nain] nom='Pierrette', sexe='F', âge=64, moral=65, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/8]]
+2025-05-05 09:13:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Elfe] nom='Armande', sexe='F', âge=53, moral=98, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9]]
+2025-05-05 09:13:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Reptilien] nom='Jeanne', sexe='F', âge=44, moral=88, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8]]
+2025-05-05 09:13:28 INFO  com.fantasyhospital.Simulation - Créature générée : [Lycanthrope] nom='Thérèse', sexe='M', âge=29, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9]]
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette s'emporte et contamine Thérèse en lui transmettant ZPL dans la bagarre.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette s'emporte et contamine Thérèse en lui transmettant ZPL dans la bagarre.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette s'emporte et contamine Armande en lui transmettant ZPL dans la bagarre.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette s'emporte et contamine Armande en lui transmettant ZPL dans la bagarre.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette s'emporte et contamine Armande en lui transmettant ZPL dans la bagarre.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette s'emporte et contamine Jeanne en lui transmettant ZPL dans la bagarre.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette s'emporte et contamine Jeanne en lui transmettant ZPL dans la bagarre.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  c.f.m.c.abstractclass.Creature - La créature Pierrette a le moral dans les chaussettes, elle hurle.
+2025-05-05 09:13:28 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Orque] nom='Raymonde', sexe='F', âge=74, moral=62, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+  - [Nain] nom='Pierrette', sexe='F', âge=64, moral=0, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 5/8]]
+  - [Elfe] nom='Armande', sexe='F', âge=53, moral=98, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 5/8]]
+  - [Reptilien] nom='Jeanne', sexe='F', âge=44, moral=88, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 5/8]]
+  - [Lycanthrope] nom='Thérèse', sexe='M', âge=29, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 5/8]]
+
+2025-05-05 09:13:28 INFO  com.fantasyhospital.salles.Salle - 
+
+--- Salle : Salle d'attente ---
+Superficie : 70.0 m²
+Nombre de créatures maximale : 100
+
+🏥 Salle :
+  - [Orque] nom='Raymonde', sexe='F', âge=74, moral=62, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 1/6]]
+  - [Nain] nom='Pierrette', sexe='F', âge=64, moral=0, maladie(s) : [Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 5/8]]
+  - [Elfe] nom='Armande', sexe='F', âge=53, moral=98, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 5/8]]
+  - [Reptilien] nom='Jeanne', sexe='F', âge=44, moral=88, maladie(s) : [Maladie (DRS) - Dépendance aux réseaux sociaux [niveau: 1/8], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 5/8]]
+  - [Lycanthrope] nom='Thérèse', sexe='M', âge=29, moral=75, maladie(s) : [Maladie (PEC) - Porphyrie érythropoïétique congénitale [niveau: 1/9], Maladie (ZPL) - Zoopathie paraphrénique lycanthropique [niveau: 5/8]]
+
