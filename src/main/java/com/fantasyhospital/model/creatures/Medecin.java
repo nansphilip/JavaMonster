@@ -2,12 +2,24 @@ package com.fantasyhospital.model.creatures;
 
 import com.fantasyhospital.model.creatures.abstractclass.Bete;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+@Setter @Getter @Slf4j
 public class Medecin extends Bete {
 
-    protected String race; //type du médecin, à voir si on créé une classe Race par exemple
+	//Getters and setters
+	protected String race; //type du médecin, à voir si on créé une classe Race par exemple
     protected ServiceMedical serviceMedical;
 
     public Medecin(String nom, String sexe, int poids, int taille, int age, int moral, String race, ServiceMedical serviceMedical) {
@@ -24,51 +36,56 @@ public class Medecin extends Bete {
     // Méthodes spécifiques : examiner, soigner, réviser budget, transférer créature
     public void examiner(ServiceMedical service) { /* ... */ }
 
-    public void soigner(Creature creature) { /* ... */ }
+    /** Soigne la maladie d'une créature avec le niveau le plus élevé **/
+    public void soigner(Creature creature) {
+        Maladie maladie = creature.getHighLevelMaladie();
+        if(!creature.etreSoigne(maladie)){
+            log.info("La créature ne possédait pas cette maladie");
+        } else {
+            log.info("La maladie {} vient d'être soignée pour la créature {} !", maladie.getNomComplet(),  creature.getNomComplet());
+        }
+    }
 
     public void reviserBudget(int valeur) { /* ... */ }
 
-    public void transferer(Creature creature, ServiceMedical serviceDestination) {
-        if(!serviceDestination.getCreatures().isEmpty()) {
-            String typeServiceDestination = serviceDestination.getCreatures().get(0).getClass().getSimpleName();
+    public boolean transferer(Creature creature,Salle salleFrom, Salle salleTo) {
+        //Vérification que la creature est bien dans la salle
+        LinkedHashSet<Creature> creaturesSalle = salleFrom.getCreatures();
+        if(!creaturesSalle.contains(creature)) {
+            log.info("La créature à transférer n'est pas présente dans la salle d'origine.");
+            return false;
+        }
+        LinkedHashSet<Creature> creaturesDest = salleTo.getCreatures();
+        Iterator<Creature> iterator = creaturesSalle.iterator();
+        if(!creaturesDest.isEmpty()) {
+            String typeServiceDestination = iterator.next().getClass().getSimpleName();
             if(!creature.getClass().getSimpleName().equals(typeServiceDestination)) {
-                System.out.println("Transfert impossible, le service de destination n'est pas du bon type.");
-                return;
+                log.info("Transfert impossible, le service de destination n'est pas du bon type.");
+                return false;
             }
         }
-        this.serviceMedical.enleverCreature(creature);
-        serviceDestination.ajouterCreature(creature);
+        return salleFrom.enleverCreature(creature) && salleTo.ajouterCreature(creature);
     }
 
-    public void transferer(Creature creature,Salle salle, ServiceMedical serviceDestination) {
-        if(!serviceDestination.getCreatures().isEmpty()) {
-            String typeServiceDestination = serviceDestination.getCreatures().get(0).getClass().getSimpleName();
-            if(!creature.getClass().getSimpleName().equals(typeServiceDestination)) {
-                System.out.println("Transfert impossible, le service de destination n'est pas du bon type.");
-                return;
-            }
+    public boolean verifierMoral(){
+        if(this.moral==0) {
+            enFinir();
+            log.info("Le médecin {} en a fini.", this);
+            return false;
         }
-        salle.enleverCreature(creature);
-        serviceDestination.ajouterCreature(creature);
+        return true;
     }
 
-    public String getRace() {
-        return race;
+    public void depression(){
+        this.moral = Math.max(this.moral - 40, 0);
+        log.info("Dépression, médecin a maintenant {} de moral.", this.moral);
     }
 
-    public void setRace(String race) {
-        this.race = race;
+    private void enFinir() {
+        this.serviceMedical.retirerMedecin(this);
     }
 
-    public ServiceMedical getServiceMedical() {
-        return serviceMedical;
-    }
-
-    public void setServiceMedical(ServiceMedical serviceMedical) {
-        this.serviceMedical = serviceMedical;
-    }
-
-    @Override
+	@Override
     public String toString() {
         return "[Médecin] nom='" + nomComplet + "', sexe='" + sexe + "', âge=" + age + ", moral=" + moral + ", poids=" + poids + ", taille=" + taille + "]";
     }

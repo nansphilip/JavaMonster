@@ -10,16 +10,16 @@ import java.util.List;
 public class Zombie extends HabitantTriage implements Regenerant {
 
     public Zombie() {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+        super(null);
     }
 
     public Zombie(HashSet<Maladie> maladies) {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+        super(maladies);
     }
 
-    public Zombie(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nom, sexe, poids, taille, age, moral, maladies);
-    }
+//    public Zombie(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
+//        super(nom, sexe, poids, taille, age, moral, maladies);
+//    }
 
     public void trepasser(){
         regenerer();

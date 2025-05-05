@@ -13,16 +13,16 @@ import java.util.List;
 public class Vampire extends ClientVIP implements Regenerant, Contaminant, Demoralisant {
 
     public Vampire() {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+        super(null);
     }
 
     public Vampire(HashSet<Maladie> maladies) {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+        super(maladies);
     }
 
-    public Vampire(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nomComplet, sexe, poids, taille, age, moral, maladies);
-    }
+//    public Vampire(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
+//        super(nomComplet, sexe, poids, taille, age, moral, maladies);
+//    }
 
     public void trepasser(List<Creature> creatures) {
         regenerer();

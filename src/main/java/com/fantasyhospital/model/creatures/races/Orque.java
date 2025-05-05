@@ -11,16 +11,16 @@ import java.util.List;
 public class Orque extends HabitantTriage implements Contaminant {
 
     public Orque() {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+        super(null);
     }
 
     public Orque(HashSet<Maladie> maladies) {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+        super(maladies);
     }
 
-    public Orque(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nom, sexe, poids, taille, age, moral, maladies);
-    }
+//    public Orque(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
+//        super(nom, sexe, poids, taille, age, moral, maladies);
+//    }
 
     public void trepasser(Creature creature){
         contaminer(creature);

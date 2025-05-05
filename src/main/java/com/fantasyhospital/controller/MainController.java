@@ -1,28 +1,33 @@
 package com.fantasyhospital.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TextArea;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class MainController {
-    @FXML private Button tab1;
-    @FXML private Button tab2;
-    @FXML private VBox content;
+
+    @FXML
+    private TextArea logConsole;
 
     @FXML
     public void initialize() {
-        tab1.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;");
-        tab2.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        File logFile = new File("logs/app.log"); // Dossier logs à la racine de ton projet
 
-        tab1.setOnAction(e -> {
-            content.setStyle("-fx-background-color: #2196F3; -fx-background-radius: 10px; -fx-padding: 40px; margin: 20px;");
-            tab1.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;");
-            tab2.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-        });
-        tab2.setOnAction(e -> {
-            content.setStyle("-fx-background-color: #4CAF50; -fx-background-radius: 10px; -fx-padding: 40px; margin: 20px;");
-            tab2.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
-            tab1.setStyle("-fx-background-color: #2196F3; -fx-text-fill: white;");
-        });
+        if (logFile.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(logFile))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    logConsole.appendText(line + "\n");
+                }
+            } catch (IOException e) {
+                logConsole.appendText("Erreur lors de la lecture du fichier de log : " + e.getMessage());
+            }
+        } else {
+            logConsole.appendText("Fichier de log introuvable à : " + logFile.getAbsolutePath());
+        }
     }
-} 
+}

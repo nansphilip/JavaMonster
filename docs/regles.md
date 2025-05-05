@@ -100,7 +100,7 @@ Immunité aux maladies
 Médecins
   - Moral : de 0 à 100% -> se suicide à 0%
   - Dépression : lorsqu'un patient meurt, le médecin le plus fragile perd 40 pts (%) de moral VICTIME
-  - Soigne : gagne 15 points de moral par patient soigné
+  - Soigne : gagne 15 points de moral par patient soigné (Soigne 1 maladie ou totalement ?)
 
 Monstres
   - Moral : de 0 à 100%, hurle à chaque tour à partir de 0%

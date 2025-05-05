@@ -5,6 +5,7 @@ import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.salles.Salle;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ServiceMedical extends Salle  {
@@ -27,7 +28,8 @@ public class ServiceMedical extends Salle  {
             return true;
         }
 
-        String raceAutorisee = creatures.get(0).getRace();
+        Iterator<Creature> iterator = creatures.iterator();
+        String raceAutorisee = iterator.next().getRace(); //.getFirst().getRace();
         if (creature.getRace().equals(raceAutorisee)) {
             creatures.add(creature);
             return true;

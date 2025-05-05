@@ -9,14 +9,14 @@ import java.util.List;
 public class Nain extends ClientVIP {
 
     public Nain() {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+        super(null);
     }
 
     public Nain(HashSet<Maladie> maladies) {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+        super(maladies);
     }
 
-    public Nain(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nomComplet, sexe, poids, taille, age, moral, maladies);
-    }
+//    public Nain(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
+//        super(nomComplet, sexe, poids, taille, age, moral, maladies);
+//    }
 }
