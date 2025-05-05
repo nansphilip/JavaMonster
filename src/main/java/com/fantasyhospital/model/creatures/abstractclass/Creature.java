@@ -1,52 +1,40 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Random;
+import com.fantasyhospital.salles.Salle;
 
+import static com.fantasyhospital.model.creatures.abstractclass.Bete.log;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.*;
+import lombok.extern.slf4j.Slf4j;
+
 
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 
+@Slf4j
 public abstract class Creature extends Bete {
     protected HashSet<Maladie> maladies = new HashSet<>();
     public static Random random = new Random();
     private static final Logger logger = LoggerFactory.getLogger(Creature.class);
     private int nbHurlements;
 
-    public Creature(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nomComplet, sexe, poids, taille, age, moral);
+    public Creature( HashSet<Maladie> maladies) {
+        super();
         this.maladies = maladies;
         this.nbHurlements = 0;
     }
 
-    public static String genererSexeAleatoire() {
-        String[] sexes = {"M", "F"};
-        return sexes[random.nextInt(sexes.length)];
-    }
-
-    public static int genererPoids(){
-        return (int) (Math.round((50.0 + random.nextDouble() * 50.0) * 10.0) / 10.0);
-    }
-
-    public static int genererTaille(){
-        return (int) ((int) Math.round((150.0 + random.nextDouble() * 50.0) * 10.0) / 10.0);
-    }
-
-    public static int genererAge(){
-        return 18 + random.nextInt(60);
-    }
-
-    public static int genererMoral(){
-        return 60 + random.nextInt(40);
-    }
-
     public void hurler(){
-        logger.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.nomComplet);
+        log.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.nomComplet);
     }
+
 
     public void semporter(Salle salle){
         if(salle.getCreatures().isEmpty()){
@@ -106,6 +94,8 @@ public abstract class Creature extends Bete {
         }
     }
 
+    public boolean etreSoigne(Maladie maladie){
+        return this.maladies.remove(maladie);
     public boolean etreSoigne(Maladie maladie){
         return this.maladies.remove(maladie);
     }

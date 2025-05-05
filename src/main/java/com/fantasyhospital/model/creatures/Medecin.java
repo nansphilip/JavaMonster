@@ -5,16 +5,20 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+@Setter @Getter @Slf4j
 public class Medecin extends Bete {
 
-    protected String race; //type du médecin, à voir si on créé une classe Race par exemple
+	//Getters and setters
+	protected String race; //type du médecin, à voir si on créé une classe Race par exemple
     protected ServiceMedical serviceMedical;
     private static final Logger logger = LoggerFactory.getLogger(Medecin.class);
 
@@ -94,15 +98,16 @@ public class Medecin extends Bete {
         this.race = race;
     }
 
-    public ServiceMedical getServiceMedical() {
-        return serviceMedical;
+    public void depression(){
+        this.moral = Math.max(this.moral - 40, 0);
+        log.info("Dépression, médecin a maintenant {} de moral.", this.moral);
     }
 
-    public void setServiceMedical(ServiceMedical serviceMedical) {
-        this.serviceMedical = serviceMedical;
+    private void enFinir() {
+        this.serviceMedical.retirerMedecin(this);
     }
 
-    @Override
+	@Override
     public String toString() {
         return "[Médecin] nom='" + nomComplet + "', sexe='" + sexe + "', âge=" + age + ", moral=" + moral + ", poids=" + poids + ", taille=" + taille + "]";
     }

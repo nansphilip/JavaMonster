@@ -1,30 +1,26 @@
 package com.fantasyhospital;
 
+import java.util.LinkedHashSet;
 import com.fantasyhospital.model.Hopital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.MoralThread;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
 import java.util.LinkedHashSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import lombok.extern.slf4j.Slf4j;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
+@Slf4j
 public class Simulation {
-
-    private static final Logger logger = LoggerFactory.getLogger(Simulation.class);
 
     public static void main(String[] args) throws InterruptedException {
         CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
         Hopital hopital = new Hopital("Marseille", 10);
         ServiceMedical urgence = new ServiceMedical("Urgence", 50.0, 10, "Mediocre");
-        ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
+//        ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
         Salle salleAttente = new Salle("Salle d'attente", 70, 100);
 
         Medecin medecin = new Medecin("Dr. Zoidberg", "H", 70, 175, 45, 100, "Lycanthrope", urgence);

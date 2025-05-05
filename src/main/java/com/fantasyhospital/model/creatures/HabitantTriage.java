@@ -7,8 +7,8 @@ import java.util.HashSet;
 
 public abstract class HabitantTriage extends Creature {
 
-    public HabitantTriage(String nom, String sexe, int poids, int taille, int age, int moral,  HashSet<Maladie> maladies) {
-        super(nom, sexe, poids, taille, age, moral, maladies);
+    public HabitantTriage(HashSet<Maladie> maladies) {
+        super(maladies);
     }
 
     public void attendre(){

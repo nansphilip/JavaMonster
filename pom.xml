@@ -7,6 +7,9 @@
   <version>1.0-SNAPSHOT</version>
   <name>FantasyHospital</name>
   <url>http://maven.apache.org</url>
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -33,6 +36,12 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>21.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.36</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
