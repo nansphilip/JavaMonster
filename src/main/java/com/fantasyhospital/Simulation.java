@@ -1,14 +1,14 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.model.Hopital;
 import com.fantasyhospital.model.creatures.Medecin;
+import com.fantasyhospital.model.creatures.MoralThread;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,60 +18,38 @@ public class Simulation {
 
     private static final Logger logger = LoggerFactory.getLogger(Simulation.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         LinkedHashSet<Creature> creatures = new LinkedHashSet<>();
 
+        Hopital hopital = new Hopital("Marseille", 10);
         ServiceMedical urgence = new ServiceMedical("Urgence", 50.0, 10, "Mediocre");
         ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
         Salle salleAttente = new Salle("Salle d'attente", 70, 100);
 
         Medecin medecin = new Medecin("Dr. Zoidberg", "H", 70, 175, 45, 100, "Lycanthrope", urgence);
+        urgence.ajouterMedecin(medecin);
 
         for (int i = 0; i < 5; i++) {
             Creature creature = Game.randomCreature();
             creatures.add(creature);
-
-//            if (creature != null && creature.getMoral() > 50) {
-//                urgence.ajouterCreature(creature);
-//            }
-            //salleAttente.ajouterCreature(creature);
-        }
-        for(Creature creature : creatures){
             logger.info("Créature générée : {}", creature);
         }
+
         salleAttente.setCreatures(creatures);
-
-        //salleAttente.ajouterCreature(creatures.get(1));
-        urgence.ajouterMedecin(medecin);
+        hopital.ajouterService(salleAttente);
+        hopital.ajouterService(urgence);
         Creature creature = salleAttente.getRandomCreature();
-        creature.setMoral(0);
-        for(int i = 0; i < 50; i++){
-            creature.verifierMoral(salleAttente);
+
+        MoralThread threadMoral = new MoralThread(creature, hopital);
+        Thread thread = new Thread(threadMoral);
+        thread.start();
+
+        //Test 4 maladies
+        //Thread.sleep(1000);
+        while(creature.getMaladies().size() <= 4) {
+            creature.tomberMalade(new Maladie());
         }
-
-        salleAttente.afficherInfosService();
-
-//        medecin.transferer(salleAttente.getCreatures().iterator().next(), salleAttente, urgence);
-//        urgence.afficherInfosService();
-//        medecin.transferer(urgence.getCreatures().iterator().next(), urgence, psychologie);
-//        urgence.afficherInfosService();
-//        psychologie.afficherInfosService();
-        salleAttente.afficherInfosService();
-
-        //docTest.transferer(salleAttente.getCreatures().get(0),salleAttente, urgence);
-        //docTest.transferer(salleAttente.getCreatures().get(0),salleAttente, urgence);
-        //urgence.afficherInfosService();
-        //docTest.transferer(urgence.getCreatures().get(0),psychologie);
-
-
-        //urgence.afficherInfosService();
-        //psychologie.afficherInfosService();
-        //salleAttente.afficherInfosService();
-
-        //salleAttente.getCreatures().getFirst().tomberMalade(new Maladie());
-
-        //salleAttente.afficherInfosService();
-
+        //medecin.transferer(creature, salleAttente, urgence);
 
     }
 }

@@ -46,6 +46,9 @@ public abstract class Creature extends Bete {
     }
 
     public void semporter(Salle salle){
+        if(salle.getCreatures().isEmpty()){
+            return;
+        }
         Random random = new Random();
         double rnd = random.nextDouble();
         if(rnd < 0.15){
@@ -54,6 +57,9 @@ public abstract class Creature extends Bete {
                 creature = salle.getRandomCreature();
             }
             Maladie maladie = this.getRandomMaladie();
+            if(maladie == null){
+                return;
+            }
             creature.tomberMalade(maladie);
             logger.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNomAbrege());
         }
@@ -69,7 +75,23 @@ public abstract class Creature extends Bete {
         }
     }
 
+    public boolean verifierSante(Salle salle){
+        for(Maladie maladie : this.maladies){
+            if(maladie.estLethale()){
+                trepasser(salle.getCreatures());
+                return true;
+            }
+        }
+        if(this.maladies.size() >= 4){
+            trepasser(salle.getCreatures());
+            return true;
+        }
+        //Rajouter 30% chance trepasser quand il s'emporte
+        return false;
+    }
+
     public void tomberMalade(Maladie maladie){
+        //Si add retourne faux c'est parce que la creature avait déjà cette maladie, on lui ajoute donc un niveau supplémentaire
         if(!this.maladies.add(maladie)){
             for(Maladie maladieAModifier : this.maladies){
                 if(maladieAModifier.equals(maladie)){
@@ -97,11 +119,17 @@ public abstract class Creature extends Bete {
     }
 
     public Maladie getRandomMaladie(){
+        if(this.maladies.isEmpty()){
+            return null;
+        }
         Random random = new Random();
         return (Maladie) this.maladies.toArray()[random.nextInt(this.maladies.size())];
     }
 
     public Maladie getHighLevelMaladie(){
+        if(this.maladies.isEmpty()){
+            return null;
+        }
         Maladie maladieWithHighLevel = this.maladies.iterator().next();
         for(Maladie maladie : this.maladies){
             if(maladie.getNiveauActuel() > maladieWithHighLevel.getNiveauActuel()){
@@ -115,4 +143,16 @@ public abstract class Creature extends Bete {
     public String toString() {
         return "[" + getRace() + "] nom='" + nomComplet + "', sexe='" + sexe + "', âge=" + age + ", moral=" + moral + ", maladie(s) : " + this.maladies;
     }
-} 
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Creature creature = (Creature) o;
+        return Objects.equals(nomComplet, creature.nomComplet) && Objects.equals(taille, creature.taille) && Objects.equals(poids, creature.poids);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(maladies, nbHurlements);
+    }
+}

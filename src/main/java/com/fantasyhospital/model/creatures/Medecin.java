@@ -34,10 +34,14 @@ public class Medecin extends Bete {
     /** Soigne la maladie d'une créature avec le niveau le plus élevé **/
     public void soigner(Creature creature) {
         Maladie maladie = creature.getHighLevelMaladie();
+        if(maladie == null){
+            logger.info("La créature {} n'a pas de maladie",  creature.getNomComplet());
+            return;
+        }
         if(!creature.etreSoigne(maladie)){
             logger.info("La créature ne possédait pas cette maladie");
         } else {
-            logger.info("La maladie {} vient d'être soignée pour la créature {} !", maladie.getNomComplet(),  creature.getNomComplet());
+            logger.info("La maladie {} vient d'être soignée pour {} !", maladie.getNomAbrege(),  creature.getNomComplet());
         }
     }
 

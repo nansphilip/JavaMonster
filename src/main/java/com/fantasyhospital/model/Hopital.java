@@ -1,7 +1,10 @@
 package com.fantasyhospital.model;
 
 import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.salles.servicemedical.ServiceMedical;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.salles.Salle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +12,20 @@ import java.util.List;
 public class Hopital {
     private String nom;
     private final int NB_MAX_SERVICE;
-    private List<ServiceMedical> services = new ArrayList<>();
+    private List<Salle> services = new ArrayList<>();
     private List<Medecin> medecins = new ArrayList<>();
+    private static final Logger logger = LoggerFactory.getLogger(Hopital.class);
 
     public Hopital(String nom, int NB_MAX_SERVICE) {
         this.nom = nom;
         this.NB_MAX_SERVICE = NB_MAX_SERVICE;
     }
 
+    public void afficherServices() {
+        for(Salle salle : this.services) {
+            logger.info("{}", salle);
+        }
+    }
     public void afficherNombreCreatures() { /* ... */ }
 
     public void afficherToutesCreatures() { /* ... */ }
@@ -29,13 +38,23 @@ public class Hopital {
 
     }
 
-    public void ajouterService(ServiceMedical service){
-        services.add(service);
+    public void ajouterService(Salle salle){
+        services.add(salle);
     }
 
     public void simulation() { /* ... */ }
 
     // Getters et setters omis pour la clarté
+    public Salle getSalleOfCreature(Creature creature) {
+        for(Salle salle : services) {
+            for(Creature creatureSalles : salle.getCreatures()) {
+                if(creatureSalles.equals(creature)) {
+                    return salle;
+                }
+            }
+        }
+        return null;
+    }
 
     public String getNom() {
         return nom;
@@ -49,11 +68,11 @@ public class Hopital {
         return NB_MAX_SERVICE;
     }
 
-    public List<ServiceMedical> getServices() {
-        return services;
+    public List<Salle> getServices() {
+        return this.services;
     }
 
-    public void setServices(List<ServiceMedical> services) {
+    public void setServices(List<Salle> services) {
         this.services = services;
     }
 }

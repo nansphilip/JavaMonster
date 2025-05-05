@@ -1,7 +1,12 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
+import com.fantasyhospital.Simulation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Random;
 
 public abstract class Bete {
@@ -17,6 +22,7 @@ public abstract class Bete {
     public static final String[] arrayNomFeminin = {"Germaine", "Georgette", "Yvonne", "Paulette", "Raymonde", "Lucienne", "Andrée", "Marcelle", "Henriette", "Simone", "Denise", "Suzanne", "Renée", "Fernande", "Berthe", "Jeanne", "Marguerite", "Augustine", "Albertine", "Léontine", "Émilienne", "Antoinette", "Clémentine", "Eugénie", "Philomène", "Odette", "Colette", "Huguette", "Pierrette", "Thérèse", "Joséphine", "Amélie", "Irène", "Bertille", "Hortense", "Édith", "Noëlie", "Armande", "Honorine", "Cunégonde"};
     public static final ArrayList<String> nomsFeminins = new ArrayList<>(Arrays.asList(arrayNomFeminin));
     public static Random random = new Random();
+    private static final Logger logger = LoggerFactory.getLogger(Bete.class);
 
     public Bete(String nomComplet, String sexe, int poids, int taille, int age, int moral) {
         this.nomComplet = nomComplet;
@@ -49,9 +55,9 @@ public abstract class Bete {
 
     public abstract void attendre();
 
-    public void trepasser(){
+    public void trepasser(LinkedHashSet<Creature> creatures) {
         //mourir
-        System.out.println("je suis mort");
+        logger.info("La créature {} se meurt.", this.nomComplet);
     }
 
     public String getNomComplet() {
