@@ -7,8 +7,8 @@ import java.util.HashSet;
 
 public abstract class ClientVIP extends Creature {
 
-    public ClientVIP(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nomComplet, sexe, poids, taille, age, moral, maladies);
+    public ClientVIP( HashSet<Maladie> maladies) {
+        super( maladies);
     }
 
     public void attendre(){

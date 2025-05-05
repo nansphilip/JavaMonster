@@ -11,16 +11,16 @@ import java.util.List;
 public class HommeBete extends HabitantTriage implements Contaminant {
 
     public HommeBete() {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+        super(null);
     }
 
     public HommeBete(HashSet<Maladie> maladies) {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+        super(maladies);
     }
-
-    public HommeBete(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nom, sexe, poids, taille, age, moral, maladies);
-    }
+//
+//    public HommeBete(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
+//        super(nom, sexe, poids, taille, age, moral, maladies);
+//    }
 
     public void trepasser(Creature creature){
         contaminer(creature);

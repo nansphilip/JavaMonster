@@ -9,14 +9,14 @@ import java.util.List;
 public class Reptilien extends ClientVIP {
 
     public Reptilien() {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), null);
+        super(null);
     }
 
     public Reptilien(HashSet<Maladie> maladies) {
-        super(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral(), maladies);
+        super(maladies);
     }
 
-    public Reptilien(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-        super(nomComplet, sexe, poids, taille, age, moral, maladies);
-    }
+//    public Reptilien(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
+//        super(nomComplet, sexe, poids, taille, age, moral, maladies);
+//    }
 }
