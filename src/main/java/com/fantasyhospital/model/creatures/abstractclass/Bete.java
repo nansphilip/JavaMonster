@@ -20,8 +20,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
     protected int age;
     protected int moral;
 
+
     public Bete() {
-        this(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral());
+        String sexeGenere = genererSexeAleatoire();
+        this.nomComplet = genererNomAleatoire(sexeGenere);
+        this.sexe = sexeGenere;
+        this.poids = genererPoids();
+        this.taille = genererTaille();
+        this.age = genererAge();
+        this.moral = genererMoral();
     }
 
     public Bete(String nomComplet, String sexe, int poids, int taille, int age, int moral) {
