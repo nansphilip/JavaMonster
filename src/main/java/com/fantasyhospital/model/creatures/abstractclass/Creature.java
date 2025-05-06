@@ -3,7 +3,7 @@ package com.fantasyhospital.model.creatures.abstractclass;
 import java.util.HashSet;
 import com.fantasyhospital.salles.Salle;
 
-import static com.fantasyhospital.model.creatures.abstractclass.Bete.log;
+//import static com.fantasyhospital.model.creatures.abstractclass.Bete.log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -52,24 +52,25 @@ public abstract class Creature extends Bete {
                 return;
             }
             creature.tomberMalade(maladie);
-            logger.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNomAbrege());
+            logger.info("La créature {} s'emporte et contamine {} en lui transmettant la maladie {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
         }
     }
 
     public void verifierMoral(Salle salle){
+        if(this.nbHurlements > 2){
+            semporter(salle);
+            return;
+        }
         if(this.moral == 0){
             hurler();
             this.nbHurlements++;
-        }
-        if(this.nbHurlements > 2){
-            semporter(salle);
         }
     }
 
     public boolean verifierSante(Salle salle){
         for(Maladie maladie : this.maladies){
             if(maladie.estLethale()){
-                logger.info("La maladie {} de {} était à son apogée.", maladie.getNomAbrege(), this.nomComplet);
+                logger.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
                 trepasser(salle.getCreatures());
                 return true;
             }
@@ -96,8 +97,6 @@ public abstract class Creature extends Bete {
 
     public boolean etreSoigne(Maladie maladie){
         return this.maladies.remove(maladie);
-    public boolean etreSoigne(Maladie maladie){
-        return this.maladies.remove(maladie);
     }
 
     // Getters et setters omis pour la clarté
@@ -115,6 +114,7 @@ public abstract class Creature extends Bete {
 
     public Maladie getRandomMaladie(){
         if(this.maladies.isEmpty()){
+            logger.error("La créature {} n'a aucune maladie.", this.nomComplet);
             return null;
         }
         Random random = new Random();
@@ -123,6 +123,7 @@ public abstract class Creature extends Bete {
 
     public Maladie getHighLevelMaladie(){
         if(this.maladies.isEmpty()){
+            logger.error("La créature {} n'a aucune maladie.", this.nomComplet);
             return null;
         }
         Maladie maladieWithHighLevel = this.maladies.iterator().next();

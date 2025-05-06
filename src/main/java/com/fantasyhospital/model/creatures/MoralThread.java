@@ -22,7 +22,6 @@ public class MoralThread implements Runnable {
     public void run() {
         //Checker le moral
         while(hopital.getSalleOfCreature(creature) != null){
-            //logger.info("creature {} moral : {} ; salle : {}", this.creature.getNomComplet(), this.creature.getMoral(), this.hopital.getSalleOfCreature(creature).getNom());
             this.creature.verifierMoral(this.hopital.getSalleOfCreature(creature));
             if(this.creature.verifierSante(this.hopital.getSalleOfCreature(creature))){
                 this.hopital.getSalleOfCreature(creature).enleverCreature(this.creature);
@@ -35,6 +34,5 @@ public class MoralThread implements Runnable {
                 break;
             }
         }
-        logger.info("fin du while");
     }
 }

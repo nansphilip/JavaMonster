@@ -4,6 +4,7 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
@@ -37,8 +38,6 @@ public class Salle {
 
     public boolean enleverCreature(Creature creature){
         return this.creatures.remove(creature);
-    public boolean enleverCreature(Creature creature){
-        return this.creatures.remove(creature);
     }
 
     public void afficherInfosService(){
@@ -68,8 +67,6 @@ public class Salle {
     public CopyOnWriteArrayList<Creature> getCreatures() {
         return creatures;
     }
-
-    
 
     public Creature getCreatureByName(String creatureName){
         for(Creature creature : creatures){
