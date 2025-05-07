@@ -1,28 +1,21 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
-import java.util.HashSet;
-import com.fantasyhospital.salles.Salle;
-
-//import static com.fantasyhospital.model.creatures.abstractclass.Bete.log;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.*;
-import lombok.extern.slf4j.Slf4j;
-
-
+import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.*;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class Creature extends Bete {
-    protected HashSet<Maladie> maladies = new HashSet<>();
-    public static Random random = new Random();
-    private static final Logger logger = LoggerFactory.getLogger(Creature.class);
+    @Getter @Setter protected HashSet<Maladie> maladies = new HashSet<>();
+    protected static final Random RANDOM = new Random();
     private int nbHurlements;
 
     public Creature( HashSet<Maladie> maladies) {
@@ -34,7 +27,6 @@ public abstract class Creature extends Bete {
     public void hurler(){
         log.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.nomComplet);
     }
-
 
     public void semporter(Salle salle){
         if(salle.getCreatures().isEmpty()){
@@ -52,7 +44,7 @@ public abstract class Creature extends Bete {
                 return;
             }
             creature.tomberMalade(maladie);
-            logger.info("La créature {} s'emporte et contamine {} en lui transmettant la maladie {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
+            log.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
         }
     }
 
@@ -70,13 +62,13 @@ public abstract class Creature extends Bete {
     public boolean verifierSante(Salle salle){
         for(Maladie maladie : this.maladies){
             if(maladie.estLethale()){
-                logger.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
+                log.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
                 trepasser(salle.getCreatures());
                 return true;
             }
         }
         if(this.maladies.size() >= 4){
-            logger.info("{} a contracté trop de maladies.", this.nomComplet);
+            log.info("{} a contracté trop de maladies.", this.nomComplet);
             trepasser(salle.getCreatures());
             return true;
         }
@@ -114,7 +106,7 @@ public abstract class Creature extends Bete {
 
     public Maladie getRandomMaladie(){
         if(this.maladies.isEmpty()){
-            logger.error("La créature {} n'a aucune maladie.", this.nomComplet);
+            log.error("La créature {} n'a aucune maladie.", this.nomComplet);
             return null;
         }
         Random random = new Random();
@@ -123,7 +115,7 @@ public abstract class Creature extends Bete {
 
     public Maladie getHighLevelMaladie(){
         if(this.maladies.isEmpty()){
-            logger.error("La créature {} n'a aucune maladie.", this.nomComplet);
+            log.error("La créature {} n'a aucune maladie.", this.nomComplet);
             return null;
         }
         Maladie maladieWithHighLevel = this.maladies.iterator().next();

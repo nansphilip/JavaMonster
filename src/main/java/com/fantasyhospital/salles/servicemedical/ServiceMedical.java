@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ServiceMedical extends Salle  {
-    protected List<Medecin> medecins = new ArrayList<>();
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter @Getter public class ServiceMedical extends Salle  {
+	// Getters et setters omis pour la clarté
+	protected List<Medecin> medecins = new ArrayList<>();
     protected String budget; // inexistant, médiocre, insuffisant, faible
 
     public ServiceMedical(String nom, double superficie, int NB_MAX_CREATURE, String budget) {
@@ -54,24 +58,7 @@ public class ServiceMedical extends Salle  {
 
     }
 
-    // Getters et setters omis pour la clarté
-    public List<Medecin> getMedecins() {
-        return medecins;
-    }
-
-    public void setMedecins(List<Medecin> medecins) {
-        this.medecins = medecins;
-    }
-
-    public String getBudget() {
-        return budget;
-    }
-
-    public void setBudget(String budget) {
-        this.budget = budget;
-    }
-
-    @Override
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n--- Service : ").append(nom).append(" ---\n");

@@ -1,21 +1,19 @@
 package com.fantasyhospital.model;
 
+import com.fantasyhospital.model.creatures.Medecin;
+import com.fantasyhospital.salles.servicemedical.ServiceMedical;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.salles.Salle;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Hopital {
-    private String nom;
-    private final int NB_MAX_SERVICE;
-    private List<Salle> services = new ArrayList<>();
+    @Setter @Getter private String nom;
+    @Getter private final int NB_MAX_SERVICE;
+    @Setter @Getter private List<ServiceMedical> services = new ArrayList<>();
     private List<Medecin> medecins = new ArrayList<>();
-    private static final Logger logger = LoggerFactory.getLogger(Hopital.class);
 
     public Hopital(String nom, int NB_MAX_SERVICE) {
         this.nom = nom;
@@ -24,7 +22,7 @@ public class Hopital {
 
     public void afficherServices() {
         for(Salle salle : this.services) {
-            logger.info("{}", salle);
+            log.info("{}", salle);
         }
     }
     public void afficherNombreCreatures() { /* ... */ }
@@ -32,7 +30,7 @@ public class Hopital {
     public void afficherToutesCreatures() {
         for(Salle salle : this.services) {
             for(Creature creature : salle.getCreatures()){
-                logger.info("{}", creature);
+                log.info("{}", creature);
             }
         }
     }
@@ -75,11 +73,11 @@ public class Hopital {
         return NB_MAX_SERVICE;
     }
 
-    public List<Salle> getServices() {
-        return this.services;
+    public List<ServiceMedical> getServices() {
+        return services;
     }
 
-    public void setServices(List<Salle> services) {
+    public void setServices(List<ServiceMedical> services) {
         this.services = services;
     }
 }

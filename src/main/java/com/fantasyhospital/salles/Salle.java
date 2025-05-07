@@ -3,21 +3,25 @@ package com.fantasyhospital.salles;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Getter @Slf4j
 public class Salle {
 
-    protected String nom;
-    protected double superficie;
+    @Setter protected String nom;
+    @Setter protected double superficie;
     protected final int NB_MAX_CREATURE;
     protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
@@ -46,14 +50,6 @@ public class Salle {
 
     public void afficherInfosCreatures(){
 
-    }
-
-	public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-	public void setSuperficie(double superficie) {
-        this.superficie = superficie;
     }
 
 	public Creature getFirstCreature() {
