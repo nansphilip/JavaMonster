@@ -24,6 +24,7 @@ public abstract class Creature extends Bete {
     public static Random random = new Random();
     private static final Logger logger = LoggerFactory.getLogger(Creature.class);
     private int nbHurlements;
+    private final Object monitor =  new Object();
 
     public Creature( HashSet<Maladie> maladies) {
         super();
@@ -68,18 +69,24 @@ public abstract class Creature extends Bete {
     }
 
     public boolean verifierSante(Salle salle){
-        for(Maladie maladie : this.maladies){
-            if(maladie.estLethale()){
-                logger.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
-                trepasser(salle.getCreatures());
+        synchronized (this.monitor){
+            if(this.maladies.isEmpty()){
+                return false;
+            }
+            for(Maladie maladie : this.maladies){
+                if(maladie.estLethale()){
+                    logger.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
+                    trepasser(salle);
+                    return true;
+                }
+            }
+            if(this.maladies.size() >= 4){
+                logger.info("{} a contracté trop de maladies.", this.nomComplet);
+                trepasser(salle);
                 return true;
             }
         }
-        if(this.maladies.size() >= 4){
-            logger.info("{} a contracté trop de maladies.", this.nomComplet);
-            trepasser(salle.getCreatures());
-            return true;
-        }
+
         //Rajouter 30% chance trepasser quand il s'emporte
         return false;
     }

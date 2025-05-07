@@ -1,6 +1,7 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
 import com.fantasyhospital.Simulation;
+import com.fantasyhospital.salles.Salle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
     public abstract void attendre();
 
-    public void trepasser(CopyOnWriteArrayList<Creature> creatures) {
+    public void trepasser(Salle salle) {
         //mourir
         logger.info("La créature {} se meurt.", this.nomComplet);
     }

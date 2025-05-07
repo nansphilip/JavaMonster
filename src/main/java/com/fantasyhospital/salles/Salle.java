@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.fantasyhospital.model.creatures.abstractclass.Creature.random;
+
 @Getter @Slf4j
 public class Salle {
 
@@ -80,6 +82,28 @@ public class Salle {
     public Creature getRandomCreature(){
         Random random = new Random();
         return (Creature) this.creatures.toArray()[random.nextInt(this.creatures.size())];
+    }
+
+    public Creature getRandomCreatureWithoutThisOne(Creature creature){
+        CopyOnWriteArrayList<Creature> creaturesCopy = new CopyOnWriteArrayList<>(creatures);
+        creaturesCopy.remove(creature);
+        return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
+    }
+
+    public Creature getRandomCreatureWithoutThem(List<Creature> creaturesToExclude){
+        CopyOnWriteArrayList<Creature> creaturesCopy = new CopyOnWriteArrayList<>(this.creatures);
+        for(Creature creature : creaturesToExclude){
+            creaturesCopy.remove(creature);
+        }
+        log.info("getrandomCreatureWithoutThem");
+        for(Creature creature : creaturesCopy){
+            log.info("creature : {}", creature);
+        }
+        //creaturesCopy.removeAll(creatures);
+        if(creaturesCopy.isEmpty()){
+            return null;
+        }
+        return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
     }
 
     public void setCreatures(CopyOnWriteArrayList<Creature> creatures) {

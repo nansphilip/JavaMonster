@@ -4,9 +4,11 @@ import com.fantasyhospital.model.creatures.HabitantTriage;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Contaminant;
 import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.salles.Salle;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HommeBete extends HabitantTriage implements Contaminant {
 
@@ -22,7 +24,9 @@ public class HommeBete extends HabitantTriage implements Contaminant {
 //        super(nom, sexe, poids, taille, age, moral, maladies);
 //    }
 
-    public void trepasser(Creature creature){
-        contaminer(creature);
+    @Override
+    public void trepasser(Salle salle) {
+        super.trepasser(salle);
+        contaminer(this, salle);
     }
 }

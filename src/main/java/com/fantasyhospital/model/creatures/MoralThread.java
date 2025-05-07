@@ -24,13 +24,13 @@ public class MoralThread implements Runnable {
         while(hopital.getSalleOfCreature(creature) != null){
             this.creature.verifierMoral(this.hopital.getSalleOfCreature(creature));
             if(this.creature.verifierSante(this.hopital.getSalleOfCreature(creature))){
-                this.hopital.getSalleOfCreature(creature).enleverCreature(this.creature);
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(2000);
+                    this.hopital.getSalleOfCreature(creature).enleverCreature(this.creature);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                this.hopital.afficherToutesCreatures();
+                //this.hopital.afficherToutesCreatures();
                 break;
             }
         }
