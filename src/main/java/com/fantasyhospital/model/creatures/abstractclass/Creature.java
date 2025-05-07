@@ -34,6 +34,7 @@ public abstract class Creature extends Bete {
      * Nombre de hurlements effectués par la créature (lié au moral)
      */
     private int nbHurlements;
+    private final Object monitor =  new Object();
 
     /**
      * Construit une créature avec un ensemble de maladies initial.
@@ -101,22 +102,27 @@ public abstract class Creature extends Bete {
      *
      * @return true si la créature doit quitter la salle (décès), false sinon
      */
-    public boolean verifierSante(Salle salle) {
-        for (Maladie maladie : this.maladies) {
-            if (maladie.estLethale()) {
-                log.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
-                trepasser(salle.getCreatures());
+    public boolean verifierSante(Salle salle){
+        synchronized (this.monitor) {
+            if (this.maladies.isEmpty()) {
+                return false;
+            }
+            for (Maladie maladie : this.maladies) {
+                if (maladie.estLethale()) {
+                    log.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
+                    trepasser(salle);
+                    return true;
+                }
+            }
+            if (this.maladies.size() >= 4) {
+                log.info("{} a contracté trop de maladies.", this.nomComplet);
+                trepasser(salle);
                 return true;
             }
+
+            // TODO: Rajouter 30% chance trepasser quand il s'emporte
+            return false;
         }
-        if (this.maladies.size() >= 4) {
-            log.info("{} a contracté trop de maladies.", this.nomComplet);
-            trepasser(salle.getCreatures());
-            return true;
-        }
-        // TODO: Rajouter 30% chance trepasser quand il s'emporte
-        return false;
-    }
 
     /**
      * Fait contracter une maladie à la créature (ou augmente son niveau si déjà

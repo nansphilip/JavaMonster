@@ -1,11 +1,13 @@
 package com.fantasyhospital;
 
+import java.util.HashSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.MoralThread;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.creatures.races.Elfe;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
@@ -39,6 +41,9 @@ public class Simulation {
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
         }
+        HashSet<Maladie> maladies = new HashSet<Maladie>();
+        maladies.add(new Maladie());
+        Elfe elfe = new Elfe(maladies);
 
         // Ajout des créatures à la salle d'attente
         salleAttente.setCreatures(creatures);
