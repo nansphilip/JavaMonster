@@ -7,7 +7,6 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genere
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererMoral;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererNomAleatoire;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererPoids;
-import java.util.LinkedHashSet;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererSexeAleatoire;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererTaille;
 import java.util.concurrent.CopyOnWriteArrayList;

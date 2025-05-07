@@ -1,17 +1,9 @@
 package com.fantasyhospital.salles;
 
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
-
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +15,7 @@ public class Salle {
     @Setter protected String nom;
     @Setter protected double superficie;
     protected final int NB_MAX_CREATURE;
-    protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
+    @Setter @Getter protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
     public Salle(String nom, double superficie, int NB_MAX_CREATURE) {
         this.nom = nom;
@@ -60,11 +52,7 @@ public class Salle {
         return (Creature) creatures.toArray()[ creatures.size()-1 ];
     }
 
-    public CopyOnWriteArrayList<Creature> getCreatures() {
-        return creatures;
-    }
-
-    public Creature getCreatureByName(String creatureName){
+	public Creature getCreatureByName(String creatureName){
         for(Creature creature : creatures){
             if(creature.getNomComplet().equals(creatureName)){
                 return creature;
@@ -78,11 +66,7 @@ public class Salle {
         return (Creature) this.creatures.toArray()[random.nextInt(this.creatures.size())];
     }
 
-    public void setCreatures(CopyOnWriteArrayList<Creature> creatures) {
-        this.creatures = creatures;
-    }
-
-    @Override
+	@Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n--- Salle : ").append(nom).append(" ---\n");

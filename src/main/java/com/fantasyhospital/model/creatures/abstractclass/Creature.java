@@ -1,12 +1,11 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
-import com.fantasyhospital.model.creatures.Medecin;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Random;
+
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class Creature extends Bete {
-    @Getter @Setter protected HashSet<Maladie> maladies = new HashSet<>();
+    @Setter @Getter protected HashSet<Maladie> maladies = new HashSet<>();
     protected static final Random RANDOM = new Random();
     private int nbHurlements;
 
@@ -96,15 +95,7 @@ public abstract class Creature extends Bete {
         return this.getClass().getSimpleName();
     }
 
-    public HashSet<Maladie> getMaladies() {
-        return maladies;
-    }
-
-    public void setMaladies(HashSet<Maladie> maladies) {
-        this.maladies = maladies;
-    }
-
-    public Maladie getRandomMaladie(){
+	public Maladie getRandomMaladie(){
         if(this.maladies.isEmpty()){
             log.error("La créature {} n'a aucune maladie.", this.nomComplet);
             return null;

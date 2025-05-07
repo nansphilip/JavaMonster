@@ -1,12 +1,12 @@
 package com.fantasyhospital.salles.servicemedical;
 
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.salles.Salle;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import com.fantasyhospital.model.creatures.Medecin;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.salles.Salle;
 
 import lombok.Getter;
 import lombok.Setter;

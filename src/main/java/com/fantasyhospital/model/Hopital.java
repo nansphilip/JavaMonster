@@ -1,18 +1,21 @@
 package com.fantasyhospital.model;
 
-import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.salles.servicemedical.ServiceMedical;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fantasyhospital.model.creatures.Medecin;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.salles.Salle;
+
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Hopital {
     @Setter @Getter private String nom;
     @Getter private final int NB_MAX_SERVICE;
-    @Setter @Getter private List<ServiceMedical> services = new ArrayList<>();
+    @Setter @Getter  private List<Salle> services = new ArrayList<Salle>();
     private List<Medecin> medecins = new ArrayList<>();
 
     public Hopital(String nom, int NB_MAX_SERVICE) {
@@ -61,23 +64,4 @@ public class Hopital {
         return null;
     }
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public int getNB_MAX_SERVICE() {
-        return NB_MAX_SERVICE;
-    }
-
-    public List<ServiceMedical> getServices() {
-        return services;
-    }
-
-    public void setServices(List<ServiceMedical> services) {
-        this.services = services;
-    }
 }
