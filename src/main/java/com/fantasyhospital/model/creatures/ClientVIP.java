@@ -1,9 +1,9 @@
 package com.fantasyhospital.model.creatures;
 
+import java.util.HashSet;
+
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
-
-import java.util.HashSet;
 
 public abstract class ClientVIP extends Creature {
 

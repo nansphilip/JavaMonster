@@ -2,14 +2,17 @@ package com.fantasyhospital.model.maladie;
 
 import com.fantasyhospital.MaladieType;
 
+import lombok.Getter;
+import lombok.Setter;
 import static com.fantasyhospital.model.maladie.MaladieUtils.getRandomType;
 import static com.fantasyhospital.model.maladie.MaladieUtils.genererNiveauMaxAleatoire;
 
 
 public class Maladie {
     protected MaladieType type;
-    protected final int NIVEAU_MAX;
-    protected int niveauActuel;
+	// Getters et setters omis pour la clarté
+	@Getter protected final int NIVEAU_MAX;
+    @Setter @Getter protected int niveauActuel;
 
     public Maladie(){
         this.type = getRandomType();
@@ -58,24 +61,11 @@ public class Maladie {
         return niveauActuel == NIVEAU_MAX;
     }
 
-    // Getters et setters omis pour la clarté
-    public int getNIVEAU_MAX() {
-        return NIVEAU_MAX;
-    }
-
-//    public void setNIVEAU_MAX(int NIVEAU_MAX) {
+	//    public void setNIVEAU_MAX(int NIVEAU_MAX) {
 //        this.NIVEAU_MAX = NIVEAU_MAX;
 //    }
 
-    public int getNiveauActuel() {
-        return niveauActuel;
-    }
-
-    public void setNiveauActuel(int niveauActuel) {
-        this.niveauActuel = niveauActuel;
-    }
-
-    @Override
+	@Override
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
