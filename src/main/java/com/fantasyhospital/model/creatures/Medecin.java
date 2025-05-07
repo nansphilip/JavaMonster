@@ -5,11 +5,12 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
+
+import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class Medecin extends Bete {
 	//Getters and setters
 	protected String race; //type du médecin, à voir si on créé une classe Race par exemple
     protected ServiceMedical serviceMedical;
+    private static final Logger logger = LoggerFactory.getLogger(Medecin.class);
 
     public Medecin(String nom, String sexe, int poids, int taille, int age, int moral, String race, ServiceMedical serviceMedical) {
         super(nom, sexe, poids, taille, age, moral);
@@ -39,10 +41,14 @@ public class Medecin extends Bete {
     /** Soigne la maladie d'une créature avec le niveau le plus élevé **/
     public void soigner(Creature creature) {
         Maladie maladie = creature.getHighLevelMaladie();
+        if(maladie == null){
+            logger.error("[medecin][soigner()] La créature {} n'a pas de maladie",  creature.getNomComplet());
+            return;
+        }
         if(!creature.etreSoigne(maladie)){
-            log.info("La créature ne possédait pas cette maladie");
+            logger.error("[medecin][soigner()] La créature {} ne possédait pas la maladie {}", this.nomComplet, maladie.getNom());
         } else {
-            log.info("La maladie {} vient d'être soignée pour la créature {} !", maladie.getNomComplet(),  creature.getNomComplet());
+            logger.info("La maladie {} vient d'être soignée pour {} !", maladie.getNom(),  creature.getNomComplet());
         }
     }
 
@@ -50,17 +56,19 @@ public class Medecin extends Bete {
 
     public boolean transferer(Creature creature,Salle salleFrom, Salle salleTo) {
         //Vérification que la creature est bien dans la salle
-        LinkedHashSet<Creature> creaturesSalle = salleFrom.getCreatures();
+        CopyOnWriteArrayList<Creature> creaturesSalle = salleFrom.getCreatures();
         if(!creaturesSalle.contains(creature)) {
-            log.info("La créature à transférer n'est pas présente dans la salle d'origine.");
+            logger.error("[medecin][transferer()] La créature {} à transférer n'est pas présente dans la salle {}.",  creature.getNomComplet(), salleFrom.getNom());
             return false;
         }
-        LinkedHashSet<Creature> creaturesDest = salleTo.getCreatures();
+        CopyOnWriteArrayList<Creature> creaturesDest = salleTo.getCreatures();
         Iterator<Creature> iterator = creaturesSalle.iterator();
         if(!creaturesDest.isEmpty()) {
+            Creature c1 = creaturesDest.get(0);
             String typeServiceDestination = iterator.next().getClass().getSimpleName();
-            if(!creature.getClass().getSimpleName().equals(typeServiceDestination)) {
-                log.info("Transfert impossible, le service de destination n'est pas du bon type.");
+            typeServiceDestination = c1.getRace();
+            if(!creature.getRace().equals(typeServiceDestination)) {
+                logger.error("[medecin][transferer()] Transfert impossible, le type du service de destination ({}) n'est pas du type de la créature ({}).", typeServiceDestination, creature.getClass().getSimpleName());
                 return false;
             }
         }
@@ -70,10 +78,19 @@ public class Medecin extends Bete {
     public boolean verifierMoral(){
         if(this.moral==0) {
             enFinir();
-            log.info("Le médecin {} en a fini.", this);
+            logger.info("Le médecin {} en a fini.", this);
             return false;
         }
         return true;
+    }
+
+    //Getters and setters
+    public String getRace() {
+        return race;
+    }
+
+    public void setRace(String race) {
+        this.race = race;
     }
 
     public void depression(){

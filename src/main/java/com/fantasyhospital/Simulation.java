@@ -1,56 +1,81 @@
 package com.fantasyhospital;
 
-import java.util.LinkedHashSet;
-
+import com.fantasyhospital.model.Hopital;
 import com.fantasyhospital.model.creatures.Medecin;
+import com.fantasyhospital.model.creatures.MoralThread;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
-
+import java.util.concurrent.CopyOnWriteArrayList;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class Simulation {
 
-    public static void main(String[] args) {
-        LinkedHashSet<Creature> creatures = new LinkedHashSet<>();
+    private static final Logger logger = LoggerFactory.getLogger(Simulation.class);
 
+    public static void main(String[] args) throws InterruptedException {
+        CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
+
+        Hopital hopital = new Hopital("Marseille", 10);
         ServiceMedical urgence = new ServiceMedical("Urgence", 50.0, 10, "Mediocre");
 //        ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
         Salle salleAttente = new Salle("Salle d'attente", 70, 100);
 
         Medecin medecin = new Medecin("Dr. Zoidberg", "H", 70, 175, 45, 100, "Lycanthrope", urgence);
+        urgence.ajouterMedecin(medecin);
 
         for (int i = 0; i < 5; i++) {
             Creature creature = Game.randomCreature();
             creatures.add(creature);
+            logger.info("Créature générée : {}", creature);
+        }
 
-//            if (creature != null && creature.getMoral() > 50) {
-//                urgence.ajouterCreature(creature);
-//            }
-            //salleAttente.ajouterCreature(creature);
-        }
-        for(Creature creature : creatures){
-            log.info("Créature générée : {}", creature);
-        }
         salleAttente.setCreatures(creatures);
-
-        //salleAttente.ajouterCreature(creatures.get(1));
-        urgence.ajouterMedecin(medecin);
-        Creature creature = salleAttente.getRandomCreature();
-        creature.setMoral(0);
-        for(int i = 0; i < 50; i++){
-            creature.verifierMoral(salleAttente);
+        hopital.ajouterService(salleAttente);
+        hopital.ajouterService(urgence);
+        for(Creature creature : creatures) {
+            MoralThread action = new MoralThread(creature, hopital);
+            Thread thread = new Thread(action);
+            thread.start();
         }
-
-//        salleAttente.afficherInfosService();
-
-//        medecin.transferer(salleAttente.getCreatures().iterator().next(), salleAttente, urgence);
-//        urgence.afficherInfosService();
-//        medecin.transferer(urgence.getCreatures().iterator().next(), urgence, psychologie);
-//        urgence.afficherInfosService();
-//        psychologie.afficherInfosService();
-        urgence.ajouterMedecin(medecin);
+        Creature rndCreature = salleAttente.getRandomCreature();
+        while(rndCreature.getMaladies().size() < 4) {
+            rndCreature.tomberMalade(new Maladie());
+        }
+        Thread.sleep(1000);
+        rndCreature = salleAttente.getRandomCreature();
+        rndCreature.getHighLevelMaladie().setNiveauActuel(rndCreature.getHighLevelMaladie().getNIVEAU_MAX());
+        Thread.sleep(1000);
+        rndCreature = salleAttente.getRandomCreature();
+        rndCreature.getHighLevelMaladie().setNiveauActuel(rndCreature.getHighLevelMaladie().getNIVEAU_MAX());
+        rndCreature = salleAttente.getRandomCreature();
+        medecin.transferer(rndCreature, salleAttente, urgence);
+        rndCreature = salleAttente.getRandomCreature();
+        medecin.transferer(rndCreature, salleAttente, urgence);
+        urgence.afficherInfosService();
 
     }
+
+//        Creature creature = salleAttente.getFirstCreature();
+//        Creature c2 =  salleAttente.getLastCreature();
+//        MoralThread threadMoral = new MoralThread(creature, hopital);
+//        MoralThread threadMoral2 = new MoralThread(c2, hopital);
+//        Thread thread = new Thread(threadMoral);
+//        Thread thread2 = new Thread(threadMoral2);
+//        thread.start();
+//        thread2.start();
+//
+//        //Test 4 maladies
+//        //Thread.sleep(1000);
+//        while(creature.getMaladies().size() <= 4) {
+//            creature.tomberMalade(new Maladie());
+//        }
+//        Thread.sleep(1000);
+//        //c2.getHighLevelMaladie().setNiveauActuel(c2.getHighLevelMaladie().getNIVEAU_MAX());
+//        //salleAttente.enleverCreature(c2);
+//        medecin.transferer(c2, salleAttente, urgence);
 }

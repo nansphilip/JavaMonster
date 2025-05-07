@@ -1,12 +1,18 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
+import com.fantasyhospital.Simulation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import lombok.extern.slf4j.Slf4j;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererAge;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererMoral;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererNomAleatoire;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererPoids;
+import java.util.LinkedHashSet;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererSexeAleatoire;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererTaille;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j public abstract class Bete {
 
@@ -16,6 +22,8 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genere
     protected int taille;
     protected int age;
     protected int moral;
+    private static final Logger logger = LoggerFactory.getLogger(Bete.class);
+
 
     public Bete() {
         this(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral());
@@ -32,9 +40,9 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genere
 
     public abstract void attendre();
 
-    public void trepasser(){
+    public void trepasser(CopyOnWriteArrayList<Creature> creatures) {
         //mourir
-        log.info("je suis mort");
+        logger.info("La créature {} se meurt.", this.nomComplet);
     }
 
     public String getNomComplet() {
