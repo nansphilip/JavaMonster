@@ -1,5 +1,6 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
+import com.fantasyhospital.salles.Salle;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
     protected int age;
     protected int moral;
 
+
     public Bete() {
         this(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral());
     }
@@ -35,7 +37,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
     public abstract void attendre();
 
-    public void trepasser(CopyOnWriteArrayList<Creature> creatures) {
+    public void trepasser(Salle salle) {
         //mourir
         log.info("La créature {} se meurt.", this.nomComplet);
     }

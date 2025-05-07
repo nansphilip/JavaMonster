@@ -1,21 +1,27 @@
 package com.fantasyhospital.salles;
 
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
+import static com.fantasyhospital.model.creatures.abstractclass.Creature.random;
 
 @Getter @Slf4j
 public class Salle {
 
-    @Setter protected String nom;
-    @Setter protected double superficie;
+    protected String nom;
+    protected double superficie;
     protected final int NB_MAX_CREATURE;
-    @Setter @Getter protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
+    protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
     public Salle(String nom, double superficie, int NB_MAX_CREATURE) {
         this.nom = nom;
@@ -44,6 +50,14 @@ public class Salle {
 
     }
 
+	public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+	public void setSuperficie(double superficie) {
+        this.superficie = superficie;
+    }
+
 	public Creature getFirstCreature() {
         return creatures.iterator().next();
     }
@@ -52,7 +66,11 @@ public class Salle {
         return (Creature) creatures.toArray()[ creatures.size()-1 ];
     }
 
-	public Creature getCreatureByName(String creatureName){
+    public CopyOnWriteArrayList<Creature> getCreatures() {
+        return creatures;
+    }
+
+    public Creature getCreatureByName(String creatureName){
         for(Creature creature : creatures){
             if(creature.getNomComplet().equals(creatureName)){
                 return creature;
@@ -66,7 +84,33 @@ public class Salle {
         return (Creature) this.creatures.toArray()[random.nextInt(this.creatures.size())];
     }
 
-	@Override
+    public Creature getRandomCreatureWithoutThisOne(Creature creature){
+        CopyOnWriteArrayList<Creature> creaturesCopy = new CopyOnWriteArrayList<>(creatures);
+        creaturesCopy.remove(creature);
+        return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
+    }
+
+    public Creature getRandomCreatureWithoutThem(List<Creature> creaturesToExclude){
+        CopyOnWriteArrayList<Creature> creaturesCopy = new CopyOnWriteArrayList<>(this.creatures);
+        for(Creature creature : creaturesToExclude){
+            creaturesCopy.remove(creature);
+        }
+        log.info("getrandomCreatureWithoutThem");
+        for(Creature creature : creaturesCopy){
+            log.info("creature : {}", creature);
+        }
+        //creaturesCopy.removeAll(creatures);
+        if(creaturesCopy.isEmpty()){
+            return null;
+        }
+        return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
+    }
+
+    public void setCreatures(CopyOnWriteArrayList<Creature> creatures) {
+        this.creatures = creatures;
+    }
+
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n--- Salle : ").append(nom).append(" ---\n");

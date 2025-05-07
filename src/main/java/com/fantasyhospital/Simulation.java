@@ -1,14 +1,12 @@
 package com.fantasyhospital;
 
+import java.util.HashSet;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fantasyhospital.model.Hopital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.MoralThread;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.creatures.races.Elfe;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
@@ -36,6 +34,9 @@ public class Simulation {
             creatures.add(creature);
             logger.info("Créature générée : {}", creature);
         }
+        HashSet<Maladie> maladies = new HashSet<Maladie>();
+        maladies.add(new Maladie());
+        Elfe elfe = new Elfe(maladies);
 
         salleAttente.setCreatures(creatures);
         hopital.ajouterService(salleAttente);
@@ -46,20 +47,22 @@ public class Simulation {
             thread.start();
         }
         Creature rndCreature = salleAttente.getRandomCreature();
-        while(rndCreature.getMaladies().size() < 4) {
-            rndCreature.tomberMalade(new Maladie());
-        }
+//        while(rndCreature.getMaladies().size() < 4) {
+//            rndCreature.tomberMalade(new Maladie());
+//        }
         Thread.sleep(1000);
         rndCreature = salleAttente.getRandomCreature();
         rndCreature.getHighLevelMaladie().setNiveauActuel(rndCreature.getHighLevelMaladie().getNIVEAU_MAX());
-        Thread.sleep(1000);
-        rndCreature = salleAttente.getRandomCreature();
-        rndCreature.getHighLevelMaladie().setNiveauActuel(rndCreature.getHighLevelMaladie().getNIVEAU_MAX());
-        rndCreature = salleAttente.getRandomCreature();
-        medecin.transferer(rndCreature, salleAttente, urgence);
-        rndCreature = salleAttente.getRandomCreature();
-        medecin.transferer(rndCreature, salleAttente, urgence);
-        urgence.afficherInfosService();
+//        Thread.sleep(1000);
+//        rndCreature = salleAttente.getRandomCreature();
+//        rndCreature.getHighLevelMaladie().setNiveauActuel(rndCreature.getHighLevelMaladie().getNIVEAU_MAX());
+//        rndCreature = salleAttente.getRandomCreature();
+//        medecin.transferer(rndCreature, salleAttente, urgence);
+//        rndCreature = salleAttente.getRandomCreature();
+//        medecin.transferer(rndCreature, salleAttente, urgence);
+//        urgence.afficherInfosService();
+        Thread.sleep(3000);
+        hopital.afficherToutesCreatures();
 
     }
 

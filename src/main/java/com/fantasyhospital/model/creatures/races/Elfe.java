@@ -4,6 +4,7 @@ import com.fantasyhospital.model.creatures.ClientVIP;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Demoralisant;
 import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.salles.Salle;
 
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +24,10 @@ public class Elfe extends ClientVIP implements Demoralisant {
 //        super(nomComplet, sexe, poids, taille, age, moral, maladies);
 //    }
 
-    public void trepasser(List<Creature> creatures) {
-        demoraliser(creatures);
+
+    @Override
+    public void trepasser(Salle salle) {
+        super.trepasser(salle);
+        demoraliser(this, salle);
     }
 }
