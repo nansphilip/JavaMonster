@@ -1,5 +1,10 @@
 package com.fantasyhospital;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fantasyhospital.model.Hopital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.MoralThread;
@@ -7,10 +12,8 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class Simulation {

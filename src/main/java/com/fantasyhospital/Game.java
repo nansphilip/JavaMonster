@@ -1,12 +1,19 @@
 package com.fantasyhospital;
 
-import com.fantasyhospital.model.creatures.Races;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.races.*;
-import com.fantasyhospital.model.maladie.Maladie;
-
 import java.util.HashSet;
 import java.util.Random;
+
+import com.fantasyhospital.model.creatures.Races;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.creatures.races.Elfe;
+import com.fantasyhospital.model.creatures.races.HommeBete;
+import com.fantasyhospital.model.creatures.races.Lycanthrope;
+import com.fantasyhospital.model.creatures.races.Nain;
+import com.fantasyhospital.model.creatures.races.Orque;
+import com.fantasyhospital.model.creatures.races.Reptilien;
+import com.fantasyhospital.model.creatures.races.Vampire;
+import com.fantasyhospital.model.creatures.races.Zombie;
+import com.fantasyhospital.model.maladie.Maladie;
 
 public class Game {
     static Random randomCreature = new Random();

@@ -1,17 +1,12 @@
 package com.fantasyhospital.model.creatures;
 
 import com.fantasyhospital.model.Hopital;
-import com.fantasyhospital.model.creatures.abstractclass.Bete;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.salles.Salle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MoralThread implements Runnable {
 
     private Creature creature;
     private Hopital hopital;
-    private static final Logger logger = LoggerFactory.getLogger(MoralThread.class);
 
     public MoralThread(Creature creature,  Hopital hopital) {
         this.creature = creature;

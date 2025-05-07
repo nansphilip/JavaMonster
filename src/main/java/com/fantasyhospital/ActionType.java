@@ -1,6 +1,8 @@
 package com.fantasyhospital;
 
-public enum ActionType {
+import lombok.Getter;
+
+@Getter public enum ActionType {
     // MEDECINS
     MEDECIN_DEPRESSION(-40),
     MEDECIN_SOIGNE(15),
@@ -24,10 +26,6 @@ public enum ActionType {
 
     ActionType(int variationMoral) {
         this.variationMoral = variationMoral;
-    }
-
-    public int getVariationMoral() {
-        return variationMoral;
     }
 
 }

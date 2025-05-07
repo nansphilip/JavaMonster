@@ -1,16 +1,16 @@
 package com.fantasyhospital.model.creatures;
 
+import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fantasyhospital.model.creatures.abstractclass.Bete;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
-
-import java.util.Iterator;
-import java.util.concurrent.CopyOnWriteArrayList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 public class Medecin extends Bete {
 
 	//Getters and setters
-	protected String race; //type du médecin, à voir si on créé une classe Race par exemple
+	//Getters and setters
+	@Setter @Getter protected String race; //type du médecin, à voir si on créé une classe Race par exemple
     protected ServiceMedical serviceMedical;
     private static final Logger logger = LoggerFactory.getLogger(Medecin.class);
 
@@ -84,16 +85,7 @@ public class Medecin extends Bete {
         return true;
     }
 
-    //Getters and setters
-    public String getRace() {
-        return race;
-    }
-
-    public void setRace(String race) {
-        this.race = race;
-    }
-
-    public void depression(){
+	public void depression(){
         this.moral = Math.max(this.moral - 40, 0);
         log.info("Dépression, médecin a maintenant {} de moral.", this.moral);
     }
