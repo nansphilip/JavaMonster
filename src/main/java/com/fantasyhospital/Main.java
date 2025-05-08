@@ -2,6 +2,7 @@ package com.fantasyhospital;
 
 import java.net.URL;
 
+import com.fantasyhospital.controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +18,17 @@ public class Main extends Application {
             throw new RuntimeException("Fichier FXML non trouvé : /fxml/MainView.fxml");
         }
 
-        Parent root = FXMLLoader.load(fxmlLocation);
+        // Charger la scène FXML
+        FXMLLoader loader = new FXMLLoader(fxmlLocation);
+        Parent root = loader.load();
+
+        // Obtenir le contrôleur de la vue FXML
+        MainController controller = loader.getController();
+
+        // Passer le Stage au contrôleur
+        controller.setStage(primaryStage);
+
+        // Configurer et afficher la scène
         primaryStage.setTitle("Fantasy Hospital - Console de Logs");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
