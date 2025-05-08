@@ -1,94 +1,72 @@
-# Modélisation des classes et héritages
+# 🌳 Arbre d'héritage — Fantasy Hospital
 
-Ce dossier contient toutes les classes, interfaces et héritages principaux du projet Fantasy Hospital.
-
-## Structure du dossier `model`
+## 🧬 Classes principales
 
 ```
-model/
+Bete (abstraite)
 │
-├── Creature.java           # Classe abstraite de base pour toutes les créatures
-├── Maladie.java           # Classe abstraite de base pour toutes les maladies
-├── Service.java           # Classe abstraite de base pour tous les services
-├── Hopital.java          # Classe principale de l'hôpital
-├── Medecin.java           # Classe médecin (hérite de Creature)
+├── Creature (abstraite)
+│   │
+│   ├── HabitantTriage (abstraite)
+│   │   ├── Orque         [Contaminant]
+│   │   ├── HommeBete     [Contaminant]
+│   │   ├── Lycanthrope   [Contaminant]
+│   │   └── Zombie        [Regenerant]
+│   │
+│   └── ClientVIP (abstraite)
+│       ├── Elfe          [Demoralisant]
+│       ├── Nain
+│       ├── Reptilien
+│       └── Vampire       [Regenerant, Contaminant, Demoralisant]
 │
-├── creatures/             # Toutes les créatures concrètes
-│   ├── Elfe.java
-│   ├── Nain.java
-│   ├── Orque.java
-│   ├── HommeBete.java
-│   ├── Zombie.java
-│   ├── Vampire.java
-│   ├── Lycanthrope.java
-│   └── Reptilien.java
-│
-├── maladies/             # Toutes les maladies concrètes
-│   ├── MDC.java
-│   ├── FOMO.java
-│   ├── DRS.java
-│   ├── PEC.java
-│   ├── ZPL.java
-│   └── NDMAD.java
-│
-├── services/             # Services médicaux concrets
-│   ├── ServiceClassique.java
-│   ├── CentreQuarantaine.java
-│   └── Crypte.java
-│
-└── interfaces/           # Interfaces pour comportements spécifiques
-    ├── Bestial.java
-    ├── Regenerant.java
-    ├── Contagieux.java
-    └── VIP.java
+└── Medecin (concrète)
 ```
 
-## Schéma d'héritage et d'implémentation
+---
+
+## 🏥 Salles et services
 
 ```
-Creature (abstraite)
+Salle
 │
-├── Elfe         (VIP)
-├── Nain         (VIP)
-├── Orque        (Bestial, Contagieux)
-├── HommeBete    (Bestial, Contagieux)
-├── Zombie       (Regenerant, Contagieux)
-├── Vampire      (Bestial, Regenerant, Contagieux, VIP)
-├── Lycanthrope  (Bestial, Contagieux)
-└── Reptilien    (VIP)
+└── ServiceMedical
+    ├── Quarantaine
+    └── Crypte
+```
 
-Maladie (abstraite)
-│
-├── MDC
-├── FOMO
-├── DRS
-├── PEC
-├── ZPL
-└── NDMAD
+---
 
-Service (abstraite)
-│
-├── ServiceClassique
-├── CentreQuarantaine
-└── Crypte
+## 🏢 Autres entités
 
-Medecin (hérite de Creature)
-
+```
 Hopital
-
-// Interfaces
-Bestial, Regenerant, Contagieux, VIP
+Maladie
 ```
 
-## Explications
+---
 
-- **Creature.java** : classe abstraite de base pour toutes les créatures
-- **Maladie.java** : classe abstraite de base pour toutes les maladies
-- **Service.java** : classe abstraite de base pour tous les services
-- **Hopital.java** : classe principale gérant l'hôpital
-- **creatures/** : toutes les créatures concrètes (patients et médecins)
-- **maladies/** : toutes les maladies concrètes
-- **services/** : tous les services médicaux concrets
-- **interfaces/** : comportements spécifiques (contamination, régénération, VIP, etc.)
+## 🧵 Threads
 
-Chaque classe concrète hérite de la classe abstraite appropriée et implémente les interfaces correspondant à ses comportements spécifiques.
+```
+MoralThread (Runnable)
+```
+
+---
+
+## 🧩 Interfaces comportementales
+
+```
+Contaminant
+Regenerant
+Demoralisant
+```
+
+---
+
+## 🏷️ Enums
+
+```
+Races
+MaladieType
+ActionType
+```

@@ -11,56 +11,90 @@ import com.fantasyhospital.salles.Salle;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter @Getter public class ServiceMedical extends Salle  {
-	// Getters et setters omis pour la clarté
-	protected List<Medecin> medecins = new ArrayList<>();
-    protected String budget; // inexistant, médiocre, insuffisant, faible
+/**
+ * Représente un service médical spécialisé dans l'hôpital Fantasy Hospital.
+ * Hérite de Salle et ajoute la gestion des médecins et du budget.
+ */
+@Setter
+@Getter
+public class ServiceMedical extends Salle {
 
+    /**
+     * Liste des médecins affectés à ce service
+     */
+    protected List<Medecin> medecins = new ArrayList<>();
+
+    /**
+     * Budget du service (ex: inexistant, médiocre, insuffisant, faible)
+     */
+    protected String budget;
+
+    /**
+     * Crée un service médical avec nom, superficie, capacité et budget.
+     */
     public ServiceMedical(String nom, double superficie, int NB_MAX_CREATURE, String budget) {
         super(nom, superficie, NB_MAX_CREATURE);
         this.budget = budget;
     }
 
+    /**
+     * Ajoute une créature au service médical si la capacité et la race sont
+     * compatibles.
+     */
     @Override
-    public boolean ajouterCreature(Creature creature){
+    public boolean ajouterCreature(Creature creature) {
         if (creatures.size() >= NB_MAX_CREATURE) {
             return false;
         }
-
         if (creatures.isEmpty()) {
             creatures.add(creature);
             return true;
         }
-
         Iterator<Creature> iterator = creatures.iterator();
-        String raceAutorisee = iterator.next().getRace(); //.getFirst().getRace();
+        String raceAutorisee = iterator.next().getRace();
         if (creature.getRace().equals(raceAutorisee)) {
             creatures.add(creature);
             return true;
         }
-
         return false;
     }
 
-    public void ajouterMedecin(Medecin medecin){
+    /**
+     * Ajoute un médecin à la liste des médecins du service.
+     */
+    public void ajouterMedecin(Medecin medecin) {
         this.medecins.add(medecin);
     }
 
-    public void retirerMedecin(Medecin medecin){
+    /**
+     * Retire un médecin du service.
+     */
+    public void retirerMedecin(Medecin medecin) {
         this.medecins.remove(medecin);
     }
 
-    public void soignerCreatures(Medecin medecin, Creature creature){
+    /**
+     * Soigne une créature par un médecin (à compléter).
+     */
+    public void soignerCreatures(Medecin medecin, Creature creature) {
 
     }
 
-    public void reviserBudget(int valeur){
+    /**
+     * Révise le budget du service (à compléter).
+     */
+    public void reviserBudget(int valeur) {
 
     }
 
-	@Override
+    /**
+     * Retourne une représentation textuelle du service médical, de ses médecins
+     * et de ses créatures.
+     */
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+
         sb.append("\n--- Service : ").append(nom).append(" ---\n");
         sb.append("Superficie : ").append(superficie).append(" m²\n");
         sb.append("Nombre de créatures maximale : ").append(NB_MAX_CREATURE).append("\n");
@@ -86,4 +120,4 @@ import lombok.Setter;
 
         return sb.toString();
     }
-} 
+}

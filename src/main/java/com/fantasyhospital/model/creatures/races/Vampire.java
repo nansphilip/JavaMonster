@@ -20,9 +20,9 @@ public class Vampire extends ClientVIP implements Regenerant, Contaminant, Demor
         super(maladies);
     }
 
-//    public Vampire(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-//        super(nomComplet, sexe, poids, taille, age, moral, maladies);
-//    }
+    //    public Vampire(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
+    //        super(nomComplet, sexe, poids, taille, age, moral, maladies);
+    //    }
 
     public void trepasser(List<Creature> creatures) {
         regenerer();
