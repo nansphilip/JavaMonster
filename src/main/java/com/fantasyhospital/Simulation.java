@@ -18,8 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Simulation {
 
-    private static final Logger logger = LoggerFactory.getLogger(Simulation.class);
-
     public static void main(String[] args) throws InterruptedException {
         CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
@@ -34,7 +32,7 @@ public class Simulation {
         for (int i = 0; i < 5; i++) {
             Creature creature = Game.randomCreature();
             creatures.add(creature);
-            logger.info("Créature générée : {}", creature);
+            log.info("Créature générée : {}", creature);
         }
 
         salleAttente.setCreatures(creatures);
@@ -60,6 +58,8 @@ public class Simulation {
         rndCreature = salleAttente.getRandomCreature();
         medecin.transferer(rndCreature, salleAttente, urgence);
         urgence.afficherInfosService();
+        medecin.soigner(urgence.getRandomCreature());
+        medecin.depression();
 
     }
 
