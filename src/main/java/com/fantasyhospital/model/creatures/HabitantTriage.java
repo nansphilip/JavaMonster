@@ -11,7 +11,7 @@ public abstract class HabitantTriage extends Creature {
         super(maladies);
     }
 
-    public void attendre(){
-        //attendre patiemment si il est avec au moins 1 autre creature meme espece
+    // Attendre patiemment si il est avec au moins 1 autre creature meme espece
+    public void attendre() {
     }
 }

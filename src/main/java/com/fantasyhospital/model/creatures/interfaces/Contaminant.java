@@ -4,7 +4,7 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 public interface Contaminant {
 
-    default void contaminer(Creature cible){
-        //Body de la mtéthode contaminer commune à toutes les classes de l'interface
+    // Body de la mtéthode contaminer commune à toutes les classes de l'interface
+    default void contaminer(Creature cible) {
     }
-} 
+}

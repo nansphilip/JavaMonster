@@ -1,6 +1,7 @@
 package com.fantasyhospital.salles.servicemedical;
 
 public class Crypte extends ServiceMedical {
+
     private final int ventilation;
     private final double temperature;
 
@@ -11,4 +12,4 @@ public class Crypte extends ServiceMedical {
     }
 
     // Getters et setters omis pour la clarté
-} 
+}

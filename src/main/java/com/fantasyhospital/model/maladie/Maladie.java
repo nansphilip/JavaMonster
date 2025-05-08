@@ -1,20 +1,24 @@
 package com.fantasyhospital.model.maladie;
 
-import com.fantasyhospital.MaladieType;
+import com.fantasyhospital.enums.MaladieType;
+import static com.fantasyhospital.model.maladie.MaladieUtils.genererNiveauMaxAleatoire;
+import static com.fantasyhospital.model.maladie.MaladieUtils.getRandomType;
 
 import lombok.Getter;
 import lombok.Setter;
-import static com.fantasyhospital.model.maladie.MaladieUtils.getRandomType;
-import static com.fantasyhospital.model.maladie.MaladieUtils.genererNiveauMaxAleatoire;
-
 
 public class Maladie {
-    protected MaladieType type;
-	// Getters et setters omis pour la clarté
-	@Getter protected final int NIVEAU_MAX;
-    @Setter @Getter protected int niveauActuel;
 
-    public Maladie(){
+    protected MaladieType type;
+
+    @Getter
+    protected final int NIVEAU_MAX;
+
+    @Setter
+    @Getter
+    protected int niveauActuel;
+
+    public Maladie() {
         this.type = getRandomType();
         this.NIVEAU_MAX = genererNiveauMaxAleatoire();
         this.niveauActuel = 1;
@@ -25,7 +29,6 @@ public class Maladie {
         this.NIVEAU_MAX = NIVEAU_MAX;
         this.niveauActuel = niveauActuel;
     }
-
 
     public int getImpactMoral() {
         return type.getImpactMoral();
@@ -39,20 +42,20 @@ public class Maladie {
         return type.getNomComplet();
     }
 
-    public void augmenterNiveau(){
-        if(this.niveauActuel < NIVEAU_MAX){
+    public void augmenterNiveau() {
+        if (this.niveauActuel < NIVEAU_MAX) {
             this.niveauActuel++;
         }
     }
 
-    public void diminuerNiveau(){
-        if(this.niveauActuel > 0){
+    public void diminuerNiveau() {
+        if (this.niveauActuel > 0) {
             this.niveauActuel--;
         }
     }
 
-    public void changerNiveau(int nouveauNiveau){
-        if(nouveauNiveau < NIVEAU_MAX &&  nouveauNiveau > 0){
+    public void changerNiveau(int nouveauNiveau) {
+        if (nouveauNiveau < NIVEAU_MAX && nouveauNiveau > 0) {
             this.niveauActuel = nouveauNiveau;
         }
     }
@@ -61,11 +64,11 @@ public class Maladie {
         return niveauActuel == NIVEAU_MAX;
     }
 
-	//    public void setNIVEAU_MAX(int NIVEAU_MAX) {
-//        this.NIVEAU_MAX = NIVEAU_MAX;
-//    }
+    //    public void setNIVEAU_MAX(int NIVEAU_MAX) {
+    //        this.NIVEAU_MAX = NIVEAU_MAX;
+    //    }
 
-	@Override
+    @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
@@ -77,9 +80,9 @@ public class Maladie {
 
     @Override
     public String toString() {
-        return " " + type +
-                " Nom Complet='" + getNomComplet() + '\'' +
-                ", NIVEAU_MAX=" + NIVEAU_MAX +
-                ", niveauActuel=" + niveauActuel;
+        return " " + type
+                + " Nom Complet='" + getNomComplet() + '\''
+                + ", NIVEAU_MAX=" + NIVEAU_MAX
+                + ", niveauActuel=" + niveauActuel;
     }
-} 
+}

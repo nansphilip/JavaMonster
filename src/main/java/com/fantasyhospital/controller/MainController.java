@@ -1,13 +1,21 @@
 package com.fantasyhospital.controller;
 
-import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+
+/**
+ * Contrôleur JavaFX chargé d'afficher le contenu du fichier de log
+ * (logs/app.log) dans la zone de texte de la fenêtre graphique.
+ * <p>
+ * Ce contrôleur lit le fichier de log à l'initialisation de la vue et affiche
+ * chaque ligne dans le composant TextArea nommé logConsole.
+ * </p>
+ */
 public class MainController {
 
     @FXML

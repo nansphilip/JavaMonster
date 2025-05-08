@@ -11,92 +11,149 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Classe abstraite représentant une créature dans Fantasy Hospital. Gère les
+ * maladies, le moral, les réactions et les interactions avec les salles.
+ */
 @Slf4j
 public abstract class Creature extends Bete {
-    @Setter @Getter protected HashSet<Maladie> maladies = new HashSet<>();
+
+    /**
+     * Ensemble des maladies contractées par la créature
+     */
+    @Setter
+    @Getter
+    protected HashSet<Maladie> maladies = new HashSet<>();
+
+    /**
+     * Générateur aléatoire partagé
+     */
     protected static final Random RANDOM = new Random();
+
+    /**
+     * Nombre de hurlements effectués par la créature (lié au moral)
+     */
     private int nbHurlements;
 
-    public Creature( HashSet<Maladie> maladies) {
+    /**
+     * Construit une créature avec un ensemble de maladies initial.
+     */
+    public Creature(HashSet<Maladie> maladies) {
         super();
         this.maladies = maladies;
         this.nbHurlements = 0;
     }
 
-    public void hurler(){
+    /**
+     * Fait hurler la créature si son moral est trop bas.
+     */
+    public void hurler() {
         log.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.nomComplet);
     }
 
-    public void semporter(Salle salle){
-        if(salle.getCreatures().isEmpty()){
+    /**
+     * La créature s'emporte et peut contaminer une autre créature de la salle.
+     */
+    public void semporter(Salle salle) {
+        if (salle.getCreatures().isEmpty()) {
             return;
         }
+
         Random random = new Random();
         double rnd = random.nextDouble();
-        if(rnd < 0.15){
+
+        if (rnd < 0.15) {
             Creature creature = salle.getRandomCreature();
-            while(creature.equals(this)){
+
+            while (creature.equals(this)) {
                 creature = salle.getRandomCreature();
             }
+
             Maladie maladie = this.getRandomMaladie();
-            if(maladie == null){
+
+            if (maladie == null) {
                 return;
             }
+
             creature.tomberMalade(maladie);
+
             log.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
         }
     }
 
-    public void verifierMoral(Salle salle){
-        if(this.nbHurlements > 2){
+    /**
+     * Vérifie le moral de la créature et déclenche des réactions si besoin.
+     */
+    public void verifierMoral(Salle salle) {
+        if (this.nbHurlements > 2) {
             semporter(salle);
             return;
         }
-        if(this.moral == 0){
+        if (this.moral == 0) {
             hurler();
             this.nbHurlements++;
         }
     }
 
-    public boolean verifierSante(Salle salle){
-        for(Maladie maladie : this.maladies){
-            if(maladie.estLethale()){
+    /**
+     * Vérifie la santé de la créature (décès si maladie létale ou trop de
+     * maladies).
+     *
+     * @return true si la créature doit quitter la salle (décès), false sinon
+     */
+    public boolean verifierSante(Salle salle) {
+        for (Maladie maladie : this.maladies) {
+            if (maladie.estLethale()) {
                 log.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
                 trepasser(salle.getCreatures());
                 return true;
             }
         }
-        if(this.maladies.size() >= 4){
+        if (this.maladies.size() >= 4) {
             log.info("{} a contracté trop de maladies.", this.nomComplet);
             trepasser(salle.getCreatures());
             return true;
         }
-        //Rajouter 30% chance trepasser quand il s'emporte
+        // TODO: Rajouter 30% chance trepasser quand il s'emporte
         return false;
     }
 
-    public void tomberMalade(Maladie maladie){
-        //Si add retourne faux c'est parce que la creature avait déjà cette maladie, on lui ajoute donc un niveau supplémentaire
-        if(!this.maladies.add(maladie)){
-            for(Maladie maladieAModifier : this.maladies){
-                if(maladieAModifier.equals(maladie)){
+    /**
+     * Fait contracter une maladie à la créature (ou augmente son niveau si déjà
+     * présente).
+     */
+    public void tomberMalade(Maladie maladie) {
+        // Si add retourne faux c'est parce que la créature avait déjà cette maladie, on lui ajoute donc un niveau supplémentaire
+        if (!this.maladies.add(maladie)) {
+            for (Maladie maladieAModifier : this.maladies) {
+                if (maladieAModifier.equals(maladie)) {
                     maladieAModifier.augmenterNiveau();
                 }
             }
         }
     }
 
-    public boolean etreSoigne(Maladie maladie){
+    /**
+     * Soigne la créature d'une maladie donnée.
+     *
+     * @return true si la maladie a été retirée
+     */
+    public boolean etreSoigne(Maladie maladie) {
         return this.maladies.remove(maladie);
     }
 
-    // Getters et setters omis pour la clarté
+    /**
+     * Retourne la race de la créature (nom de la classe concrète).
+     */
     public String getRace() {
         return this.getClass().getSimpleName();
     }
 
-	public Maladie getRandomMaladie(){
-        if(this.maladies.isEmpty()){
+    /**
+     * Retourne une maladie aléatoire parmi celles de la créature.
+     */
+    public Maladie getRandomMaladie() {
+        if (this.maladies.isEmpty()) {
             log.error("La créature {} n'a aucune maladie.", this.nomComplet);
             return null;
         }
@@ -104,14 +161,17 @@ public abstract class Creature extends Bete {
         return (Maladie) this.maladies.toArray()[random.nextInt(this.maladies.size())];
     }
 
-    public Maladie getHighLevelMaladie(){
-        if(this.maladies.isEmpty()){
+    /**
+     * Retourne la maladie avec le niveau le plus élevé.
+     */
+    public Maladie getHighLevelMaladie() {
+        if (this.maladies.isEmpty()) {
             log.error("La créature {} n'a aucune maladie.", this.nomComplet);
             return null;
         }
         Maladie maladieWithHighLevel = this.maladies.iterator().next();
-        for(Maladie maladie : this.maladies){
-            if(maladie.getNiveauActuel() > maladieWithHighLevel.getNiveauActuel()){
+        for (Maladie maladie : this.maladies) {
+            if (maladie.getNiveauActuel() > maladieWithHighLevel.getNiveauActuel()) {
                 maladieWithHighLevel = maladie;
             }
         }
@@ -125,7 +185,9 @@ public abstract class Creature extends Bete {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Creature creature = (Creature) o;
         return Objects.equals(nomComplet, creature.nomComplet) && Objects.equals(taille, creature.taille) && Objects.equals(poids, creature.poids);
     }
