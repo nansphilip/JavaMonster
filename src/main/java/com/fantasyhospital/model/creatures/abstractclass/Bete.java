@@ -1,22 +1,18 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import com.fantasyhospital.salles.Salle;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererAge;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererMoral;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererNomAleatoire;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererPoids;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererSexeAleatoire;
 import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererTaille;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
-@Setter
-@Getter
-@Slf4j
-public abstract class Bete {
+@Setter @Getter @Slf4j public abstract class Bete {
 
     protected String nomComplet;
     protected String sexe;
@@ -24,6 +20,7 @@ public abstract class Bete {
     protected int taille;
     protected int age;
     protected int moral;
+
 
     public Bete() {
         this(genererNomAleatoire(), genererSexeAleatoire(), genererPoids(), genererTaille(), genererAge(), genererMoral());
@@ -38,11 +35,12 @@ public abstract class Bete {
         this.moral = moral;
     }
 
-    public abstract void attendre();
+    public abstract void attendre(Salle salle);
 
-    public void trepasser(CopyOnWriteArrayList<Creature> creatures) {
+    public boolean trepasser(Salle salle) {
         //mourir
         log.info("La créature {} se meurt.", this.nomComplet);
+        return true;
     }
 
 }

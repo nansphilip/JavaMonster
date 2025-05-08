@@ -1,11 +1,11 @@
 package com.fantasyhospital.model.creatures.races;
 
-import java.util.HashSet;
-
 import com.fantasyhospital.model.creatures.HabitantTriage;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Contaminant;
 import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.salles.Salle;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HommeBete extends HabitantTriage implements Contaminant {
 
@@ -13,14 +13,18 @@ public class HommeBete extends HabitantTriage implements Contaminant {
         super(null);
     }
 
-    public HommeBete(HashSet<Maladie> maladies) {
+    public HommeBete(CopyOnWriteArrayList<Maladie> maladies) {
         super(maladies);
     }
-    //    public HommeBete(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-    //        super(nom, sexe, poids, taille, age, moral, maladies);
-    //    }
+//
+//    public HommeBete(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
+//        super(nom, sexe, poids, taille, age, moral, maladies);
+//    }
 
-    public void trepasser(Creature creature) {
-        contaminer(creature);
+    @Override
+    public boolean trepasser(Salle salle) {
+        super.trepasser(salle);
+        contaminer(this, salle);
+        return true;
     }
 }
