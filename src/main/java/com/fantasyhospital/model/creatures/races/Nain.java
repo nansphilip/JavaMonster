@@ -5,6 +5,7 @@ import com.fantasyhospital.model.maladie.Maladie;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Nain extends ClientVIP {
 
@@ -12,7 +13,7 @@ public class Nain extends ClientVIP {
         super(null);
     }
 
-    public Nain(HashSet<Maladie> maladies) {
+    public Nain(CopyOnWriteArrayList<Maladie> maladies) {
         super(maladies);
     }
 

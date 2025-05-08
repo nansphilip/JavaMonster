@@ -2,6 +2,7 @@ package com.fantasyhospital;
 
 import java.util.HashSet;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.model.creatures.Races;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -20,7 +21,7 @@ public class Game {
     public static Creature randomCreature() {
         Races race = Races.values()[randomCreature.nextInt(Races.values().length)];
 
-        HashSet<Maladie> maladie = new HashSet<>();
+        CopyOnWriteArrayList<Maladie> maladie = new CopyOnWriteArrayList<>();
         maladie.add(new Maladie());
 
         Creature creature = switch (race) {

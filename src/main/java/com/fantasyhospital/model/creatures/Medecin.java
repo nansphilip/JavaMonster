@@ -32,8 +32,8 @@ public class Medecin extends Bete {
     }
 
     @Override
-    public void attendre() {
-        //Attente du medecin si il a rien à faire par exemple
+    public void attendre(Salle salle) {
+
     }
 
     // Méthodes spécifiques : examiner, soigner, réviser budget, transférer créature

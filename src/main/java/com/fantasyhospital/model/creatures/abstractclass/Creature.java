@@ -1,8 +1,8 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
@@ -13,12 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class Creature extends Bete {
-    @Setter @Getter protected HashSet<Maladie> maladies = new HashSet<>();
+    @Setter @Getter protected CopyOnWriteArrayList<Maladie> maladies = new CopyOnWriteArrayList<>();
     protected static final Random RANDOM = new Random();
     private int nbHurlements;
-    private final Object monitor =  new Object();
 
-    public Creature( HashSet<Maladie> maladies) {
+    public Creature( CopyOnWriteArrayList<Maladie> maladies) {
         super();
         this.maladies = maladies;
         this.nbHurlements = 0;
@@ -32,13 +31,10 @@ public abstract class Creature extends Bete {
         if(salle.getCreatures().isEmpty()){
             return;
         }
-        Random random = new Random();
-        double rnd = random.nextDouble();
+        double rnd = new Random().nextDouble();
+        //15% de chance de contaminer creature lorsqu'il s'emporte
         if(rnd < 0.15){
-            Creature creature = salle.getRandomCreature();
-            while(creature.equals(this)){
-                creature = salle.getRandomCreature();
-            }
+            Creature creature = salle.getRandomCreatureWithoutThisOne(this);
             Maladie maladie = this.getRandomMaladie();
             if(maladie == null){
                 return;
@@ -56,39 +52,41 @@ public abstract class Creature extends Bete {
         if(this.moral == 0){
             hurler();
             this.nbHurlements++;
+        } else {
+            this.nbHurlements = 0;
         }
     }
 
-    public boolean verifierSante(Salle salle){
-        synchronized (this.monitor){
-            if(this.maladies.isEmpty()){
-                return false;
+    public boolean hasCreatureToleaveHospital(Salle salle){
+        boolean creatureGetsOut = true;
+        if(this.maladies.isEmpty()){
+            return false;
+        }
+        for(Maladie maladie : this.maladies){
+            if(maladie.estLethale()){
+                log.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
+                creatureGetsOut = trepasser(salle);
+                return creatureGetsOut;
             }
-            for(Maladie maladie : this.maladies){
-                if(maladie.estLethale()){
-                    log.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
-                    trepasser(salle);
-                    return true;
-                }
-            }
-            if(this.maladies.size() >= 4){
-                log.info("{} a contracté trop de maladies.", this.nomComplet);
-                trepasser(salle);
-                return true;
-            }
+        }
+        if(this.maladies.size() >= 4){
+            log.info("{} a contracté trop de maladies.", this.nomComplet);
+            creatureGetsOut = trepasser(salle);
+            return creatureGetsOut;
         }
         //Rajouter 30% chance trepasser quand il s'emporte
         return false;
     }
 
     public void tomberMalade(Maladie maladie){
-        //Si add retourne faux c'est parce que la creature avait déjà cette maladie, on lui ajoute donc un niveau supplémentaire
-        if(!this.maladies.add(maladie)){
+        if(this.maladies.contains(maladie)){
             for(Maladie maladieAModifier : this.maladies){
                 if(maladieAModifier.equals(maladie)){
                     maladieAModifier.augmenterNiveau();
                 }
             }
+        } else {
+            this.maladies.add(maladie);
         }
     }
 
@@ -101,7 +99,7 @@ public abstract class Creature extends Bete {
         return this.getClass().getSimpleName();
     }
 
-	public Maladie getRandomMaladie(){
+    public Maladie getRandomMaladie(){
         if(this.maladies.isEmpty()){
             log.error("La créature {} n'a aucune maladie.", this.nomComplet);
             return null;

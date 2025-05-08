@@ -16,7 +16,7 @@ public class Orque extends HabitantTriage implements Contaminant {
         super(null);
     }
 
-    public Orque(HashSet<Maladie> maladies) {
+    public Orque(CopyOnWriteArrayList<Maladie> maladies) {
         super(maladies);
     }
 
@@ -25,8 +25,9 @@ public class Orque extends HabitantTriage implements Contaminant {
 //    }
 
     @Override
-    public void trepasser(Salle salle) {
+    public boolean trepasser(Salle salle) {
         super.trepasser(salle);
         contaminer(this, salle);
+        return true;
     }
 }
