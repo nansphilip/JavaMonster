@@ -178,7 +178,6 @@ public abstract class Creature extends Bete {
     }
 
 
-}
 
     @Override
     public boolean equals(Object o) {
@@ -192,5 +191,6 @@ public abstract class Creature extends Bete {
     @Override
     public int hashCode() {
         return Objects.hash(nomComplet, taille, poids);
-    }
 }
+    }
+

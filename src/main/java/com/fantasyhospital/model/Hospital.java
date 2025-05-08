@@ -7,6 +7,7 @@ import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.salles.Salle;
 
+import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class Hospital {
      */
     @Setter
     @Getter
-    private List<Salle> services = new ArrayList<Salle>();
+    private List<ServiceMedical> services = new ArrayList<ServiceMedical>();
 
     /**
      * Liste des médecins de l'hôpital
@@ -100,8 +101,8 @@ public class Hospital {
      *
      * @param salle la salle à ajouter
      */
-    public void ajouterService(Salle salle) {
-        services.add(salle);
+    public void ajouterService(ServiceMedical serviceMedical) {
+        services.add(serviceMedical);
     }
 
     /**
@@ -122,6 +123,15 @@ public class Hospital {
                 if (creatureSalles.equals(creature)) {
                     return salle;
                 }
+            }
+        }
+        return null;
+    }
+    //    private List<ServiceMedical> services = new ArrayList<ServiceMedical>();
+    public ServiceMedical getServiceWithName(String ServiceName) {
+        for (ServiceMedical serviceMedical : this.services) {
+            if (serviceMedical.getNom().equals(ServiceName)) {
+                return serviceMedical;
             }
         }
         return null;

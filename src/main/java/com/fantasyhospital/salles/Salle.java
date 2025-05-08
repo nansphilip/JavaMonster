@@ -1,5 +1,6 @@
 package com.fantasyhospital.salles;
 
+import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Salle {
     protected final int NB_MAX_CREATURE;
     @Setter
     protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
+
     public Random random = new Random();
 
     public Salle(String nom, double superficie, int NB_MAX_CREATURE) {

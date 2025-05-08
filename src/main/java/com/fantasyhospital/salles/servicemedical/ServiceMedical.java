@@ -43,7 +43,7 @@ public class ServiceMedical extends Salle {
      */
     @Override
     public boolean ajouterCreature(Creature creature) {
-        if (creatures.size() >= NB_MAX_CREATURE) {
+/*        if (creatures.size() >= NB_MAX_CREATURE) {
             return false;
         }
         if (creatures.isEmpty()) {
@@ -56,8 +56,13 @@ public class ServiceMedical extends Salle {
             creatures.add(creature);
             return true;
         }
-        return false;
+        return false;*/
+        creatures.add(creature);
+        return true;
     }
+
+
+
 
     /**
      * Ajoute un médecin à la liste des médecins du service.

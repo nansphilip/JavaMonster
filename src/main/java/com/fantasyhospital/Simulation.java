@@ -31,7 +31,7 @@ public class Simulation {
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
         // Création de la salle d'attente
-        Salle salleAttente = new Salle("Salle d'attente", 70, 100);
+        ServiceMedical salleAttente = new ServiceMedical("Salle d'attente", 70, 100, "Moyen");
 
         // Création d'un médecin et affectation au service d'urgence
         Medecin medecin = new Medecin("Dr. Zoidberg", "H", 70, 175, 45, 100, "Lycanthrope", urgence);
