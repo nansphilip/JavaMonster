@@ -2,6 +2,8 @@ package com.fantasyhospital.model.creatures;
 
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.salles.Salle;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Thread chargé de surveiller et de gérer le moral d'une créature dans l'hôpital.
@@ -9,6 +11,7 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
  * À chaque itération, il vérifie le moral et la santé de la créature.
  * Si la créature décède ou quitte la salle, elle est retirée de l'hôpital.
  */
+@Slf4j
 public class MoralThread implements Runnable {
 
     /**
@@ -34,21 +37,29 @@ public class MoralThread implements Runnable {
 
     @Override
     public void run() {
-        // Boucle tant que la créature est présente dans une salle
-        while (hospital.getSalleOfCreature(creature) != null) {
-            // Vérifie le moral de la créature dans sa salle actuelle
-            this.creature.verifierMoral(this.hospital.getSalleOfCreature(creature));
-
-            // Si la créature décède ou doit quitter la salle
-            if (this.creature.verifierSante(this.hospital.getSalleOfCreature(creature))) {
-                this.hospital.getSalleOfCreature(creature).enleverCreature(this.creature);
-                try {
-                    Thread.sleep(200); // Petite pause avant de mettre à jour l'affichage
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+        //Checker le moral
+//        while(hopital.getSalleOfCreature(creature) != null){
+//            //this.creature.verifierMoral(this.hopital.getSalleOfCreature(creature));
+//            boolean isDead = this.creature.verifierSante(this.hopital.getSalleOfCreature(creature));
+//            log.info("moral thread, creature : {}, boolean : {}", creature.getNomComplet(), isDead);
+//            if(isDead){
+//                this.hopital.getSalleOfCreature(creature).enleverCreature(this.creature);
+//                break;
+//            }
+//        }
+        while(!Thread.currentThread().isInterrupted()){
+            for(Salle salle : hopital.getServices()){
+                for(Creature creature : salle.getCreatures()){
+                    boolean getsOut = creature.hasCreatureToleaveHospital(this.hopital.getSalleOfCreature(creature));
+                    String interfaceCreature = "";
+                    if(creature.getClass().getInterfaces().length > 0){
+                        interfaceCreature = creature.getClass().getInterfaces()[0].getSimpleName();
+                    }
+                    if(getsOut){
+                        this.hopital.getSalleOfCreature(creature).enleverCreature(creature);
+                        break;
+                    }
                 }
-                this.hospital.afficherToutesCreatures();
-                break;
             }
         }
     }

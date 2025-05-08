@@ -38,7 +38,7 @@ public interface Demoralisant {
                 c1.setMoral(moral);
                 moral = Math.max(c2.getMoral() - 10, 0);
                 c2.setMoral(moral);
-                logger.info("Les créatures {} et {} ont été démoralisés.", c1.getNomComplet(), c2.getNomComplet());
+                logger.info("Les créatures {} et {} ont été démoralisés par {}.", c1.getNomComplet(), c2.getNomComplet(), creatureMourrante.getNomComplet());
         }
     }
 }

@@ -35,11 +35,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
         this.moral = moral;
     }
 
-    public abstract void attendre();
+    public abstract void attendre(Salle salle);
 
-    public void trepasser(Salle salle) {
+    public boolean trepasser(Salle salle) {
         //mourir
         log.info("La créature {} se meurt.", this.nomComplet);
+        return true;
     }
 
 }

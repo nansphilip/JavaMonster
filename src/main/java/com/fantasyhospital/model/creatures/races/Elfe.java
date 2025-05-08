@@ -1,10 +1,11 @@
 package com.fantasyhospital.model.creatures.races;
 
 import com.fantasyhospital.model.creatures.ClientVIP;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Demoralisant;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 
 public class Elfe extends ClientVIP implements Demoralisant {
 
@@ -12,7 +13,7 @@ public class Elfe extends ClientVIP implements Demoralisant {
         super(null);
     }
 
-    public Elfe(HashSet<Maladie> maladies) {
+    public Elfe(CopyOnWriteArrayList<Maladie> maladies) {
         super(maladies);
     }
 
@@ -21,8 +22,9 @@ public class Elfe extends ClientVIP implements Demoralisant {
 //    }
 
     @Override
-    public void trepasser(Salle salle) {
+    public boolean trepasser(Salle salle) {
         super.trepasser(salle);
         demoraliser(this, salle);
+        return true;
     }
 }

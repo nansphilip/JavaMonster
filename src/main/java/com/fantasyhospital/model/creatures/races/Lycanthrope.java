@@ -13,13 +13,14 @@ public class Lycanthrope extends HabitantTriage implements Contaminant {
         this( null);
     }
 
-    public Lycanthrope(HashSet<Maladie> maladies) {
+    public Lycanthrope(CopyOnWriteArrayList<Maladie> maladies) {
         super(maladies);
     }
 
     @Override
-    public void trepasser(Salle salle) {
+    public boolean trepasser(Salle salle) {
         super.trepasser(salle);
         contaminer(this, salle);
+        return true;
     }
 }
