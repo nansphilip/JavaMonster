@@ -49,7 +49,8 @@ public class Medecin extends Bete {
      * Action d'attente du médecin (à compléter si besoin).
      */
     @Override
-    public void attendre() {
+    public void attendre(Salle salle) {
+
     }
 
     /**

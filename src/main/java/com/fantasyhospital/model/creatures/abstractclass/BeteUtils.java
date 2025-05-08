@@ -16,27 +16,27 @@ public abstract class BeteUtils {
 
     protected static final Random RANDOM = new Random();
 
-    public static String genererNomAleatoire() {
-        //        String[] prefix = {"Kra", "Zor", "El", "Thra", "Gor", "Vel", "Mor", "Sha", "Lun", "Dra"};
-        //        String[] suffix = {"gor", "nax", "iel", "dor", "vak", "mir", "thar", "dil", "rak", "zul"};
-        //
-        //        return prefix[random.nextInt(prefix.length)] + suffix[random.nextInt(suffix.length)];
-        String nom = "";
-        String sexe = "M";
-        switch (sexe) {
-            case "M":
-                int i = RANDOM.nextInt(NOM_MASCULIN.length);
-                nom = NOM_MASCULIN[i];
-            //NOM_MASCULIN.remove(i);
-            case "F":
-                i = RANDOM.nextInt(NOM_FEMININ.length);
-                nom = NOM_FEMININ[i];
-            //nomsFeminins.remove(i);
-        }
-        return nom;
-    }
-
-    public static String genererSexeAleatoire() {
+	public static String genererNomAleatoire(String sexe) {
+		//        String[] prefix = {"Kra", "Zor", "El", "Thra", "Gor", "Vel", "Mor", "Sha", "Lun", "Dra"};
+		//        String[] suffix = {"gor", "nax", "iel", "dor", "vak", "mir", "thar", "dil", "rak", "zul"};
+		//
+		//        return prefix[random.nextInt(prefix.length)] + suffix[random.nextInt(suffix.length)];
+		String nom = switch (sexe) {
+			case "M" -> {
+				int i = RANDOM.nextInt(NOM_MASCULIN.length);
+				yield NOM_MASCULIN[i];
+			}
+			//NOM_MASCULIN.remove(i);
+			case "F" -> {
+				int j = RANDOM.nextInt(NOM_FEMININ.length);
+				yield NOM_FEMININ[j];
+				//nomsFeminins.remove(i);
+			}
+			default -> "";
+		};
+		return nom;
+	}
+	public static String genererSexeAleatoire() {
 
         return SEXES[RANDOM.nextInt(SEXES.length)];
     }
