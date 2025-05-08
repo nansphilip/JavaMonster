@@ -3,6 +3,7 @@ package com.fantasyhospital.model.creatures.races;
 import com.fantasyhospital.model.creatures.ClientVIP;
 import com.fantasyhospital.model.maladie.Maladie;
 import java.util.HashSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Reptilien extends ClientVIP {
 

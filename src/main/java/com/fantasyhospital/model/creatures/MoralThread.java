@@ -48,15 +48,15 @@ public class MoralThread implements Runnable {
 //            }
 //        }
         while(!Thread.currentThread().isInterrupted()){
-            for(Salle salle : hopital.getServices()){
+            for(Salle salle : hospital.getServices()){
                 for(Creature creature : salle.getCreatures()){
-                    boolean getsOut = creature.hasCreatureToleaveHospital(this.hopital.getSalleOfCreature(creature));
+                    boolean getsOut = creature.hasCreatureToleaveHospital(this.hospital.getSalleOfCreature(creature));
                     String interfaceCreature = "";
                     if(creature.getClass().getInterfaces().length > 0){
                         interfaceCreature = creature.getClass().getInterfaces()[0].getSimpleName();
                     }
                     if(getsOut){
-                        this.hopital.getSalleOfCreature(creature).enleverCreature(creature);
+                        this.hospital.getSalleOfCreature(creature).enleverCreature(creature);
                         break;
                     }
                 }

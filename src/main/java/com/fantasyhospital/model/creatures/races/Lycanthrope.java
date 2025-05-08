@@ -6,6 +6,7 @@ import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 
 import java.util.HashSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Lycanthrope extends HabitantTriage implements Contaminant {
 

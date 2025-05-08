@@ -55,16 +55,16 @@ public class Simulation {
 //            thread.start();
 //        }
         //Thread vérifie si creature doit sortir de l'hopital
-        MoralThread action = new MoralThread(null, hopital);
+        MoralThread action = new MoralThread(null, hospital);
         Thread thread = new Thread(action);
         thread.start();
 
         salleAttente.setCreatures(creatures);
-        hopital.ajouterService(salleAttente);
-        hopital.ajouterService(urgence);
+        hospital.ajouterService(salleAttente);
+        hospital.ajouterService(urgence);
 
         //Thread d'évolution du jeu et vérifie moral creatures
-        EvolutionJeuThread evol = new EvolutionJeuThread(hopital);
+        EvolutionJeuThread evol = new EvolutionJeuThread(hospital);
         Thread threadMoral = new Thread(evol);
         threadMoral.start();
 
