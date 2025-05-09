@@ -3,6 +3,9 @@ package com.fantasyhospital;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.creatures.interfaces.Regenerant;
+import com.fantasyhospital.model.creatures.races.Vampire;
+import com.fantasyhospital.model.creatures.races.Zombie;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
@@ -57,6 +60,7 @@ public class EvolutionJeuThread implements Runnable {
                 break;
             }
 
+
             for(Salle salle : hospital.getServices()){
                 for(Creature creature : salle.getCreatures()){
                     creature.attendre(hospital.getSalleOfCreature(creature));
@@ -90,6 +94,7 @@ public class EvolutionJeuThread implements Runnable {
                     verifierCreatureSortHopital(creature);
                 }
             }
+
             hospital.afficherServices();
             nbTour++;
         }
@@ -100,14 +105,56 @@ public class EvolutionJeuThread implements Runnable {
     }
 
     public void verifierCreatureSortHopital(Creature creature){
-        boolean getsOut = creature.hasCreatureToleaveHospital(this.hospital.getSalleOfCreature(creature));
+        Salle salleCreature = this.hospital.getSalleOfCreature(creature);
+        //Si la créature est déjà sortie de l'hopital
+        if(salleCreature == null){
+            return;
+        }
+
+        //Récupération interface creature pour les regenerants
         String interfaceCreature = "";
         if(creature.getClass().getInterfaces().length > 0){
             interfaceCreature = creature.getClass().getInterfaces()[0].getSimpleName();
         }
+
+        //Avant de potentiellement faire trepasser la creature, si regenerant, on check si creature va mourir
+        //Si va mourir, on appliquera depression sur medecin
+        boolean isDead = false;
+        if(interfaceCreature.equals("Regenerant")){
+            if(creature.getRace().equals("Zombie")){
+                Zombie zombieCreature = (Zombie)creature;
+                isDead = zombieCreature.isCreatureDeadButWillRevive(creature);
+            } else {
+                Vampire vampire = (Vampire)creature;
+                isDead = vampire.isCreatureDeadButWillRevive(creature);
+            }
+        }
+
+        boolean getsOut = creature.hasCreatureToleaveHospital(salleCreature);
+
+        //Si creature meurt, médecins du service perd du moral
         if(getsOut){
-            this.hospital.getSalleOfCreature(creature).enleverCreature(creature);
+            log.info("creature {} sort, nb maladies : {}", creature.getNomComplet(), creature.getMaladies().size());
+            if(!creature.getMaladies().isEmpty()){
+                if(salleCreature instanceof ServiceMedical){
+                    List<Medecin> medecins = ((ServiceMedical) salleCreature).getMedecins();
+                    for(Medecin medecin : medecins){
+                        medecin.depression();
+                    }
+                }
+            }
+            salleCreature.enleverCreature(creature);
             return;
+        }
+
+        //Si regenerant qui meurt mais reste quand même dans l'hopital, applique depression a medecin
+        if(isDead){
+            if(salleCreature instanceof ServiceMedical){
+                List<Medecin> medecins = ((ServiceMedical) salleCreature).getMedecins();
+                for(Medecin medecin : medecins){
+                    medecin.depression();
+                }
+            }
         }
     }
 }

@@ -6,6 +6,8 @@ import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.ThreadVerifieCreatureSortHopital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.creatures.races.Zombie;
+import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
@@ -33,18 +35,19 @@ public class Simulation {
         urgence.ajouterMedecin(medecin);
 
         // Génération de 5 créatures aléatoires et ajout à la liste
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             Creature creature = Game.randomCreature();
+            creature = new Zombie();
+            Maladie maladie = new Maladie();
+            CopyOnWriteArrayList<Maladie> maladies = new CopyOnWriteArrayList<>();
+            maladies.add(maladie);
+            creature.setMaladies(maladies);
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
         }
 
-        //Thread vérifie si creature doit sortir de l'hopital
-//        ThreadVerifieCreatureSortHopital action = new ThreadVerifieCreatureSortHopital(null, hospital);
-//        Thread thread = new Thread(action);
-//        thread.start();
-
-        salleAttente.setCreatures(creatures);
+        //salleAttente.setCreatures(creatures);
+        urgence.setCreatures(creatures);
         hospital.ajouterService(salleAttente);
         hospital.ajouterService(urgence);
         //medecin.transferer(creatures.getFirst(), salleAttente, urgence);

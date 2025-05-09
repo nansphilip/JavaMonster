@@ -1,5 +1,6 @@
 package com.fantasyhospital.model.creatures;
 
+import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
@@ -24,11 +25,13 @@ public abstract class HabitantTriage extends Creature {
                 break;
             }
         }
+        int baisseMoral = 0;
         if(estAvecTriage){
-            log.info("La créature {} attend (-5pts).", this.nomComplet);
+            baisseMoral = ActionType.CREATURE_ATTENTE_TRIAGE_NONSEUL.getVariationMoral();
         } else {
-            log.info("La créature {} attend (-10pts).", this.nomComplet);
+            baisseMoral = ActionType.CREATURE_ATTENTE_TRIAGE_SEUL.getVariationMoral();
         }
-        this.moral -= estAvecTriage ? 5 : 10;
+        log.info("La créature {} attend ({} points).", this.nomComplet, baisseMoral);
+        this.moral -= estAvecTriage ? ActionType.CREATURE_ATTENTE_TRIAGE_NONSEUL.getVariationMoral() : ActionType.CREATURE_ATTENTE_TRIAGE_SEUL.getVariationMoral();
     }
 }

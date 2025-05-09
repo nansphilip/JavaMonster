@@ -159,7 +159,7 @@ public class Hospital {
 
     /**
      * Retourne le nombre total de creatures de l'hopital
-     * @return
+     * @return int
      */
     public int getNbCreaturesHopital(){
         int nbTotalCreatures = 0;
