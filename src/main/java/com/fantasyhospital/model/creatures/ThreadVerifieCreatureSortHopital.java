@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  * Si la créature décède ou quitte la salle, elle est retirée de l'hôpital.
  */
 @Slf4j
-public class MoralThread implements Runnable {
+public class ThreadVerifieCreatureSortHopital implements Runnable {
 
     /**
      * La créature surveillée par ce thread
@@ -30,7 +30,7 @@ public class MoralThread implements Runnable {
      * @param creature la créature à surveiller
      * @param hospital l'hôpital de référence
      */
-    public MoralThread(Creature creature, Hospital hospital) {
+    public ThreadVerifieCreatureSortHopital(Creature creature, Hospital hospital) {
         this.creature = creature;
         this.hospital = hospital;
     }

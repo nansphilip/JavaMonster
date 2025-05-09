@@ -96,6 +96,22 @@ public class Salle {
         return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
     }
 
+    public Creature getCreatureWithHighLevelMaladie(){
+        Creature creatureToReturn = creatures.getFirst();
+        for(Creature creature : this.creatures) {
+            creatureToReturn = (creature.getHighLevelMaladie().getNiveauActuel() > creatureToReturn.getHighLevelMaladie().getNiveauActuel()) ? creature : creatureToReturn;
+        }
+        return creatureToReturn;
+    }
+
+    public Creature getCreatureWithNbMaxMaladie(){
+        Creature creatureToReturn = creatures.getFirst();
+        for(Creature creature : this.creatures) {
+            creatureToReturn = (creature.getMaladies().size() > creatureToReturn.getMaladies().size()) ? creature : creatureToReturn;
+        }
+        return creatureToReturn;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
