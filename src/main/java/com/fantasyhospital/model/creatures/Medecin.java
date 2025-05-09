@@ -115,10 +115,15 @@ public class Medecin extends Bete {
         if (!creature.etreSoigne(maladie)) {
             log.error("[medecin][soigner()] La créature {} ne possédait pas la maladie {}", this.nomComplet, maladie.getNom());
         } else {
-            log.info("La maladie {} vient d'être soignée pour {} !", maladie.getNom(), creature.getNomComplet());
+            log.info("La maladie {} vient d'être soignée pour la créature {} !", maladie.getNom(), creature.getNomComplet());
             int soigne = ActionType.MEDECIN_SOIGNE.getVariationMoral();
             this.moral = Math.min(this.moral + soigne, 100);
-            log.info("Soigner a redonné {} points de moral au médecin {}. Moral actuel : {}", soigne, this.getNomComplet(), this.moral);
+
+            int soinCreature = ActionType.CREATURE_SOIN.getVariationMoral();
+            for(Creature creatureService : this.serviceMedical.getCreatures()){
+                creatureService.setMoral(Math.min(creatureService.getMoral() + soinCreature, 100));
+            }
+            log.info("Soigner a redonné {} points de moral au médecin {} et {} points à toutes les créatures du service. Moral actuel du médecin : {}", soigne, this.getNomComplet(), soinCreature, this.moral);
         }
     }
 
