@@ -1,6 +1,5 @@
 package com.fantasyhospital;
 
-import java.util.HashSet;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
