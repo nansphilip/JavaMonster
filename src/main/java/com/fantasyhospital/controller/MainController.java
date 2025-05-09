@@ -1,6 +1,15 @@
 package com.fantasyhospital.controller;
 
+import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import com.fantasyhospital.util.LogUtils;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,13 +17,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Contrôleur JavaFX chargé d'afficher le contenu du fichier de log
@@ -26,67 +28,82 @@ import java.util.concurrent.TimeUnit;
  */
 public class MainController {
 
-    @FXML
-    private TextArea logConsole;
+	@FXML
+	private TextArea logConsole;
 
-    @FXML
-    private ImageView creatureImage;
+	@FXML
+	private ImageView creatureImage;
 
-    private final Path logFilePath = Path.of("logs/app.log");
-    private ScheduledExecutorService scheduler;
-    private long lastLength = 0;
+	private final Path logFilePath = Path.of("logs/app.log");
+	private ScheduledExecutorService scheduler;
 
-    @FXML
-    public void initialize() {
-        scheduler = Executors.newSingleThreadScheduledExecutor();
+	@FXML
+	public void initialize() {
+		scheduler = Executors.newSingleThreadScheduledExecutor();
 
-        scheduler.scheduleAtFixedRate(() -> {
-            try {
-                if (Files.exists(logFilePath)) {
-                    long currentLength = Files.size(logFilePath);
+		LogTailListener listener = new LogTailListener();
+		scheduler.scheduleAtFixedRate(() -> {
 
-                    if (currentLength != lastLength) {
-                        String content = Files.readString(logFilePath);
-                        lastLength = currentLength;
+			if (Files.exists(logFilePath)) {
+				listener.listen();
+			}
 
-                        Platform.runLater(() -> {
-                            logConsole.setText(content);
-                            logConsole.positionCaret(content.length());
-                        });
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }, 0, 1, TimeUnit.SECONDS); // met à jour toutes les secondes
-    }
+		}, 0, 1, TimeUnit.SECONDS); // met à jour toutes les secondes
+	}
 
-    public void stop() {
-        if (scheduler != null && !scheduler.isShutdown()) {
-            scheduler.shutdown();
-        }
-        Platform.exit();  // Ferme toutes les ressources JavaFX
-    }
+	class LogTailListener {
 
-    // Cette méthode permet d'écouter l'événement de fermeture de la fenêtre
-    public void setStage(Stage stage) {
-        stage.setOnCloseRequest(event -> stop()); // Ajoute un gestionnaire pour la fermeture
+		long filePointer;
 
-    }
+		void listen() {
 
-    public void clearLog(ActionEvent actionEvent) {
-        LogUtils.clearLogFile(); // Appeler la méthode de nettoyage du fichier de log
-        logConsole.setText(""); // Effacer également le contenu du TextArea
-    }
+			try {
+				long len = Files.size(logFilePath);
 
-    private void creatureImageLog(String logContent) {
-        if (logContent.contains("Zombie")) {
-            creatureImage.setImage(new Image(getClass().getResourceAsStream("/images/Zombie.PNG")));
-        } else if (logContent.contains("Orque")) {
-            creatureImage.setImage(new Image(getClass().getResourceAsStream("/images/Orque.PNG")));
-//        } else {
-//            // Une image par défaut ou vide
-//            creatureImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Nain.png"))));
-        }
-    }
+				if (len < filePointer) {
+					filePointer = len;
+				} else if (len > filePointer) {
+
+					try (RandomAccessFile raf = new RandomAccessFile(logFilePath.toFile(), "r")) {
+						raf.seek(filePointer);
+						String line;
+						while ((line = raf.readLine()) != null) {
+							logConsole.appendText(new String(line.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
+						}
+						filePointer = raf.getFilePointer();
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+	}
+
+	public void stop() {
+		if (scheduler != null && !scheduler.isShutdown()) {
+			scheduler.shutdown();
+		}
+		Platform.exit();  // Ferme toutes les ressources JavaFX
+	}
+
+	// Cette méthode permet d'écouter l'événement de fermeture de la fenêtre
+	public void setStage(Stage stage) {
+		stage.setOnCloseRequest(event -> stop()); // Ajoute un gestionnaire pour la fermeture
+
+	}
+
+	public void clearLog(ActionEvent actionEvent) {
+		LogUtils.clearLogFile(); // Appeler la méthode de nettoyage du fichier de log
+		logConsole.setText(""); // Effacer également le contenu du TextArea
+	}
+
+	private void creatureImageLog(String logContent) {
+		if (logContent.contains("Zombie")) {
+			creatureImage.setImage(new Image(getClass().getResourceAsStream("/images/Zombie.PNG")));
+		} else if (logContent.contains("Orque")) {
+			creatureImage.setImage(new Image(getClass().getResourceAsStream("/images/Orque.PNG")));
+			//        } else {
+			//            // Une image par défaut ou vide
+			//            creatureImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/Nain.png"))));
+		}
+	}
 }

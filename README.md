@@ -19,7 +19,7 @@
 - **Sur Ubuntu (avec apt) :**
   ```sh
   sudo apt update
-  sudo apt install openjdk-17-jdk maven
+  sudo apt install openjdk-21-jdk maven
   ```
 
 ### Installer Java extension pour VSCode/Cursor
@@ -28,7 +28,9 @@
 - Pour Mac, ajouter le chemin de Java à `settings.json`
 
 ```json
+{
 "jdk.jdkhome": "/opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
+}
 ```
 
 ### Installer SceneBuilder
