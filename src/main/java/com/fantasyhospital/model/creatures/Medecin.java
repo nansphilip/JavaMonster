@@ -5,6 +5,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.enums.GenderType;
+import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Bete;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
@@ -55,9 +56,50 @@ public class Medecin extends Bete {
     }
 
     /**
-     * Examine un service médical (à compléter).
+     * Examine un service médical.
+     * Si son service médical est vide, il transfère une créature de la salle d'attente, ou d'un autre service
+     * Il soigne la créature la plus malade (maladie niveau le plus haut ou le plus grand nombre de maladies)
+     * Evolution V2:
+     * il privilégiera le soin des créatures contaminantes et démoralisantes et pas les regénérants
+     * Et regardera aussi le moral des créatures
+     * Au lieu d'aller forcément chercher une créature de la salle d'attente, il regardera les autres services si il peut
+     * transférer une créature d'un autre service qui a besoin de soin plus urgent
+     * Il peut transférer une créature sur le point de mourir pour l'isoler
+     * Autres actions potentielles...
      */
-    public void examiner(ServiceMedical service) {
+    public Creature examiner(Hospital hospital) {
+        CopyOnWriteArrayList<Creature> listeCreatures = this.serviceMedical.getCreatures();
+
+        // Si son service médical est vide, il essaie de transférer une créature de la salle d'attente vers son service
+        if(listeCreatures.isEmpty()){
+            Salle salleAttente = hospital.getSalleByName("Salle d'attente");
+            if(salleAttente != null){
+                CopyOnWriteArrayList<Creature> creatureSalleAttente = salleAttente.getCreatures();
+                Creature creatureATransferer = salleAttente.getCreatureWithHighLevelMaladie();
+                if(transferer(creatureATransferer, salleAttente, this.serviceMedical)){
+                    log.info("La créature {} a été transféré de {} vers {}.", creatureATransferer.getNomComplet(), salleAttente.getNom(), this.serviceMedical.getNom());
+                }
+                return creatureATransferer;
+            }
+        }
+
+        // Récupération de la créature avec le niveau de maladie le plus avancé et le nombre de maladies le plus élevé
+        Creature creatureNiveauMaladieMax = this.serviceMedical.getCreatureWithHighLevelMaladie();
+        Creature creatureNbMaladieMax = this.serviceMedical.getCreatureWithNbMaxMaladie();
+
+        //Soigne créature si niveau maladie >= 8
+        if(creatureNiveauMaladieMax.getHighLevelMaladie().getNiveauActuel() >= 8){
+            log.info("Le médecin soigne la créature {}, elle était sur le point de trépasser.", creatureNiveauMaladieMax.getNomComplet());
+            soigner(creatureNiveauMaladieMax);
+            return creatureNiveauMaladieMax;
+        } else if(creatureNbMaladieMax.getMaladies().size() >= 3) {  //Soigne créature si nombre de maladie >= 3
+            log.info("Le médecin soigne la créature {}.", creatureNbMaladieMax.getNomComplet());
+            soigner(creatureNbMaladieMax);
+            return creatureNbMaladieMax;
+        }
+        log.info("Le médecin soigne la créature {}.", creatureNiveauMaladieMax.getNomComplet());
+        soigner(creatureNiveauMaladieMax);
+        return creatureNiveauMaladieMax;
     }
 
     /**
@@ -74,10 +116,15 @@ public class Medecin extends Bete {
         if (!creature.etreSoigne(maladie)) {
             log.error("[medecin][soigner()] La créature {} ne possédait pas la maladie {}", this.nomComplet, maladie.getNom());
         } else {
-            log.info("La maladie {} vient d'être soignée pour {} !", maladie.getNom(), creature.getNomComplet());
+            log.info("La maladie {} vient d'être soignée pour la créature {} !", maladie.getNom(), creature.getNomComplet());
             int soigne = ActionType.MEDECIN_SOIGNE.getVariationMoral();
             this.moral = Math.min(this.moral + soigne, 100);
-            log.info("Soigner a redonné {} points de moral. Moral actuel : {}", soigne, this.moral);
+
+            int soinCreature = ActionType.CREATURE_SOIN.getVariationMoral();
+            for(Creature creatureService : this.serviceMedical.getCreatures()){
+                creatureService.setMoral(Math.min(creatureService.getMoral() + soinCreature, 100));
+            }
+            log.info("Soigner a redonné {} points de moral au médecin {} et {} points à toutes les créatures du service. Moral actuel du médecin : {}", soigne, this.getNomComplet(), soinCreature, this.moral);
         }
     }
 

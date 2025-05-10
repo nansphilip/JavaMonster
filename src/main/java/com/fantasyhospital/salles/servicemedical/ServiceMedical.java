@@ -64,6 +64,7 @@ public class ServiceMedical extends Salle {
      */
     public void ajouterMedecin(Medecin medecin) {
         this.medecins.add(medecin);
+        medecin.setServiceMedical(this);
     }
 
     /**
@@ -71,6 +72,7 @@ public class ServiceMedical extends Salle {
      */
     public void retirerMedecin(Medecin medecin) {
         this.medecins.remove(medecin);
+        medecin.setServiceMedical(null);
     }
 
     /**

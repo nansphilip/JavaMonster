@@ -20,7 +20,7 @@ public class Maladie {
 
     public Maladie() {
         this.type = getRandomType();
-        this.NIVEAU_MAX = genererNiveauMaxAleatoire();
+        this.NIVEAU_MAX = 10; //genererNiveauMaxAleatoire(); remplacé par 10 (cf. règles)
         this.niveauActuel = 1;
     }
 

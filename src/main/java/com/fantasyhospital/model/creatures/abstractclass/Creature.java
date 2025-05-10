@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 
@@ -58,7 +59,8 @@ public abstract class Creature extends Bete {
             Creature creature = salle.getRandomCreatureWithoutThisOne(this);
             Maladie maladie = this.getRandomMaladie();
 
-            if (maladie == null) {
+            if (maladie == null || creature == null) {
+                log.info("La créature {} s'emporte mais n'a aucune créature à contaminer...", this.nomComplet);
                 return;
             }
 
@@ -93,7 +95,7 @@ public abstract class Creature extends Bete {
     public boolean hasCreatureToleaveHospital(Salle salle){
         boolean creatureGetsOut = true;
         if(this.maladies.isEmpty()){
-            return false;
+            return true;
         }
         for(Maladie maladie : this.maladies){
             if(maladie.estLethale()){
@@ -185,6 +187,8 @@ public abstract class Creature extends Bete {
         Creature creature = (Creature) o;
         return Objects.equals(nomComplet, creature.nomComplet) && Objects.equals(taille, creature.taille) && Objects.equals(poids, creature.poids);
     }
+
+
 
     @Override
     public int hashCode() {

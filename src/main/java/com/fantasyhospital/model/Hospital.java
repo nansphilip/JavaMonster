@@ -2,11 +2,13 @@ package com.fantasyhospital.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.salles.Salle;
 
+import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -116,15 +118,54 @@ public class Hospital {
      * @param creature la créature recherchée
      * @return la salle contenant la créature, ou null si absente
      */
-    public Salle getSalleOfCreature(Creature creature) {
+     public Salle getSalleOfCreature(Creature creature) {
+         for (Salle salle : this.services) {
+             //log.info("salle : {}", salle.getNom());
+             if(salle.getCreatures().contains(creature)) {
+                 return salle;
+             }
+         }
+         return null;
+     }
+
+    /**
+     * Recherche et renvoie une salle par son nom
+     *
+     * @param String nom le nom du service recherché
+     * @return Salle la salle recherchée, null si non trouvée
+     */
+    public Salle getSalleByName(String name) {
         for (Salle salle : services) {
-            for (Creature creatureSalles : salle.getCreatures()) {
-                if (creatureSalles.equals(creature)) {
-                    return salle;
-                }
+            if(salle.getNom().equals(name)) {
+                return salle;
             }
         }
         return null;
     }
 
+    /**
+     * Retourne uniquement les salles de type services medicaux de l'hopital
+     * @return List<ServiceMedical>
+     */
+    public List<ServiceMedical> getServicesMedicaux() {
+        List<ServiceMedical> listeServices =  new ArrayList<>();
+        for (Salle salle : services) {
+            if(salle instanceof ServiceMedical) {
+                listeServices.add((ServiceMedical) salle);
+            }
+        }
+        return listeServices;
+    }
+
+    /**
+     * Retourne le nombre total de creatures de l'hopital
+     * @return int
+     */
+    public int getNbCreaturesHopital(){
+        int nbTotalCreatures = 0;
+        for(Salle salle : this.services) {
+            nbTotalCreatures += salle.getCreatures().size();
+        }
+        return nbTotalCreatures;
+    }
 }
