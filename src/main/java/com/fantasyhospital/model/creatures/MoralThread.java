@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Thread chargé de surveiller et de gérer le moral d'une créature dans l'hôpital.
- *
  * À chaque itération, il vérifie le moral et la santé de la créature.
  * Si la créature décède ou quitte la salle, elle est retirée de l'hôpital.
  */
