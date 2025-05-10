@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.ActionType;
+import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Bete;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -40,7 +41,7 @@ public class Medecin extends Bete {
      * Construit un médecin avec ses caractéristiques et son service
      * d'affectation.
      */
-    public Medecin(String nom, String sexe, int poids, int taille, int age, int moral, String race, ServiceMedical serviceMedical) {
+    public Medecin(String nom, GenderType sexe, int poids, int taille, int age, int moral, String race, ServiceMedical serviceMedical) {
         super(nom, sexe, poids, taille, age, moral);
         this.race = race;
         this.serviceMedical = serviceMedical;

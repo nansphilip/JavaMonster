@@ -2,6 +2,7 @@ package com.fantasyhospital;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.ThreadVerifieCreatureSortHopital;
@@ -31,7 +32,7 @@ public class Simulation {
         Salle salleAttente = new Salle("Salle d'attente", 70, 100);
 
         // Création d'un médecin et affectation au service d'urgence
-        Medecin medecin = new Medecin("Dr. Zoidberg", "H", 70, 175, 45, 100, "Lycanthrope", urgence);
+        Medecin medecin = new Medecin("Dr. Zoidberg", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", urgence);
         urgence.ajouterMedecin(medecin);
 
         // Génération de 5 créatures aléatoires et ajout à la liste
