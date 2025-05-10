@@ -17,6 +17,9 @@ import java.util.Scanner;
 @Slf4j
 public class EvolutionJeuThread implements Runnable {
 
+    /**
+     * L'hopital du jeu
+     */
     private Hospital hospital;
 
     public EvolutionJeuThread(Hospital hospital) {
@@ -27,83 +30,110 @@ public class EvolutionJeuThread implements Runnable {
     public void run() {
         boolean endOfGame = false;
         int nbTour = 1;
-        int nbTotalCreatures = 0;
         Scanner sc  = new Scanner(System.in);
-        while(!endOfGame) {
-            log.info("#############################################", nbTour);
-            log.info("################ TOUR : {} ##################", nbTour);
-            log.info("#############################################", nbTour);
 
+        while (!endOfGame) {
+            logTour(nbTour);
             sc.nextLine();
 
-            //Si plus aucune créature hopital, fin du jeu
-            nbTotalCreatures = hospital.getNbCreaturesHopital();
-            if(nbTotalCreatures == 0) {
-                endOfGame = true;
-                break;
-            }
-
-            for(Salle salle : hospital.getServices()){
-                for(Creature creature : salle.getCreatures()){
-                    //Diminuer le moral de 5 pts par maladie, et augmenter maladies 1 niveau
-                    for(Maladie maladie : creature.getMaladies()){
-                        maladie.augmenterNiveau();
-                        verifierCreatureSortHopital(creature);
-                        creature.setMoral(Math.max(creature.getMoral() - 5,0));
-                    }
-                }
-            }
-
-            nbTotalCreatures = hospital.getNbCreaturesHopital();
-            if(nbTotalCreatures == 0) {
-                endOfGame = true;
-                break;
-            }
-
-
-            for(Salle salle : hospital.getServices()){
-                for(Creature creature : salle.getCreatures()){
-                    creature.attendre(hospital.getSalleOfCreature(creature));
-                    verifierCreatureSortHopital(creature);
-                }
-            }
-
-            nbTotalCreatures = hospital.getNbCreaturesHopital();
-            if(nbTotalCreatures == 0) {
-                endOfGame = true;
-                break;
-            }
-
-            for(Salle salle : hospital.getServices()){
-                for(Creature creature : salle.getCreatures()){
-                    creature.verifierMoral(this.hospital.getSalleOfCreature(creature));
-                    verifierCreatureSortHopital(creature);
-                }
-            }
-
-            nbTotalCreatures = hospital.getNbCreaturesHopital();
-            if(nbTotalCreatures == 0) {
-                endOfGame = true;
-                break;
-            }
-
-            for(ServiceMedical service : hospital.getServicesMedicaux()){
-                List<Medecin> medecins = service.getMedecins();
-                for(Medecin medecin : medecins){
-                    Creature creature = medecin.examiner(hospital);
-                    verifierCreatureSortHopital(creature);
-                }
-            }
+            if (checkEndOfGame()) break;
+            appliquerEffetsMaladies();
+            if (checkEndOfGame()) break;
+            faireAttendreCreatures();
+            if (checkEndOfGame()) break;
+            verifierMoralCreatures();
+            if (checkEndOfGame()) break;
+            faireExaminerMedecins();
 
             hospital.afficherServices();
             nbTour++;
         }
         sc.close();
+        logFinJeu();
+    }
+
+    // Méthodes privées extraites
+
+    private void logTour(int nbTour) {
+        log.info("#############################################", nbTour);
+        log.info("################ TOUR : {} ##################", nbTour);
+        log.info("#############################################", nbTour);
+    }
+
+    /**
+     * Vérifie si l'hopital est vide
+     * @return vrai si c'est le cas, faux sinon
+     */
+    private boolean checkEndOfGame() {
+        int nbTotalCreatures = hospital.getNbCreaturesHopital();
+        if (nbTotalCreatures == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Applique les effets et évolutions des maladies pour toutes les créatures
+     */
+    private void appliquerEffetsMaladies() {
+        for (Salle salle : hospital.getServices()) {
+            for (Creature creature : salle.getCreatures()) {
+                for (Maladie maladie : creature.getMaladies()) {
+                    maladie.augmenterNiveau();
+                    verifierCreatureSortHopital(creature);
+                    creature.setMoral(Math.max(creature.getMoral() - 5, 0));
+                }
+            }
+        }
+    }
+
+    /**
+     * Fait attendre toutes les créatures avec les effets associés
+     */
+    private void faireAttendreCreatures() {
+        for (Salle salle : hospital.getServices()) {
+            for (Creature creature : salle.getCreatures()) {
+                creature.attendre(hospital.getSalleOfCreature(creature));
+                verifierCreatureSortHopital(creature);
+            }
+        }
+    }
+
+    /**
+     * Vérifie le moral de chaque créature et les effets associés
+     */
+    private void verifierMoralCreatures() {
+        for (Salle salle : hospital.getServices()) {
+            for (Creature creature : salle.getCreatures()) {
+                creature.verifierMoral(hospital.getSalleOfCreature(creature));
+                verifierCreatureSortHopital(creature);
+            }
+        }
+    }
+
+    /**
+     * Execute les actions des médecins pour l'hopital
+     */
+    private void faireExaminerMedecins() {
+        for (ServiceMedical service : hospital.getServicesMedicaux()) {
+            List<Medecin> medecins = service.getMedecins();
+            for (Medecin medecin : medecins) {
+                Creature creature = medecin.examiner(hospital);
+                verifierCreatureSortHopital(creature);
+            }
+        }
+    }
+
+    private void logFinJeu() {
         log.info("#############################################");
         log.info("################## FIN DU JEU ###############");
         log.info("#############################################");
     }
 
+    /**
+     * Fonction qui vérifie si la créature doit sortir de l'hopital (mort ou soigné)
+     * @param creature
+     */
     public void verifierCreatureSortHopital(Creature creature){
         Salle salleCreature = this.hospital.getSalleOfCreature(creature);
         //Si la créature est déjà sortie de l'hopital
