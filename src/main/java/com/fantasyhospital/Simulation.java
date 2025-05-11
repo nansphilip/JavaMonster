@@ -1,25 +1,28 @@
 package com.fantasyhospital;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.MoralThread;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.races.Elfe;
 import com.fantasyhospital.model.creatures.races.Zombie;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 public class Simulation {
 
-    public static void main(String[] args) throws InterruptedException {
+    private final ListCreatureController controller;
+
+    public Simulation(ListCreatureController controller) {
+        this.controller = controller;
+    }
+
+    public void startSimulation() {
         // Création de la liste des créatures (thread-safe)
         CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
@@ -40,12 +43,13 @@ public class Simulation {
         // Génération de 5 créatures aléatoires et ajout à la liste
         for (int i = 0; i < 5; i++) {
             Creature creature = Game.randomCreature();
-            creature = new Zombie();
             CopyOnWriteArrayList<Maladie> maladie = new CopyOnWriteArrayList<>();
             maladie.add(new Maladie());
             creature.setMaladies(maladie);
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
+
+            controller.addCreature(creature);
         }
 
         //Thread qui vérifie si creatures doit mourir
@@ -83,5 +87,4 @@ public class Simulation {
 //        Thread.sleep(3000);
 //        hopital.afficherToutesCreatures();
     }
-
 }

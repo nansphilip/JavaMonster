@@ -4,13 +4,8 @@ import com.fantasyhospital.salles.Salle;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererAge;
-import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererMoral;
-import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererNomAleatoire;
-import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererPoids;
-import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererSexeAleatoire;
-import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.genererTaille;
-import java.util.concurrent.CopyOnWriteArrayList;
+
+import static com.fantasyhospital.model.creatures.abstractclass.BeteUtils.*;
 
 @Setter @Getter @Slf4j public abstract class Bete {
 

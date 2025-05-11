@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane fx:id="gridPane" xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.fantasyhospital.controller.GameBoardController"
+          hgap="0" vgap="0">
+</GridPane>
+
