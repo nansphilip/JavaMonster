@@ -1,16 +1,8 @@
 package com.fantasyhospital;
 
-import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.races.Zombie;
-import com.fantasyhospital.model.disease.Disease;
-import com.fantasyhospital.rooms.Room;
-import com.fantasyhospital.rooms.medicalservice.MedicalService;
-import com.fantasyhospital.observer.ExitObserver;
-import com.fantasyhospital.observer.MoralObserver;
-
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -21,7 +13,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 public class Simulation {
 
-    public static void main(String[] args) throws InterruptedException {
+    private final ListCreatureController controller;
+
+    public Simulation(ListCreatureController controller) {
+        this.controller = controller;
+    }
+
+    public void startSimulation() {
         // Création de la liste des créatures (thread-safe)
         CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
@@ -55,6 +53,8 @@ public class Simulation {
             creature.addMoralObserver(new MoralObserver(hospital));
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
+
+            controller.addCreature(creature);
         }
 
         //roomAttente.setCreatures(creatures);

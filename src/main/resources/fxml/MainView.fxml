@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
 
-<VBox prefHeight="440.0" prefWidth="460.0" spacing="10" style="-fx-background-color: #1e1e1e; -fx-padding: 20px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fantasyhospital.controller.MainController">
-    <TextArea fx:id="logConsole"
-              prefHeight="400.0"
-              prefWidth="420.0"
-              wrapText="true"
-              editable="false"
-              style="-fx-control-inner-background: black; -fx-text-fill: #00ff00; -fx-font-family: 'Consolas'; -fx-font-size: 12px;"/>
-</VBox>
+<BorderPane xmlns:fx="http://javafx.com/fxml">
+
+    <!-- Plateau de jeu au centre -->
+    <center>
+        <fx:include source="GameBoardView.fxml"/>
+    </center>
+
+    <!-- Liste des créatures à droite -->
+    <right>
+        <fx:include source="ListCreatureView.fxml"/>
+    </right>
+
+    <!-- Console des logs en bas -->
+    <bottom>
+        <fx:include source="ConsoleLogView.fxml"/>
+    </bottom>
+
+</BorderPane>

@@ -3,6 +3,7 @@ package com.fantasyhospital;
 import java.net.URL;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,16 +13,23 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL fxmlLocation = getClass().getResource("/fxml/MainView.fxml");
-        if (fxmlLocation == null) {
-            throw new RuntimeException("Fichier FXML non trouvé : /fxml/MainView.fxml");
+        URL welcomeFxml = getClass().getResource("/fxml/LogoView.fxml");
+        if (welcomeFxml == null) {
+            throw new RuntimeException("Fichier LogoView.fxml non trouvé");
         }
 
-        Parent root = FXMLLoader.load(fxmlLocation);
-        primaryStage.setTitle("Fantasy Hospital - Console de Logs");
-        primaryStage.setScene(new Scene(root));
+        Parent welcomeRoot = FXMLLoader.load(welcomeFxml);
+        primaryStage.setTitle("Fantasy Hospital - Bienvenue");
+        primaryStage.setScene(new Scene(welcomeRoot, 800, 600)); // Taille plus petite
         primaryStage.show();
+
+        primaryStage.setOnCloseRequest(event -> {
+            System.out.println("Fermeture de l'application...");
+            Platform.exit();
+            System.exit(0);
+        });
     }
+
 
     public static void main(String[] args) {
         launch(args);
