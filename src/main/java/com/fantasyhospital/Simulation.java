@@ -32,17 +32,17 @@ public class Simulation {
         Salle salleAttente = new Salle("Salle d'attente", 70, 100);
 
         // Création d'un médecin et affectation au service d'urgence
-        Medecin medecin = new Medecin("Dr. Zoidberg", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", urgence);
+        Medecin medecin = new Medecin("Dr. Zoidberg", GenderType.MALE, 70, 175, 45, 20, "Lycanthrope", urgence);
         urgence.ajouterMedecin(medecin);
 
         // Génération de 5 créatures aléatoires et ajout à la liste
         for (int i = 0; i < 10; i++) {
             Creature creature = Game.randomCreature();
-            creature = new Zombie();
-            Maladie maladie = new Maladie();
-            CopyOnWriteArrayList<Maladie> maladies = new CopyOnWriteArrayList<>();
-            maladies.add(maladie);
-            creature.setMaladies(maladies);
+//            creature = new Zombie();
+//            Maladie maladie = new Maladie();
+//            CopyOnWriteArrayList<Maladie> maladies = new CopyOnWriteArrayList<>();
+//            maladies.add(maladie);
+//            creature.setMaladies(maladies);
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
         }
@@ -54,9 +54,10 @@ public class Simulation {
         //medecin.transferer(creatures.getFirst(), salleAttente, urgence);
 
         //Thread d'évolution du jeu et vérifie moral creatures
-        EvolutionJeuThread evol = new EvolutionJeuThread(hospital);
-        Thread threadMoral = new Thread(evol);
-        threadMoral.start();
+        EvolutionJeu jeu = new EvolutionJeu(hospital);
+        jeu.run();
+//        Thread threadMoral = new Thread(evol);
+//        threadMoral.start();
     }
 
 }

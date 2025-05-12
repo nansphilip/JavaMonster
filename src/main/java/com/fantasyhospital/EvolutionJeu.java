@@ -3,7 +3,6 @@ package com.fantasyhospital;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Medecin;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.interfaces.Regenerant;
 import com.fantasyhospital.model.creatures.races.Vampire;
 import com.fantasyhospital.model.creatures.races.Zombie;
 import com.fantasyhospital.model.maladie.Maladie;
@@ -11,22 +10,22 @@ import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 @Slf4j
-public class EvolutionJeuThread implements Runnable {
+public class EvolutionJeu {
 
     /**
      * L'hopital du jeu
      */
     private Hospital hospital;
 
-    public EvolutionJeuThread(Hospital hospital) {
+    public EvolutionJeu(Hospital hospital) {
         this.hospital = hospital;
     }
 
-    @Override
     public void run() {
         boolean endOfGame = false;
         int nbTour = 1;
@@ -50,9 +49,8 @@ public class EvolutionJeuThread implements Runnable {
         }
         sc.close();
         logFinJeu();
+        afficherCreaturesSortiesHospital();
     }
-
-    // Méthodes privées extraites
 
     private void logTour(int nbTour) {
         log.info("#############################################", nbTour);
@@ -73,14 +71,34 @@ public class EvolutionJeuThread implements Runnable {
     }
 
     /**
+     * Vérifie le moral de tous les médecins, et le sort de l'hopital si il en a fini
+     */
+    public void verifierMoralMedecins(){
+        for(ServiceMedical service : hospital.getServicesMedicaux()){
+            List<Medecin> listMedecin = new ArrayList<>(service.getMedecins());
+            for(Medecin medecin : listMedecin){
+                medecin.verifierMoral();
+            }
+        }
+    }
+
+    /**
      * Applique les effets et évolutions des maladies pour toutes les créatures
+     * Fait aussi évoluer les maladies des créatures de manière aléatoire
+     * Elles ont toutes 5% de chance de tomber malade à chaque tour
      */
     private void appliquerEffetsMaladies() {
         for (Salle salle : hospital.getServices()) {
             for (Creature creature : salle.getCreatures()) {
+                if(Math.random() < 0.05){
+                    Maladie maladie = new Maladie();
+                    creature.tomberMalade(maladie);
+                    log.info("La créature {} n'a pas de chance, elle vient de contracter la maladie {} de manière complétement aléatoire.", creature.getNomComplet(), maladie.getNom());
+                }
                 for (Maladie maladie : creature.getMaladies()) {
                     maladie.augmenterNiveau();
                     verifierCreatureSortHopital(creature);
+                    verifierMoralMedecins();
                     creature.setMoral(Math.max(creature.getMoral() - 5, 0));
                 }
             }
@@ -95,6 +113,7 @@ public class EvolutionJeuThread implements Runnable {
             for (Creature creature : salle.getCreatures()) {
                 creature.attendre(hospital.getSalleOfCreature(creature));
                 verifierCreatureSortHopital(creature);
+                verifierMoralMedecins();
             }
         }
     }
@@ -105,8 +124,11 @@ public class EvolutionJeuThread implements Runnable {
     private void verifierMoralCreatures() {
         for (Salle salle : hospital.getServices()) {
             for (Creature creature : salle.getCreatures()) {
-                creature.verifierMoral(hospital.getSalleOfCreature(creature));
+                if(creature.verifierMoral(hospital.getSalleOfCreature(creature))){
+                    salle.enleverCreature(creature);
+                }
                 verifierCreatureSortHopital(creature);
+                verifierMoralMedecins();
             }
         }
     }
@@ -120,6 +142,7 @@ public class EvolutionJeuThread implements Runnable {
             for (Medecin medecin : medecins) {
                 Creature creature = medecin.examiner(hospital);
                 verifierCreatureSortHopital(creature);
+                verifierMoralMedecins();
             }
         }
     }
@@ -128,6 +151,7 @@ public class EvolutionJeuThread implements Runnable {
         log.info("#############################################");
         log.info("################## FIN DU JEU ###############");
         log.info("#############################################");
+        log.info("");
     }
 
     /**
@@ -162,15 +186,11 @@ public class EvolutionJeuThread implements Runnable {
 
         boolean getsOut = creature.hasCreatureToleaveHospital(salleCreature);
 
-        //Si creature meurt, médecins du service perd du moral
+        //Si creature meurt, médecin le plus faible du service perd du moral
         if(getsOut){
-            log.info("creature {} sort, nb maladies : {}", creature.getNomComplet(), creature.getMaladies().size());
             if(!creature.getMaladies().isEmpty()){
                 if(salleCreature instanceof ServiceMedical){
-                    List<Medecin> medecins = ((ServiceMedical) salleCreature).getMedecins();
-                    for(Medecin medecin : medecins){
-                        medecin.depression();
-                    }
+                    ((ServiceMedical) salleCreature).getWeakerMedecin().depression();
                 }
             }
             salleCreature.enleverCreature(creature);
@@ -180,11 +200,32 @@ public class EvolutionJeuThread implements Runnable {
         //Si regenerant qui meurt mais reste quand même dans l'hopital, applique depression a medecin
         if(isDead){
             if(salleCreature instanceof ServiceMedical){
-                List<Medecin> medecins = ((ServiceMedical) salleCreature).getMedecins();
-                for(Medecin medecin : medecins){
-                    medecin.depression();
-                }
+                ((ServiceMedical) salleCreature).getWeakerMedecin().depression();
             }
+        }
+    }
+
+    /**
+     * Récupère toutes les créatures soignées et trépassées des stack du singleton
+     * et les affiche
+     */
+    public void afficherCreaturesSortiesHospital(){
+        Singleton instance = Singleton.getInstance();
+
+        log.info("#################################");
+        log.info("#### CREATURES TREPASSEES : #####");
+        log.info("#################################");
+
+        while(!instance.isStackTrepasEmpty()){
+            log.info("{}", instance.popCreatureTrepas());
+        }
+
+        log.info("#################################");
+        log.info("###### CREATURES SOIGNEES : #####");
+        log.info("#################################");
+
+        while(!instance.isStackSoigneEmpty()){
+            log.info("{}", instance.popCreatureSoigne());
         }
     }
 }

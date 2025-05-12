@@ -121,10 +121,7 @@ public class Medecin extends Bete {
             this.moral = Math.min(this.moral + soigne, 100);
 
             int soinCreature = ActionType.CREATURE_SOIN.getVariationMoral();
-            for(Creature creatureService : this.serviceMedical.getCreatures()){
-                creatureService.setMoral(Math.min(creatureService.getMoral() + soinCreature, 100));
-            }
-            log.info("Soigner a redonné {} points de moral au médecin {} et {} points à toutes les créatures du service. Moral actuel du médecin : {}", soigne, this.getNomComplet(), soinCreature, this.moral);
+            log.info("Soigner a redonné {} points de moral au médecin {} et {} points à la créature {}. Moral actuel du médecin : {}", soigne, this.getNomComplet(), soinCreature, creature.getNomComplet(), this.moral);
         }
     }
 
@@ -172,7 +169,7 @@ public class Medecin extends Bete {
     public boolean verifierMoral() {
         if (this.moral == 0) {
             enFinir();
-            log.info("Le médecin {} en a fini.", this);
+            log.info("Le médecin {} en a fini...", this.getNomComplet());
             return false;
         }
         return true;

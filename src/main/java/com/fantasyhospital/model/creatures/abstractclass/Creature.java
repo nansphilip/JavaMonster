@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.Singleton;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.salles.Salle;
@@ -48,35 +49,42 @@ public abstract class Creature extends Bete {
 
     /**
      * La créature s'emporte et peut contaminer une autre créature de la salle.
+     * Elle a 30% de chance de trépasser en s'emportant
+     * @return true si creature trepasse, false sinon
      */
-    public void semporter(Salle salle) {
+    public boolean semporter(Salle salle) {
         if (salle.getCreatures().isEmpty()) {
-            return;
+            return false;
         }
-        double rnd = new Random().nextDouble();
+        if(Math.random() < 0.30){
+            log.info("La créature {} s'emporte trop fort, elle trépasse.", this.nomComplet);
+            return true;
+        }
+
         //15% de chance de contaminer creature lorsqu'il s'emporte
-        if(rnd < 0.15){
+        if(Math.random() < 0.15){
             Creature creature = salle.getRandomCreatureWithoutThisOne(this);
             Maladie maladie = this.getRandomMaladie();
 
             if (maladie == null || creature == null) {
                 log.info("La créature {} s'emporte mais n'a aucune créature à contaminer...", this.nomComplet);
-                return;
+                return false;
             }
 
             creature.tomberMalade(maladie);
 
             log.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
         }
+        return false;
     }
 
     /**
      * Vérifie le moral de la créature et déclenche des réactions si besoin.
+     * @return true si la créature trépasse, false sinon
      */
-    public void verifierMoral(Salle salle) {
+    public boolean verifierMoral(Salle salle) {
         if (this.nbHurlements > 2) {
-            semporter(salle);
-            return;
+            return semporter(salle);
         }
         if (this.moral == 0) {
             hurler();
@@ -84,6 +92,7 @@ public abstract class Creature extends Bete {
         } else {
             this.nbHurlements = 0;
         }
+        return false;
     }
 
     /**
@@ -94,19 +103,29 @@ public abstract class Creature extends Bete {
      */
     public boolean hasCreatureToleaveHospital(Salle salle){
         boolean creatureGetsOut = true;
+
+        Singleton instanceSingleton = Singleton.getInstance();
+
         if(this.maladies.isEmpty()){
+            instanceSingleton.addCreatureSoigne(this);
             return true;
         }
         for(Maladie maladie : this.maladies){
             if(maladie.estLethale()){
                 log.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
                 creatureGetsOut = trepasser(salle);
+                if(creatureGetsOut){
+                    instanceSingleton.addCreatureTrepas(this);
+                }
                 return creatureGetsOut;
             }
         }
         if(this.maladies.size() >= 4){
             log.info("{} a contracté trop de maladies.", this.nomComplet);
             creatureGetsOut = trepasser(salle);
+            if(creatureGetsOut){
+                instanceSingleton.addCreatureTrepas(this);
+            }
             return creatureGetsOut;
         }
         // TODO: Rajouter 30% chance trepasser quand il s'emporte
@@ -131,10 +150,14 @@ public abstract class Creature extends Bete {
 
     /**
      * Soigne la créature d'une maladie donnée.
-     *
+     * Et lui redonne 50 pts de moral
      * @return true si la maladie a été retirée
      */
     public boolean etreSoigne(Maladie maladie) {
+        if(!this.maladies.contains(maladie)){
+            return false;
+        }
+        this.moral = Math.min(this.moral + ActionType.CREATURE_SOIN.getVariationMoral(), 100);
         return this.maladies.remove(maladie);
     }
 
