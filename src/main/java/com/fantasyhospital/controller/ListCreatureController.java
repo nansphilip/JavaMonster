@@ -56,10 +56,4 @@ public class ListCreatureController {
 			creatureListView.setItems(observableCreatures);
 		});
 	}
-
-	@FXML
-	private void startSimulation() {
-		Simulation simulation = new Simulation(this);
-		simulation.startSimulation();
-	}
 }
