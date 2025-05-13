@@ -1,6 +1,8 @@
 package com.fantasyhospital.model.creatures;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.ActionType;
@@ -9,6 +11,7 @@ import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
+import com.fantasyhospital.observer.CreatureObserver;
 import com.fantasyhospital.rooms.Room;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
 
@@ -39,6 +42,11 @@ public class Doctor extends Beast {
     protected MedicalService medicalService;
 
     /**
+     * Liste d'observer qui sont appelés pour être notifiés d'un changement de moral du médecin
+     */
+    private List<CreatureObserver> observers = new ArrayList<>();
+
+    /**
      * Constructs a doctor with their characteristics and assigned service.
      */
     public Doctor(String name, GenderType sex, int weight, int height, int age, int morale, String race, MedicalService medicalService) {
@@ -53,6 +61,23 @@ public class Doctor extends Beast {
     @Override
     public void waiting(Room room) {
 
+    }
+
+    /**
+     * Ajoute un observer à la liste d'observer
+     * @param creatureObserver
+     */
+    public void addObserver(CreatureObserver creatureObserver) {
+        observers.add(creatureObserver);
+    }
+
+    /**
+     * Notifie les observer que l'état du médecin a changé
+     */
+    public void notifyObservers() {
+        for (CreatureObserver observer : observers) {
+            observer.onStateChanged(this);
+        }
     }
 
     /**

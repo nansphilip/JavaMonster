@@ -75,6 +75,21 @@ public class MedicalService extends Room {
     }
 
     /**
+     * Recherche et retourne le médecin le plus faible moralement du service
+     * @return Medecin
+     */
+    public Doctor getWeakerDoctor() {
+        if(!doctors.isEmpty()){
+            Doctor doctor = this.doctors.getFirst();
+            for(Doctor m : doctors) {
+                doctor = m.getMorale() < doctor.getMorale() ? m : doctor;
+            }
+            return doctor;
+        }
+        return null;
+    }
+
+    /**
      * Heals a creature by a doctor (to be completed).
      */
     public void healCreatures(Doctor doctor, Creature creature) {

@@ -32,6 +32,7 @@ public abstract class TriageResident extends Creature {
             decreaseMorale = ActionType.CREATURE_PENDING_TRIAGE_ALONE.getMoraleVariation();
         }
         log.info("La créature {} attend ({} points).", this.fullName, decreaseMorale);
-        this.morale -= withTriage ? ActionType.CREATURE_PENDING_TRIAGE_NOT_ALONE.getMoraleVariation() : ActionType.CREATURE_PENDING_TRIAGE_ALONE.getMoraleVariation();
+        this.setMorale(Math.max(this.getMorale() + decreaseMorale, 0));
+        notifyMoralObservers();
     }
 }

@@ -26,6 +26,7 @@ public abstract class VIPPatient extends Creature {
         } else {
             log.info("La créature {} attend.", this.fullName);
         }
+        notifyMoralObservers();
     }
 
     @Override

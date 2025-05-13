@@ -1,7 +1,5 @@
 package com.fantasyhospital;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -10,8 +8,13 @@ import com.fantasyhospital.model.creatures.races.Zombie;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.rooms.Room;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.observer.ExitObserver;
+import com.fantasyhospital.observer.MoralObserver;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.CopyOnWriteArrayList;
+
 
 @Slf4j
 public class Simulation {
@@ -32,16 +35,14 @@ public class Simulation {
 
         // Création d'un médecin et affectation au service d'emergency
         Doctor doctor = new Doctor("Dr. Zoidberg", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
+        doctor.addObserver(new MoralObserver(hospital));
         emergency.addDoctor(doctor);
 
         // Génération de 5 créatures aléatoires et ajout à la liste
         for (int i = 0; i < 10; i++) {
             Creature creature = Game.randomCreature();
-            creature = new Zombie();
-            Disease disease = new Disease();
-            CopyOnWriteArrayList<Disease> diseases = new CopyOnWriteArrayList<>();
-            diseases.add(disease);
-            creature.setDiseases(diseases);
+            creature.addExitObserver(new ExitObserver(hospital));
+            creature.addMoralObserver(new MoralObserver(hospital));
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
         }
@@ -52,10 +53,9 @@ public class Simulation {
         hospital.addService(emergency);
         //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
 
-        //Thread d'évolution du jeu et vérifie moral creatures
-        EvolutionGameThread evol = new EvolutionGameThread(hospital);
-        Thread threadMoral = new Thread(evol);
-        threadMoral.start();
+        //Boucle d'évolution du jeu
+        EvolutionGame jeu = new EvolutionGame(hospital);
+        jeu.run();
     }
 
 }
