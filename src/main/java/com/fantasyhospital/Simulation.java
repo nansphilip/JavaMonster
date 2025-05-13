@@ -1,8 +1,15 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.controller.ConsoleLogController;
+import com.fantasyhospital.controller.ListCreatureController;
+import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
+import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.races.Zombie;
+import com.fantasyhospital.observer.ExitObserver;
+import com.fantasyhospital.observer.MoralObserver;
+import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -13,10 +20,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 public class Simulation {
 
-    private final ListCreatureController controller;
+    private final ConsoleLogController consoleLogController;
+    private final ListCreatureController listCreatureController;
 
-    public Simulation(ListCreatureController controller) {
-        this.controller = controller;
+    public Simulation(ConsoleLogController consoleLogController, ListCreatureController listCreatureController) {
+        this.listCreatureController = listCreatureController;
+        this.consoleLogController = consoleLogController;
     }
 
     public void startSimulation() {
@@ -54,7 +63,7 @@ public class Simulation {
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
 
-            controller.addCreature(creature);
+            listCreatureController.addCreature(creature);
         }
 
         //roomAttente.setCreatures(creatures);

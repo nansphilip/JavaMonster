@@ -18,4 +18,8 @@
     <Button text="Clear Log"
             onAction="#clearLog"
             style="-fx-background-color: #ff0000; -fx-text-fill: white; -fx-font-size: 14px;" />
+
+    <Button text="Start Simulation"
+            onAction="#startSimulation"
+            style="-fx-background-color: #00ff00; -fx-text-fill: white; -fx-font-size: 14px;" />
 </VBox>

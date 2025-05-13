@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.fantasyhospital.controller.MiniLogoViewController"
+      alignment="CENTER_LEFT"
+      prefWidth="250">
+
+    <ImageView fitWidth="250" preserveRatio="true">
+        <image>
+            <Image url="@/images/Logo.jpg"/>
+        </image>
+    </ImageView>
+</HBox>

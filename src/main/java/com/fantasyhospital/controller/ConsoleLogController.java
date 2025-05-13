@@ -1,6 +1,7 @@
 package com.fantasyhospital.controller;
 
-import com.fantasyhospital.util.LogUtils;
+import com.fantasyhospital.Simulation;
+import com.fantasyhospital.util.LogsUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,16 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class ConsoleLogController {
+
+    private ListCreatureController listCreatureController;
+
+    public ConsoleLogController() {
+
+    }
+
+    public ConsoleLogController(ListCreatureController listCreatureController) {
+        this.listCreatureController = listCreatureController;
+    }
 
     @FXML
     private TextArea logConsole;
@@ -87,8 +98,14 @@ public class ConsoleLogController {
     }
 
     public void clearLog(ActionEvent actionEvent) {
-        LogUtils.clearLogFile(); // Appeler la méthode de nettoyage du fichier de log
+        LogsUtils.clearLogFile(); // Appeler la méthode de nettoyage du fichier de log
         logConsole.setText(""); // Effacer également le contenu du TextArea
+    }
+
+    @FXML
+    private void startSimulation() {
+        Simulation simulation = new Simulation(this, listCreatureController);
+        simulation.startSimulation();
     }
 
 }

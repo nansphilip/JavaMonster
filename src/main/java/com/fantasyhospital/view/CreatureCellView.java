@@ -42,7 +42,7 @@ public class CreatureCellView extends ListCell<Creature> {
             Image croppedImage = cropImage(transparentImage);
 
             imageView.setImage(croppedImage);
-            name.setText(creature.getNomComplet());
+            name.setText(creature.getFullName());
             detailsLabel.setText(creature.toString());
             setGraphic(content);
         }
