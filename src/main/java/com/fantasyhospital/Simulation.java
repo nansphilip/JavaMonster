@@ -28,15 +28,19 @@ public class Simulation {
 
         // Création d'un service médical "Urgence"
         MedicalService emergency = new MedicalService("Urgence", 50.0, 10, "Mediocre");
+        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, "Mediocre");
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
         // Création de la room d'attente
         Room roomAttente = new Room("Room d'attente", 70, 100);
 
         // Création d'un médecin et affectation au service d'emergency
-        Doctor doctor = new Doctor("Dr. Zoidberg", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
+        Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", cardiac);
         doctor.addObserver(new MoralObserver(hospital));
-        emergency.addDoctor(doctor);
+        cardiac.addDoctor(doctor);
+        Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
+        doctor2.addObserver(new MoralObserver(hospital));
+        emergency.addDoctor(doctor2);
 
         // Génération de 5 créatures aléatoires et ajout à la liste
         for (int i = 0; i < 10; i++) {
@@ -48,9 +52,10 @@ public class Simulation {
         }
 
         //roomAttente.setCreatures(creatures);
-        emergency.setCreatures(creatures);
+        roomAttente.setCreatures(creatures);
         hospital.addService(roomAttente);
         hospital.addService(emergency);
+        hospital.addService(cardiac);
         //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
 
         //Boucle d'évolution du jeu

@@ -84,6 +84,8 @@ public class ExitObserver implements CreatureObserver {
                         doctor.depression();
                         //On notifie l'observer du médecin pour vérifier si il n'en finit pas
                         doctor.notifyObservers();
+                    } else {
+                        log.info("Il n'y avait aucun médecin à déprimer dans le service.");
                     }
                 }
             }

@@ -5,6 +5,7 @@ import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.rooms.medicalservice.MedicalService;
 
 /**
  * Implémentation de l'interface Observer chargée de surveiller le moral des bêtes
@@ -39,6 +40,9 @@ public class MoralObserver implements CreatureObserver {
         Room room = hospital.getRoomOfCreature(creature);
         if(creature.checkMorale(room)){
             room.removeCreature(creature);
+            if(room instanceof MedicalService){
+                ((MedicalService) room).getWeakerDoctor().depression();
+            }
         }
     }
 }

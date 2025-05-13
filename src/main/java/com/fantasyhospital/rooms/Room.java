@@ -96,6 +96,9 @@ public class Room {
     }
 
     public Creature getCreatureWithHighLevelDisease(){
+        if(creatures.isEmpty()){
+            return null;
+        }
         Creature creatureToReturn = creatures.getFirst();
         for(Creature creature : this.creatures) {
             creatureToReturn = (creature.getHighLevelDisease().getCurrentLevel() > creatureToReturn.getHighLevelDisease().getCurrentLevel()) ? creature : creatureToReturn;
@@ -104,11 +107,21 @@ public class Room {
     }
 
     public Creature getCreatureWithNbMaxDisease(){
+        if(creatures.isEmpty()){
+            return null;
+        }
         Creature creatureToReturn = creatures.getFirst();
         for(Creature creature : this.creatures) {
             creatureToReturn = (creature.getDiseases().size() > creatureToReturn.getDiseases().size()) ? creature : creatureToReturn;
         }
         return creatureToReturn;
+    }
+
+    public String getRoomType(){
+        if(creatures.isEmpty()){
+            return null;
+        }
+        return this.creatures.getFirst().getRace();
     }
 
     @Override

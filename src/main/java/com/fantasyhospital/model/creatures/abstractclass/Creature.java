@@ -2,6 +2,7 @@ package com.fantasyhospital.model.creatures.abstractclass;
 
 import com.fantasyhospital.Singleton;
 import com.fantasyhospital.enums.ActionType;
+import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.CreatureObserver;
 import com.fantasyhospital.rooms.Room;
@@ -69,7 +70,7 @@ public abstract class Creature extends Beast {
         if(Math.random() < 0.30){
             log.info("La créature {} s'emporte trop fort, elle trépasse.", this.fullName);
             Singleton instanceSingleton = Singleton.getInstance();
-            instanceSingleton.addCreatureTrepas(this);
+            instanceSingleton.addBeastToStack(this, StackType.DIE);
             return true;
         }
 
@@ -108,7 +109,6 @@ public abstract class Creature extends Beast {
         } else {
             this.howlCount = 0;
         }
-        notifyExitObservers();
         return false;
     }
 
@@ -123,7 +123,7 @@ public abstract class Creature extends Beast {
 
         //Créature n'a plus de maladies, elle est soignée
         if(this.diseases.isEmpty()){
-            instanceSingleton.addCreatureSoigne(this);
+            instanceSingleton.addBeastToStack(this, StackType.HEAL);
             return true;
         }
 
@@ -132,7 +132,7 @@ public abstract class Creature extends Beast {
                 log.info("La disease {} de {} était à son apogée.", disease.getName(), this.fullName);
                 creatureGetsOut = die(room);
                 if(creatureGetsOut){
-                    instanceSingleton.addCreatureTrepas(this);
+                    instanceSingleton.addBeastToStack(this, StackType.DIE);
                 }
                 return creatureGetsOut;
             }
@@ -141,7 +141,7 @@ public abstract class Creature extends Beast {
             log.info("{} a contracté trop de diseases.", this.fullName);
             creatureGetsOut = die(room);
             if(creatureGetsOut){
-                instanceSingleton.addCreatureTrepas(this);
+                instanceSingleton.addBeastToStack(this, StackType.DIE);
             }
             return creatureGetsOut;
         }

@@ -1,5 +1,6 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -105,6 +106,7 @@ public class EvolutionGame {
             List<Doctor> medecins = service.getDoctors();
             for (Doctor medecin : medecins) {
                 Creature creature = medecin.examine(hospital);
+                log.info("docteur : {} salle : {}",  medecin.getFullName(), service.getName());
             }
         }
     }
@@ -121,16 +123,24 @@ public class EvolutionGame {
         log.info("#### CREATURES TREPASSEES : #####");
         log.info("#################################");
 
-        while(!instance.isStackTrepasEmpty()){
-            log.info("{}", instance.popCreatureTrepas());
+        while(!instance.isStackEmpty(StackType.DIE)){
+            log.info("{}", instance.popBeastFromStack(StackType.DIE));
         }
 
         log.info("#################################");
         log.info("###### CREATURES SOIGNEES : #####");
         log.info("#################################");
 
-        while(!instance.isStackSoigneEmpty()){
-            log.info("{}", instance.popCreatureSoigne());
+        while(!instance.isStackEmpty(StackType.HEAL)){
+            log.info("{}", instance.popBeastFromStack(StackType.HEAL));
+        }
+
+        log.info("#################################");
+        log.info("###### MEDECINS HARAKIRI : ######");
+        log.info("#################################");
+
+        while(!instance.isStackEmpty(StackType.DOCTOR)){
+            log.info("{}", instance.popBeastFromStack(StackType.DOCTOR));
         }
     }
 
