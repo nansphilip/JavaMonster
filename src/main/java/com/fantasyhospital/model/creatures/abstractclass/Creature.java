@@ -1,17 +1,20 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
-import java.util.Objects;
-import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.fantasyhospital.Singleton;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.observer.CreatureObserver;
+import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.salles.Salle;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Classe abstraite représentant une créature dans Fantasy Hospital. Gère les
@@ -29,7 +32,11 @@ public abstract class Creature extends Bete {
      * Générateur aléatoire partagé
      */
     protected static final Random RANDOM = new Random();
+
     private int nbHurlements;
+
+    private List<CreatureObserver> exitObservers = new ArrayList<>();
+    private List<CreatureObserver> moralObservers = new ArrayList<>();
 
     /**
      * Construit une créature avec un ensemble de maladies initial.
@@ -58,6 +65,8 @@ public abstract class Creature extends Bete {
         }
         if(Math.random() < 0.30){
             log.info("La créature {} s'emporte trop fort, elle trépasse.", this.nomComplet);
+            Singleton instanceSingleton = Singleton.getInstance();
+            instanceSingleton.addCreatureTrepas(this);
             return true;
         }
 
@@ -83,6 +92,9 @@ public abstract class Creature extends Bete {
      * @return true si la créature trépasse, false sinon
      */
     public boolean verifierMoral(Salle salle) {
+        if(salle == null) {
+            return false;
+        }
         if (this.nbHurlements > 2) {
             return semporter(salle);
         }
@@ -92,6 +104,7 @@ public abstract class Creature extends Bete {
         } else {
             this.nbHurlements = 0;
         }
+        notifyExitObservers();
         return false;
     }
 
@@ -106,6 +119,7 @@ public abstract class Creature extends Bete {
 
         Singleton instanceSingleton = Singleton.getInstance();
 
+        //Créature n'a plus de maladies, elle est soignée
         if(this.maladies.isEmpty()){
             instanceSingleton.addCreatureSoigne(this);
             return true;
@@ -128,8 +142,33 @@ public abstract class Creature extends Bete {
             }
             return creatureGetsOut;
         }
-        // TODO: Rajouter 30% chance trepasser quand il s'emporte
         return false;
+    }
+
+    public void addExitObserver(CreatureObserver creatureObserver){
+        this.exitObservers.add(creatureObserver);
+    }
+
+    public void addMoralObserver(CreatureObserver creatureObserver){
+        this.moralObservers.add(creatureObserver);
+    }
+
+//    @Override
+//    public void setMoral(int moral) {
+//        super.setMoral(moral);
+//        //notifyMoralObservers();
+//    }
+
+    public void notifyExitObservers() {
+        for (CreatureObserver observer : this.exitObservers) {
+            observer.onStateChanged(this);
+        }
+    }
+
+    public void notifyMoralObservers() {
+        for (CreatureObserver observer : this.moralObservers) {
+            observer.onStateChanged(this);
+        }
     }
 
     /**
@@ -146,6 +185,7 @@ public abstract class Creature extends Bete {
         } else {
             this.maladies.add(maladie);
         }
+        notifyExitObservers();
     }
 
     /**
@@ -158,7 +198,9 @@ public abstract class Creature extends Bete {
             return false;
         }
         this.moral = Math.min(this.moral + ActionType.CREATURE_SOIN.getVariationMoral(), 100);
-        return this.maladies.remove(maladie);
+        this.maladies.remove(maladie);
+        notifyExitObservers();
+        return true;
     }
 
     /**

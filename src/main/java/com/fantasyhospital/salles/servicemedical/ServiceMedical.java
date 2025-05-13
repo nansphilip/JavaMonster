@@ -80,11 +80,14 @@ public class ServiceMedical extends Salle {
      * @return Medecin
      */
     public Medecin getWeakerMedecin() {
-        Medecin medecin = this.medecins.getFirst();
-        for(Medecin m : medecins) {
-            medecin = m.getMoral() < medecin.getMoral() ? m : medecin;
+        if(!medecins.isEmpty()){
+            Medecin medecin = this.medecins.getFirst();
+            for(Medecin m : medecins) {
+                medecin = m.getMoral() < medecin.getMoral() ? m : medecin;
+            }
+            return medecin;
         }
-        return medecin;
+        return null;
     }
 
     /**

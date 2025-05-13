@@ -40,7 +40,7 @@ public class EvolutionJeu {
             if (checkEndOfGame()) break;
             faireAttendreCreatures();
             if (checkEndOfGame()) break;
-            verifierMoralCreatures();
+            //verifierMoralCreatures();
             if (checkEndOfGame()) break;
             faireExaminerMedecins();
 
@@ -83,7 +83,7 @@ public class EvolutionJeu {
     }
 
     /**
-     * Applique les effets et évolutions des maladies pour toutes les créatures
+     * Applique les effets et évolutions des maladies pour toutes les créatures (-5 pts moral par maladie)
      * Fait aussi évoluer les maladies des créatures de manière aléatoire
      * Elles ont toutes 5% de chance de tomber malade à chaque tour
      */
@@ -97,10 +97,11 @@ public class EvolutionJeu {
                 }
                 for (Maladie maladie : creature.getMaladies()) {
                     maladie.augmenterNiveau();
-                    verifierCreatureSortHopital(creature);
-                    verifierMoralMedecins();
+                    //verifierCreatureSortHopital(creature);
+                    //verifierMoralMedecins();
                     creature.setMoral(Math.max(creature.getMoral() - 5, 0));
                 }
+                creature.notifyExitObservers();
             }
         }
     }
@@ -112,8 +113,8 @@ public class EvolutionJeu {
         for (Salle salle : hospital.getServices()) {
             for (Creature creature : salle.getCreatures()) {
                 creature.attendre(hospital.getSalleOfCreature(creature));
-                verifierCreatureSortHopital(creature);
-                verifierMoralMedecins();
+                //verifierCreatureSortHopital(creature);
+                //verifierMoralMedecins();
             }
         }
     }
@@ -127,8 +128,8 @@ public class EvolutionJeu {
                 if(creature.verifierMoral(hospital.getSalleOfCreature(creature))){
                     salle.enleverCreature(creature);
                 }
-                verifierCreatureSortHopital(creature);
-                verifierMoralMedecins();
+                //verifierCreatureSortHopital(creature);
+                //verifierMoralMedecins();
             }
         }
     }
@@ -141,8 +142,8 @@ public class EvolutionJeu {
             List<Medecin> medecins = service.getMedecins();
             for (Medecin medecin : medecins) {
                 Creature creature = medecin.examiner(hospital);
-                verifierCreatureSortHopital(creature);
-                verifierMoralMedecins();
+                //verifierCreatureSortHopital(creature);
+                //verifierMoralMedecins();
             }
         }
     }

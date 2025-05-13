@@ -9,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 public abstract class ClientVIP extends Creature {
+
     public int nbTourAttente;
 
     public ClientVIP( CopyOnWriteArrayList<Maladie> maladies) {
@@ -26,6 +27,7 @@ public abstract class ClientVIP extends Creature {
         } else {
             log.info("La créature {} attend.", this.nomComplet);
         }
+        notifyMoralObservers();
     }
 
     @Override

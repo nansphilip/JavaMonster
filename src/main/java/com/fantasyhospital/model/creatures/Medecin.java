@@ -1,6 +1,8 @@
 package com.fantasyhospital.model.creatures;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.ActionType;
@@ -9,6 +11,7 @@ import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Bete;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.observer.CreatureObserver;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
 
@@ -37,6 +40,8 @@ public class Medecin extends Bete {
      */
     protected ServiceMedical serviceMedical;
 
+    private List<CreatureObserver> observers = new ArrayList<>();
+
     /**
      * Construit un médecin avec ses caractéristiques et son service
      * d'affectation.
@@ -53,6 +58,16 @@ public class Medecin extends Bete {
     @Override
     public void attendre(Salle salle) {
 
+    }
+
+    public void addObserver(CreatureObserver creatureObserver) {
+        observers.add(creatureObserver);
+    }
+
+    public void notifyObservers() {
+        for (CreatureObserver observer : observers) {
+            observer.onStateChanged(this);
+        }
     }
 
     /**
@@ -97,9 +112,9 @@ public class Medecin extends Bete {
             soigner(creatureNbMaladieMax);
             return creatureNbMaladieMax;
         }
-        log.info("Le médecin soigne la créature {}.", creatureNiveauMaladieMax.getNomComplet());
-        soigner(creatureNiveauMaladieMax);
-        return creatureNiveauMaladieMax;
+        log.info("Le médecin soigne la créature {}.", creatureNbMaladieMax.getNomComplet());
+        soigner(creatureNbMaladieMax);
+        return creatureNbMaladieMax;
     }
 
     /**
