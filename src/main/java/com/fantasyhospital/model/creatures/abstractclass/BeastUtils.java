@@ -21,13 +21,8 @@ public abstract class BeastUtils {
 
 	protected static final Random RANDOM = new Random();
 
-	public static String generateRandomName() {
-		//        String[] prefix = {"Kra", "Zor", "El", "Thra", "Gor", "Vel", "Mor", "Sha", "Lun", "Dra"};
-		//        String[] suffix = {"gor", "nax", "iel", "dor", "vak", "mir", "thar", "dil", "rak", "zul"};
-		//
-		//        return prefix[random.nextInt(prefix.length)] + suffix[random.nextInt(suffix.length)];
-		GenderType sex = GenderType.MALE;
-		return switch (sex) {
+	public static String generateRandomName(GenderType genderType) {
+		return switch (genderType) {
 			case MALE:
 				int i = RANDOM.nextInt(MALE_NAME.length);
 				yield MALE_NAME[i];
