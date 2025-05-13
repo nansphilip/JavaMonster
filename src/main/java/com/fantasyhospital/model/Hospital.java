@@ -2,170 +2,168 @@ package com.fantasyhospital.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
-import com.fantasyhospital.model.creatures.Medecin;
+import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.salles.Salle;
+import com.fantasyhospital.rooms.Room;
 
-import com.fantasyhospital.salles.servicemedical.ServiceMedical;
+import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Représente l'hôpital Fantasy Hospital.
- * Gère la liste des services (salles), les médecins et les opérations globales sur l'hôpital.
+ * Represents the Fantasy Hospital.
+ * Manages the list of services (rooms), doctors, and global operations within the hospital.
  */
 @Slf4j
 public class Hospital {
 
     /**
-     * Nom de l'hôpital
+     * Name of the hospital
      */
     @Setter
     @Getter
-    private String nom;
+    private String name;
 
     /**
-     * Nombre maximal de services que l'hôpital peut contenir
+     * Maximum number of services the hospital can contain
      */
     @Getter
-    private final int NB_MAX_SERVICE;
+    private final int MAX_SERVICE_COUNT;
 
     /**
-     * Liste des services (salles) de l'hôpital
+     * List of the hospital's services (rooms)
      */
     @Setter
     @Getter
-    private List<Salle> services = new ArrayList<Salle>();
+    private List<Room> services = new ArrayList<Room>();
 
     /**
-     * Liste des médecins de l'hôpital
+     * List of the hospital's doctors
      */
-    private List<Medecin> medecins = new ArrayList<>();
+    private List<Doctor> doctors = new ArrayList<>();
 
     /**
-     * Crée un nouvel hôpital.
+     * Creates a new hospital.
      *
-     * @param nom nom de l'hôpital
-     * @param NB_MAX_SERVICE nombre maximal de services
+     * @param name the name of the hospital
+     * @param MAX_SERVICE_COUNT the maximum number of services
      */
-    public Hospital(String nom, int NB_MAX_SERVICE) {
-        this.nom = nom;
-        this.NB_MAX_SERVICE = NB_MAX_SERVICE;
+    public Hospital(String name, int MAX_SERVICE_COUNT) {
+        this.name = name;
+        this.MAX_SERVICE_COUNT = MAX_SERVICE_COUNT;
     }
 
     /**
-     * Affiche les informations de chaque service de l'hôpital dans les logs.
+     * Displays information about each of the hospital's services in the logs.
      */
-    public void afficherServices() {
-        for (Salle salle : this.services) {
-            log.info("{}", salle);
+    public void displayServices() {
+        for (Room room : this.services) {
+            log.info("{}", room);
         }
     }
 
     /**
-     * Affiche le nombre total de créatures dans l'hôpital (à compléter).
+     * Displays the total number of creatures in the hospital (to be completed).
      */
-    public void afficherNombreCreatures() {
+    public void displayCreaturesList() {
         /* ... */ }
 
     /**
-     * Affiche toutes les créatures présentes dans tous les services de
-     * l'hôpital.
+     * Displays all creatures present in all the hospital's services.
      */
-    public void afficherToutesCreatures() {
-        for (Salle salle : this.services) {
-            for (Creature creature : salle.getCreatures()) {
+    public void displayAllCreatures() {
+        for (Room room : this.services) {
+            for (Creature creature : room.getCreatures()) {
                 log.info("{}", creature);
             }
         }
     }
 
     /**
-     * Modifie aléatoirement des créatures (à compléter).
+     * Randomly modifies creatures (to be completed).
      */
-    public void modifierRandomCreatures() {
+    public void modifyRandomCreatures() {
 
     }
 
     /**
-     * Modifie aléatoirement des services (à compléter).
+     * Randomly modifies services (to be completed).
      */
-    public void modifierRandomServices() {
+    public void modifyRandomServices() {
 
     }
 
     /**
-     * Ajoute un service (salle) à l'hôpital.
+     * Adds a service (room) to the hospital.
      *
-     * @param salle la salle à ajouter
+     * @param room the room to add
      */
-    public void ajouterService(Salle salle) {
-        services.add(salle);
+    public void addService(Room room) {
+        services.add(room);
     }
 
     /**
-     * Lance la simulation de l'hôpital (à compléter).
+     * Starts the hospital simulation (to be completed).
      */
     public void simulation() {
     }
 
     /**
-     * Retourne la salle dans laquelle se trouve une créature donnée.
+     * Returns the room where a given creature is located.
      *
-     * @param creature la créature recherchée
-     * @return la salle contenant la créature, ou null si absente
+     * @param creature the creature to search for
+     * @return the room containing the creature, or null if not found
      */
-     public Salle getSalleOfCreature(Creature creature) {
-         for (Salle salle : this.services) {
-             //log.info("salle : {}", salle.getNom());
-             if(salle.getCreatures().contains(creature)) {
-                 return salle;
+     public Room getRoomOfCreature(Creature creature) {
+         for (Room room : this.services) {
+             //log.info("room : {}", room.getNom());
+             if(room.getCreatures().contains(creature)) {
+                 return room;
              }
          }
          return null;
      }
 
     /**
-     * Recherche et renvoie une salle par son nom
+     * Searches and returns a room by its name.
      *
-     * @param String nom le nom du service recherché
-     * @return Salle la salle recherchée, null si non trouvée
+     * @param name the name of the service to search for
+     * @return the searched room, or null if not found
      */
-    public Salle getSalleByName(String name) {
-        for (Salle salle : services) {
-            if(salle.getNom().equals(name)) {
-                return salle;
+    public Room getRoomByName(String name) {
+        for (Room room : services) {
+            if(room.getName().equals(name)) {
+                return room;
             }
         }
         return null;
     }
 
     /**
-     * Retourne uniquement les salles de type services medicaux de l'hopital
-     * @return List<ServiceMedical>
+     * Returns only the medical service rooms in the hospital.
+     * @return List<MedicalService>
      */
-    public List<ServiceMedical> getServicesMedicaux() {
-        List<ServiceMedical> listeServices =  new ArrayList<>();
-        for (Salle salle : services) {
-            if(salle instanceof ServiceMedical) {
-                listeServices.add((ServiceMedical) salle);
+    public List<MedicalService> getMedicalServices() {
+        List<MedicalService> servicesList =  new ArrayList<>();
+        for (Room room : services) {
+            if(room instanceof MedicalService) {
+                servicesList.add((MedicalService) room);
             }
         }
-        return listeServices;
+        return servicesList;
     }
 
     /**
-     * Retourne le nombre total de creatures de l'hopital
+     * Returns the total number of creatures in the hospital.
      * @return int
      */
-    public int getNbCreaturesHopital(){
-        int nbTotalCreatures = 0;
-        for(Salle salle : this.services) {
-            nbTotalCreatures += salle.getCreatures().size();
+    public int getTotalCreaturesHospital(){
+        int TotalCreatures = 0;
+        for(Room room : this.services) {
+            TotalCreatures += room.getCreatures().size();
         }
-        return nbTotalCreatures;
+        return TotalCreatures;
     }
 }

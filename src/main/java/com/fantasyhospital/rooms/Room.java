@@ -1,8 +1,7 @@
-package com.fantasyhospital.salles;
+package com.fantasyhospital.rooms;
 
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -13,24 +12,24 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Getter @Slf4j
-public class Salle {
+public class Room {
 
     @Setter
-    protected String nom;
-    protected double superficie;
-    protected final int NB_MAX_CREATURE;
+    protected String name;
+    protected double area;
+    protected final int MAX_CREATURE;
     @Setter
     protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
     public Random random = new Random();
 
-    public Salle(String nom, double superficie, int NB_MAX_CREATURE) {
-        this.nom = nom;
-        this.superficie = superficie;
-        this.NB_MAX_CREATURE = NB_MAX_CREATURE;
+    public Room(String name, double area, int MAX_CREATURE) {
+        this.name = name;
+        this.area = area;
+        this.MAX_CREATURE = MAX_CREATURE;
     }
 
-    public boolean ajouterCreature(Creature creature){
-        if (creatures.size() >= NB_MAX_CREATURE) {
+    public boolean addCreature(Creature creature){
+        if (creatures.size() >= MAX_CREATURE) {
             return false;
         } else {
             creatures.add(creature);
@@ -38,20 +37,20 @@ public class Salle {
         }
     }
 
-    public boolean enleverCreature(Creature creature){
+    public boolean removeCreature(Creature creature){
         return this.creatures.remove(creature);
     }
 
-    public void afficherInfosService(){
+    public void displayInfosService(){
         log.info("\n{}", this);
     }
 
-    public void afficherInfosCreatures(){
+    public void displayInfosCreatures(){
 
     }
 
-    public void setSuperficie(double superficie) {
-        this.superficie = superficie;
+    public void setArea(double area) {
+        this.area = area;
     }
 
 	public Creature getFirstCreature() {
@@ -64,7 +63,7 @@ public class Salle {
 
     public Creature getCreatureByName(String creatureName){
         for(Creature creature : creatures){
-            if(creature.getNomComplet().equals(creatureName)){
+            if(creature.getFullName().equals(creatureName)){
                 return creature;
             }
         }
@@ -96,18 +95,18 @@ public class Salle {
         return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
     }
 
-    public Creature getCreatureWithHighLevelMaladie(){
+    public Creature getCreatureWithHighLevelDisease(){
         Creature creatureToReturn = creatures.getFirst();
         for(Creature creature : this.creatures) {
-            creatureToReturn = (creature.getHighLevelMaladie().getNiveauActuel() > creatureToReturn.getHighLevelMaladie().getNiveauActuel()) ? creature : creatureToReturn;
+            creatureToReturn = (creature.getHighLevelDisease().getCurrentLevel() > creatureToReturn.getHighLevelDisease().getCurrentLevel()) ? creature : creatureToReturn;
         }
         return creatureToReturn;
     }
 
-    public Creature getCreatureWithNbMaxMaladie(){
+    public Creature getCreatureWithNbMaxDisease(){
         Creature creatureToReturn = creatures.getFirst();
         for(Creature creature : this.creatures) {
-            creatureToReturn = (creature.getMaladies().size() > creatureToReturn.getMaladies().size()) ? creature : creatureToReturn;
+            creatureToReturn = (creature.getDiseases().size() > creatureToReturn.getDiseases().size()) ? creature : creatureToReturn;
         }
         return creatureToReturn;
     }
@@ -115,11 +114,11 @@ public class Salle {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n--- Salle : ").append(nom).append(" ---\n");
-        sb.append("Superficie : ").append(superficie).append(" m²\n");
-        sb.append("Nombre de créatures maximale : ").append(NB_MAX_CREATURE).append("\n");
+        sb.append("\n--- Room : ").append(name).append(" ---\n");
+        sb.append("Superficie : ").append(area).append(" m²\n");
+        sb.append("Nombre de créatures maximale : ").append(MAX_CREATURE).append("\n");
 
-        sb.append("\n🏥 Salle :\n");
+        sb.append("\n🏥 Room :\n");
         if (creatures.isEmpty()) {
             sb.append("  Aucune créature dans ce service.\n");
         } else {

@@ -7,7 +7,7 @@
 
 - L'hopital soigne des créatures magiques (elfes, orcs, vampires, etc.)
 - L'hopital est composé de services : classiques ou spéciaux
-- Chaque créature a : nom, sexe, poids, taille, âge, moral, liste de maladies
+- Chaque créature a : nom, sexe, poids, taille, âge, moral, liste de diseases
 
 ## Services
 
@@ -74,13 +74,13 @@ Actions possibles :
   - Être soigné
   - Trépasser
 
-## Maladies
+## Diseases
 
-Types de maladies :
+Types de diseases :
   - DRS (Dépendance aux Réseaux Sociaux)
   - FOMO (Fear Of Missing Out)
-  - MDC (Maladie Débilitante Chronique)
-  - NDMAD (Nom De Maladie À Définir)
+  - MDC (Disease Débilitante Chronique)
+  - NDMAD (Nom De Disease À Définir)
   - PEC (Porphyrie Érythropoïétique Congénitale)
   - ZPL (Zoopathie Paraphrénique Lycanthropique)
 
@@ -88,43 +88,43 @@ Caractéristiques :
   - Nom complet et abrégé
   - Niveau actuel et maximum (léthal)
 
-## Medecins
+## Doctors
 
 Les médecins sont des créatures magiques avec un type aussi.
 Ils n'ont accès qu'aux services du même type que le leur.
 Caractéristiques : nom, sexe, âge
-Immunité aux maladies
+Immunité aux diseases
 
 # Nombres
 
 Médecins
   - Moral : de 0 à 100% -> se suicide à 0%
   - Dépression : lorsqu'un patient meurt, le médecin le plus fragile perd 40 pts (%) de moral VICTIME
-  - Soigne : gagne 15 points de moral par patient soigné (Soigne 1 maladie ou totalement ?)
+  - Soigne : gagne 15 points de moral par patient soigné (Soigne 1 disease ou totalement ?)
 
 Monstres
   - Moral : de 0 à 100%, hurle à chaque tour à partir de 0%
   - Attendre : 
-    - si Triage : si autre triage, perd 5 points moral. Sinon, 10 points. Perd 10 point moral par maladie
+    - si Triage : si autre triage, perd 5 points moral. Sinon, 10 points. Perd 10 point moral par disease
     - si VIP : au bout de 4 tours, moral = 0%
   - Hurlement : compteur jusqu'à 3 fois avant de s'emporter
   - S'emporter : a 15% chance de contaminer une autre créature à proximité
   - Tomber malade :
-    - échelle de maladie sur 10
-    - état maladie (à l'arrivée à l'hopital) aléatoire entre 0 et 7 max (ex: 7 sur 10pts)
+    - échelle de disease sur 10
+    - état disease (à l'arrivée à l'hopital) aléatoire entre 0 et 7 max (ex: 7 sur 10pts)
     - son état s'agrave de 1pts par tour
   - Etre soigne :
-    - redonne 50 pts (%) de moral et supprime une maladie
+    - redonne 50 pts (%) de moral et supprime une disease
   - Trepasser :
-    -  si maladie niveau max
-    -  si > 4 maladies
+    -  si disease niveau max
+    -  si > 4 diseases
     -  30% chance par tour quand il s'emporte
-    - Regénérants : quand meurt, si il avait une seule maladie, revit et a 50% de chance de reprendre une maladie ou sortir de l'hosto
+    - Regénérants : quand meurt, si il avait une seule disease, revit et a 50% de chance de reprendre une disease ou sortir de l'hosto
     - Contaminants : 
     - Demoralisants : démoralise 2 des créatures de leur service, 10 points moral
 
-Maladies :
-  - Moral : reduit de 5 points par tour et par maladie
+Diseases :
+  - Moral : reduit de 5 points par tour et par disease
 
 Services :
 selon budget du service ? 
@@ -135,7 +135,7 @@ selon budget du service ?
 
 Ecoulement du jeu, modifications aléatoires
 - Modifier l'état de certaines créatures : 
-  - ajouter maladies : Les créatures ont toutes 5% de chance de contracter une nouvelle maladie à chaque tour
+  - ajouter diseases : Les créatures ont toutes 5% de chance de contracter une nouvelle disease à chaque tour
 - Modifier l'état de services : A voir random modification du budget d'un service
 - 
 
@@ -149,9 +149,9 @@ Initialisation
     - nombre nouveaux médecins par tour
     - nombre nouvelles créatures par tour
   - créer l'hopital
-  - créer 5 créatures aléatoire avec une maladie aléatoire
-  - créer la salle d'attente et y mettre les monstres
-  - affecter les créatures à la salle d'attente
+  - créer 5 créatures aléatoire avec une disease aléatoire
+  - créer la room d'attente et y mettre les monstres
+  - affecter les créatures à la room d'attente
   - créer 3 médecins
   - créer les services adaptés aux monstres et les ajouter à l'hopital
   - affecter les médecins aux services
@@ -171,21 +171,21 @@ Boucles
 
 tant que la partie n'est pas terminée
 //modifier aléatoirement l'état de certaines créatures
-//(ajout maladie, évoluer maladie, évoluer moral)
-//pour chaque évolution maladie, doit vérifier si créature meurt
+//(ajout disease, évoluer disease, évoluer moral)
+//pour chaque évolution disease, doit vérifier si créature meurt
 prendre une liste de créatures random
-leur ajouter une maladie random
-si créature a déjà cette maladie, on augmente le niveau de la maladie de 1
-si maladie foudroyante ou si créature a trop de maladies (plus de 5 par ex ?)
-créature meurt (maladie niveau max, dépend si niveau actuel maladie random quand on créé une maladie random)
+leur ajouter une disease random
+si créature a déjà cette disease, on augmente le niveau de la disease de 1
+si disease foudroyante ou si créature a trop de diseases (plus de 5 par ex ?)
+créature meurt (disease niveau max, dépend si niveau actuel disease random quand on créé une disease random)
 ajouter créature stats
 fin si  
 prendre une liste de créatures random
-augmenter d'un niveau une de leur maladie (random aussi ? plusieurs niveau à la fois ? plusieurs maladies en même temps ?)
-si maladie passe au niveau max
+augmenter d'un niveau une de leur disease (random aussi ? plusieurs niveau à la fois ? plusieurs diseases en même temps ?)
+si disease passe au niveau max
 1 chance sur 2 que créature meurt instant, sinon fin du tour (laisse 1 chance que médecin soigne)
 fin si
-pour toutes les créatures, suivant paramètres, faire baisser leur moral à cause maladies
+pour toutes les créatures, suivant paramètres, faire baisser leur moral à cause diseases
 
 //modifier aléatoirement l'état de certains services médicaux (budget, isolation, temp…)
 prendre liste services médicaux random
@@ -203,15 +203,15 @@ fin pour tout
 
 //actions de tous les médecins
 //suivant paramètres (privilégier soin créature ou isolation créature presque morte?)
-soigner une maladie d'une créature (ce qui redonne du moral à la créature et au médecin)
+soigner une disease d'une créature (ce qui redonne du moral à la créature et au médecin)
 déplacer des créatures
-déplacer créatures salle attente vers service
+déplacer créatures room attente vers service
 ajuster budget services médicaux
 
-//vérifier si des créatures meurent (maladie niveau max)
+//vérifier si des créatures meurent (disease niveau max)
 pour toutes les créatures
-pour toutes leurs maladies
-si maladie est au niveau max
+pour toutes leurs diseases
+si disease est au niveau max
 créature meurt (dans méthode trepasser, suivant si implémente interface méthode appelée de l'interface)
 moral des médecins du service baisse
 fin si

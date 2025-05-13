@@ -1,31 +1,31 @@
 package com.fantasyhospital.model.creatures.races;
 
-import com.fantasyhospital.model.creatures.HabitantTriage;
-import com.fantasyhospital.model.maladie.Maladie;
-import com.fantasyhospital.model.creatures.interfaces.Regenerant;
-import com.fantasyhospital.salles.Salle;
+import com.fantasyhospital.model.creatures.TriageResident;
+import com.fantasyhospital.model.disease.Disease;
+import com.fantasyhospital.model.creatures.interfaces.Regenerating;
+import com.fantasyhospital.rooms.Room;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
-public class Zombie extends HabitantTriage implements Regenerant {
+public class Zombie extends TriageResident implements Regenerating {
 
     public Zombie() {
         super(null);
     }
 
-    public Zombie(CopyOnWriteArrayList<Maladie> maladies) {
-        super(maladies);
+    public Zombie(CopyOnWriteArrayList<Disease> diseases) {
+        super(diseases);
     }
 
-//    public Zombie(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Maladie> maladies) {
-//        super(nom, sexe, poids, taille, age, moral, maladies);
+//    public Zombie(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Disease> diseases) {
+//        super(nom, sexe, poids, taille, age, moral, diseases);
 //    }
 
     @Override
-    public boolean trepasser(Salle salle) {
-        super.trepasser(salle);
-        return regenerer(this);
+    public boolean die(Room room) {
+        super.die(room);
+        return regenerate(this);
     }
 }

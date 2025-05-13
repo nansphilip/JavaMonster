@@ -9,11 +9,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
 /**
- * Contrôleur JavaFX chargé d'afficher le contenu du fichier de log
- * (logs/app.log) dans la zone de texte de la fenêtre graphique.
+ * JavaFX controller responsible for displaying the contents of the log file
+ * (logs/app.log) in the text area of the graphical window.
  * <p>
- * Ce contrôleur lit le fichier de log à l'initialisation de la vue et affiche
- * chaque ligne dans le composant TextArea nommé logConsole.
+ * This controller reads the log file when the view is initialized and displays
+ * each line in the TextArea component named logConsole.
  * </p>
  */
 public class MainController {
@@ -23,7 +23,7 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        File logFile = new File("logs/app.log"); // Dossier logs à la racine de ton projet
+        File logFile = new File("logs/app.log");
 
         if (logFile.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(logFile))) {
