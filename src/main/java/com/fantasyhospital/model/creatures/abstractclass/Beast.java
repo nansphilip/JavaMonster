@@ -24,7 +24,8 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.gener
 
 
     public Beast() {
-        this(generateRandomName(), generateRandomSex(), generateWeight(), generateHeight(), generateAge(), generateMorale());
+        this(null, generateRandomSex(), generateWeight(), generateHeight(), generateAge(), generateMorale());
+        this.fullName = generateRandomName(this.sex);
     }
 
     public Beast(String fullName, GenderType sex, int weight, int height, int age, int morale) {
