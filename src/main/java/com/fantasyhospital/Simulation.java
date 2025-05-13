@@ -1,20 +1,16 @@
 package com.fantasyhospital;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.model.creatures.ThreadVerifieCreatureSortHopital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.races.Zombie;
-import com.fantasyhospital.model.maladie.Maladie;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.salles.Salle;
 import com.fantasyhospital.salles.servicemedical.ServiceMedical;
-
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 public class Simulation {
