@@ -5,8 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.Singleton;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.enums.GenderType;
+import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -93,18 +95,37 @@ public class Doctor extends Beast {
      * Other potential actions...
      */
     public Creature examine(Hospital hospital) {
+        if(hospital.getTotalCreaturesHospital() == 0){
+            return null;
+        }
         CopyOnWriteArrayList<Creature> listeCreatures = this.medicalService.getCreatures();
 
         // Si son service médical est vide, il essaie de transférer une créature de la room d'attente vers son service
+        // Il doit chercher un service du type de la créature, sinon choisir une autre créature
         if(listeCreatures.isEmpty()){
             Room waintingRoom = hospital.getRoomByName("Room d'attente");
             if(waintingRoom != null){
-                CopyOnWriteArrayList<Creature> creatureWaitingRoom = waintingRoom.getCreatures();
-                Creature creatureToTransfer = waintingRoom.getCreatureWithHighLevelDisease();
-                if(transfer(creatureToTransfer, waintingRoom, this.medicalService)){
-                    log.info("La créature {} a été transféré de {} vers {}.", creatureToTransfer.getFullName(), waintingRoom.getName(), this.medicalService.getName());
+                //Il reste des creatures dans la salle d'attente à soigner
+                if(!waintingRoom.getCreatures().isEmpty()){
+                    Creature creatureToTransfer = waintingRoom.getCreatureWithHighLevelDisease();
+
+                    if(transfer(creatureToTransfer, waintingRoom, this.medicalService)){
+                        log.info("La créature {} a été transférée de {} vers {}.", creatureToTransfer.getFullName(), waintingRoom.getName(), this.medicalService.getName());
+                    }
+                    return creatureToTransfer;
+                } else {
+                    //si la salle d'attente est vide, le médecin va regarder dans les autres services si il reste des créatures à soigner
+                    Creature creatureToTransfer = null;
+                    for(MedicalService service : hospital.getMedicalServices()){
+                        creatureToTransfer = service.getCreatureWithHighLevelDisease();
+                        if(creatureToTransfer != null){
+                            if(transfer(creatureToTransfer, waintingRoom, this.medicalService)){
+                                log.info("La créature {} a été transférée de {} vers {}.", creatureToTransfer.getFullName(), waintingRoom.getName(), this.medicalService.getName());
+                            }
+                            return creatureToTransfer;
+                        }
+                    }
                 }
-                return creatureToTransfer;
             }
         }
 
@@ -174,14 +195,11 @@ public class Doctor extends Beast {
             log.error("[medecin][transferer()] La créature {} à transférer n'est pas présente dans la room {}.", creature.getFullName(), roomFrom.getName());
             return false;
         }
-        CopyOnWriteArrayList<Creature> creaturesDest = roomTo.getCreatures();
-        Iterator<Creature> iterator = creaturesRoom.iterator();
-        if (!creaturesDest.isEmpty()) {
-            Creature c1 = creaturesDest.get(0);
-            String destinationServiceType = iterator.next().getClass().getSimpleName();
-            destinationServiceType = c1.getRace();
-            if (!creature.getRace().equals(destinationServiceType)) {
-                log.error("[medecin][transferer()] Transfert impossible, le type du service de destination ({}) n'est pas du type de la créature ({}).", destinationServiceType, creature.getClass().getSimpleName());
+        String roomType = roomTo.getRoomType();
+        //Si la room de destination n'est pas vide, on vérifie que la race de la creature correspond au type de la room
+        if (!roomTo.getCreatures().isEmpty()) {
+            if (!creature.getRace().equals(roomType)) {
+                log.error("[medecin][transferer()] Transfert impossible, le type du service de destination ({}) n'est pas du type de la créature ({}).", roomType, creature.getRace());
                 return false;
             }
         }
@@ -196,7 +214,9 @@ public class Doctor extends Beast {
     public boolean checkMorale() {
         if (this.morale == 0) {
             haraKiri();
-            log.info("Le médecin {} en a fini.", this);
+            log.info("Le médecin {} a harakiri.", this.getFullName());
+            Singleton instance = Singleton.getInstance();
+            instance.addBeastToStack(this, StackType.DOCTOR);
             return false;
         }
         return true;
