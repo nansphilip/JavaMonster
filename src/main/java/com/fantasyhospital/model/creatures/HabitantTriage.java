@@ -17,6 +17,9 @@ public abstract class HabitantTriage extends Creature {
 
     @Override
     public void attendre(Salle salle) {
+        if(salle == null) {
+            return;
+        }
         //attendre patiemment (-5 pts) si il est avec au moins 1 autre creature meme espece, sinon -10pts
         boolean estAvecTriage = false;
         for(Creature creature : salle.getCreatures()){
@@ -32,6 +35,7 @@ public abstract class HabitantTriage extends Creature {
             baisseMoral = ActionType.CREATURE_ATTENTE_TRIAGE_SEUL.getVariationMoral();
         }
         log.info("La créature {} attend ({} points).", this.nomComplet, baisseMoral);
-        this.moral -= estAvecTriage ? ActionType.CREATURE_ATTENTE_TRIAGE_NONSEUL.getVariationMoral() : ActionType.CREATURE_ATTENTE_TRIAGE_SEUL.getVariationMoral();
+        this.setMoral(Math.max(this.getMoral() + baisseMoral, 0));
+        notifyMoralObservers();
     }
 }

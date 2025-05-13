@@ -76,6 +76,21 @@ public class ServiceMedical extends Salle {
     }
 
     /**
+     * Recherche et retourne le médecin le plus faible moralement du service
+     * @return Medecin
+     */
+    public Medecin getWeakerMedecin() {
+        if(!medecins.isEmpty()){
+            Medecin medecin = this.medecins.getFirst();
+            for(Medecin m : medecins) {
+                medecin = m.getMoral() < medecin.getMoral() ? m : medecin;
+            }
+            return medecin;
+        }
+        return null;
+    }
+
+    /**
      * Soigne une créature par un médecin (à compléter).
      */
     public void soignerCreatures(Medecin medecin, Creature creature) {

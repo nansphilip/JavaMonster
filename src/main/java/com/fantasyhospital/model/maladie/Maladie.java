@@ -68,9 +68,17 @@ public class Maladie {
     //        this.NIVEAU_MAX = NIVEAU_MAX;
     //    }
 
+//    @Override
+//    public boolean equals(Object obj) {
+//        return super.equals(obj);
+//    }
+
+
     @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Maladie maladie = (Maladie) o;
+        return type == maladie.type;
     }
 
     @Override
