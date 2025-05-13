@@ -3,52 +3,53 @@ package com.fantasyhospital.enums;
 import lombok.Getter;
 
 /**
- * Enumère les différents types d'actions possibles dans la simulation Fantasy
- * Hospital. Chaque action a un impact sur le moral des créatures ou des
- * médecins.
+ * Enumerates the different types of actions possible in the Fantasy Hospital
+ * simulation. Each action has an impact on the morale of either the creatures
+ * or the doctors.
  */
+
 @Getter
 public enum ActionType {
 
     /**
-     * Perte de moral du médecin suite à une dépression
+     * Loss of morale for the doctor due to depression
      */
-    MEDECIN_DEPRESSION(-40),
+    DOCTOR_DEPRESSION(-40),
 
     /**
-     * Gain de moral du médecin après avoir soigné une créature
+     * Doctor's morale increase after treating a creature
      */
-    MEDECIN_SOIGNE(15),
+    DOCTOR_HEALS(15),
 
     /**
-     * Créature en attente de triage, non seule
+     * Creature in triage queue, accompanied
      */
-    CREATURE_ATTENTE_TRIAGE_NONSEUL(-5),
+    CREATURE_PENDING_TRIAGE_NOT_ALONE(-5),
 
     /**
-     * Créature en attente de triage, seule
+     * Creature in triage queue, alone
      */
-    CREATURE_ATTENTE_TRIAGE_SEUL(-10),
+    CREATURE_PENDING_TRIAGE_ALONE(-10),
 
     /**
-     * VIP en attente plus de 4 tours : moral tombe à 0
+     * IP awaiting for more than 4 turns: morale reaches 0
      */
-    CREATURE_ATTENTE_VIP(-100),
+    CREATURE_AWAITING_VIP(-100),
 
     /**
-     * Créature soignée
+     * Healed creature
      */
-    CREATURE_SOIN(50),
+    CREATURE_TREATED(50),
 
     /**
-     * Créature trépassée, effet démoralisant
+     * Dead creature, demoralizing effect
      */
-    CREATE_TREPASSE_DEMORALISANT(-10);
+    DEAD_CREATURE_DEMORALIZING_EFFECT(-10);
 
-    private final int variationMoral;
+    private final int moraleVariation;
 
-    ActionType(int variationMoral) {
-        this.variationMoral = variationMoral;
+    ActionType(int moraleVariation) {
+        this.moraleVariation = moraleVariation;
     }
 
 }

@@ -5,62 +5,59 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.races.Elfe;
-import com.fantasyhospital.model.creatures.races.HommeBete;
+import com.fantasyhospital.model.creatures.races.Elf;
+import com.fantasyhospital.model.creatures.races.Werebeast;
 import com.fantasyhospital.model.creatures.races.Lycanthrope;
-import com.fantasyhospital.model.creatures.races.Nain;
-import com.fantasyhospital.model.creatures.races.Orque;
-import com.fantasyhospital.model.creatures.races.Reptilien;
+import com.fantasyhospital.model.creatures.races.Dwarf;
+import com.fantasyhospital.model.creatures.races.Orc;
+import com.fantasyhospital.model.creatures.races.Reptilian;
 import com.fantasyhospital.model.creatures.races.Vampire;
 import com.fantasyhospital.model.creatures.races.Zombie;
-import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.model.disease.Disease;
 
 /**
- * Classe utilitaire pour la génération aléatoire de créatures dans la
- * simulation Fantasy Hospital.
+ * Utility class for randomly generating creatures in the Fantasy Hospital simulation.
  * <p>
- * Fournit une méthode statique permettant de créer une créature d'une race
- * aléatoire, avec au moins une maladie initiale.
+ * Provides a static method to create a creature of a random race, with at least one initial disease.
  * </p>
  */
 public class Game {
 
     /**
-     * Générateur de nombres aléatoires utilisé pour la sélection des races.
+     * Random number generator used for selecting races.
      */
     static Random randomCreature = new Random();
 
     /**
-     * Génère une créature aléatoire avec une maladie.
+     * Generates a random creature with a disease.
      *
-     * @return une instance de {@link Creature} d'une race aléatoire, avec une
-     * maladie initiale.
+     * @return an instance of {@link Creature} with a random race and an initial disease.
      */
     public static Creature randomCreature() {
         RaceType race = RaceType.values()[randomCreature.nextInt(RaceType.values().length)];
 
-        CopyOnWriteArrayList<Maladie> maladie = new CopyOnWriteArrayList<>();
-        maladie.add(new Maladie());
+        CopyOnWriteArrayList<Disease> disease = new CopyOnWriteArrayList<>();
+        disease.add(new Disease());
 
         Creature creature = switch (race) {
             case ELFE ->
-                new Elfe();
+                new Elf();
             case ORQUE ->
-                new Orque();
+                new Orc();
             case LYCANTHROPE ->
                 new Lycanthrope();
             case NAIN ->
-                new Nain();
+                new Dwarf();
             case REPTILIEN ->
-                new Reptilien();
+                new Reptilian();
             case VAMPIRE ->
                 new Vampire();
             case ZOMBIE ->
                 new Zombie();
             case HOMME_BETE ->
-                new HommeBete();
+                new Werebeast();
         };
-        creature.setMaladies(maladie);
+        creature.setDiseases(disease);
         return creature;
     }
 }

@@ -2,10 +2,9 @@ package com.fantasyhospital.model.creatures.abstractclass;
 
 import com.fantasyhospital.Singleton;
 import com.fantasyhospital.enums.ActionType;
-import com.fantasyhospital.model.maladie.Maladie;
+import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.CreatureObserver;
-import com.fantasyhospital.observer.MoralObserver;
-import com.fantasyhospital.salles.Salle;
+import com.fantasyhospital.rooms.Room;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -17,41 +16,44 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Classe abstraite représentant une créature dans Fantasy Hospital. Gère les
- * maladies, le moral, les réactions et les interactions avec les salles.
+ * Abstract class representing a creature in Fantasy Hospital.
+ * Manages diseases, morale, reactions, and interactions with rooms.
  */
 @Slf4j
-public abstract class Creature extends Bete {
+public abstract class Creature extends Beast {
 
     /**
-     * Ensemble des maladies contractées par la créature
+     * Set of diseases contracted by the creature
      */
-    @Setter @Getter protected CopyOnWriteArrayList<Maladie> maladies = new CopyOnWriteArrayList<>();
+    @Setter @Getter protected CopyOnWriteArrayList<Disease> diseases = new CopyOnWriteArrayList<>();
 
     /**
-     * Générateur aléatoire partagé
+     * Shared random generator
      */
     protected static final Random RANDOM = new Random();
 
-    private int nbHurlements;
+    /**
+     * Number of howl the beast has done
+     */
+    private int howlCount;
 
     private List<CreatureObserver> exitObservers = new ArrayList<>();
     private List<CreatureObserver> moralObservers = new ArrayList<>();
 
     /**
-     * Construit une créature avec un ensemble de maladies initial.
+     * Constructs a creature with an initial set of diseases.
      */
-    public Creature( CopyOnWriteArrayList<Maladie> maladies) {
+    public Creature( CopyOnWriteArrayList<Disease> diseases) {
         super();
-        this.maladies = maladies;
-        this.nbHurlements = 0;
+        this.diseases = diseases;
+        this.howlCount = 0;
     }
 
     /**
-     * Fait hurler la créature si son moral est trop bas.
+     * Makes the creature howl if its morale is too low.
      */
-    public void hurler() {
-        log.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.nomComplet);
+    public void howl() {
+        log.info("La créature {} a le moral dans les chaussettes, elle hurle.", this.fullName);
     }
 
     /**
@@ -59,12 +61,13 @@ public abstract class Creature extends Bete {
      * Elle a 30% de chance de trépasser en s'emportant
      * @return true si creature trepasse, false sinon
      */
-    public boolean semporter(Salle salle) {
-        if (salle.getCreatures().isEmpty()) {
+    public boolean loseControl(Room room) {
+        if (room.getCreatures().isEmpty()) {
             return false;
         }
+
         if(Math.random() < 0.30){
-            log.info("La créature {} s'emporte trop fort, elle trépasse.", this.nomComplet);
+            log.info("La créature {} s'emporte trop fort, elle trépasse.", this.fullName);
             Singleton instanceSingleton = Singleton.getInstance();
             instanceSingleton.addCreatureTrepas(this);
             return true;
@@ -72,71 +75,71 @@ public abstract class Creature extends Bete {
 
         //15% de chance de contaminer creature lorsqu'il s'emporte
         if(Math.random() < 0.15){
-            Creature creature = salle.getRandomCreatureWithoutThisOne(this);
-            Maladie maladie = this.getRandomMaladie();
+            Creature creature = room.getRandomCreatureWithoutThisOne(this);
+            Disease disease = this.getRandomDisease();
 
-            if (maladie == null || creature == null) {
-                log.info("La créature {} s'emporte mais n'a aucune créature à contaminer...", this.nomComplet);
+            if (disease == null || creature == null) {
+                log.info("La créature {} s'emporte mais n'a aucune créature à contaminer...", this.fullName);
                 return false;
             }
 
-            creature.tomberMalade(maladie);
+            creature.fallSick(disease);
 
-            log.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.nomComplet, creature.nomComplet, maladie.getNom());
+            log.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.fullName, creature.fullName, disease.getName());
         }
         return false;
     }
 
     /**
-     * Vérifie le moral de la créature et déclenche des réactions si besoin.
+     * Checks the creature's morale and triggers reactions if necessary.
      * @return true si la créature trépasse, false sinon
      */
-    public boolean verifierMoral(Salle salle) {
-        if(salle == null) {
+    public boolean checkMorale(Room room) {
+        if(room == null){
             return false;
         }
-        if (this.nbHurlements > 2) {
-            return semporter(salle);
+
+        if (this.howlCount > 2) {
+            return loseControl(room);
         }
-        if (this.moral == 0) {
-            hurler();
-            this.nbHurlements++;
+        if (this.morale == 0) {
+            howl();
+            this.howlCount++;
         } else {
-            this.nbHurlements = 0;
+            this.howlCount = 0;
         }
         notifyExitObservers();
         return false;
     }
 
     /**
-     * Vérifie la santé de la créature (décès si maladie létale ou trop de
-     * maladies).
+     * Checks the creature's health (death if lethal disease or too many diseases).
      *
-     * @return true si la créature doit quitter la salle (décès), false sinon
+     * @return true if the creature should leave the room (death), false otherwise.
      */
-    public boolean hasCreatureToleaveHospital(Salle salle){
+    public boolean hasCreatureToleaveHospital(Room room){
         boolean creatureGetsOut = true;
-
         Singleton instanceSingleton = Singleton.getInstance();
 
         //Créature n'a plus de maladies, elle est soignée
-        if(this.maladies.isEmpty()){
+        if(this.diseases.isEmpty()){
             instanceSingleton.addCreatureSoigne(this);
             return true;
         }
-        for(Maladie maladie : this.maladies){
-            if(maladie.estLethale()){
-                log.info("La maladie {} de {} était à son apogée.", maladie.getNom(), this.nomComplet);
-                creatureGetsOut = trepasser(salle);
+
+        for(Disease disease : this.diseases){
+            if(disease.isLethal()){
+                log.info("La disease {} de {} était à son apogée.", disease.getName(), this.fullName);
+                creatureGetsOut = die(room);
                 if(creatureGetsOut){
                     instanceSingleton.addCreatureTrepas(this);
                 }
                 return creatureGetsOut;
             }
         }
-        if(this.maladies.size() >= 4){
-            log.info("{} a contracté trop de maladies.", this.nomComplet);
-            creatureGetsOut = trepasser(salle);
+        if(this.diseases.size() >= 4){
+            log.info("{} a contracté trop de diseases.", this.fullName);
+            creatureGetsOut = die(room);
             if(creatureGetsOut){
                 instanceSingleton.addCreatureTrepas(this);
             }
@@ -153,12 +156,6 @@ public abstract class Creature extends Bete {
         this.moralObservers.add(creatureObserver);
     }
 
-//    @Override
-//    public void setMoral(int moral) {
-//        super.setMoral(moral);
-//        //notifyMoralObservers();
-//    }
-
     public void notifyExitObservers() {
         for (CreatureObserver observer : this.exitObservers) {
             observer.onStateChanged(this);
@@ -172,76 +169,74 @@ public abstract class Creature extends Bete {
     }
 
     /**
-     * Fait contracter une maladie à la créature (ou augmente son niveau si déjà
-     * présente).
+     * Causes the creature to contract a disease (or increases its level if already present).
      */
-    public void tomberMalade(Maladie maladie){
-        if(this.maladies.contains(maladie)){
-            for(Maladie maladieAModifier : this.maladies){
-                if(maladieAModifier.equals(maladie)){
-                    maladieAModifier.augmenterNiveau();
+    public void fallSick(Disease disease){
+        if(this.diseases.contains(disease)){
+            for(Disease diseaseAModifier : this.diseases){
+                if(diseaseAModifier.equals(disease)){
+                    diseaseAModifier.increaseLevel();
                 }
             }
         } else {
-            this.maladies.add(maladie);
+            this.diseases.add(disease);
         }
         notifyExitObservers();
     }
 
     /**
-     * Soigne la créature d'une maladie donnée.
-     * Et lui redonne 50 pts de moral
-     * @return true si la maladie a été retirée
+     * Cures the creature of a given disease and give 50 pts of moral
+     * @return true if the disease was removed.
      */
-    public boolean etreSoigne(Maladie maladie) {
-        if(!this.maladies.contains(maladie)){
+    public boolean beCured(Disease disease) {
+        if(!this.diseases.contains(disease)){
             return false;
         }
-        this.moral = Math.min(this.moral + ActionType.CREATURE_SOIN.getVariationMoral(), 100);
-        this.maladies.remove(maladie);
+        this.morale = Math.min(this.morale + ActionType.CREATURE_TREATED.getMoraleVariation(), 100);
+        this.diseases.remove(disease);
         notifyExitObservers();
         return true;
     }
 
     /**
-     * Retourne la race de la créature (nom de la classe concrète).
+     * Returns the creature's race (name of the concrete class).
      */
     public String getRace() {
         return this.getClass().getSimpleName();
     }
 
     /**
-     * Retourne une maladie aléatoire parmi celles de la créature.
+     * Returns a random disease from the creature's diseases.
      */
-    public Maladie getRandomMaladie(){
-        if(this.maladies.isEmpty()){
-            log.error("La créature {} n'a aucune maladie.", this.nomComplet);
+    public Disease getRandomDisease(){
+        if(this.diseases.isEmpty()){
+            log.error("La créature {} n'a aucune disease.", this.fullName);
             return null;
         }
         Random random = new Random();
-        return (Maladie) this.maladies.toArray()[random.nextInt(this.maladies.size())];
+        return (Disease) this.diseases.toArray()[random.nextInt(this.diseases.size())];
     }
 
     /**
-     * Retourne la maladie avec le niveau le plus élevé.
+     * Returns the disease with the highest level.
      */
-    public Maladie getHighLevelMaladie() {
-        if (this.maladies.isEmpty()) {
-            log.error("La créature {} n'a aucune maladie.", this.nomComplet);
+    public Disease getHighLevelDisease() {
+        if (this.diseases.isEmpty()) {
+            log.error("La créature {} n'a aucune disease.", this.fullName);
             return null;
         }
-        Maladie maladieWithHighLevel = this.maladies.iterator().next();
-        for (Maladie maladie : this.maladies) {
-            if (maladie.getNiveauActuel() > maladieWithHighLevel.getNiveauActuel()) {
-                maladieWithHighLevel = maladie;
+        Disease highLevelDisease  = this.diseases.iterator().next();
+        for (Disease disease : this.diseases) {
+            if (disease.getCurrentLevel() > highLevelDisease .getCurrentLevel()) {
+                highLevelDisease  = disease;
             }
         }
-        return maladieWithHighLevel;
+        return highLevelDisease ;
     }
 
     @Override
     public String toString() {
-        return "[" + getRace() + "] nom='" + nomComplet + "', sexe='" + sexe + "', âge=" + age + ", moral=" + moral + ", maladie(s) : " + this.maladies;
+        return "[" + getRace() + "] nom='" + fullName + "', sexe='" + sex + "', âge=" + age + ", moral=" + morale + ", disease(s) : " + this.diseases;
     }
 
     @Override
@@ -250,13 +245,13 @@ public abstract class Creature extends Bete {
             return false;
         }
         Creature creature = (Creature) o;
-        return Objects.equals(nomComplet, creature.nomComplet) && Objects.equals(taille, creature.taille) && Objects.equals(poids, creature.poids);
+        return Objects.equals(fullName, creature.fullName) && Objects.equals(height, creature.height) && Objects.equals(weight, creature.weight);
     }
 
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(nomComplet, taille, poids);
+        return Objects.hash(fullName, height, weight);
     }
 }

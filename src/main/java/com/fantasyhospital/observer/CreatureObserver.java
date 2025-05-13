@@ -1,7 +1,6 @@
 package com.fantasyhospital.observer;
 
-import com.fantasyhospital.model.creatures.abstractclass.Bete;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.creatures.abstractclass.Beast;
 
 /**
  * Interface du patron du design pattern Observer
@@ -13,5 +12,5 @@ public interface CreatureObserver {
      * Méthode appelée à chaque modification (maladie, moral) d'une bête
      * @param bete
      */
-    void onStateChanged(Bete bete);
+    void onStateChanged(Beast beast);
 }

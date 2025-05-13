@@ -2,7 +2,7 @@
 
 ## Présentation du projet
 
-**Fantasy Hospital** est un projet d'apprentissage du langage Java, centré sur la modélisation et la gestion d'un hôpital fantastique pour créatures (elfes, orques, vampires, etc.). Il met en pratique l'héritage, les interfaces, les collections, la programmation orientée objet et l'utilisation de JavaFX pour l'interface graphique. Ce projet s'appuie sur un sujet pédagogique détaillé (voir [consigne](docs/consigne.md)).
+**Fantasy Hospital** est un projet d'apprentissage du langage Java, centré sur la modélisation et la gestion d'un hôpital fantastique pour créatures (elfes, orques, vampires, etc.). Il met en pratique l'héritage, les interfaces, les collections, la programmation orientée objet et l'utilisation de JavaFX pour l'interface graphique. Ce projet s'appuie sur un sujet pédagogique détaillé (voir [consigne](docs/instruction)).
 
 ## Prérequis et installation
 
@@ -28,7 +28,9 @@
 - Pour Mac, ajouter le chemin de Java à `settings.json`
 
 ```json
-"jdk.jdkhome": "/opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
+{
+  "jdk.jdkhome": "/opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home"
+}
 ```
 
 ### Installer SceneBuilder
@@ -53,9 +55,9 @@ L'application s'ouvre dans une fenêtre native.
 
 ### Documentation et ressources
 - [README du modèle (classes, héritages, interfaces...)](docs/models.md)
-- [Sujet et consignes détaillées](docs/consigne.md)
-- [Exigences et barème](docs/exigences.md)
-- [Règles du jeu](docs/regles.md)
+- [Sujet et consignes détaillées](docs/instruction)
+- [Exigences et barème](docs/requirements)
+- [Règles du jeu](docs/rules)
 
 ## JavaFX, FXML et Scene Builder
 

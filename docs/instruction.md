@@ -39,19 +39,19 @@ Au minimum, l’application doit permettre de gérer :
 - une taille
 - un âge
 - un indicateur de moral
-- une liste de maladies
+- une liste de diseases
 
 **Toutes les créatures doivent pouvoir :**
 - attendre (ce qui diminue le moral)
 - hurler (lorsque leur moral est au plus bas)
 - s'emporter (en remplacement d'hurlements consécutifs)
-- tomber malade (ce qui ajoute une maladie à la liste de maladies)
-- être soigné (ce qui traite une maladie et redonne du moral)
+- tomber malade (ce qui ajoute une disease à la liste de diseases)
+- être soigné (ce qui traite une disease et redonne du moral)
 - trépasser (s'il devient trop malade)
 
 **Comportements spécifiques :**
 - En trépassant, les elfes et les vampires doivent pouvoir démoraliser une partie des créatures de leur service médical.
-- Les créatures bestiales (orques, homme-bêtes, lycanthropes et vampires) doivent pouvoir contaminer (en transmettant une de leur maladie à une autre créature de leur service médical).
+- Les créatures bestiales (orques, homme-bêtes, lycanthropes et vampires) doivent pouvoir contaminer (en transmettant une de leur disease à une autre créature de leur service médical).
 - Les créatures mortes-vivantes (zombies et vampires) doivent pouvoir régénérer directement après avoir trépassé.
 - Les habitants du triage (orques, homme-bêtes, zombies et lycanthropes) attendent plus patiemment dès lors qu'ils le font avec au moins un autre représentant de leur espèce.
 - Les clients VIP prioritaires (elfes, nains, vampires et reptiliens) voient leur moral évoluer au plus bas dès qu'ils doivent attendre trop longtemps.
@@ -59,25 +59,25 @@ Au minimum, l’application doit permettre de gérer :
 
 ---
 
-## 3. Les maladies
+## 3. Les diseases
 
-En dehors des exceptions décrites ci-après, toutes les créatures ont une chance de contracter, au minimum, une des maladies suivantes :
-- Maladie débilitante chronique (MDC)
+En dehors des exceptions décrites ci-après, toutes les créatures ont une chance de contracter, au minimum, une des diseases suivantes :
+- Disease débilitante chronique (MDC)
 - Syndrome fear of missing out (FOMO)
 - Dépendance aux réseaux sociaux (DRS)
 - Porphyrie érythropoïétique congénitale (PEC)
 - Zoopathie paraphrénique lycanthropique (ZPL)
-- <Nom de maladie à définir> (NDMAD ou BG, au choix)
+- <Nom de disease à définir> (NDMAD ou BG, au choix)
 
-**Toutes les maladies doivent posséder les caractéristiques suivantes :**
+**Toutes les diseases doivent posséder les caractéristiques suivantes :**
 - un nom complet
 - un nom abrégé
 - un niveau actuel
 - un niveau maximum (avant trépas)
 
-**Toutes les maladies doivent pouvoir :**
+**Toutes les diseases doivent pouvoir :**
 - diminuer, augmenter ou changer leur niveau actuel
-- déterminer si le niveau de la maladie est léthal
+- déterminer si le niveau de la disease est léthal
 
 ---
 
@@ -144,7 +144,7 @@ Un hôpital fantastique doit posséder les caractéristiques suivantes :
 
 Il doit en plus avoir la méthode principale de l'application (point d'entrée de la simulation) qui est chargée de modéliser l'aspect temporel de la gestion de l'hôpital fantastique.  
 À intervalle régulier, cette méthode doit :
-- modifier aléatoirement l'état de certaines créatures (les rendre malades, faire évoluer leurs maladies, faire évoluer leur moral, etc.)
+- modifier aléatoirement l'état de certaines créatures (les rendre malades, faire évoluer leurs diseases, faire évoluer leur moral, etc.)
 - modifier aléatoirement l'état de certains services médicaux (leur budget, leur isolation, leur température, etc.)
 - passer la main à un médecin (et donc à l'utilisateur) pour qu'il s'occupe de l'hôpital fantastique (son nombre d'actions par intervalle de temps devant être limité)
 

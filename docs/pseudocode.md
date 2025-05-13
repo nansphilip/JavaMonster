@@ -30,7 +30,7 @@ Doctor doctor3 = new Doctor(...);
 /*
   Créer des créatures aléatoires
     - moral aléatoire
-    - niveau maladie aléatoire
+    - niveau disease aléatoire
 */
 Creature creature1 = hospital.addRandomCreature();
 Creature creature2 = hospital.addRandomCreature();
@@ -66,7 +66,7 @@ while (simulationActive) {
         // Obtenir le nombre de medecins du service
         int numberOfDoctors = creature.getService().getNumberOfDoctors();
 
-        // Faire évoluer l'état de la maladie de la créature selon le budget du service
+        // Faire évoluer l'état de la disease de la créature selon le budget du service
         creature.evolveStateRandomly(budget, numberOfDoctors);
 
         // 5% de chance que le monstre déclenche son comportement spécial (hurlement, contagion,)

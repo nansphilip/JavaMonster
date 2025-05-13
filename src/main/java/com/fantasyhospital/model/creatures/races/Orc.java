@@ -7,15 +7,19 @@ import com.fantasyhospital.rooms.Room;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Lycanthrope extends TriageResident implements Contaminant {
+public class Orc extends TriageResident implements Contaminant {
 
-    public Lycanthrope() {
-        this( null);
+    public Orc() {
+        super(null);
     }
 
-    public Lycanthrope(CopyOnWriteArrayList<Disease> diseases) {
+    public Orc(CopyOnWriteArrayList<Disease> diseases) {
         super(diseases);
     }
+
+//    public Orque(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Disease> diseases) {
+//        super(nom, sexe, poids, taille, age, moral, diseases);
+//    }
 
     @Override
     public boolean die(Room room) {

@@ -1,12 +1,17 @@
 package com.fantasyhospital.observer;
 
 import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.model.creatures.abstractclass.Bete;
+import com.fantasyhospital.model.creatures.Doctor;
+import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.salles.Salle;
-import com.fantasyhospital.salles.servicemedical.ServiceMedical;
+import com.fantasyhospital.model.creatures.interfaces.Regenerating;
+import com.fantasyhospital.model.creatures.races.Vampire;
+import com.fantasyhospital.model.creatures.races.Zombie;
+import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 /**
  * Implémentation de l'interface Observer chargé de surveiller si une bête doit sortir de l'hopital
@@ -30,8 +35,8 @@ public class ExitObserver implements CreatureObserver {
      * @param bete
      */
     @Override
-    public void onStateChanged(Bete bete) {
-        checkExitCreature((Creature) bete);
+    public void onStateChanged(Beast beast) {
+        checkExitCreature((Creature) beast);
     }
 
 
@@ -42,10 +47,29 @@ public class ExitObserver implements CreatureObserver {
      * @param creature
      */
     private void checkExitCreature(Creature creature) {
-        Salle salleCreature = this.hospital.getSalleOfCreature(creature);
+        Room salleCreature = this.hospital.getRoomOfCreature(creature);
         //Si la créature est déjà sortie de l'hopital
         if(salleCreature == null){
             return;
+        }
+
+        //Récupération interface creature pour les regenerants
+        String interfaceCreature = "";
+        if(creature.getClass().getInterfaces().length > 0){
+            interfaceCreature = creature.getClass().getInterfaces()[0].getSimpleName();
+        }
+
+        //Avant de potentiellement faire trepasser la creature, si regenerant, on check si creature va mourir
+        //Si va mourir, on appliquera depression sur medecin
+        boolean isDead = false;
+        if(Regenerating.class.isAssignableFrom(creature.getClass())){
+            if(creature instanceof Zombie zombie){
+                isDead = zombie.isCreatureDeadButWillRevive(creature);
+            } else if (creature instanceof Vampire vampire){
+                isDead = vampire.isCreatureDeadButWillRevive(creature);
+            } else {
+                throw new RuntimeException("Unrecognized creature class: " + creature.getClass().getName());
+            }
         }
 
         boolean getsOut = creature.hasCreatureToleaveHospital(salleCreature);
@@ -53,17 +77,24 @@ public class ExitObserver implements CreatureObserver {
         //Si creature meurt, médecin le plus faible du service perd du moral
         if(getsOut){
             //On vérifie que la créature a bien trépassé, c'est à dire qu'elle a des maladies
-            if(!creature.getMaladies().isEmpty()){
-                if(salleCreature instanceof ServiceMedical){
-                    Medecin medecin = ((ServiceMedical) salleCreature).getWeakerMedecin();
-                    if(medecin != null){
-                        medecin.depression();
+            if(!creature.getDiseases().isEmpty()){
+                if(salleCreature instanceof MedicalService){
+                    Doctor doctor = ((MedicalService) salleCreature).getWeakerDoctor();
+                    if(doctor != null){
+                        doctor.depression();
                         //On notifie l'observer du médecin pour vérifier si il n'en finit pas
-                        medecin.notifyObservers();
+                        doctor.notifyObservers();
                     }
                 }
             }
-            salleCreature.enleverCreature(creature);
+            salleCreature.removeCreature(creature);
+        }
+
+        //Si regenerant qui meurt mais reste quand même dans l'hopital, applique depression a medecin
+        if(isDead){
+            if(salleCreature instanceof MedicalService){
+                ((MedicalService) salleCreature).getWeakerDoctor().depression();
+            }
         }
     }
 

@@ -1,14 +1,10 @@
 package com.fantasyhospital.observer;
 
 import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.model.creatures.Medecin;
-import com.fantasyhospital.model.creatures.abstractclass.Bete;
+import com.fantasyhospital.model.creatures.Doctor;
+import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.salles.Salle;
-import com.fantasyhospital.salles.servicemedical.ServiceMedical;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.fantasyhospital.rooms.Room;
 
 /**
  * Implémentation de l'interface Observer chargée de surveiller le moral des bêtes
@@ -34,15 +30,15 @@ public class MoralObserver implements CreatureObserver {
      * @param bete
      */
     @Override
-    public void onStateChanged(Bete bete) {
-        if(bete instanceof Medecin){
-            ((Medecin) bete).verifierMoral();
+    public void onStateChanged(Beast beast) {
+        if(beast instanceof Doctor){
+            ((Doctor) beast).checkMorale();
             return;
         }
-        Creature creature = (Creature) bete;
-        Salle salle = hospital.getSalleOfCreature(creature);
-        if(creature.verifierMoral(salle)){
-            salle.enleverCreature(creature);
+        Creature creature = (Creature) beast;
+        Room room = hospital.getRoomOfCreature(creature);
+        if(creature.checkMorale(room)){
+            room.removeCreature(creature);
         }
     }
 }

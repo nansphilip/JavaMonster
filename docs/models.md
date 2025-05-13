@@ -1,46 +1,46 @@
-# 🌳 Arbre d'héritage — Fantasy Hospital
+# 🌳 Inheritance Tree — Fantasy Hospital
 
-## 🧬 Classes principales
+## 🧬 Mains classes
 
 ```
-Bete (abstraite)
+Beast (abstract)
 │
-├── Creature (abstraite)
+├── Creature (abstract)
 │   │
-│   ├── HabitantTriage (abstraite)
-│   │   ├── Orque         [Contaminant]
-│   │   ├── HommeBete     [Contaminant]
+│   ├── TriageResident (abstract)
+│   │   ├── Orc         [Contaminant]
+│   │   ├── Werebeast     [Contaminant]
 │   │   ├── Lycanthrope   [Contaminant]
-│   │   └── Zombie        [Regenerant]
+│   │   └── Zombie        [Regenerating]
 │   │
-│   └── ClientVIP (abstraite)
-│       ├── Elfe          [Demoralisant]
-│       ├── Nain
-│       ├── Reptilien
-│       └── Vampire       [Regenerant, Contaminant, Demoralisant]
+│   └── VIPClient (abstract)
+│       ├── Elf          [Demoralizing]
+│       ├── Dwarf
+│       ├── Reptilian
+│       └── Vampire       [Regeneratin, Contaminant, Demoralizing]
 │
-└── Medecin (concrète)
+└── Doctor (concret)
 ```
 
 ---
 
-## 🏥 Salles et services
+## 🏥 Rooms and services
 
 ```
-Salle
+Room
 │
-└── ServiceMedical
-    ├── Quarantaine
-    └── Crypte
+└── MedicalService
+    ├── Quarantine
+    └── Crypt
 ```
 
 ---
 
-## 🏢 Autres entités
+## 🏢 Other Entities
 
 ```
-Hopital
-Maladie
+Hospital
+Disease
 ```
 
 ---
@@ -53,12 +53,12 @@ MoralThread (Runnable)
 
 ---
 
-## 🧩 Interfaces comportementales
+## 🧩 Behavioral Interfaces
 
 ```
 Contaminant
-Regenerant
-Demoralisant
+Regenerating
+Demoralizing
 ```
 
 ---
@@ -67,6 +67,6 @@ Demoralisant
 
 ```
 Races
-MaladieType
+DiseaseType
 ActionType
 ```
