@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
-
-<?import javafx.scene.layout.HBox?>
-
 <?import javafx.scene.layout.VBox?>
 <BorderPane xmlns:fx="http://javafx.com/fxml">
 
     <!-- Liste des créatures à droite && mini logo -->
     <right>
         <VBox spacing="10" alignment="TOP_RIGHT" VBox.vgrow="ALWAYS">
-            <fx:include source="LogoMini.fxml" />
+            <fx:include source="LogoMiniView.fxml" />
             <fx:include source="ListCreatureView.fxml" VBox.vgrow="ALWAYS"/>
         </VBox>
     </right>
