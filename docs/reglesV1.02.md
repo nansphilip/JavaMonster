@@ -102,7 +102,7 @@ Médecins
   - Soigne : gagne 15 points de moral par patient soigné (Soigne 1 maladie) DONE
 
 Monstres
-  - Moral : de 0 à 100%, hurle à chaque tour à partir de 0%
+  - Moral : de 0 à 100%, hurle à chaque tour à partir de 0% DONE
 Actuellement, à 0 de moral la créature hurle 3 fois puis s'emporte, puis hurle à nouveau si moral toujours à 0
   - Attendre : 
     - si Triage : si autre triage, perd 5 points moral. Sinon, 10 points. Perd 5 point moral par maladie DONE

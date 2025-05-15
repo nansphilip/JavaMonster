@@ -5,12 +5,12 @@
 package com.fantasyhospital.enums;
 
 public enum RaceType {
-    ELFE,
-    ORQUE,
+    ELF,
+    ORC,
     LYCANTHROPE,
-    NAIN,
-    REPTILIEN,
+    DWARF,
+    REPTILIAN,
     VAMPIRE,
     ZOMBIE,
-    HOMME_BETE
+    WEREBEAST
 }

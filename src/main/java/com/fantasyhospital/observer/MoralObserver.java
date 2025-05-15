@@ -41,7 +41,8 @@ public class MoralObserver implements CreatureObserver {
         if(creature.checkMorale(room)){
             room.removeCreature(creature);
             if(room instanceof MedicalService){
-                ((MedicalService) room).getWeakerDoctor().depression();
+                Doctor doc = ((MedicalService) room).getWeakerDoctor();
+                doc.depression();
             }
         }
     }
