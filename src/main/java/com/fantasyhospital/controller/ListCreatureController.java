@@ -1,25 +1,41 @@
 package com.fantasyhospital.controller;
 
-import com.fantasyhospital.Simulation;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
+import com.fantasyhospital.config.FxmlView;
+import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.view.CreatureCellView;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
 /**
  *
  */
+
+@Component
 public class ListCreatureController {
 
+	private final StageManager stageManager;
 
+	@Lazy
+	public ListCreatureController(StageManager stageManager) {this.stageManager = stageManager;}
+
+	@FXML
+	private void addCreature(Creature creature) {
+		stageManager.switchScene(FxmlView.LIST_CREATURE);
+	}
 
 	@FXML
 	private ImageView creatureImage;
@@ -50,10 +66,10 @@ public class ListCreatureController {
 
 	}
 
-	public void addCreature(Creature creature) {
-		Platform.runLater(() -> {
-			observableCreatures.add(creature);
-			creatureListView.setItems(observableCreatures);
-		});
-	}
+//	public void addCreature(Creature creature) {
+//		Platform.runLater(() -> {
+//			observableCreatures.add(creature);
+//			creatureListView.setItems(observableCreatures);
+//		});
+//	}
 }

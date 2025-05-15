@@ -1,5 +1,7 @@
 package com.fantasyhospital.controller;
 
+import org.springframework.stereotype.Component;
+
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
+@Component
 public class GameBoardController {
 
     @FXML

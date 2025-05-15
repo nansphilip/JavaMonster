@@ -1,20 +1,26 @@
 package com.fantasyhospital.controller;
 
-import com.fantasyhospital.Simulation;
-import com.fantasyhospital.util.LogsUtils;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
-
 import java.io.RandomAccessFile;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import org.springframework.stereotype.Component;
+
+import com.fantasyhospital.Simulation;
+import com.fantasyhospital.util.LogsUtils;
+
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 /**
  * Contrôleur JavaFX chargé d'afficher le contenu du fichier de log
@@ -24,88 +30,84 @@ import java.util.concurrent.TimeUnit;
  * chaque ligne dans le composant TextArea nommé logConsole.
  * </p>
  */
+@Component
+public class ConsoleLogController implements Initializable {
 
-public class ConsoleLogController {
+	private final Path logFilePath = Path.of("logs/app.log");
+	@FXML
+	private TextArea logConsole;
 
-    private ListCreatureController listCreatureController;
+	private ScheduledExecutorService scheduler;
+	private final Simulation simulation;
 
-    public ConsoleLogController() {
 
-    }
+	public ConsoleLogController(Simulation simulation) {
+		this.simulation = simulation;
+	}
 
-    public ConsoleLogController(ListCreatureController listCreatureController) {
-        this.listCreatureController = listCreatureController;
-    }
 
-    @FXML
-    private TextArea logConsole;
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle) {
+		scheduler = Executors.newSingleThreadScheduledExecutor();
 
-    private final Path logFilePath = Path.of("logs/app.log");
-    private ScheduledExecutorService scheduler;
+		LogTailListener listener = new LogTailListener();
+		scheduler.scheduleAtFixedRate(() -> {
 
-    @FXML
-    public void initialize() {
-        scheduler = Executors.newSingleThreadScheduledExecutor();
+			if (Files.exists(logFilePath)) {
+				listener.listen();
+			}
 
-        LogTailListener listener = new LogTailListener();
-        scheduler.scheduleAtFixedRate(() -> {
+		}, 0, 1, TimeUnit.SECONDS);
+	}
 
-            if (Files.exists(logFilePath)) {
-                listener.listen();
-            }
+	class LogTailListener {
 
-        }, 0, 1, TimeUnit.SECONDS);
-    }
+		long filePointer;
 
-    class LogTailListener {
+		void listen() {
 
-        long filePointer;
+			try {
+				long len = Files.size(logFilePath);
 
-        void listen() {
+				if (len < filePointer) {
+					filePointer = len;
+				} else if (len > filePointer) {
 
-            try {
-                long len = Files.size(logFilePath);
+					try (RandomAccessFile raf = new RandomAccessFile(logFilePath.toFile(), "r")) {
+						raf.seek(filePointer);
+						String line;
+						while ((line = raf.readLine()) != null) {
+							logConsole.appendText(new String(line.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8) + "\n");
+						}
+						filePointer = raf.getFilePointer();
+					}
+				}
+			} catch (Exception e) {
+			}
+		}
+	}
 
-                if (len < filePointer) {
-                    filePointer = len;
-                } else if (len > filePointer) {
+	public void stop() {
+		if (scheduler != null && !scheduler.isShutdown()) {
+			scheduler.shutdown();
+		}
+		Platform.exit();  // Ferme toutes les ressources JavaFX
+	}
 
-                    try (RandomAccessFile raf = new RandomAccessFile(logFilePath.toFile(), "r")) {
-                        raf.seek(filePointer);
-                        String line;
-                        while ((line = raf.readLine()) != null) {
-                            logConsole.appendText(new String(line.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8) + "\n");
-                        }
-                        filePointer = raf.getFilePointer();
-                    }
-                }
-            } catch (Exception e) {
-            }
-        }
-    }
+	// Cette méthode permet d'écouter l'événement de fermeture de la fenêtre
+	public void setStage(Stage stage) {
+		stage.setOnCloseRequest(event -> stop()); // Ajoute un gestionnaire pour la fermeture
 
-    public void stop() {
-        if (scheduler != null && !scheduler.isShutdown()) {
-            scheduler.shutdown();
-        }
-        Platform.exit();  // Ferme toutes les ressources JavaFX
-    }
+	}
 
-    // Cette méthode permet d'écouter l'événement de fermeture de la fenêtre
-    public void setStage(Stage stage) {
-        stage.setOnCloseRequest(event -> stop()); // Ajoute un gestionnaire pour la fermeture
+	public void clearLog(ActionEvent actionEvent) {
+		LogsUtils.clearLogFile(); // Appeler la méthode de nettoyage du fichier de log
+		logConsole.setText(""); // Effacer également le contenu du TextArea
+	}
 
-    }
-
-    public void clearLog(ActionEvent actionEvent) {
-        LogsUtils.clearLogFile(); // Appeler la méthode de nettoyage du fichier de log
-        logConsole.setText(""); // Effacer également le contenu du TextArea
-    }
-
-    @FXML
-    private void startSimulation() {
-        Simulation simulation = new Simulation(this, listCreatureController);
-        simulation.startSimulation();
-    }
+	@FXML
+	private void startSimulation() {
+		simulation.startSimulation();
+	}
 
 }

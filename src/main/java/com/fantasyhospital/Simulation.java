@@ -1,32 +1,30 @@
 package com.fantasyhospital;
 
-import com.fantasyhospital.controller.ConsoleLogController;
-import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
+import com.fantasyhospital.service.PatientService;
 import com.fantasyhospital.rooms.Room;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.springframework.stereotype.Service;
 
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class Simulation {
 
-    private final ConsoleLogController consoleLogController;
-    private final ListCreatureController listCreatureController;
-
-    public Simulation(ConsoleLogController consoleLogController, ListCreatureController listCreatureController) {
-        this.listCreatureController = listCreatureController;
-        this.consoleLogController = consoleLogController;
-    }
+    private final PatientService patientService;
 
     public void startSimulation() {
         // Création de la liste des créatures (thread-safe)
@@ -63,7 +61,8 @@ public class Simulation {
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
 
-            listCreatureController.addCreature(creature);
+            // TODO: use patientRepository
+            // listCreatureController.addCreature(creature);
         }
 
         //roomAttente.setCreatures(creatures);
