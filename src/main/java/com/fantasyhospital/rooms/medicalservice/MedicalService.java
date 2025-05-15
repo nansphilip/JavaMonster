@@ -80,7 +80,7 @@ public class MedicalService extends Room {
      */
     public Doctor getWeakerDoctor() {
         if(!doctors.isEmpty()){
-            Doctor doctor = this.doctors.getFirst();
+            Doctor doctor = this.doctors.get(0);
             for(Doctor m : doctors) {
                 doctor = m.getMorale() < doctor.getMorale() ? m : doctor;
             }

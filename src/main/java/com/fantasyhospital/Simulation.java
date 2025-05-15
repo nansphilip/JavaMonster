@@ -52,7 +52,7 @@ public class Simulation {
         }
 
         //roomAttente.setCreatures(creatures);
-        roomAttente.setCreatures(creatures);
+        cardiac.setCreatures(creatures);
         hospital.addService(roomAttente);
         hospital.addService(emergency);
         hospital.addService(cardiac);

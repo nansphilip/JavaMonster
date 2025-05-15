@@ -1,15 +1,19 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
+import com.fantasyhospital.observer.ExitObserver;
+import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.rooms.Room;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 @Slf4j
@@ -41,7 +45,8 @@ public class EvolutionGame {
             //verifyMoraleCreatures();
             if (checkEndOfGame()) break;
             doDoctorsExamine();
-
+            if (checkEndOfGame()) break;
+            addRndCreatureRndRoom();
             hospital.displayServices();
             round++;
         }
@@ -106,7 +111,33 @@ public class EvolutionGame {
             List<Doctor> medecins = service.getDoctors();
             for (Doctor medecin : medecins) {
                 Creature creature = medecin.examine(hospital);
-                log.info("docteur : {} salle : {}",  medecin.getFullName(), service.getName());
+            }
+        }
+    }
+
+    /**
+     * Ajoute une nouvelle créature avec une maladie, un niveau aléatoire dans une room aléatoire
+     */
+    private void addRndCreatureRndRoom(){
+        if(Math.random() < 0.40){
+            int rnd = new Random().nextInt(hospital.getServices().size());
+            Room room = hospital.getServices().get(rnd);
+
+            if(room != null){
+                Creature creature = null;
+                if(room.getCreatures().isEmpty()){
+                    creature = Game.randomCreature();
+                } else {
+                    String type = room.getRoomType().toUpperCase();
+                    RaceType race = RaceType.valueOf(type);
+                    log.info("type : {} race : {}", type, race);
+                    creature = Game.randomCreature(race);
+                }
+                creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8)+1);
+                creature.addExitObserver(new ExitObserver(hospital));
+                creature.addMoralObserver(new MoralObserver(hospital));
+                room.addCreature(creature);
+                log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue",  creature.getFullName(), room.getName());
             }
         }
     }

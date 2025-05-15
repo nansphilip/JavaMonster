@@ -40,22 +40,53 @@ public class Game {
         disease.add(new Disease());
 
         Creature creature = switch (race) {
-            case ELFE ->
+            case ELF ->
                 new Elf();
-            case ORQUE ->
+            case ORC ->
                 new Orc();
             case LYCANTHROPE ->
                 new Lycanthrope();
-            case NAIN ->
+            case DWARF ->
                 new Dwarf();
-            case REPTILIEN ->
+            case REPTILIAN ->
                 new Reptilian();
             case VAMPIRE ->
                 new Vampire();
             case ZOMBIE ->
                 new Zombie();
-            case HOMME_BETE ->
+            case WEREBEAST ->
                 new Werebeast();
+        };
+        creature.setDiseases(disease);
+        return creature;
+    }
+
+    /**
+     * Generates a random creature of type given in param with a disease.
+     * @param race the race of the creature to instanciate
+     * @return an instance of {@link Creature} with a random race and an initial disease.
+     */
+    public static Creature randomCreature(RaceType race) {
+        CopyOnWriteArrayList<Disease> disease = new CopyOnWriteArrayList<>();
+        disease.add(new Disease());
+
+        Creature creature = switch (race) {
+            case ELF ->
+                    new Elf();
+            case ORC ->
+                    new Orc();
+            case LYCANTHROPE ->
+                    new Lycanthrope();
+            case DWARF ->
+                    new Dwarf();
+            case REPTILIAN ->
+                    new Reptilian();
+            case VAMPIRE ->
+                    new Vampire();
+            case ZOMBIE ->
+                    new Zombie();
+            case WEREBEAST ->
+                    new Werebeast();
         };
         creature.setDiseases(disease);
         return creature;

@@ -114,12 +114,12 @@ public class Doctor extends Beast {
                     }
                     return creatureToTransfer;
                 } else {
-                    //si la salle d'attente est vide, le médecin va regarder dans les autres services si il reste des créatures à soigner
+                    //si la salle d'attente est vide, le médecin va regarder dans les autres services si il reste des créatures à soigner et la transferer
                     Creature creatureToTransfer = null;
                     for(MedicalService service : hospital.getMedicalServices()){
                         creatureToTransfer = service.getCreatureWithHighLevelDisease();
                         if(creatureToTransfer != null){
-                            if(transfer(creatureToTransfer, waintingRoom, this.medicalService)){
+                            if(transfer(creatureToTransfer, service, this.medicalService)){
                                 log.info("La créature {} a été transférée de {} vers {}.", creatureToTransfer.getFullName(), waintingRoom.getName(), this.medicalService.getName());
                             }
                             return creatureToTransfer;
@@ -135,16 +135,16 @@ public class Doctor extends Beast {
 
         //Soigne créature si niveau disease >= 8
         if(creatureMaxLvlDisease.getHighLevelDisease().getCurrentLevel() >= 8){
-            log.info("Le médecin soigne la créature {}, elle était sur le point de trépasser.", creatureMaxLvlDisease.getFullName());
-            heal(creatureMaxLvlDisease);
+//            log.info("Le médecin soigne la créature {}, elle était sur le point de trépasser.", creatureMaxLvlDisease.getFullName());
+            heal(creatureMaxLvlDisease, creatureMaxLvlDisease.getHighLevelDisease());
             return creatureMaxLvlDisease;
         } else if(creatureMaxDiseases.getDiseases().size() >= 3) {  //Soigne créature si nombre de disease >= 3
-            log.info("Le médecin soigne la créature {}.", creatureMaxDiseases.getFullName());
-            heal(creatureMaxDiseases);
+            //log.info("Le médecin soigne la créature {}.", creatureMaxDiseases.getFullName());
+            heal(creatureMaxDiseases, creatureMaxLvlDisease.getHighLevelDisease());
             return creatureMaxDiseases;
         }
-        log.info("Le médecin soigne la créature {}.", creatureMaxLvlDisease.getFullName());
-        heal(creatureMaxLvlDisease);
+        //log.info("Le médecin soigne la créature {}.", creatureMaxLvlDisease.getFullName());
+        heal(creatureMaxLvlDisease, creatureMaxLvlDisease.getHighLevelDisease());
         return creatureMaxLvlDisease;
     }
 
@@ -152,9 +152,9 @@ public class Doctor extends Beast {
      * Heals the disease of a creature with the highest level.
      *
      * @param creature the creature to heal
+     * @param disease the disease to heal
      */
-    public void heal(Creature creature) {
-        Disease disease = creature.getHighLevelDisease();
+    public void heal(Creature creature, Disease disease) {
         if (disease == null) {
             log.error("[medecin][soigner()] La créature {} n'a pas de disease", creature.getFullName());
             return;
@@ -162,15 +162,16 @@ public class Doctor extends Beast {
         if (!creature.beCured(disease)) {
             log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", this.fullName, disease.getName());
         } else {
-            log.info("La disease {} vient d'être soignée pour la créature {} !", disease.getName(), creature.getFullName());
             int heal = ActionType.DOCTOR_HEALS.getMoraleVariation();
             this.morale = Math.min(this.morale + heal, 100);
 
             int healCreature = ActionType.CREATURE_TREATED.getMoraleVariation();
-            for(Creature creatureService : this.medicalService.getCreatures()){
-                creatureService.setMorale(Math.min(creatureService.getMorale() + healCreature, 100));
-            }
-            log.info("Soigner a redonné {} points de moral au médecin {} et {} points à toutes les créatures du service. Moral actuel du médecin : {}", heal, this.getFullName(), healCreature, this.morale);
+            creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
+            //for(Creature creatureService : this.medicalService.getCreatures()){
+                //creatureService.setMorale(Math.min(creatureService.getMorale() + healCreature, 100));
+            //}
+            log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
+            //log.info("Soigner a redonné {} points de moral au médecin {} et {} points à toutes les créatures du service. Moral actuel du médecin : {}", heal, this.getFullName(), healCreature, this.morale);
         }
     }
 
@@ -228,7 +229,8 @@ public class Doctor extends Beast {
     public void depression() {
         int depression = ActionType.DOCTOR_DEPRESSION.getMoraleVariation();
         this.morale = Math.max(this.morale + depression, 0);
-        log.info("Dépression, médecin a maintenant {} de moral.", this.morale);
+        log.info("Dépression, le médecin {} a maintenant {} de moral.", this.fullName, this.morale);
+        notifyObservers();
     }
 
     /**

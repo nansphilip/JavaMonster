@@ -53,12 +53,6 @@ public class ExitObserver implements CreatureObserver {
             return;
         }
 
-        //Récupération interface creature pour les regenerants
-        String interfaceCreature = "";
-        if(creature.getClass().getInterfaces().length > 0){
-            interfaceCreature = creature.getClass().getInterfaces()[0].getSimpleName();
-        }
-
         //Avant de potentiellement faire trepasser la creature, si regenerant, on check si creature va mourir
         //Si va mourir, on appliquera depression sur medecin
         boolean isDead = false;
@@ -76,14 +70,13 @@ public class ExitObserver implements CreatureObserver {
 
         //Si creature meurt, médecin le plus faible du service perd du moral
         if(getsOut){
-            //On vérifie que la créature a bien trépassé, c'est à dire qu'elle a des maladies
+            //On vérifie que la créature a bien trépassé et non soignée, c'est à dire qu'elle a des maladies
             if(!creature.getDiseases().isEmpty()){
                 if(salleCreature instanceof MedicalService){
                     Doctor doctor = ((MedicalService) salleCreature).getWeakerDoctor();
                     if(doctor != null){
                         doctor.depression();
                         //On notifie l'observer du médecin pour vérifier si il n'en finit pas
-                        doctor.notifyObservers();
                     } else {
                         log.info("Il n'y avait aucun médecin à déprimer dans le service.");
                     }
