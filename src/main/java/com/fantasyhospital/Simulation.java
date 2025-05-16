@@ -13,6 +13,8 @@ import com.fantasyhospital.observer.MoralObserver;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
@@ -52,12 +54,12 @@ public class Simulation {
         }
 
         //roomAttente.setCreatures(creatures);
-        cardiac.setCreatures(creatures);
+        roomAttente.setCreatures(creatures);
         hospital.addService(roomAttente);
         hospital.addService(emergency);
         hospital.addService(cardiac);
         //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
-
+        roomAttente.getAllCreaturesOfSameRace();
         //Boucle d'évolution du jeu
         EvolutionGame jeu = new EvolutionGame(hospital);
         jeu.run();

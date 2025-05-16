@@ -1,14 +1,13 @@
 package com.fantasyhospital.rooms;
 
+import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import lombok.Setter;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 @Getter @Slf4j
@@ -68,6 +67,41 @@ public class Room {
             }
         }
         return null;
+    }
+
+    public List<Creature> getAllCreaturesOfSameRace() {
+        if(creatures.isEmpty()){
+            return null;
+        }
+
+        List<Creature> creaturesSameRace = new ArrayList<>();
+        //instanciation d'une map à partir d'un enum (enumMap)
+        EnumMap<RaceType, Integer> map = new EnumMap<>(RaceType.class);
+
+        for(Creature creature : creatures){
+            RaceType race = RaceType.valueOf(creature.getRace().toUpperCase());
+            //Affecte l'int 1 si value est à null, sinon fait somme de 1 sur la valeur
+            map.merge(race, 1, Integer::sum);
+        }
+
+        //Récupération de la race qui a le plus de créatures présentes dans la room
+        int count = 0;
+        RaceType race = null;
+        for(RaceType raceType : map.keySet()){
+            if(map.get(raceType) > count){
+                count = map.get(raceType);
+                race = raceType;
+            }
+        }
+
+        //Ajout de toutes les créatures de cette race à la liste à retourner
+        for(Creature creature : creatures){
+            if(RaceType.valueOf(creature.getRace().toUpperCase()).equals(race)){
+                creaturesSameRace.add(creature);
+            }
+        }
+
+        return creaturesSameRace;
     }
 
     public Creature getRandomCreature(){

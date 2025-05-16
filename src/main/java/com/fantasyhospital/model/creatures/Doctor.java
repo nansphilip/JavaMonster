@@ -94,9 +94,9 @@ public class Doctor extends Beast {
      * They may isolate a creature that is about to die.
      * Other potential actions...
      */
-    public Creature examine(Hospital hospital) {
+    public void examine(Hospital hospital) {
         if(hospital.getTotalCreaturesHospital() == 0){
-            return null;
+            return;
         }
         CopyOnWriteArrayList<Creature> listeCreatures = this.medicalService.getCreatures();
 
@@ -105,14 +105,19 @@ public class Doctor extends Beast {
         if(listeCreatures.isEmpty()){
             Room waintingRoom = hospital.getRoomByName("Room d'attente");
             if(waintingRoom != null){
-                //Il reste des creatures dans la salle d'attente à soigner
+                //Il reste des creatures dans la salle d'attente à soigner, il essaie d'en transferer le plus grand nombre de la même race
                 if(!waintingRoom.getCreatures().isEmpty()){
                     Creature creatureToTransfer = waintingRoom.getCreatureWithHighLevelDisease();
-
-                    if(transfer(creatureToTransfer, waintingRoom, this.medicalService)){
-                        log.info("La créature {} a été transférée de {} vers {}.", creatureToTransfer.getFullName(), waintingRoom.getName(), this.medicalService.getName());
+                    List<Creature> creaturesToTransfer = waintingRoom.getAllCreaturesOfSameRace();
+                    if(creaturesToTransfer != null){
+                        transferGroup(creaturesToTransfer, waintingRoom, this.medicalService);
+                        log.info("Le médecin {} transfère un groupe de {} de {} vers {}.", this.fullName, creaturesToTransfer.get(0).getRace(), waintingRoom.getName(), this.medicalService.getName());
+                    } else {
+                        if(transfer(creatureToTransfer, waintingRoom, this.medicalService)){
+                            log.info("Le médecin {} transfère la créature {} de {} vers {}.", this.fullName, creatureToTransfer.getFullName(), waintingRoom.getName(), this.medicalService.getName());
+                        }
                     }
-                    return creatureToTransfer;
+                    return;
                 } else {
                     //si la salle d'attente est vide, le médecin va regarder dans les autres services si il reste des créatures à soigner et la transferer
                     Creature creatureToTransfer = null;
@@ -120,9 +125,9 @@ public class Doctor extends Beast {
                         creatureToTransfer = service.getCreatureWithHighLevelDisease();
                         if(creatureToTransfer != null){
                             if(transfer(creatureToTransfer, service, this.medicalService)){
-                                log.info("La créature {} a été transférée de {} vers {}.", creatureToTransfer.getFullName(), waintingRoom.getName(), this.medicalService.getName());
+                                log.info("Le médecin {} transfère la créature {} de {} vers {}.", this.fullName, creatureToTransfer.getFullName(), service.getName(), this.medicalService.getName());
                             }
-                            return creatureToTransfer;
+                            return;
                         }
                     }
                 }
@@ -135,17 +140,13 @@ public class Doctor extends Beast {
 
         //Soigne créature si niveau disease >= 8
         if(creatureMaxLvlDisease.getHighLevelDisease().getCurrentLevel() >= 8){
-//            log.info("Le médecin soigne la créature {}, elle était sur le point de trépasser.", creatureMaxLvlDisease.getFullName());
             heal(creatureMaxLvlDisease, creatureMaxLvlDisease.getHighLevelDisease());
-            return creatureMaxLvlDisease;
+            return;
         } else if(creatureMaxDiseases.getDiseases().size() >= 3) {  //Soigne créature si nombre de disease >= 3
-            //log.info("Le médecin soigne la créature {}.", creatureMaxDiseases.getFullName());
-            heal(creatureMaxDiseases, creatureMaxLvlDisease.getHighLevelDisease());
-            return creatureMaxDiseases;
+            heal(creatureMaxDiseases, creatureMaxDiseases.getHighLevelDisease());
+            return;
         }
-        //log.info("Le médecin soigne la créature {}.", creatureMaxLvlDisease.getFullName());
         heal(creatureMaxLvlDisease, creatureMaxLvlDisease.getHighLevelDisease());
-        return creatureMaxLvlDisease;
     }
 
     /**
@@ -160,7 +161,7 @@ public class Doctor extends Beast {
             return;
         }
         if (!creature.beCured(disease)) {
-            log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", this.fullName, disease.getName());
+            log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", creature.getFullName(), disease.getName());
         } else {
             int heal = ActionType.DOCTOR_HEALS.getMoraleVariation();
             this.morale = Math.min(this.morale + heal, 100);
@@ -205,6 +206,40 @@ public class Doctor extends Beast {
             }
         }
         return roomFrom.removeCreature(creature) && roomTo.addCreature(creature);
+    }
+
+    /**
+     * Transfers a list of creature from one room to another if the conditions are met.
+     * All the creatures have to be the same race
+     *
+     * @param creatures the creatures to transfer
+     * @param roomFrom the room to transfer from
+     * @param roomTo the room to transfer to
+     * @return true if the transfer was successful, false otherwise
+     */
+    public void transferGroup(List<Creature> creatures, Room roomFrom, Room roomTo) {
+        boolean isTransferPossible = true;
+        // Vérification que la créature est bien dans la room
+        for(Creature creature : creatures){
+            CopyOnWriteArrayList<Creature> creaturesRoom = roomFrom.getCreatures();
+            if (!creaturesRoom.contains(creature)) {
+                log.error("[medecin][transferer()] La créature {} à transférer n'est pas présente dans la room {}.", creature.getFullName(), roomFrom.getName());
+                isTransferPossible = false;
+            }
+
+            String roomType = roomTo.getRoomType();
+            //Si la room de destination n'est pas vide, on vérifie que la race de la creature correspond au type de la room
+            if (!roomTo.getCreatures().isEmpty()) {
+                if (!creature.getRace().equals(roomType)) {
+                    log.error("[medecin][transferer()] Transfert impossible, le type du service de destination ({}) n'est pas du type de la créature ({}).", roomType, creature.getRace());
+                    isTransferPossible = false;
+                }
+            }
+            if(isTransferPossible){
+                roomFrom.removeCreature(creature);
+                roomTo.addCreature(creature);
+            }
+        }
     }
 
     /**
