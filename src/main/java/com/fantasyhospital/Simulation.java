@@ -28,9 +28,10 @@ public class Simulation {
         // Création de l'hôpital avec un nom et un nombre max de services
         Hospital hospital = new Hospital("Marseille", 10);
 
-        // Création d'un service médical "Urgence"
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, "Mediocre");
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, "Mediocre");
+        // Création des services medicaux
+        MedicalService emergency = new MedicalService("Urgence", 50.0, 1, "Mediocre");
+        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 1, "Mediocre");
+        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, "Mediocre");
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
         // Création de la room d'attente
@@ -43,9 +44,12 @@ public class Simulation {
         Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
         doctor2.addObserver(new MoralObserver(hospital));
         emergency.addDoctor(doctor2);
+        Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", gastro);
+        doctor3.addObserver(new MoralObserver(hospital));
+        gastro.addDoctor(doctor3);
 
         // Génération de 5 créatures aléatoires et ajout à la liste
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             Creature creature = Game.randomCreature();
             creature.addExitObserver(new ExitObserver(hospital));
             creature.addMoralObserver(new MoralObserver(hospital));
@@ -58,6 +62,7 @@ public class Simulation {
         hospital.addService(roomAttente);
         hospital.addService(emergency);
         hospital.addService(cardiac);
+        hospital.addService(gastro);
         //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
         roomAttente.getAllCreaturesOfSameRace();
         //Boucle d'évolution du jeu

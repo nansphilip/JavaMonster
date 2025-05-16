@@ -191,6 +191,12 @@ public class Doctor extends Beast {
      * @return true if the transfer was successful, false otherwise
      */
     public boolean transfer(Creature creature, Room roomFrom, Room roomTo) {
+        //Check si il y a bien de la place dans la room de destination
+        if(roomTo.getCreatures().size() >= roomTo.getMAX_CREATURE()){
+            log.info("Le service de destination était déjà plein...");
+            return false;
+        }
+
         // Vérification que la créature est bien dans la room
         CopyOnWriteArrayList<Creature> creaturesRoom = roomFrom.getCreatures();
         if (!creaturesRoom.contains(creature)) {
@@ -218,11 +224,21 @@ public class Doctor extends Beast {
      * @return true if the transfer was successful, false otherwise
      */
     public void transferGroup(List<Creature> creatures, Room roomFrom, Room roomTo) {
+        //Check si il y a bien de la place dans la room de destination
+        if(roomTo.getCreatures().size() >= roomTo.getMAX_CREATURE()){
+            log.info("Le service de destination était déjà plein...");
+            return;
+        }
         boolean isTransferPossible = true;
         // Vérification que la créature est bien dans la room
         for(Creature creature : creatures){
             CopyOnWriteArrayList<Creature> creaturesRoom = roomFrom.getCreatures();
-            if (!creaturesRoom.contains(creature)) {
+
+            if(roomTo.getCreatures().size() >= roomTo.getMAX_CREATURE()) {
+                log.info("Le service de destination était déjà plein...");
+                break;
+            }
+                if (!creaturesRoom.contains(creature)) {
                 log.error("[medecin][transferer()] La créature {} à transférer n'est pas présente dans la room {}.", creature.getFullName(), roomFrom.getName());
                 isTransferPossible = false;
             }

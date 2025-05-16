@@ -1,9 +1,11 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
+import com.fantasyhospital.model.creatures.abstractclass.BeastUtils;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.ExitObserver;
@@ -80,13 +82,14 @@ public class EvolutionGame {
         for (Room room : hospital.getServices()) {
             for (Creature creature : room.getCreatures()) {
                 //5% chance contracter nouvelle maladie
-                if(Math.random() < 0.2){
+                if(Math.random() < 0.05){
                     Disease disease = new Disease();
                     creature.fallSick(disease);
                     log.info("La créature {} n'a pas de chance, elle vient de contracter la maladie {} de manière complétement aléatoire.", creature.getFullName(), disease.getName());
                 }
+
                 //Récupère maladie random creature et modifie current level random
-                if(Math.random() < 0.15){
+                if(Math.random() < 0.10){
                     Disease dis = creature.getRandomDisease();
                     dis.setCurrentLevel(new Random().nextInt(8)+1);
                 }
@@ -125,7 +128,8 @@ public class EvolutionGame {
     }
 
     /**
-     * Ajoute une nouvelle créature avec une maladie, un niveau aléatoire dans une room aléatoire
+     * Ajoute une nouvelle créature avec une maladie, un niveau aléatoire dans une room aléatoire chance 50%
+     * Ajoute un nouveau médecin 5% chance
      */
     private void addRndCreatureRndRoom(){
         if(Math.random() < 0.50){
@@ -147,6 +151,14 @@ public class EvolutionGame {
                 room.addCreature(creature);
                 log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue",  creature.getFullName(), room.getName());
             }
+        }
+
+        if(Math.random() < 0.05){
+            MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getServices().size()));
+            Doctor doctor = new Doctor(BeastUtils.generateRandomName(GenderType.FEMALE), GenderType.FEMALE, 70, 175, 45, 100, "Lycanthrope", medicalService);
+            doctor.addObserver(new MoralObserver(hospital));
+            medicalService.addDoctor(doctor);
+            log.info("Le médecin {} vient d'arriver dans le service {} !", doctor.getFullName(), medicalService.getName());
         }
     }
 
