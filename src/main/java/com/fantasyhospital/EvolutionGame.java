@@ -89,10 +89,10 @@ public class EvolutionGame {
                 }
 
                 //Récupère maladie random creature et modifie current level random
-                if(Math.random() < 0.10){
-                    Disease dis = creature.getRandomDisease();
-                    dis.setCurrentLevel(new Random().nextInt(8)+1);
-                }
+//                if(Math.random() < 0.10){
+//                    Disease dis = creature.getRandomDisease();
+//                    dis.setCurrentLevel(new Random().nextInt(8)+1);
+//                }
 
                 //fait monter 1 niveau maladies par tour et perdre 5 moral par maladie
                 for (Disease disease : creature.getDiseases()) {
@@ -129,7 +129,7 @@ public class EvolutionGame {
 
     /**
      * Ajoute une nouvelle créature avec une maladie, un niveau aléatoire dans une room aléatoire chance 50%
-     * Ajoute un nouveau médecin 5% chance
+     * Ajoute un nouveau médecin 4% chance
      */
     private void addRndCreatureRndRoom(){
         if(Math.random() < 0.50){
@@ -153,8 +153,8 @@ public class EvolutionGame {
             }
         }
 
-        if(Math.random() < 0.05){
-            MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getServices().size()));
+        if(Math.random() < 0.04){
+            MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getMedicalServices().size()));
             Doctor doctor = new Doctor(BeastUtils.generateRandomName(GenderType.FEMALE), GenderType.FEMALE, 70, 175, 45, 100, "Lycanthrope", medicalService);
             doctor.addObserver(new MoralObserver(hospital));
             medicalService.addDoctor(doctor);

@@ -76,7 +76,6 @@ public class ExitObserver implements CreatureObserver {
                     Doctor doctor = ((MedicalService) salleCreature).getWeakerDoctor();
                     if(doctor != null){
                         doctor.depression();
-                        //On notifie l'observer du médecin pour vérifier si il n'en finit pas
                     } else {
                         log.info("Il n'y avait aucun médecin à déprimer dans le service.");
                     }
@@ -85,10 +84,11 @@ public class ExitObserver implements CreatureObserver {
             salleCreature.removeCreature(creature);
         }
 
-        //Si regenerant qui meurt mais reste quand même dans l'hopital, applique depression a medecin
+        //Si regenerant qui meurt mais reste quand même dans l'hopital après avoir regénéré, applique depression a medecin
         if(isDead){
             if(salleCreature instanceof MedicalService){
-                ((MedicalService) salleCreature).getWeakerDoctor().depression();
+                Doctor doctor = ((MedicalService) salleCreature).getWeakerDoctor();
+                if(doctor != null) doctor.depression();
             }
         }
     }

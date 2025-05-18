@@ -29,8 +29,8 @@ public class Simulation {
         Hospital hospital = new Hospital("Marseille", 10);
 
         // Création des services medicaux
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 1, "Mediocre");
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 1, "Mediocre");
+        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, "Mediocre");
+        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, "Mediocre");
         MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, "Mediocre");
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 

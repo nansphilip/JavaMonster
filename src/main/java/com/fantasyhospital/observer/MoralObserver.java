@@ -28,7 +28,7 @@ public class MoralObserver implements CreatureObserver {
      * et execute les méthodes si c'est le cas
      * Elle vérifie le moral d'une créature avec la méthode verifierMoral, execute les actions potentielles
      * et retire la créature de l'hopital si elle a trépassé
-     * @param bete
+     * @param beast la bête pour laquelle son moral évolue
      */
     @Override
     public void onStateChanged(Beast beast) {
@@ -42,7 +42,7 @@ public class MoralObserver implements CreatureObserver {
             room.removeCreature(creature);
             if(room instanceof MedicalService){
                 Doctor doc = ((MedicalService) room).getWeakerDoctor();
-                doc.depression();
+                if(doc != null) doc.depression();
             }
         }
     }
