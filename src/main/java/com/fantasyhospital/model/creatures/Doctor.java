@@ -120,10 +120,17 @@ public class Doctor extends Beast {
                     return;
                 } else {
                     //si la salle d'attente est vide, le médecin va regarder dans les autres services si il reste des créatures à soigner et la transferer
+                    //Si il ne reste qu'une créature dans l'hopital (donc dans un service) et qu'il y a un médecin dans le service il laisse l'autre médecin la soigner
                     Creature creatureToTransfer = null;
+
                     for(MedicalService service : hospital.getMedicalServices()){
                         creatureToTransfer = service.getCreatureWithHighLevelDisease();
-                        if(creatureToTransfer != null){
+                        if(creatureToTransfer != null && (hospital.getTotalCreaturesHospital() == 1) && service.getDoctors().isEmpty()){
+                            if(transfer(creatureToTransfer, service, this.medicalService)){
+                                log.info("Le médecin {} transfère la créature {} de {} vers {}.", this.fullName, creatureToTransfer.getFullName(), service.getName(), this.medicalService.getName());
+                            }
+                            return;
+                        } else if(creatureToTransfer != null && hospital.getTotalCreaturesHospital() > 1){
                             if(transfer(creatureToTransfer, service, this.medicalService)){
                                 log.info("Le médecin {} transfère la créature {} de {} vers {}.", this.fullName, creatureToTransfer.getFullName(), service.getName(), this.medicalService.getName());
                             }
@@ -137,6 +144,11 @@ public class Doctor extends Beast {
         // Récupération de la créature avec le niveau de disease le plus avancé et le nombre de diseases le plus élevé
         Creature creatureMaxLvlDisease = this.medicalService.getCreatureWithHighLevelDisease();
         Creature creatureMaxDiseases = this.medicalService.getCreatureWithNbMaxDisease();
+
+        if(creatureMaxDiseases == null || creatureMaxLvlDisease == null){
+            log.info("Le médecin {} n'a rien à faire..",  this.fullName);
+            return;
+        }
 
         //Soigne créature si niveau disease >= 8
         if(creatureMaxLvlDisease.getHighLevelDisease().getCurrentLevel() >= 8){

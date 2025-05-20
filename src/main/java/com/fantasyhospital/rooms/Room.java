@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-
+/**
+ * Represents a room where the creatures are stacked
+ */
 @Getter @Slf4j
 public class Room {
 
@@ -27,6 +29,11 @@ public class Room {
         this.MAX_CREATURE = MAX_CREATURE;
     }
 
+    /**
+     * Add a creature to the list of creature of the room
+     * @param creature to add
+     * @return true if added, false else
+     */
     public boolean addCreature(Creature creature){
         if (creatures.size() >= MAX_CREATURE) {
             return false;
@@ -36,6 +43,11 @@ public class Room {
         }
     }
 
+    /**
+     * Remove a creature from the list of the room
+     * @param creature to remove
+     * @return true if removed, false else
+     */
     public boolean removeCreature(Creature creature){
         return this.creatures.remove(creature);
     }
@@ -48,18 +60,11 @@ public class Room {
 
     }
 
-    public void setArea(double area) {
-        this.area = area;
-    }
-
-	public Creature getFirstCreature() {
-        return creatures.iterator().next();
-    }
-
-    public Creature getLastCreature() {
-        return (Creature) creatures.toArray()[ creatures.size()-1 ];
-    }
-
+    /**
+     * Search and return the creature identified by this name
+     * @param creatureName name of the creature
+     * @return the creature if found, else null
+     */
     public Creature getCreatureByName(String creatureName){
         for(Creature creature : creatures){
             if(creature.getFullName().equals(creatureName)){
@@ -69,6 +74,10 @@ public class Room {
         return null;
     }
 
+    /**
+     * Search for the race that has the longer length and return the list of this creatures
+     * @return the list of creatures, null if creatures are empty
+     */
     public List<Creature> getAllCreaturesOfSameRace() {
         if(creatures.isEmpty()){
             return null;
@@ -104,11 +113,11 @@ public class Room {
         return creaturesSameRace;
     }
 
-    public Creature getRandomCreature(){
-        Random random = new Random();
-        return (Creature) this.creatures.toArray()[random.nextInt(this.creatures.size())];
-    }
-
+    /**
+     * Return a random creature from the list, by excluding the one in param
+     * @param creature the creature to exclude
+     * @return the random creature, null if creatures are empty
+     */
     public Creature getRandomCreatureWithoutThisOne(Creature creature){
         if(creatures.size() <= 1){
             return null;
@@ -118,6 +127,11 @@ public class Room {
         return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
     }
 
+    /**
+     * Return a random creature from the list, by excluding the list of creatures in param
+     * @param creaturesToExclude the list of creatures to exclude
+     * @return the random creature, null if creatures are empty
+     */
     public Creature getRandomCreatureWithoutThem(List<Creature> creaturesToExclude){
         CopyOnWriteArrayList<Creature> creaturesCopy = new CopyOnWriteArrayList<>(this.creatures);
         for(Creature creature : creaturesToExclude){
@@ -129,6 +143,10 @@ public class Room {
         return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
     }
 
+    /**
+     * Search and return the creature with the higher level disease
+     * @return the creature, null if list is empty
+     */
     public Creature getCreatureWithHighLevelDisease(){
         if(creatures.isEmpty()){
             return null;
@@ -140,6 +158,10 @@ public class Room {
         return creatureToReturn;
     }
 
+    /**
+     * Search and return the creature with that has the most diseases
+     * @return the creature, null if list is empty
+     */
     public Creature getCreatureWithNbMaxDisease(){
         if(creatures.isEmpty()){
             return null;
@@ -151,6 +173,10 @@ public class Room {
         return creatureToReturn;
     }
 
+    /**
+     * Return the room type (race) of the room
+     * @return the type, null if the room is empty (= no race)
+     */
     public String getRoomType(){
         if(creatures.isEmpty()){
             return null;
