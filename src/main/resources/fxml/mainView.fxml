@@ -7,14 +7,17 @@
     <!-- Liste des créatures à droite && mini logo -->
     <right>
         <VBox spacing="10" alignment="TOP_RIGHT" VBox.vgrow="ALWAYS">
-            <fx:include source="LogoMiniView.fxml" />
-            <fx:include source="ListCreatureView.fxml" VBox.vgrow="ALWAYS"/>
+            <fx:include source="logoMiniView.fxml" />
+            <fx:include source="listCreatureView.fxml" VBox.vgrow="ALWAYS"/>
         </VBox>
     </right>
 
     <!-- Console des logs en bas -->
     <bottom>
-        <fx:include source="ConsoleLogView.fxml"/>
+        <VBox spacing="5.0">
+            <fx:include source="toolbar.fxml" />
+            <fx:include source="consoleLogView.fxml" />
+        </VBox>
     </bottom>
 
 </BorderPane>

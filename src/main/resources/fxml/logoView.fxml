@@ -13,9 +13,7 @@
       style="-fx-background-color: #1e1e1e; -fx-padding: 40px;">
 
     <ImageView fitWidth="400" preserveRatio="true">
-        <image>
-            <Image url="/images/Logo.jpg"/>
-        </image>
+        <Image url="/images/Logo.jpg"/>
     </ImageView>
 
     <Button text="Start Game"

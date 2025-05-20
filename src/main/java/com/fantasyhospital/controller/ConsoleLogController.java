@@ -12,15 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Component;
 
-import com.fantasyhospital.Simulation;
-import com.fantasyhospital.util.LogsUtils;
-
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import javafx.stage.Stage;
 
 /**
  * Contrôleur JavaFX chargé d'afficher le contenu du fichier de log
@@ -38,11 +32,9 @@ public class ConsoleLogController implements Initializable {
 	private TextArea logConsole;
 
 	private ScheduledExecutorService scheduler;
-	private final Simulation simulation;
 
 
-	public ConsoleLogController(Simulation simulation) {
-		this.simulation = simulation;
+	public ConsoleLogController() {
 	}
 
 
@@ -87,27 +79,10 @@ public class ConsoleLogController implements Initializable {
 		}
 	}
 
-	public void stop() {
-		if (scheduler != null && !scheduler.isShutdown()) {
-			scheduler.shutdown();
+	public void clearConsole() {
+		if (logConsole != null) {
+			logConsole.setText("");
 		}
-		Platform.exit();  // Ferme toutes les ressources JavaFX
-	}
-
-	// Cette méthode permet d'écouter l'événement de fermeture de la fenêtre
-	public void setStage(Stage stage) {
-		stage.setOnCloseRequest(event -> stop()); // Ajoute un gestionnaire pour la fermeture
-
-	}
-
-	public void clearLog(ActionEvent actionEvent) {
-		LogsUtils.clearLogFile(); // Appeler la méthode de nettoyage du fichier de log
-		logConsole.setText(""); // Effacer également le contenu du TextArea
-	}
-
-	@FXML
-	private void startSimulation() {
-		simulation.startSimulation();
 	}
 
 }

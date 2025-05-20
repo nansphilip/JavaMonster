@@ -11,8 +11,6 @@
       prefWidth="250">
 
     <ImageView fitWidth="250" preserveRatio="true">
-        <image>
-            <Image url="@/images/Logo.jpg"/>
-        </image>
+        <Image url="@/images/Logo.jpg"/>
     </ImageView>
 </HBox>

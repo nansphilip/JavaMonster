@@ -1,0 +1,128 @@
+package com.fantasyhospital.controller.ui;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.concurrent.ScheduledExecutorService;
+
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
+import com.fantasyhospital.EvolutionGame;
+import com.fantasyhospital.Simulation;
+import com.fantasyhospital.config.FxmlView;
+import com.fantasyhospital.config.StageManager;
+import com.fantasyhospital.controller.ConsoleLogController;
+import com.fantasyhospital.util.LogsUtils;
+
+import javafx.application.Platform;
+import javafx.css.PseudoClass;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ToolBar;
+import javafx.stage.Stage;
+
+@Component
+public class ToolbarController implements Initializable {
+
+	public ToolBar toolPane;
+	@FXML
+	private Button homeButton;
+
+	@FXML
+	private Button fullScreenButton;
+
+	@FXML
+	private Button exitButton;
+
+	@FXML
+	private TextArea logConsole;
+
+	private final StageManager stageManager;
+
+	private static final PseudoClass maximizeIcon = PseudoClass.getPseudoClass("max");
+	private static final PseudoClass minimizeIcon = PseudoClass.getPseudoClass("min");
+
+	private ScheduledExecutorService scheduler;
+	private final Simulation simulation;
+	private final ConsoleLogController consoleLogController;
+	private EvolutionGame jeu;
+
+	@Lazy
+	public ToolbarController(StageManager stageManager, Simulation simulation, ConsoleLogController consoleLogController,
+		ConsoleLogController consoleLogController1) {
+		this.simulation = simulation;
+		this.stageManager = stageManager;
+		this.consoleLogController = consoleLogController1;
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		if (stageManager.isStageFullScreen()) {
+			setWindowedGraphicsAndAction();
+		} else {
+			setFullScreenGraphicsAndAction();
+		}
+	}
+
+	public void goToHomeScreen() {
+		stageManager.switchToNextScene(FxmlView.MAIN);
+	}
+
+	public void goFullScreen() {
+		stageManager.switchToFullScreenMode();
+		setWindowedGraphicsAndAction();
+	}
+
+	public void goWindowed() {
+		stageManager.switchToWindowedMode();
+		setFullScreenGraphicsAndAction();
+
+	}
+
+	void setFullScreenGraphicsAndAction() {
+
+		fullScreenButton.pseudoClassStateChanged(minimizeIcon, false);
+		fullScreenButton.pseudoClassStateChanged(maximizeIcon, true);
+
+		fullScreenButton.setOnAction(e -> goFullScreen());
+
+	}
+
+	// Cette méthode permet d'écouter l'événement de fermeture de la fenêtre
+	public void setStage(Stage stage) {
+		stage.setOnCloseRequest(event -> stop()); // Ajoute un gestionnaire pour la fermeture
+
+	}
+
+	public void setWindowedGraphicsAndAction() {
+
+		fullScreenButton.pseudoClassStateChanged(maximizeIcon, false);
+		fullScreenButton.pseudoClassStateChanged(minimizeIcon, true);
+
+		fullScreenButton.setOnAction(e -> goWindowed());
+	}
+
+	public void stop() {
+		if (scheduler != null && !scheduler.isShutdown()) {
+			scheduler.shutdown();
+		}
+		Platform.exit();  // Ferme toutes les ressources JavaFX
+	}
+
+	@FXML
+	private void startSimulation() {
+		simulation.startSimulation();
+	}
+
+	public void clearLog(ActionEvent actionEvent) {
+		consoleLogController.clearConsole();
+		LogsUtils.clearLogFile();
+	}
+
+	public void handleNextRound(ActionEvent actionEvent) {
+
+	}
+}

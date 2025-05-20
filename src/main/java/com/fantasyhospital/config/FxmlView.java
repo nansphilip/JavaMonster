@@ -5,28 +5,28 @@ public enum FxmlView {
 	START {
 		@Override
 		public String getFxmlPath() {
-			return "/fxml/LogoView.fxml";
+			return "/fxml/logoView.fxml";
 		}
 	},
 
 	MINI_LOGO {
 		@Override
 		public String getFxmlPath() {
-			return "/fxml/LogoMiniView.fxml";
+			return "/fxml/logoMiniView.fxml";
 		}
 	},
 
 	LIST_CREATURE {
 		@Override
 		public String getFxmlPath() {
-			return "/fxml/ListCreatureView.fxml";
+			return "/fxml/listCreatureView.fxml";
 		}
 	},
 
 	MAIN {
 		@Override
 		public String getFxmlPath() {
-			return "/fxml/MainView.fxml";
+			return "/fxml/mainView.fxml";
 		}
 	};
 
