@@ -25,37 +25,46 @@ public class EvolutionGame {
      * Game hospital
      */
     private Hospital hospital;
+    private int round = 1;
+    private boolean endOfGame = false;
 
     public EvolutionGame(Hospital hospital) {
         this.hospital = hospital;
     }
 
     public void run() {
-        boolean endOfGame = false;
-        int round = 1;
-        Scanner sc  = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         while (!endOfGame) {
-            logRound(round);
+            log.info("Appuie sur Entrée pour lancer le prochain tour...");
             sc.nextLine();
-
-            if (checkEndOfGame()) break;
-            applyDiseasesEffects();
-            if (checkEndOfGame()) break;
-            doCreaturesWait();
-            if (checkEndOfGame()) break;
-            //verifyMoraleCreatures();
-            if (checkEndOfGame()) break;
-            doDoctorsExamine();
-            if (checkEndOfGame()) break;
-            addRndCreatureRndRoom();
-            hospital.displayServices();
-            round++;
+            runNextRound();
         }
+
         sc.close();
         logEndGame();
         afficherCreaturesSortiesHospital();
     }
+
+    public void runNextRound() {
+        if (endOfGame) return;
+
+        logRound(round);
+
+        if (checkEndOfGame()) return;
+        applyDiseasesEffects();
+        if (checkEndOfGame()) return;
+        doCreaturesWait();
+        if (checkEndOfGame()) return;
+        doDoctorsExamine();
+        if (checkEndOfGame()) return;
+        addRndCreatureRndRoom();
+
+        hospital.displayServices();
+
+        round++;
+    }
+
 
     // Méthodes privées extraites
 

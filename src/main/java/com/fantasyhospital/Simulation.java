@@ -10,6 +10,7 @@ import com.fantasyhospital.service.PatientService;
 import com.fantasyhospital.rooms.Room;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,10 +26,23 @@ import org.springframework.stereotype.Service;
 public class Simulation {
 
     private final PatientService patientService;
+    @Getter
+    private EvolutionGame jeu;
 
-    public void startSimulation() {
-        // Création de la liste des créatures (thread-safe)
-        CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
+    @Getter
+    private volatile boolean running = false;
+
+    public synchronized void startSimulation() {
+
+        if (running) {
+            log.info("Simulation déjà en cours, lancement ignoré.");
+            return;
+        }
+        running = true;
+
+        try {
+            // Création de la liste des créatures (thread-safe)
+            CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
         // Création de l'hôpital avec un nom et un nombre max de services
         Hospital hospital = new Hospital("Marseille", 10);
@@ -39,8 +53,8 @@ public class Simulation {
         MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, "Mediocre");
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
-        // Création de la room d'attente
-        Room roomAttente = new Room("Room d'attente", 70, 100);
+            // Création de la room d'attente
+            Room roomAttente = new Room("Room d'attente", 70, 100);
 
         // Création d'un médecin et affectation au service d'emergency
         Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", cardiac);
@@ -61,9 +75,9 @@ public class Simulation {
             creatures.add(creature);
             log.info("Créature générée : {}", creature);
 
-            // TODO: use patientRepository
-            // listCreatureController.addCreature(creature);
-        }
+                // TODO: use patientRepository
+                // listCreatureController.addCreature(creature);
+            }
 
         //roomAttente.setCreatures(creatures);
         roomAttente.setCreatures(creatures);
@@ -76,6 +90,14 @@ public class Simulation {
         //Boucle d'évolution du jeu
         EvolutionGame jeu = new EvolutionGame(hospital);
         jeu.run();
+
+            //Boucle d'évolution du jeu
+            this.jeu = new EvolutionGame(hospital);
+            jeu.runNextRound();
+
+        } finally {
+            running = false;
+        }
     }
 
 }

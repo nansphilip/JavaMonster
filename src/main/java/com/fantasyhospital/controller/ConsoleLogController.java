@@ -29,7 +29,7 @@ public class ConsoleLogController implements Initializable {
 
 	private final Path logFilePath = Path.of("logs/app.log");
 	@FXML
-	private TextArea logConsole;
+    public TextArea logConsole;
 
 	private ScheduledExecutorService scheduler;
 
@@ -57,24 +57,24 @@ public class ConsoleLogController implements Initializable {
 		long filePointer;
 
 		void listen() {
-
 			try {
 				long len = Files.size(logFilePath);
 
 				if (len < filePointer) {
 					filePointer = len;
 				} else if (len > filePointer) {
-
 					try (RandomAccessFile raf = new RandomAccessFile(logFilePath.toFile(), "r")) {
 						raf.seek(filePointer);
 						String line;
 						while ((line = raf.readLine()) != null) {
-							logConsole.appendText(new String(line.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8) + "\n");
+							final String logLine = new String(line.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+							javafx.application.Platform.runLater(() -> logConsole.appendText(logLine + "\n"));
 						}
 						filePointer = raf.getFilePointer();
 					}
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -85,4 +85,9 @@ public class ConsoleLogController implements Initializable {
 		}
 	}
 
+	public void appendText(String text) {
+		if (logConsole != null) {
+			javafx.application.Platform.runLater(() -> logConsole.appendText(text));
+		}
+	}
 }

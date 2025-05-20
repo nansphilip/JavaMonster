@@ -35,11 +35,20 @@ public class ToolbarController implements Initializable {
 	private Button fullScreenButton;
 
 	@FXML
+	private Button startSimulationButton;
+
+	@FXML
 	private Button exitButton;
+
+	@FXML
+	private Button nextRoundButton;
 
 	@FXML
 	private TextArea logConsole;
 
+
+
+	private final ConsoleLogController consoleLogController;
 	private final StageManager stageManager;
 
 	private static final PseudoClass maximizeIcon = PseudoClass.getPseudoClass("max");
@@ -47,15 +56,13 @@ public class ToolbarController implements Initializable {
 
 	private ScheduledExecutorService scheduler;
 	private final Simulation simulation;
-	private final ConsoleLogController consoleLogController;
 	private EvolutionGame jeu;
 
 	@Lazy
-	public ToolbarController(StageManager stageManager, Simulation simulation, ConsoleLogController consoleLogController,
-		ConsoleLogController consoleLogController1) {
+	public ToolbarController(StageManager stageManager, Simulation simulation, ConsoleLogController consoleLogController) {
 		this.simulation = simulation;
 		this.stageManager = stageManager;
-		this.consoleLogController = consoleLogController1;
+		this.consoleLogController = consoleLogController;
 	}
 
 	@Override
@@ -114,7 +121,19 @@ public class ToolbarController implements Initializable {
 
 	@FXML
 	private void startSimulation() {
-		simulation.startSimulation();
+		startSimulationButton.setDisable(true);
+
+		if (simulation.isRunning()) {
+			consoleLogController.clearConsole();
+			consoleLogController.appendText("Démarrage de la simulation...\n");
+			startSimulationButton.setDisable(false);
+			return;
+		}
+
+		new Thread(() -> {
+			simulation.startSimulation();
+			Platform.runLater(() -> startSimulationButton.setDisable(false));
+		}).start();
 	}
 
 	public void clearLog(ActionEvent actionEvent) {
@@ -123,6 +142,11 @@ public class ToolbarController implements Initializable {
 	}
 
 	public void handleNextRound(ActionEvent actionEvent) {
-
+		EvolutionGame jeu = simulation.getJeu();
+		if (jeu == null) {
+			consoleLogController.appendText("La simulation n'est pas démarrée.\n");
+			return;
+		}
+		jeu.runNextRound();
 	}
 }
