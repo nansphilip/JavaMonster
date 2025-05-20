@@ -84,6 +84,7 @@ public abstract class Creature extends Beast {
                 return false;
             }
 
+            disease.setCurrentLevel(1);
             creature.fallSick(disease);
 
             log.info("La créature {} s'emporte et contamine {} en lui transmettant {} dans la bagarre.", this.fullName, creature.fullName, disease.getName());

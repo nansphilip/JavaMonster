@@ -13,7 +13,8 @@ public interface Contaminant {
 
     default void contaminate(Creature CreatureDying, Room room){
         //Body de la mtéthode contaminer commune à toutes les classes de l'interface
-        //On récupère une disease au hasard, mais qui n'est pas au niveau max si possible
+        //On récupère une disease au hasard, mais qui n'est pas au niveau max
+        //Si il n'en avait qu'une, on baisse le niveau de la maladie à 5
         CopyOnWriteArrayList<Disease> diseases = CreatureDying.getDiseases();
         Disease disease = CreatureDying.getRandomDisease();
         for(Disease m : diseases){
@@ -21,6 +22,9 @@ public interface Contaminant {
                 disease = m;
                 break;
             }
+        }
+        if(disease.isLethal()){
+            disease.setCurrentLevel(5);
         }
         Creature creature = room.getRandomCreatureWithoutThisOne(CreatureDying);
         if(creature == null){
