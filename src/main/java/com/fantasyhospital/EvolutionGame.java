@@ -2,10 +2,12 @@ package com.fantasyhospital;
 
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
+import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
+import com.fantasyhospital.model.creatures.abstractclass.BeastUtils;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.ExitObserver;
