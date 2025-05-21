@@ -78,6 +78,13 @@ public class Hospital {
     }
 
     /**
+     * Displays the total number of doctors in the hospital (to be completed).
+     */
+    public List<Doctor> getDoctorsList() {
+        return this.doctors;
+    }
+
+    /**
      * Displays all creatures present in all the hospital's services.
      */
     public void displayAllCreatures() {

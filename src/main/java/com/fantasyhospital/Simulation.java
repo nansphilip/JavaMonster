@@ -1,6 +1,7 @@
 package com.fantasyhospital;
 
 import com.fantasyhospital.controller.ListCreatureController;
+import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -30,6 +31,7 @@ public class Simulation {
 	private volatile boolean running = false;
 
 	private final ListCreatureController listCreatureController;
+	private final ListDoctorsController listDoctorsController;
 
 	public synchronized void startSimulation() {
 
@@ -89,7 +91,7 @@ public class Simulation {
         roomAttente.getAllCreaturesOfSameRace();
 
 		//Boucle d'évolution du jeu
-		this.jeu = new EvolutionGame(hospital, listCreatureController);
+		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController);
 		jeu.runNextRound();
 
 	}

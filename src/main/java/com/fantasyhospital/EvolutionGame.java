@@ -1,6 +1,7 @@
 package com.fantasyhospital;
 
 import com.fantasyhospital.controller.ListCreatureController;
+import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
@@ -27,10 +28,12 @@ public class EvolutionGame {
     private int round = 1;
     private boolean endOfGame = false;
     private ListCreatureController listCreatureController;
+    private ListDoctorsController listDoctorsController;
 
-    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController) {
+    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController) {
         this.hospital = hospital;
         this.listCreatureController = listCreatureController;
+        this.listDoctorsController = listDoctorsController;
     }
 
     public void run() {
@@ -67,6 +70,9 @@ public class EvolutionGame {
 
         if (listCreatureController != null) {
             listCreatureController.updateCreaturesList();
+        }
+        if (listDoctorsController != null) {
+            listDoctorsController.updateDoctorsList();
         }
     }
 
