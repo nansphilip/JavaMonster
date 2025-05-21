@@ -1,5 +1,6 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -31,6 +33,8 @@ public class Simulation {
 
     @Getter
     private volatile boolean running = false;
+
+    private final ListCreatureController listCreatureController;
 
     public synchronized void startSimulation() {
 
@@ -76,7 +80,7 @@ public class Simulation {
             log.info("Créature générée : {}", creature);
 
                 // TODO: use patientRepository
-                // listCreatureController.addCreature(creature);
+                 listCreatureController.addCreature(creature);
             }
 
         //roomAttente.setCreatures(creatures);
@@ -92,7 +96,7 @@ public class Simulation {
         jeu.run();
 
             //Boucle d'évolution du jeu
-            this.jeu = new EvolutionGame(hospital);
+            this.jeu = new EvolutionGame(hospital, listCreatureController);
             jeu.runNextRound();
 
         } finally {

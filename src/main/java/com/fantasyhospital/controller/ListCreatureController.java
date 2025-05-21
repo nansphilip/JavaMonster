@@ -7,7 +7,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import com.fantasyhospital.config.FxmlView;
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -29,16 +28,17 @@ import javafx.stage.Stage;
 public class ListCreatureController {
 
 	private final StageManager stageManager;
+	private Hospital hospital;
 
 	@Lazy
 	public ListCreatureController(StageManager stageManager) {
 		this.stageManager = stageManager;
-		this.hospital = hospital;
 	}
 
 	@FXML
-	private void addCreature(Creature creature) {
-		stageManager.switchScene(FxmlView.LIST_CREATURE);
+	public void addCreature(Creature creature) {
+		observableCreatures.add(creature);
+		creatureListView.refresh();
 	}
 
 	@FXML
@@ -49,7 +49,6 @@ public class ListCreatureController {
 
 	private ObservableList<Creature> observableCreatures = FXCollections.observableArrayList();
 	private ScheduledExecutorService scheduler;
-	private Hospital hospital;
 
 	@FXML
 	public void initialize() {
@@ -76,5 +75,14 @@ public class ListCreatureController {
 			List<Creature> creatures = hospital.displayCreaturesList();
 			observableCreatures.setAll(creatures);
 		}
+	}
+
+	public void updateCreaturesList() {
+		Platform.runLater(this::loadCreatures);
+	}
+
+	public void setHospital(Hospital hospital) {
+		this.hospital = hospital;
+		loadCreatures();
 	}
 }

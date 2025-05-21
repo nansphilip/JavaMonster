@@ -1,11 +1,10 @@
 package com.fantasyhospital;
 
-import com.fantasyhospital.enums.GenderType;
+import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
-import com.fantasyhospital.model.creatures.abstractclass.BeastUtils;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.ExitObserver;
@@ -27,9 +26,11 @@ public class EvolutionGame {
     private Hospital hospital;
     private int round = 1;
     private boolean endOfGame = false;
+    private ListCreatureController listCreatureController;
 
-    public EvolutionGame(Hospital hospital) {
+    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController) {
         this.hospital = hospital;
+        this.listCreatureController = listCreatureController;
     }
 
     public void run() {
@@ -63,6 +64,10 @@ public class EvolutionGame {
         hospital.displayServices();
 
         round++;
+
+        if (listCreatureController != null) {
+            listCreatureController.updateCreaturesList();
+        }
     }
 
 
@@ -152,6 +157,7 @@ public class EvolutionGame {
                 } else {
                     String type = room.getRoomType().toUpperCase();
                     RaceType race = RaceType.valueOf(type);
+                    log.info("type : {} race : {}", type, race);
                     creature = Game.randomCreature(race);
                 }
                 creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8)+1);

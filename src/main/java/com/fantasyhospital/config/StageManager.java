@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Component;
 
-import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
