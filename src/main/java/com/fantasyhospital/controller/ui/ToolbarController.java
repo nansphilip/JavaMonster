@@ -121,14 +121,14 @@ public class ToolbarController implements Initializable {
 
 	@FXML
 	private void startSimulation() {
-		startSimulationButton.setDisable(true);
-
 		if (simulation.isRunning()) {
-			consoleLogController.clearConsole();
-			consoleLogController.appendText("Démarrage de la simulation...\n");
-			startSimulationButton.setDisable(false);
+			consoleLogController.appendText("⚠️ La simulation est déjà en cours.\n");
 			return;
 		}
+
+		startSimulationButton.setDisable(true);
+		consoleLogController.clearConsole();
+		consoleLogController.appendText("✅ Démarrage de la simulation...\n");
 
 		new Thread(() -> {
 			simulation.startSimulation();
