@@ -67,8 +67,22 @@ public class Hospital {
     /**
      * Displays the total number of creatures in the hospital (to be completed).
      */
-    public void displayCreaturesList() {
-        /* ... */ }
+    public List<Creature> displayCreaturesList() {
+        List<Creature> allCreatures = new ArrayList<>();
+        for (Room room : this.services) {
+            if (room.getCreatures() != null) {
+                allCreatures.addAll(room.getCreatures());
+            }
+        }
+        return allCreatures;
+    }
+
+    /**
+     * Displays the total number of doctors in the hospital (to be completed).
+     */
+    public List<Doctor> getDoctorsList() {
+        return this.doctors;
+    }
 
     /**
      * Displays all creatures present in all the hospital's services.

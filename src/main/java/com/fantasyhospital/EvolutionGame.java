@@ -1,5 +1,7 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.controller.ListCreatureController;
+import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
@@ -25,37 +27,57 @@ public class EvolutionGame {
      * Game hospital
      */
     private Hospital hospital;
+    private int round = 1;
+    private boolean endOfGame = false;
+    private ListCreatureController listCreatureController;
+    private ListDoctorsController listDoctorsController;
 
-    public EvolutionGame(Hospital hospital) {
+    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController) {
         this.hospital = hospital;
+        this.listCreatureController = listCreatureController;
+        this.listDoctorsController = listDoctorsController;
     }
 
     public void run() {
-        boolean endOfGame = false;
-        int round = 1;
-        Scanner sc  = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         while (!endOfGame) {
-            logRound(round);
+            log.info("Appuie sur Entrée pour lancer le prochain tour...");
             sc.nextLine();
-
-            if (checkEndOfGame()) break;
-            applyDiseasesEffects();
-            if (checkEndOfGame()) break;
-            doCreaturesWait();
-            if (checkEndOfGame()) break;
-            //verifyMoraleCreatures();
-            if (checkEndOfGame()) break;
-            doDoctorsExamine();
-            if (checkEndOfGame()) break;
-            addRndCreatureRndRoom();
-            hospital.displayServices();
-            round++;
+            runNextRound();
         }
+
         sc.close();
         logEndGame();
         afficherCreaturesSortiesHospital();
     }
+
+    public void runNextRound() {
+        if (endOfGame) return;
+
+        logRound(round);
+
+        if (checkEndOfGame()) return;
+        applyDiseasesEffects();
+        if (checkEndOfGame()) return;
+        doCreaturesWait();
+        if (checkEndOfGame()) return;
+        doDoctorsExamine();
+        if (checkEndOfGame()) return;
+        addRndCreatureRndRoom();
+
+        hospital.displayServices();
+
+        round++;
+
+        if (listCreatureController != null) {
+            listCreatureController.updateCreaturesList();
+        }
+        if (listDoctorsController != null) {
+            listDoctorsController.updateDoctorsList();
+        }
+    }
+
 
     // Méthodes privées extraites
 
@@ -143,6 +165,7 @@ public class EvolutionGame {
                 } else {
                     String type = room.getRoomType().toUpperCase();
                     RaceType race = RaceType.valueOf(type);
+                    log.info("type : {} race : {}", type, race);
                     creature = Game.randomCreature(race);
                 }
                 creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8)+1);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+<VBox spacing="10"
+      style="-fx-background-color: #1e1e1e; -fx-padding: 20px;"
+      xmlns="http://javafx.com/javafx/21.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.fantasyhospital.controller.ConsoleLogController">
+
+    <TextArea fx:id="logConsole"
+              wrapText="true"
+              editable="false"
+              VBox.vgrow="ALWAYS"
+              style="-fx-control-inner-background: black; -fx-text-fill: #00ff00; -fx-font-family: 'Consolas'; -fx-font-size: 12px;" />
+
+</VBox>
