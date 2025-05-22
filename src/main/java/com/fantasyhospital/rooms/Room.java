@@ -75,7 +75,7 @@ public class Room {
     }
 
     /**
-     * Search for the race that has the longer length and return the list of this creatures
+     * Search for the race that has the most creatures and return the list of this creatures
      * @return the list of creatures, null if creatures are empty
      */
     public List<Creature> getAllCreaturesOfSameRace() {
