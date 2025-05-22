@@ -1,5 +1,9 @@
 package com.fantasyhospital;
 
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.enums.GenderType;
@@ -14,11 +18,9 @@ import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.rooms.Room;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
-import lombok.extern.slf4j.Slf4j;
+import com.fantasyhospital.rooms.medicalservice.Quarantine;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class EvolutionGame {
@@ -103,23 +105,30 @@ public class EvolutionGame {
     private void applyDiseasesEffects() {
         for (Room room : hospital.getServices()) {
             for (Creature creature : room.getCreatures()) {
-                //5% chance contracter nouvelle maladie
-                if(Math.random() < 0.05){
+                // Si la créature est en quarantaine, on ne lui ajoute pas de nouvelles maladies aléatoirement
+                boolean isInQuarantine = room instanceof Quarantine;
+                
+                // 5% chance contracter nouvelle maladie (sauf en quarantaine)
+                if(!isInQuarantine && Math.random() < 0.05){
                     Disease disease = new Disease();
                     creature.fallSick(disease);
                     log.info("La créature {} n'a pas de chance, elle vient de contracter la maladie {} de manière complétement aléatoire.", creature.getFullName(), disease.getName());
                 }
 
-                //Récupère maladie random creature et modifie current level random
-//                if(Math.random() < 0.10){
-//                    Disease dis = creature.getRandomDisease();
-//                    dis.setCurrentLevel(new Random().nextInt(8)+1);
-//                }
+                // Récupère maladie random creature et modifie current level random
+                // if(Math.random() < 0.10){
+                //    Disease dis = creature.getRandomDisease();
+                //    dis.setCurrentLevel(new Random().nextInt(8)+1);
+                // }
 
-                //fait monter 1 niveau maladies par tour et perdre 5 moral par maladie
+                // Fait monter 1 niveau maladies par tour et perdre 5 moral par maladie (sauf en quarantaine pour le moral)
                 for (Disease disease : creature.getDiseases()) {
                     disease.increaseLevel();
-                    creature.setMorale(Math.max(creature.getMorale() - 5, 0));
+                    
+                    // En quarantaine, le moral ne change pas
+                    if (!isInQuarantine) {
+                        creature.setMorale(Math.max(creature.getMorale() - 5, 0));
+                    }
                 }
                 creature.notifyExitObservers();
             }
@@ -128,9 +137,15 @@ public class EvolutionGame {
 
     /**
      * Makes all creatures wait with the associated effects.
+     * Les créatures en quarantaine n'attendent pas (leur moral est figé)
      */
     private void doCreaturesWait() {
         for (Room room : hospital.getServices()) {
+            // Si c'est une quarantaine, les créatures n'attendent pas (moral figé)
+            if (room instanceof Quarantine) {
+                continue;
+            }
+            
             for (Creature creature : room.getCreatures()) {
                 creature.waiting(hospital.getRoomOfCreature(creature));
             }

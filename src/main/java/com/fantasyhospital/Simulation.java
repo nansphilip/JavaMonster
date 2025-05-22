@@ -1,5 +1,9 @@
 package com.fantasyhospital;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.springframework.stereotype.Service;
+
 import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
@@ -12,12 +16,10 @@ import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.rooms.Room;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.service.PatientService;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 @Service

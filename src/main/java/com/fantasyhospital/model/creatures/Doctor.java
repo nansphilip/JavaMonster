@@ -1,7 +1,6 @@
 package com.fantasyhospital.model.creatures;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -172,17 +171,23 @@ public class Doctor extends Beast {
             log.error("[medecin][soigner()] La créature {} n'a pas de disease", creature.getFullName());
             return;
         }
-        if (!creature.beCured(disease)) {
+        
+        // On récupère la room où se trouve la créature pour le passage à beCured
+        Room room = this.medicalService;
+        
+        if (!creature.beCured(disease, room)) {
             log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", creature.getFullName(), disease.getName());
         } else {
             int heal = ActionType.DOCTOR_HEALS.getMoraleVariation();
             this.morale = Math.min(this.morale + heal, 100);
 
             int healCreature = ActionType.CREATURE_TREATED.getMoraleVariation();
-            creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
+            // creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
+            creature.setMoraleWithRoom(Math.min(creature.getMorale() + healCreature, 100), room);
             //for(Creature creatureService : this.medicalService.getCreatures()){
                 //creatureService.setMorale(Math.min(creatureService.getMorale() + healCreature, 100));
             //}
+
             log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
             //log.info("Soigner a redonné {} points de moral au médecin {} et {} points à toutes les créatures du service. Moral actuel du médecin : {}", heal, this.getFullName(), healCreature, this.morale);
         }
