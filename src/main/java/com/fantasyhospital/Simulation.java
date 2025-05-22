@@ -4,17 +4,14 @@ import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.races.Zombie;
-import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.rooms.medicalservice.Crypt;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
@@ -32,6 +29,8 @@ public class Simulation {
         MedicalService emergency = new MedicalService("Urgence", 50.0, 10, "Mediocre");
         MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, "Mediocre");
         MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, "Mediocre");
+        //Crypt crypt = new Crypt("Crypt", 50, 5, "Mediocre");
+
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
         // Création de la room d'attente
@@ -47,9 +46,12 @@ public class Simulation {
         Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", gastro);
         doctor3.addObserver(new MoralObserver(hospital));
         gastro.addDoctor(doctor3);
+        //Doctor doctor4 = new Doctor("Dr Crypt", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", crypt);
+        //doctor4.addObserver(new MoralObserver(hospital));
+        //crypt.addDoctor(doctor4);
 
         // Génération de 5 créatures aléatoires et ajout à la liste
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 8; i++) {
             Creature creature = Game.randomCreature();
             creature.addExitObserver(new ExitObserver(hospital));
             creature.addMoralObserver(new MoralObserver(hospital));
@@ -63,8 +65,8 @@ public class Simulation {
         hospital.addService(emergency);
         hospital.addService(cardiac);
         hospital.addService(gastro);
-        //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
-        roomAttente.getAllCreaturesOfSameRace();
+        //hospital.addService(crypt);
+
         //Boucle d'évolution du jeu
         EvolutionGame jeu = new EvolutionGame(hospital);
         jeu.run();

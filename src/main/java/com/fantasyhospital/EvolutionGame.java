@@ -11,9 +11,11 @@ import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.rooms.medicalservice.Crypt;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -48,6 +50,8 @@ public class EvolutionGame {
             if (checkEndOfGame()) break;
             doDoctorsExamine();
             if (checkEndOfGame()) break;
+            actionCrypte();
+            if(checkEndOfGame()) break;
             addRndCreatureRndRoom();
             hospital.displayServices();
             round++;
@@ -57,12 +61,14 @@ public class EvolutionGame {
         afficherCreaturesSortiesHospital();
     }
 
-    // Méthodes privées extraites
 
-    private void logRound(int round) {
-        log.info("#############################################", round);
-        log.info("################ TOUR : {} ###################", round);
-        log.info("#############################################", round);
+    private void actionCrypte(){
+        List<Crypt> cryptList =  hospital.getCrypts();
+        if(!cryptList.isEmpty()){
+            for(Crypt crypt : cryptList){
+                crypt.manageCrypt();
+            }
+        }
     }
 
     /**
@@ -136,7 +142,7 @@ public class EvolutionGame {
             int rnd = new Random().nextInt(hospital.getServices().size());
             Room room = hospital.getServices().get(rnd);
 
-            if(room != null){
+            if(room != null && room.getCreatures().size() < room.getMAX_CREATURE()){
                 Creature creature = null;
                 if(room.getCreatures().isEmpty()){
                     creature = Game.randomCreature();
@@ -162,6 +168,11 @@ public class EvolutionGame {
         }
     }
 
+    private void logRound(int round) {
+        log.info("#############################################", round);
+        log.info("################ TOUR : {} ###################", round);
+        log.info("#############################################", round);
+    }
 
     /**
      * Récupère toutes les créatures soignées et trépassées des stack du singleton
