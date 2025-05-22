@@ -1,23 +1,30 @@
 package com.fantasyhospital.view;
 
+import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.geometry.Pos;
-
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
 public class CreatureCellView extends ListCell<Creature> {
     private VBox content;
     private HBox topRow;
+    private VBox imageAndBar;
     private ImageView creatureImageView;
     private ImageView moraleImageView;
+    private ImageView genderImageView;
+    private StackPane diseasesStackPane;
+    private ImageView backgroundView;
+    private ImageView barView;
     private Text name;
     private Label detailsLabel;
 
@@ -31,15 +38,30 @@ public class CreatureCellView extends ListCell<Creature> {
         moraleImageView.setFitHeight(10);
         moraleImageView.setFitWidth(65);
 
+        genderImageView = new ImageView();
+        genderImageView.setFitHeight(10);
+        genderImageView.setFitWidth(10);
+
+        backgroundView = new ImageView();
+        barView = new ImageView();
+
+        backgroundView.setFitHeight(12);
+        backgroundView.setFitWidth(948);
+        backgroundView.setOpacity(0.2);
+        barView.setFitHeight(12);
+        barView.setFitWidth(948);
+
+        diseasesStackPane = new StackPane(backgroundView, barView);
+
         name = new Text();
         detailsLabel = new Label();
         detailsLabel.setWrapText(true);
         detailsLabel.setStyle("-fx-text-fill: lightgray;");
 
-        VBox imageAndBar = new VBox(3, creatureImageView, moraleImageView);
+        imageAndBar = new VBox(3, creatureImageView, moraleImageView, diseasesStackPane);
         imageAndBar.setAlignment(Pos.CENTER);
 
-        topRow = new HBox(10, imageAndBar, name);
+        topRow = new HBox(10, imageAndBar, name, genderImageView);
         topRow.setAlignment(Pos.CENTER_LEFT);
 
         content = new VBox(5, topRow, detailsLabel);
@@ -58,7 +80,12 @@ public class CreatureCellView extends ListCell<Creature> {
 
             creatureImageView.setImage(croppedImage);
 
-            moraleImageView.setImage(getMoraleImage(creature.getMorale()));
+            moraleImageView.setImage(getMoraleImageView(creature.getMorale()));
+
+            genderImageView.setImage(getGenderImageView(creature.getSex()));
+
+            backgroundView.setImage(new Image(getClass().getResourceAsStream("/images/diseases/diseasesBarBackground.png")));
+            barView.setImage(new Image(getClass().getResourceAsStream("/images/diseases/diseasesBar.png")));
 
             name.setText(creature.getFullName());
             detailsLabel.setText(creature.toString());
@@ -67,7 +94,7 @@ public class CreatureCellView extends ListCell<Creature> {
         }
     }
 
-    private Image getMoraleImage(int morale) {
+    private Image getMoraleImageView(int morale) {
         String moraleImagePath;
 
         if (morale == 0) {
@@ -91,6 +118,17 @@ public class CreatureCellView extends ListCell<Creature> {
         }
 
         return new Image(getClass().getResourceAsStream(moraleImagePath));
+    }
+
+    private Image getGenderImageView(GenderType genderType) {
+        String genderImagePath;
+
+        if (genderType == GenderType.MALE) {
+            genderImagePath = "/images/gender/Male.png";
+        } else {
+            genderImagePath = "/images/gender/Female.png";
+        }
+        return new Image(getClass().getResourceAsStream(genderImagePath));
     }
 }
 
