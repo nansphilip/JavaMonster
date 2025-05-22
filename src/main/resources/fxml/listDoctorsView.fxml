@@ -9,6 +9,6 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.fantasyhospital.controller.ListDoctorsController">
 
-	<ListView fx:id="doctorListView" VBox.vgrow="ALWAYS" maxWidth="Infinity"/>
+	<ListView fx:id="doctorsListView" VBox.vgrow="ALWAYS" maxWidth="Infinity"/>
 
 </VBox>

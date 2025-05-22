@@ -68,6 +68,11 @@ public class Simulation {
         gastro.addDoctor(doctor3);
 
 		listCreatureController.setHospital(hospital);
+		// A revoir pour faire dynamiuquement !
+		// les docs sont en dur pour l'instant
+		listDoctorsController.addDoctor(doctor);
+		listDoctorsController.addDoctor(doctor2);
+		listDoctorsController.addDoctor(doctor3);
 
 		// Génération de 5 créatures aléatoires et ajout à la liste
 		for (int i = 0; i < 10; i++) {
