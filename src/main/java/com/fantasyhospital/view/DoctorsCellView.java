@@ -2,7 +2,11 @@ package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.creatures.Doctor;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
+
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -10,6 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
@@ -26,6 +32,7 @@ public class DoctorsCellView extends ListCell<Doctor> {
     private Label serviceLabel;
     private Label ageLabel;
     private Label moraleLabel;
+    private Label detailsLabel;
 
     public DoctorsCellView() {
         super();
@@ -73,7 +80,7 @@ public class DoctorsCellView extends ListCell<Doctor> {
             setText(null);
             setGraphic(null);
         } else {
-            String imagePath = "/images/Doctor.png";
+            String imagePath = "/images/races/Doctor.png";
             Image image = new Image(getClass().getResourceAsStream(imagePath));
             Image transparentImage = removePngBackground(image);
             Image croppedImage = cropImage(transparentImage);
@@ -90,6 +97,13 @@ public class DoctorsCellView extends ListCell<Doctor> {
 //            serviceLabel.setText("Service: " + doctor.getMedicalService());
 
             setGraphic(content);
+
+            this.setOnMouseClicked(event -> {
+                Doctor selected = getItem();
+                if (selected != null) {
+                    showDoctorPopup(selected);
+                }
+            });
         }
     }
 
@@ -130,4 +144,19 @@ public class DoctorsCellView extends ListCell<Doctor> {
         return new Image(getClass().getResourceAsStream(genderImagePath));
     }
 
+    private void showDoctorPopup(Doctor doctor) {
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("Détails du docteur");
+
+        detailsLabel = new Label(doctor.toString());
+        detailsLabel.setWrapText(true);
+
+        VBox detailContent = new VBox(10, detailsLabel);
+        detailContent.setPadding(new Insets(10));
+
+        Scene scene = new Scene(detailContent, 300, 200); // Taille de la popup
+        popup.setScene(scene);
+        popup.showAndWait();
+    }
 }

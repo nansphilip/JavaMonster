@@ -3,13 +3,18 @@ package com.fantasyhospital.view;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
+
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
@@ -29,6 +34,7 @@ public class CreatureCellView extends ListCell<Creature> {
     private Text name;
     private Label ageLabel;
     private Label moraleLabel;
+    private Label detailsLabel;
 
 
     public CreatureCellView() {
@@ -88,6 +94,13 @@ public class CreatureCellView extends ListCell<Creature> {
         content = new VBox(5, topRow);
 //        content = new VBox(5, topRow, detailsLabel);
         content.setAlignment(Pos.CENTER_LEFT);
+
+        this.setOnMouseClicked(event -> {
+            Creature selected = getItem();
+            if (selected != null) {
+                showCreaturePopup(selected);
+            }
+        });
     }
 
     @Override
@@ -96,7 +109,7 @@ public class CreatureCellView extends ListCell<Creature> {
         if (creature == null || empty) {
             setGraphic(null);
         } else {
-            String imagePath = "/images/" + creature.getRace().toLowerCase() + ".png";
+            String imagePath = "/images/races/" + creature.getRace().toLowerCase() + ".png";
             Image image = new Image(getClass().getResourceAsStream(imagePath));
             Image transparentImage = removePngBackground(image);
             Image croppedImage = cropImage(transparentImage);
@@ -196,6 +209,22 @@ public class CreatureCellView extends ListCell<Creature> {
         }
 
         return new Image(getClass().getResourceAsStream(imagePath));
+    }
+
+    private void showCreaturePopup(Creature creature) {
+        Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.setTitle("Détails de la créature");
+
+        detailsLabel = new Label(creature.toString());
+        detailsLabel.setWrapText(true);
+
+        VBox detailContent = new VBox(10, detailsLabel);
+        detailContent.setPadding(new Insets(10));
+
+        Scene scene = new Scene(detailContent, 300, 200); // Taille de la popup
+        popup.setScene(scene);
+        popup.showAndWait();
     }
 }
 
