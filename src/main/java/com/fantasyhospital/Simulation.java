@@ -36,6 +36,10 @@ public class Simulation {
 	private final ListCreatureController listCreatureController;
 	private final ListDoctorsController listDoctorsController;
 
+	public static void main(String[] args){
+		startSimulation();
+	}
+
 	public synchronized void startSimulation() {
 
 		if (running) {
@@ -54,7 +58,7 @@ public class Simulation {
         MedicalService emergency = new MedicalService("Urgence", 50.0, 10, "Mediocre");
         MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, "Mediocre");
         MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, "Mediocre");
-        //Crypt crypt = new Crypt("Crypt", 50, 5, "Mediocre");
+        Crypt crypt = new Crypt("Crypt", 50, 5, "Mediocre");
 
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
@@ -83,22 +87,23 @@ public class Simulation {
 			creature.addExitObserver(new ExitObserver(hospital));
 			creature.addMoralObserver(new MoralObserver(hospital));
 			creatures.add(creature);
+			crypt.addCreature(creature);
 			log.info("Créature générée : {}", creature);
 
 			// TODO: use patientRepository
 			listCreatureController.addCreature(creature);
 		}
 
-        //roomAttente.setCreatures(creatures);
-        roomAttente.setCreatures(creatures);
-        hospital.addService(roomAttente);
-        hospital.addService(emergency);
-        hospital.addService(cardiac);
-        hospital.addService(gastro);
+//        roomAttente.setCreatures(creatures);
+//        hospital.addService(roomAttente);
+//        hospital.addService(emergency);
+//        hospital.addService(cardiac);
+//        hospital.addService(gastro);
+		hospital.addService(crypt);
 
 		//Boucle d'évolution du jeu
 		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController);
-		jeu.runNextRound();
+		jeu.run();
 
 	}
 }
