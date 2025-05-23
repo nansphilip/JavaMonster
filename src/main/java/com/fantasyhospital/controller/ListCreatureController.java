@@ -7,6 +7,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import com.fantasyhospital.config.FxmlView;
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;

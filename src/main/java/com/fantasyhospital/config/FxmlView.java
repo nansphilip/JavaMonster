@@ -23,6 +23,20 @@ public enum FxmlView {
 		}
 	},
 
+	LIST_DOCTORS {
+		@Override
+		public String getFxmlPath() {
+			return "/fxml/listDoctorsView.fxml";
+		}
+	},
+
+	CREATURE_DETAILS {
+		@Override
+		public String getFxmlPath() {
+			return "/fxml/creatureDetails.fxml";
+		}
+	},
+
 	MAIN {
 		@Override
 		public String getFxmlPath() {
