@@ -1,6 +1,7 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.GenderType;
+import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 
@@ -35,10 +36,15 @@ public class CreatureCellView extends ListCell<Creature> {
     private Label ageLabel;
     private Label moraleLabel;
     private Label detailsLabel;
+    private Label roomLabel;
+
+    private Hospital hospital;
 
 
-    public CreatureCellView() {
+    public CreatureCellView(Hospital hospital) {
         super();
+        this.hospital = hospital;
+
         creatureImageView = new ImageView();
         creatureImageView.setPreserveRatio(true);
         creatureImageView.setFitHeight(30);
@@ -57,6 +63,9 @@ public class CreatureCellView extends ListCell<Creature> {
 
         ageLabel = new Label();
         ageLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 10px;");
+
+        roomLabel = new Label();
+        roomLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: gray; -fx-font-size: 10px;");
 
         moraleLabel = new Label();
         moraleLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 10px;");
@@ -82,7 +91,7 @@ public class CreatureCellView extends ListCell<Creature> {
         lifeAndDiseasesBox = new VBox(2, moraleBox, diseasesBox);
         lifeAndDiseasesBox.setAlignment(Pos.CENTER_LEFT);
 
-        nameGenderAgeBox = new HBox(5, name, genderImageView, ageLabel);
+        nameGenderAgeBox = new HBox(5, name, genderImageView, ageLabel, roomLabel);
         nameGenderAgeBox.setAlignment(Pos.CENTER_LEFT);
 
         nameAndDiseasesBox = new VBox(2, nameGenderAgeBox, lifeAndDiseasesBox);
@@ -105,6 +114,8 @@ public class CreatureCellView extends ListCell<Creature> {
 
     @Override
     protected void updateItem(Creature creature, boolean empty) {
+        String roomName = "";
+        
         super.updateItem(creature, empty);
         if (creature == null || empty) {
             setGraphic(null);
@@ -139,10 +150,19 @@ public class CreatureCellView extends ListCell<Creature> {
 
                     diseasesBox.getChildren().add(diseaseHBox);
                 }
+                if (hospital != null) {
+                    var room = hospital.getRoomOfCreature(creature);
+                    if (room != null) {
+                        roomName = room.getName();
+                    }
+                }
+
             }
 
             name.setText(creature.getFullName());
             ageLabel.setText("(" + creature.getAge() + ")");
+            roomLabel.setText(roomName);
+            
             moraleLabel.setText("Moral (" + creature.getMorale() + "/100)");
 //            detailsLabel.setText(creature.toString());
             setGraphic(content);

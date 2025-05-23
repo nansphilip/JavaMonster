@@ -54,7 +54,7 @@ public class ListCreatureController {
 	@FXML
 	public void initialize() {
 		creatureListView.setItems(observableCreatures);
-		creatureListView.setCellFactory(listView -> new CreatureCellView());
+		creatureListView.setCellFactory(listView -> new CreatureCellView(hospital));
 		scheduler = Executors.newSingleThreadScheduledExecutor();
 		loadCreatures();
 	}
