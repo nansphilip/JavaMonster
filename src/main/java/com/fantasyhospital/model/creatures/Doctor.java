@@ -247,10 +247,10 @@ public class Doctor extends Beast {
             CopyOnWriteArrayList<Creature> creaturesRoom = roomFrom.getCreatures();
 
             if(roomTo.getCreatures().size() >= roomTo.getMAX_CREATURE()) {
-                log.info("Le service de destination était déjà plein...");
+                log.info("Le service de destination est à présent plein...{}",  creature.getFullName());
                 break;
             }
-                if (!creaturesRoom.contains(creature)) {
+            if (!creaturesRoom.contains(creature)) {
                 log.error("[medecin][transferer()] La créature {} à transférer n'est pas présente dans la room {}.", creature.getFullName(), roomFrom.getName());
                 isTransferPossible = false;
             }

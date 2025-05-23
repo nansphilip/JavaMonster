@@ -36,10 +36,6 @@ public class Simulation {
 	private final ListCreatureController listCreatureController;
 	private final ListDoctorsController listDoctorsController;
 
-	public static void main(String[] args){
-		startSimulation();
-	}
-
 	public synchronized void startSimulation() {
 
 		if (running) {

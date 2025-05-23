@@ -58,16 +58,15 @@ public class EvolutionGame {
         if (endOfGame) return;
 
         logRound(round);
-
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
         applyDiseasesEffects();
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
         doCreaturesWait();
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
         doDoctorsExamine();
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
         actionCrypte();
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
         addRndCreatureRndRoom();
 
         hospital.displayServices();

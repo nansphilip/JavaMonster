@@ -110,7 +110,7 @@ public final class Crypt extends MedicalService {
      */
     public void airflowBreakDown() {
         this.airflow = false;
-        log.debug("Ah shit, here we go again. La clim est tombé en panne");
+        log.info("Ah shit, here we go again. La clim est tombé en panne");
     }
 
     /**
@@ -118,7 +118,7 @@ public final class Crypt extends MedicalService {
      */
     public void airflowRepair() {
         this.airflow = true;
-        log.debug("Un ouvrier regénérant répare la clim !");
+        log.info("Un ouvrier regénérant répare la clim !");
     }
 
     /**
@@ -141,7 +141,7 @@ public final class Crypt extends MedicalService {
             int increase = MIN_TEMPERATURE_INCREASE + random.nextInt(maxIncrease - MIN_TEMPERATURE_INCREASE + 1);
             this.temperature = Math.min(MAX_TEMPERATURE, this.temperature + increase);
             
-            log.info("La température augmente encore dans la crypt : {}°C (+{}°C) !", this.temperature, this.temperature - previousTemperature);
+            log.info("La température augmente dans la crypt : {}°C (+{}°C) !", this.temperature, this.temperature - previousTemperature);
         } else {
             log.info("Température : {}°C Clim : {}", this.temperature, this.airflow ? "fonctionnelle" : "en panne");
         }
@@ -204,10 +204,6 @@ public final class Crypt extends MedicalService {
             chanceToGetSick = HIGH_TEMPERATURE_DISEASE_CHANCE;
         } else { // Temp < 30°C, creature waits
             chanceToGetSick = 0.0;
-//            creatureWaitNbTour.forEach((k, v) -> {
-//                v++; //Increments nb for each entry
-//                creatureWaitNbTour.replace(k, v);
-//            });
         }
         return chanceToGetSick;
     }
