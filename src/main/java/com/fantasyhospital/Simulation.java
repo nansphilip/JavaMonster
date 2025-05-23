@@ -1,5 +1,6 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.enums.GenderType;
@@ -32,6 +33,7 @@ public class Simulation {
 
 	private final ListCreatureController listCreatureController;
 	private final ListDoctorsController listDoctorsController;
+	private final GridMedicalServiceController gridMedicalServiceController;
 
 	public synchronized void startSimulation() {
 
@@ -94,6 +96,8 @@ public class Simulation {
         hospital.addService(gastro);
         //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
         roomAttente.getAllCreaturesOfSameRace();
+
+		gridMedicalServiceController.setHospital(hospital);
 
 		//Boucle d'évolution du jeu
 		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController);
