@@ -3,6 +3,7 @@ package com.fantasyhospital;
 import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
+import com.fantasyhospital.controller.WaitingRoomController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -34,6 +35,7 @@ public class Simulation {
 	private final ListCreatureController listCreatureController;
 	private final ListDoctorsController listDoctorsController;
 	private final GridMedicalServiceController gridMedicalServiceController;
+	private final WaitingRoomController waitingRoomController;
 
 	public synchronized void startSimulation() {
 
@@ -97,10 +99,12 @@ public class Simulation {
         //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
         roomAttente.getAllCreaturesOfSameRace();
 
+		waitingRoomController.setHospital(hospital);
+
 		gridMedicalServiceController.setHospital(hospital);
 
 		//Boucle d'évolution du jeu
-		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController);
+		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController);
 		jeu.runNextRound();
 
 	}

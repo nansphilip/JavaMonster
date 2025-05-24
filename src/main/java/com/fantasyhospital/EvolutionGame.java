@@ -2,6 +2,7 @@ package com.fantasyhospital;
 
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
+import com.fantasyhospital.controller.WaitingRoomController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
@@ -31,11 +32,13 @@ public class EvolutionGame {
     private boolean endOfGame = false;
     private ListCreatureController listCreatureController;
     private ListDoctorsController listDoctorsController;
+    private WaitingRoomController waitingRoomController;
 
-    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController) {
+    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController ) {
         this.hospital = hospital;
         this.listCreatureController = listCreatureController;
         this.listDoctorsController = listDoctorsController;
+        this.waitingRoomController = waitingRoomController;
     }
 
     public void run() {
@@ -75,6 +78,9 @@ public class EvolutionGame {
         }
         if (listDoctorsController != null) {
             listDoctorsController.updateDoctorsList();
+        }
+        if (waitingRoomController != null) {
+            waitingRoomController.updateWaitingRoom();
         }
     }
 

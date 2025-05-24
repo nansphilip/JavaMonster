@@ -15,10 +15,12 @@
     </right>
 
     <center>
-        <fx:include source="medicalServiceView.fxml" />
-
         <VBox spacing="5.0" VBox.vgrow="ALWAYS">
-            <fx:include source="medicalServiceView.fxml" VBox.vgrow="ALWAYS"/>
+            <HBox spacing="10" VBox.vgrow="ALWAYS">
+                <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include source="waitingRoomView.fxml" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
             <fx:include source="toolbar.fxml" />
         </VBox>
     </center>
