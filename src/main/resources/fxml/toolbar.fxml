@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            style="-fx-background-color: #1e1e1e; -fx-padding: 10px;"
+            style="-fx-background-color: #1e1e1e; -fx-padding: 20px;"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.fantasyhospital.controller.ui.ToolbarController">

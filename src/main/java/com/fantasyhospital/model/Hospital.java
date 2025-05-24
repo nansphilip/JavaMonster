@@ -180,4 +180,16 @@ public class Hospital {
         }
         return TotalCreatures;
     }
+
+    /**
+     *  Display all creatures in waiting room
+     */
+    public Room getWaitingRoom() {
+        for (Room service : services) {
+            if (service.getName().equalsIgnoreCase("Room d'attente")) {
+                return service;
+            }
+        }
+        return null;
+    }
 }

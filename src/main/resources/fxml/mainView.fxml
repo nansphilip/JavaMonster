@@ -2,6 +2,7 @@
 
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <BorderPane xmlns:fx="http://javafx.com/fxml">
 
     <!-- Liste des créatures à droite && mini logo -->
@@ -14,13 +15,19 @@
     </right>
 
     <center>
-        <fx:include source="medicalServiceView.fxml" />
+        <VBox spacing="5.0" VBox.vgrow="ALWAYS">
+            <HBox spacing="10" VBox.vgrow="ALWAYS">
+                <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS"/>
+                <fx:include source="waitingRoomView.fxml" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <fx:include source="toolbar.fxml" />
+        </VBox>
     </center>
 
     <!-- Console des logs en bas -->
     <bottom>
         <VBox spacing="5.0">
-            <fx:include source="toolbar.fxml" />
             <fx:include source="consoleLogView.fxml" />
         </VBox>
     </bottom>
