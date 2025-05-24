@@ -4,6 +4,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.geometry.Insets?>
+
 <BorderPane xmlns:fx="http://javafx.com/fxml">
 
     <!-- Liste des créatures à droite && mini logo -->
@@ -15,12 +17,24 @@
         </VBox>
     </right>
 
-    <!-- Console des logs en bas -->
+    <!-- Boutons à gauche -->
     <bottom>
-        <VBox spacing="5.0">
-            <fx:include source="toolbar.fxml" />
-            <fx:include source="consoleLogView.fxml" />
-        </VBox>
+        <HBox alignment="CENTER" spacing="20">
+            <VBox alignment="BOTTOM_LEFT">
+                <fx:include source="toolbar.fxml" />
+            </VBox>
+
+    <!-- Console des logs en bas -->
+            <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                <fx:include source="consoleLogView.fxml" />
+            </HBox>
+
+            <VBox minWidth="320"/>
+
+            <padding>
+                <Insets top="10.0" bottom="10.0" left="10.0"/>
+            </padding>
+        </HBox>
     </bottom>
 
 </BorderPane>
