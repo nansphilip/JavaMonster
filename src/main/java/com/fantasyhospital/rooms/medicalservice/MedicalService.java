@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.fantasyhospital.enums.BudgetType;
+import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.rooms.Room;
@@ -19,6 +20,12 @@ import lombok.Setter;
 @Setter
 @Getter
 public class MedicalService extends Room {
+
+    /**
+     *
+     */
+    @Getter @Setter
+    private RaceType expectedRace;
 
     /**
      * List of doctors assigned to this service

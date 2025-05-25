@@ -48,7 +48,7 @@ public class GridMedicalServiceController {
 		int col = 0;
 
 		for (MedicalService service : services) {
-			VBox box = MedicalServiceCellView.createView(service);
+			VBox box = MedicalServiceCellView.createView(service, hospital);
 			gridPane.add(box, col, row);
 
 			col++;

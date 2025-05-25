@@ -46,19 +46,19 @@ public class EvolutionGame {
         this.gridMedicalServiceController = gridMedicalServiceController;
     }
 
-    public void run() {
-        Scanner sc = new Scanner(System.in);
-
-        while (!endOfGame) {
-            log.info("Appuie sur Entrée pour lancer le prochain tour...");
-            sc.nextLine();
-            runNextRound();
-        }
-
-        sc.close();
-        logEndGame();
-        afficherCreaturesSortiesHospital();
-    }
+//    public void run() {
+//        Scanner sc = new Scanner(System.in);
+//
+//        while (!endOfGame) {
+//            log.info("Appuie sur Entrée pour lancer le prochain tour...");
+//            sc.nextLine();
+//            runNextRound();
+//        }
+//
+//        sc.close();
+//        logEndGame();
+//        afficherCreaturesSortiesHospital();
+//    }
 
     public void runNextRound() {
         if (endOfGame) return;

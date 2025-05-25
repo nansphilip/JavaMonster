@@ -3,6 +3,7 @@ package com.fantasyhospital;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.BudgetType;
+import com.fantasyhospital.enums.RaceType;
 import org.springframework.stereotype.Service;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
@@ -56,13 +57,21 @@ public class Simulation {
 
         // Création des services medicaux
         MedicalService elf = new MedicalService("Elfe", 50.0, 10, BudgetType.INEXISTANT);
+		elf.setExpectedRace(RaceType.ELF);
         MedicalService dwarf = new MedicalService("Nains", 50.0, 10, BudgetType.INEXISTANT);
+		dwarf.setExpectedRace(RaceType.DWARF);
         MedicalService orc = new MedicalService("Orques", 50.0, 10, BudgetType.INEXISTANT);
+		orc.setExpectedRace(RaceType.ORC);
 		MedicalService werebeast = new MedicalService("Hommes-Bête", 50.0, 10, BudgetType.INEXISTANT);
+		werebeast.setExpectedRace(RaceType.WEREBEAST);
 		MedicalService zombie = new MedicalService("Zombies", 50.0, 10, BudgetType.INEXISTANT);
+		zombie.setExpectedRace(RaceType.ZOMBIE);
 		MedicalService vampire = new MedicalService("Vampires", 50.0, 10, BudgetType.INEXISTANT);
+		vampire.setExpectedRace(RaceType.VAMPIRE);
 		MedicalService lycanthrope = new MedicalService("Lycanthropes", 50.0, 10, BudgetType.INEXISTANT);
+		lycanthrope.setExpectedRace(RaceType.LYCANTHROPE);
 		MedicalService reptilian = new MedicalService("Reptiliens", 50.0, 10, BudgetType.INEXISTANT);
+		reptilian.setExpectedRace(RaceType.REPTILIAN);
 
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
