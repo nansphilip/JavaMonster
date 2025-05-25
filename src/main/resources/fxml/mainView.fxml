@@ -6,7 +6,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+style="-fx-background-image: url('images/grass-background.png')">
 
     <!-- Liste des créatures à droite && mini logo -->
     <right>
@@ -16,6 +17,11 @@
             <fx:include source="listDoctorsView.fxml" VBox.vgrow="ALWAYS"/>
         </VBox>
     </right>
+
+    <!-- Vue Hôpital au centre -->
+    <center>
+        <fx:include source="hospitalStructureView.fxml" />
+    </center>
 
     <!-- Boutons à gauche -->
     <center>
