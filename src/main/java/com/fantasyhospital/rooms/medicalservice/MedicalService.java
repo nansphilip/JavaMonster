@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.rooms.Room;
@@ -27,14 +28,14 @@ public class MedicalService extends Room {
     /**
      * Service budget (e.g., nonexistent, poor, insufficient, low)
      */
-    protected String budget;
+    protected BudgetType budgetType;
 
     /**
      * Creates a medical service with name, area, capacity, and budget.
      */
-    public MedicalService(String name, double area, int MAX_CREATURE, String budget) {
+    public MedicalService(String name, double area, int MAX_CREATURE, BudgetType budgetType) {
         super(name, area, MAX_CREATURE);
-        this.budget = budget;
+        this.budgetType = budgetType;
     }
 
     /**
@@ -114,7 +115,7 @@ public class MedicalService extends Room {
         sb.append("\n--- Service : ").append(name).append(" ---\n");
         sb.append("Superficie : ").append(area).append(" m²\n");
         sb.append("Nombre de créatures maximale : ").append(MAX_CREATURE).append("\n");
-        sb.append("Budget : ").append(budget).append("\n");
+        sb.append("Budget : ").append(budgetType).append("\n");
 
         sb.append("\n🧍 Médecins :\n");
         if (doctors.isEmpty()) {

@@ -2,6 +2,7 @@ package com.fantasyhospital;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.enums.BudgetType;
 import org.springframework.stereotype.Service;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
@@ -54,24 +55,30 @@ public class Simulation {
             Hospital hospital = new Hospital("Marseille", 10);
 
         // Création des services medicaux
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, "Mediocre");
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, "Mediocre");
-        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, "Mediocre");
+        MedicalService elf = new MedicalService("Elfe", 50.0, 10, BudgetType.INEXISTANT);
+        MedicalService dwarf = new MedicalService("Nains", 50.0, 10, BudgetType.INEXISTANT);
+        MedicalService orc = new MedicalService("Orques", 50.0, 10, BudgetType.INEXISTANT);
+		MedicalService werebeast = new MedicalService("Hommes-Bête", 50.0, 10, BudgetType.INEXISTANT);
+		MedicalService zombie = new MedicalService("Zombies", 50.0, 10, BudgetType.INEXISTANT);
+		MedicalService vampire = new MedicalService("Vampires", 50.0, 10, BudgetType.INEXISTANT);
+		MedicalService lycanthrope = new MedicalService("Lycanthropes", 50.0, 10, BudgetType.INEXISTANT);
+		MedicalService reptilian = new MedicalService("Reptiliens", 50.0, 10, BudgetType.INEXISTANT);
+
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
 		// Création de la room d'attente
 		Room roomAttente = new Room("Room d'attente", 70, 100);
 
         // Création d'un médecin et affectation au service d'emergency
-        Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", cardiac);
+        Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", lycanthrope);
         doctor.addObserver(new MoralObserver(hospital));
-        cardiac.addDoctor(doctor);
-        Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
+        lycanthrope.addDoctor(doctor);
+        Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", orc);
         doctor2.addObserver(new MoralObserver(hospital));
-        emergency.addDoctor(doctor2);
-        Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", gastro);
+        orc.addDoctor(doctor2);
+        Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", elf);
         doctor3.addObserver(new MoralObserver(hospital));
-        gastro.addDoctor(doctor3);
+        elf.addDoctor(doctor3);
 
 		listCreatureController.setHospital(hospital);
 		// A revoir pour faire dynamiuquement !
@@ -95,9 +102,14 @@ public class Simulation {
         //roomAttente.setCreatures(creatures);
         roomAttente.setCreatures(creatures);
         hospital.addService(roomAttente);
-        hospital.addService(emergency);
-        hospital.addService(cardiac);
-        hospital.addService(gastro);
+        hospital.addService(elf);
+        hospital.addService(dwarf);
+        hospital.addService(orc);
+		hospital.addService(werebeast);
+		hospital.addService(zombie);
+		hospital.addService(vampire);
+		hospital.addService(lycanthrope);
+		hospital.addService(reptilian);
         //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
         roomAttente.getAllCreaturesOfSameRace();
 
@@ -106,7 +118,7 @@ public class Simulation {
 		gridMedicalServiceController.setHospital(hospital);
 
 		//Boucle d'évolution du jeu
-		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController);
+		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController, gridMedicalServiceController);
 		jeu.runNextRound();
 
 	}

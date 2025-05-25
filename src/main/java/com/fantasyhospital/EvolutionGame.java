@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
@@ -35,12 +36,14 @@ public class EvolutionGame {
     private ListCreatureController listCreatureController;
     private ListDoctorsController listDoctorsController;
     private WaitingRoomController waitingRoomController;
+    private GridMedicalServiceController gridMedicalServiceController;
 
-    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController ) {
+    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
         this.hospital = hospital;
         this.listCreatureController = listCreatureController;
         this.listDoctorsController = listDoctorsController;
         this.waitingRoomController = waitingRoomController;
+        this.gridMedicalServiceController = gridMedicalServiceController;
     }
 
     public void run() {
@@ -83,6 +86,9 @@ public class EvolutionGame {
         }
         if (waitingRoomController != null) {
             waitingRoomController.updateWaitingRoom();
+        }
+        if (gridMedicalServiceController != null) {
+            gridMedicalServiceController.updateServicesList();
         }
     }
 

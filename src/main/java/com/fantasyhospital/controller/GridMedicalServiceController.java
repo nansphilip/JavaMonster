@@ -59,6 +59,11 @@ public class GridMedicalServiceController {
 		}
 	}
 
+	public void updateServicesList() {
+		this.services = hospital.getMedicalServices();
+		Platform.runLater(() -> displayServices());
+	}
+
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 		this.services = hospital.getMedicalServices();
