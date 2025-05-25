@@ -1,6 +1,7 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.BudgetType;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,20 +30,29 @@ public class MedicalServiceCellView {
 		name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 		Label type = new Label("Type du service : " + service.getRoomType());
 		Label occupied = new Label("Docteurs du service : " + service.getDoctors());
-		Label budget = new Label("Budget : " + service.getBudget());
+		Label budget = new Label("Budget : " + service.getBudgetType());
+
 
 		// a refaire plus propre en passant directement un budgetType et pas un valueOf string
-		BudgetType budgetEnum;
-		try {
-			budgetEnum = BudgetType.valueOf(service.getBudget().toUpperCase());
-
-		} catch (IllegalArgumentException | NullPointerException e) {
+		BudgetType budgetEnum = service.getBudgetType();
+		if (budgetEnum == null) {
 			budgetEnum = BudgetType.INEXISTANT;
 		}
 
 		HBox bedsHBox = createBedsView(service.getMAX_CREATURE(), budgetEnum);
 
-		box.getChildren().addAll(name, type, occupied, budget, bedsHBox);
+		Label creaturesLabel = new Label("Créatures :");
+		VBox creatureList = new VBox();
+		if (service.getCreatures().isEmpty()) {
+			creatureList.getChildren().add(new Label("  Aucune."));
+		} else {
+			for (Creature creature : service.getCreatures()) {
+				Label creatureLabel = new Label("  - " + creature.getFullName());
+				creatureList.getChildren().add(creatureLabel);
+			}
+		}
+
+		box.getChildren().addAll(name, type, occupied, budget, bedsHBox, creaturesLabel, creatureList);
 
 		return box;
 	}

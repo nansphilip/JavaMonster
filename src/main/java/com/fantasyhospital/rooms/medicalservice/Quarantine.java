@@ -3,6 +3,7 @@ package com.fantasyhospital.rooms.medicalservice;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 import lombok.Getter;
@@ -20,9 +21,9 @@ public class Quarantine extends MedicalService {
      * Crée une salle de quarantaine liée à un service médical parent
      * La capacité maximale est automatiquement calculée à 10% de celle du service parent
      */
-    public Quarantine(String name, double area, MedicalService parentService, String budget) {
+    public Quarantine(String name, double area, MedicalService parentService, BudgetType budgetType) {
         // La capacité maximale est de 10% de celle du service médical parent
-        super(name, area, (int) Math.ceil(parentService.getMAX_CREATURE() * 0.1), budget);
+        super(name, area, (int) Math.ceil(parentService.getMAX_CREATURE() * 0.1), budgetType);
         this.isolation = true;
         this.parentService = parentService;
     }
@@ -91,7 +92,7 @@ public class Quarantine extends MedicalService {
         sb.append("\n--- Quarantaine : ").append(name).append(" ---\n");
         sb.append("Superficie : ").append(area).append(" m²\n");
         sb.append("Nombre de créatures maximale : ").append(MAX_CREATURE).append("\n");
-        sb.append("Budget : ").append(budget).append("\n");
+        sb.append("Budget : ").append(budgetType).append("\n");
         sb.append("Isolation : ").append(isolation).append("\n");
         sb.append("Service parent : ").append(parentService.getName()).append("\n");
 

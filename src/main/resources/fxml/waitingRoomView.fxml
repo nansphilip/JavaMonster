@@ -6,6 +6,6 @@
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.fantasyhospital.controller.WaitingRoomController" spacing="10">
 
-    <ListView fx:id="waitingRoomListView" prefWidth="300" />
+    <ListView fx:id="waitingRoomListView" prefWidth="100" />
 
 </VBox>
