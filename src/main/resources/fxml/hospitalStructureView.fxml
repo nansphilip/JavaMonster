@@ -48,7 +48,7 @@
                               style="
                                      -fx-border-color: #000000;
                                      -fx-border-width: 2;
-                                     -fx-background-image: url('images/crypt-background.jpg');
+                                     -fx-background-image: url('images/tiles/FloorCrypt.png');
                                      -fx-background-size: 235px 285px;
                                      -fx-background-position: center;"
 
