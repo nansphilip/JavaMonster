@@ -3,57 +3,67 @@ package com.fantasyhospital.view;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.geometry.Insets;
-import javafx.scene.Cursor;
-
-import java.awt.*;
 
 public class MedicalServiceCellView {
 
-	public static VBox createView(MedicalService service, Hospital hospital) {
-		VBox box = new VBox(5);
-		box.setStyle("""
-            -fx-border-color: gray;
-            -fx-padding: 10;
-            -fx-background-color: #f4f4f4;
-            -fx-background-radius: 5;
-            -fx-border-radius: 5;
+	public static Pane createView(MedicalService service, Hospital hospital) {
+		Pane pane = new Pane();
+		pane.setStyle("""
+            -fx-background-color: #add8e6;
+            -fx-border-color: #000000;
+            -fx-border-width: 1;
         """);
-		box.setPrefWidth(200);
-		box.setCursor(Cursor.HAND);
+		pane.setPrefSize(112.5, 300.0);
+		pane.setCursor(Cursor.HAND);
 
 		Label name = new Label("🩺 " + service.getName());
 		name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-		Label type = new Label("Type du service : " + service.getRoomType());
-		Label occupied = new Label("Docteurs du service : " + service.getDoctors());
+		name.setLayoutX(10);
+		name.setLayoutY(10);
+		name.setMaxWidth(92.5);
+
+		Label type = new Label("Type : " + service.getRoomType());
+		type.setLayoutX(10);
+		type.setLayoutY(40);
+		type.setMaxWidth(92.5);
+
+		Label occupied = new Label("Docteurs : " + service.getDoctors());
+		occupied.setLayoutX(10);
+		occupied.setLayoutY(60);
+		occupied.setMaxWidth(92.5);
+
 		Label budget = new Label("Budget : " + service.getBudgetType());
+		budget.setLayoutX(10);
+		budget.setLayoutY(80);
+		budget.setMaxWidth(92.5);
 
-
-		// a refaire plus propre en passant directement un budgetType et pas un valueOf string
-		BudgetType budgetEnum = service.getBudgetType();
-		if (budgetEnum == null) {
-			budgetEnum = BudgetType.INEXISTANT;
-		}
+		BudgetType budgetEnum = service.getBudgetType() != null ? service.getBudgetType() : BudgetType.INEXISTANT;
 
 		HBox bedsHBox = createBedsView(service.getMAX_CREATURE(), budgetEnum);
+		bedsHBox.setLayoutX(10);
+		bedsHBox.setLayoutY(110);
 
 		int creatureCount = service.getCreatures() != null ? service.getCreatures().size() : 0;
-		Label creatureCountLabel = new Label("Nombre de créatures : " + creatureCount);
+		Label creatureCountLabel = new Label("Créatures : " + creatureCount);
 		creatureCountLabel.setStyle("-fx-font-style: italic; -fx-text-fill: #555;");
+		creatureCountLabel.setLayoutX(10);
+		creatureCountLabel.setLayoutY(180);
 
-		box.setOnMouseClicked(event -> openDetailPanel(service, hospital));
+		pane.setOnMouseClicked(event -> openDetailPanel(service, hospital));
 
-		box.getChildren().addAll(name, type, occupied, budget, bedsHBox, creatureCountLabel);
-
-		return box;
+		pane.getChildren().addAll(name, type, occupied, budget, bedsHBox, creatureCountLabel);
+		return pane;
 	}
 
 	private static HBox createBedsView(int numberOfBeds, BudgetType budgetType) {

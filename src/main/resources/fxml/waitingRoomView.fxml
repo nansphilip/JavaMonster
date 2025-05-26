@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.fantasyhospital.controller.WaitingRoomController" spacing="10">
+<VBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.fantasyhospital.controller.WaitingRoomController"
+      fx:id="waitingRoom"
+      layoutX="0.0"
+      layoutY="0.0"
+      prefWidth="150.0"
+      prefHeight="600.0"
+      spacing="10"
+      style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;">
 
-    <ListView fx:id="waitingRoomListView" prefWidth="100" />
+    <Label text="Salle d'attente"
+           style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;"
+           maxWidth="130.0" />
 
+    <ListView fx:id="waitingRoomListView"
+              prefWidth="130.0"
+              prefHeight="550.0" />
 </VBox>
