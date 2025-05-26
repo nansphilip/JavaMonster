@@ -2,6 +2,7 @@ package com.fantasyhospital.controller;
 
 import java.util.List;
 
+import javafx.scene.layout.Pane;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -48,8 +49,8 @@ public class GridMedicalServiceController {
 		int col = 0;
 
 		for (MedicalService service : services) {
-			VBox box = MedicalServiceCellView.createView(service, hospital);
-			gridPane.add(box, col, row);
+			Pane pane = MedicalServiceCellView.createView(service, hospital);
+			gridPane.add(pane, col, row);
 
 			col++;
 			if (col >= columns) {

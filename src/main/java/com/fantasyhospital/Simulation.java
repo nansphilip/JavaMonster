@@ -4,6 +4,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.enums.RaceType;
+import com.fantasyhospital.rooms.medicalservice.Crypt;
 import org.springframework.stereotype.Service;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
@@ -72,6 +73,7 @@ public class Simulation {
 		lycanthrope.setExpectedRace(RaceType.LYCANTHROPE);
 		MedicalService reptilian = new MedicalService("Reptiliens", 50.0, 10, BudgetType.INEXISTANT);
 		reptilian.setExpectedRace(RaceType.REPTILIAN);
+		Crypt crypt = new Crypt("Crypte", 50.0, 10, BudgetType.BON, 1,10);
 
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
@@ -119,6 +121,7 @@ public class Simulation {
 		hospital.addService(vampire);
 		hospital.addService(lycanthrope);
 		hospital.addService(reptilian);
+		hospital.addService(crypt);
         //doctor.transferer(creatures.getFirst(), roomAttente, emergency);
         roomAttente.getAllCreaturesOfSameRace();
 
