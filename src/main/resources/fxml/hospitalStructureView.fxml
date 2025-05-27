@@ -19,15 +19,16 @@
                              -fx-border-width: 3;
                              -fx-border-style: solid;
                              -fx-background-color: #f8f8f8;"
-                      prefWidth="600.0"
-                      prefHeight="400.0"
-                      maxWidth="800.0"
-                      maxHeight="600.0">
+                      minWidth="0.0"
+                      minHeight="0.0"
+                      maxWidth="Infinity"
+                      maxHeight="Infinity"
+                      VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
                     <children>
                         <!-- Salle d'attente -->
-                        <fx:include source="waitingRoomView.fxml" fx:id="waitingRoomInclude"  />
+<!--                        <fx:include source="waitingRoomView.fxml" fx:id="waitingRoomInclude"  />-->
                         <!-- Services médicaux -->
-                        <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"  />
+<!--                        <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"  />-->
                         <!-- Zone de quarantaine (moitié inférieure) -->
                         <Pane fx:id="quarantineZone"
                               style="-fx-background-color: green; -fx-border-color: #000000; -fx-border-width: 2;"

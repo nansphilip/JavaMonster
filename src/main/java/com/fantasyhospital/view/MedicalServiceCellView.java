@@ -2,7 +2,7 @@ package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -34,7 +34,8 @@ public class MedicalServiceCellView {
                     -fx-border-color: #000000;
                     -fx-border-width: 1;
                 """);
-        pane.setPrefSize(112.5, 300.0);
+        pane.setPrefHeight(350.0);
+        pane.setMaxWidth(Double.MAX_VALUE);
         pane.setCursor(Cursor.HAND);
 
         Label name = new Label("🩺 " + service.getName());
@@ -94,7 +95,9 @@ public class MedicalServiceCellView {
                         "/images/room/Bed.png",
                         "/images/room/Bedblood.png"
                 });
-                case BON -> "/images/room/Bed.png";
+                case BON -> getRandomImage(new String[]{
+                        "/images/room/Bed.png"
+                });
                 case INEXISTANT -> "/images/room/Bed.png";
             };
 

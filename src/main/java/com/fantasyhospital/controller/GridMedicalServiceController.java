@@ -44,7 +44,7 @@ public class GridMedicalServiceController {
 	private void displayServices() {
 		gridPane.getChildren().clear();
 
-		int columns = 3;
+		int columns = 4;
 		int row = 0;
 		int col = 0;
 
