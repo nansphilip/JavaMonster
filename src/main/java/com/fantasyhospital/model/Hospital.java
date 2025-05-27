@@ -5,9 +5,10 @@ import java.util.List;
 
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.model.rooms.Room;
 
-import com.fantasyhospital.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.model.rooms.medicalservice.Crypt;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -167,6 +168,20 @@ public class Hospital {
             }
         }
         return servicesList;
+    }
+
+    /**
+     * Returns only the crypts in the hospital.
+     * @return List<Crypt>
+     */
+    public List<Crypt> getCrypts() {
+        List<Crypt> cryptList =  new ArrayList<>();
+        for (Room room : services) {
+            if(room instanceof Crypt) {
+                cryptList.add((Crypt) room);
+            }
+        }
+        return cryptList;
     }
 
     /**

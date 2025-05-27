@@ -11,8 +11,8 @@ import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.CreatureObserver;
-import com.fantasyhospital.rooms.Room;
-import com.fantasyhospital.rooms.medicalservice.Quarantine;
+import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -216,7 +216,7 @@ public abstract class Creature extends Beast {
         // La vérification de quarantaine sera faite par l'appelant
         this.morale = morale;
     }
-    
+
     /**
      * Permet de changer le moral de la créature tout en tenant compte de la quarantaine
      * @param morale Nouveau moral
@@ -228,7 +228,7 @@ public abstract class Creature extends Beast {
             log.info("La créature {} est en quarantaine, son moral reste à {}.", this.fullName, this.morale);
             return;
         }
-        
+
         // Sinon, on change le moral normalement
         this.morale = morale;
     }
@@ -241,7 +241,7 @@ public abstract class Creature extends Beast {
     public boolean beCured(Disease disease) {
         return beCured(disease, null);
     }
-    
+
     /**
      * Cures the creature of a given disease and give moral points
      * (moral doesn't change if in quarantine)
@@ -253,12 +253,12 @@ public abstract class Creature extends Beast {
         if(!this.diseases.contains(disease)){
             return false;
         }
-        
+
         // Si la créature est en quarantaine, on ne modifie pas son moral
         if (room == null || !(room instanceof Quarantine)) {
             this.morale = Math.min(this.morale + ActionType.CREATURE_TREATED.getMoraleVariation(), 100);
         }
-        
+
         this.diseases.remove(disease);
         notifyExitObservers();
         return true;
