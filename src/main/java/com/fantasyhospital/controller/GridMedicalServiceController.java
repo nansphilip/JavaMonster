@@ -8,13 +8,20 @@ import org.springframework.stereotype.Component;
 
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.Hospital;
+<<<<<<< HEAD
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
+=======
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+>>>>>>> 5711fe2 (feat: squash branch before MR)
 import com.fantasyhospital.view.MedicalServiceCellView;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
+<<<<<<< HEAD
 import javafx.scene.layout.VBox;
+=======
+>>>>>>> 5711fe2 (feat: squash branch before MR)
 
 @Component
 public class GridMedicalServiceController {
