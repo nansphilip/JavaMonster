@@ -2,20 +2,14 @@ package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
-<<<<<<< HEAD
-import com.fantasyhospital.rooms.medicalservice.MedicalService;
-=======
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
->>>>>>> 5711fe2 (feat: squash branch before MR)
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -23,11 +17,23 @@ public class MedicalServiceCellView {
 
 	public static Pane createView(MedicalService service, Hospital hospital) {
 		Pane pane = new Pane();
+
+		Image tileImage = new Image(MedicalServiceCellView.class.getResourceAsStream("/images/tiles/RoomFloor.png"));
+
+		BackgroundImage bgImage = new BackgroundImage(
+				tileImage,
+				BackgroundRepeat.REPEAT,
+				BackgroundRepeat.REPEAT,
+				BackgroundPosition.DEFAULT,
+				BackgroundSize.DEFAULT
+		);
+		pane.setBackground(new Background(bgImage));
+
+
 		pane.setStyle("""
-            -fx-background-color: #add8e6;
-            -fx-border-color: #000000;
-            -fx-border-width: 1;
-        """);
+                    -fx-border-color: #000000;
+                    -fx-border-width: 1;
+                """);
 		pane.setPrefSize(112.5, 300.0);
 		pane.setCursor(Cursor.HAND);
 
@@ -100,10 +106,11 @@ public class MedicalServiceCellView {
 
 		return bedsBox;
 	}
-		private static String getRandomImage(String[] options) {
-			int randomIndex = (int) (Math.random() * options.length);
-			return options[randomIndex];
-		}
+
+	private static String getRandomImage(String[] options) {
+		int randomIndex = (int) (Math.random() * options.length);
+		return options[randomIndex];
+	}
 
 	private static void openDetailPanel(MedicalService service, Hospital hospital) {
 		Stage detailStage = new Stage();

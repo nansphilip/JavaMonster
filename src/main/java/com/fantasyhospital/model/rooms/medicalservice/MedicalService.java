@@ -5,10 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.fantasyhospital.enums.BudgetType;
-<<<<<<< HEAD:src/main/java/com/fantasyhospital/rooms/medicalservice/MedicalService.java
 import com.fantasyhospital.enums.RaceType;
-=======
->>>>>>> 5711fe2 (feat: squash branch before MR):src/main/java/com/fantasyhospital/model/rooms/medicalservice/MedicalService.java
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
