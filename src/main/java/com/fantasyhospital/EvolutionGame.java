@@ -1,9 +1,5 @@
 package com.fantasyhospital;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
-
 import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
@@ -18,11 +14,15 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
-import com.fantasyhospital.rooms.Room;
-import com.fantasyhospital.rooms.medicalservice.MedicalService;
-import com.fantasyhospital.rooms.medicalservice.Quarantine;
-
+import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.Crypt;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 @Slf4j
 public class EvolutionGame {
@@ -46,32 +46,33 @@ public class EvolutionGame {
         this.gridMedicalServiceController = gridMedicalServiceController;
     }
 
-//    public void run() {
-//        Scanner sc = new Scanner(System.in);
-//
-//        while (!endOfGame) {
-//            log.info("Appuie sur Entrée pour lancer le prochain tour...");
-//            sc.nextLine();
-//            runNextRound();
-//        }
-//
-//        sc.close();
-//        logEndGame();
-//        afficherCreaturesSortiesHospital();
-//    }
+    public void run() {
+        Scanner sc = new Scanner(System.in);
+
+        while (!endOfGame) {
+            log.info("Appuie sur Entrée pour lancer le prochain tour...");
+            sc.nextLine();
+            runNextRound();
+        }
+
+        sc.close();
+        logEndGame();
+        afficherCreaturesSortiesHospital();
+    }
 
     public void runNextRound() {
         if (endOfGame) return;
 
         logRound(round);
-
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
         applyDiseasesEffects();
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
         doCreaturesWait();
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
         doDoctorsExamine();
-        if (checkEndOfGame()) return;
+        endOfGame = checkEndOfGame();
+        actionCrypte();
+        endOfGame = checkEndOfGame();
         addRndCreatureRndRoom();
 
         hospital.displayServices();
@@ -93,12 +94,13 @@ public class EvolutionGame {
     }
 
 
-    // Méthodes privées extraites
-
-    private void logRound(int round) {
-        log.info("#############################################", round);
-        log.info("################ TOUR : {} ###################", round);
-        log.info("#############################################", round);
+    private void actionCrypte(){
+        List<Crypt> cryptList =  hospital.getCrypts();
+        if(!cryptList.isEmpty()){
+            for(Crypt crypt : cryptList){
+                crypt.manageCrypt();
+            }
+        }
     }
 
     /**
@@ -119,7 +121,7 @@ public class EvolutionGame {
             for (Creature creature : room.getCreatures()) {
                 // Si la créature est en quarantaine, on ne lui ajoute pas de nouvelles maladies aléatoirement
                 boolean isInQuarantine = room instanceof Quarantine;
-                
+
                 // 5% chance contracter nouvelle maladie (sauf en quarantaine)
                 if(!isInQuarantine && Math.random() < 0.05){
                     Disease disease = new Disease();
@@ -136,7 +138,7 @@ public class EvolutionGame {
                 // Fait monter 1 niveau maladies par tour et perdre 5 moral par maladie (sauf en quarantaine pour le moral)
                 for (Disease disease : creature.getDiseases()) {
                     disease.increaseLevel();
-                    
+
                     // En quarantaine, le moral ne change pas
                     if (!isInQuarantine) {
                         creature.setMorale(Math.max(creature.getMorale() - 5, 0));
@@ -157,7 +159,7 @@ public class EvolutionGame {
             if (room instanceof Quarantine) {
                 continue;
             }
-            
+
             for (Creature creature : room.getCreatures()) {
                 creature.waiting(hospital.getRoomOfCreature(creature));
             }
@@ -185,14 +187,13 @@ public class EvolutionGame {
             int rnd = new Random().nextInt(hospital.getServices().size());
             Room room = hospital.getServices().get(rnd);
 
-            if(room != null){
+            if(room != null && room.getCreatures().size() < room.getMAX_CREATURE()){
                 Creature creature = null;
                 if(room.getCreatures().isEmpty()){
                     creature = Game.randomCreature();
                 } else {
                     String type = room.getRoomType().toUpperCase();
                     RaceType race = RaceType.valueOf(type);
-                    log.info("type : {} race : {}", type, race);
                     creature = Game.randomCreature(race);
                 }
                 creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8)+1);
@@ -212,6 +213,11 @@ public class EvolutionGame {
         }
     }
 
+    private void logRound(int round) {
+        log.info("#############################################", round);
+        log.info("################ TOUR : {} ###################", round);
+        log.info("#############################################", round);
+    }
 
     /**
      * Récupère toutes les créatures soignées et trépassées des stack du singleton
