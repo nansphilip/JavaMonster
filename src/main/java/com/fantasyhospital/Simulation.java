@@ -1,15 +1,7 @@
 package com.fantasyhospital;
 
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import com.fantasyhospital.enums.BudgetType;
-import com.fantasyhospital.model.rooms.medicalservice.Crypt;
-import org.springframework.stereotype.Service;
-
-import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
-import com.fantasyhospital.controller.WaitingRoomController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -23,6 +15,9 @@ import com.fantasyhospital.service.PatientService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 @Service
@@ -81,16 +76,8 @@ public class Simulation {
         Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", gastro);
         doctor3.addObserver(new MoralObserver(hospital));
         gastro.addDoctor(doctor3);
-        //Doctor doctor4 = new Doctor("Dr Crypt", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", crypt);
-        //doctor4.addObserver(new MoralObserver(hospital));
-        //crypt.addDoctor(doctor4);
 
 		listCreatureController.setHospital(hospital);
-		// A revoir pour faire dynamiuquement !
-		// les docs sont en dur pour l'instant
-		listDoctorsController.addDoctor(doctor);
-		listDoctorsController.addDoctor(doctor2);
-		listDoctorsController.addDoctor(doctor3);
 
 		// Génération de 5 créatures aléatoires et ajout à la liste
 		for (int i = 0; i < 10; i++) {
@@ -98,13 +85,13 @@ public class Simulation {
 			creature.addExitObserver(new ExitObserver(hospital));
 			creature.addMoralObserver(new MoralObserver(hospital));
 			creatures.add(creature);
-			crypt.addCreature(creature);
 			log.info("Créature générée : {}", creature);
 
 			// TODO: use patientRepository
 			listCreatureController.addCreature(creature);
 		}
 
+        //roomAttente.setCreatures(creatures);
         roomAttente.setCreatures(creatures);
         hospital.addService(roomAttente);
         hospital.addService(emergency);
@@ -125,7 +112,7 @@ public class Simulation {
 		gridMedicalServiceController.setHospital(hospital);
 
 		//Boucle d'évolution du jeu
-		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController, gridMedicalServiceController);
+		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController);
 		jeu.runNextRound();
 
 	}

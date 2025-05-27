@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.fantasyhospital.enums.BudgetType;
-import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
@@ -20,12 +18,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class MedicalService extends Room {
-
-    /**
-     *
-     */
-    @Getter @Setter
-    private RaceType expectedRace;
 
     /**
      * List of doctors assigned to this service
@@ -122,7 +114,7 @@ public class MedicalService extends Room {
         sb.append("\n--- Service : ").append(name).append(" ---\n");
         sb.append("Superficie : ").append(area).append(" m²\n");
         sb.append("Nombre de créatures maximale : ").append(MAX_CREATURE).append("\n");
-        sb.append("Budget : ").append(budgetType).append("\n");
+        sb.append("Budget : ").append(budget).append("\n");
 
         sb.append("\n🧍 Médecins :\n");
         if (doctors.isEmpty()) {

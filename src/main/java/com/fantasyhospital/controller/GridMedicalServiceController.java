@@ -1,20 +1,17 @@
 package com.fantasyhospital.controller;
 
-import java.util.List;
-
+import com.fantasyhospital.config.StageManager;
+import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.view.MedicalServiceCellView;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import com.fantasyhospital.config.StageManager;
-import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.view.MedicalServiceCellView;
-
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import java.util.List;
 
 @Component
 public class GridMedicalServiceController {
