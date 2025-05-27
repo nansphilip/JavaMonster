@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.fantasyhospital.controller.HospitalStructureController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <StackPane AnchorPane.topAnchor="0.0"
+               AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0">
+
+        <BorderPane>
+            <center>
+                <Pane fx:id="hospitalStructure"
+                      style="-fx-border-color: #555555;
+                             -fx-border-width: 3;
+                             -fx-border-style: solid;
+                             -fx-background-color: #f8f8f8;"
+                      prefWidth="600.0"
+                      prefHeight="400.0"
+                      maxWidth="800.0"
+                      maxHeight="600.0">
+                    <children>
+                        <!-- Salle d'attente -->
+                        <fx:include source="waitingRoomView.fxml" fx:id="waitingRoomInclude"  />
+                        <!-- Services médicaux -->
+                        <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"  />
+                        <!-- Zone de quarantaine (moitié inférieure) -->
+                        <Pane fx:id="quarantineZone"
+                              style="-fx-background-color: green; -fx-border-color: #000000; -fx-border-width: 2;"
+                              layoutX="600.0"
+                              layoutY="300.0"
+                              prefWidth="200.0"
+                              prefHeight="300.0">
+                            <children>
+                                <Label text="Zone de quarantaine"
+                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; -fx-wrap-text: true;"
+                                       layoutX="10.0"
+                                       layoutY="10.0"
+                                       maxWidth="92.5" />
+                            </children>
+                        </Pane>
+                        <!-- Crypte (moitié supérieure) -->
+                        <Pane fx:id="crypt"
+                              style="
+                                     -fx-border-color: #000000;
+                                     -fx-border-width: 2;
+                                     -fx-background-image: url('images/crypt-background.jpg');
+                                     -fx-background-size: 235px 285px;
+                                     -fx-background-position: center;"
+
+                              layoutX="600.0"
+                              layoutY="0.0"
+                              prefWidth="200.0"
+                              prefHeight="300.0">
+                            <children>
+                                <Label text="Crypte"
+                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; -fx-wrap-text: true;"
+                                       layoutX="10.0"
+                                       layoutY="10.0"
+                                       maxWidth="92.5" />
+                            </children>
+                        </Pane>
+                    </children>
+                </Pane>
+            </center>
+        </BorderPane>
+    </StackPane>
+
+</AnchorPane>

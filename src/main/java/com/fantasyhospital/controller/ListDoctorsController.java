@@ -1,7 +1,10 @@
 package com.fantasyhospital.controller;
 
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
+import com.fantasyhospital.view.DoctorsCellView;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +21,14 @@ import javafx.scene.control.ListView;
 public class ListDoctorsController {
 
 	@FXML
-	private ListView<Doctor> doctorListView;  // Liste des docteurs
+	private ListView<Doctor> doctorsListView;
 
 	private ObservableList<Doctor> observableDoctors = FXCollections.observableArrayList();
 
 	private final StageManager stageManager;
 	private Hospital hospital;
+
+	private ScheduledExecutorService scheduler;
 
 	@Lazy
 	public ListDoctorsController(StageManager stageManager) {
@@ -32,7 +37,9 @@ public class ListDoctorsController {
 
 	@FXML
 	public void initialize() {
-		doctorListView.setItems(observableDoctors);
+		doctorsListView.setItems(observableDoctors);
+		doctorsListView.setCellFactory(listView -> new DoctorsCellView());
+		scheduler = Executors.newSingleThreadScheduledExecutor();
 		loadDoctors();
 	}
 
@@ -50,7 +57,7 @@ public class ListDoctorsController {
 	@FXML
 	public void addDoctor(Doctor doctor) {
 		observableDoctors.add(doctor);
-		doctorListView.refresh();
+		doctorsListView.refresh();
 	}
 
 	public void setHospital(Hospital hospital) {
