@@ -1,12 +1,16 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
+import com.fantasyhospital.controller.WaitingRoomController;
+import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
@@ -112,7 +116,7 @@ public class Simulation {
 		gridMedicalServiceController.setHospital(hospital);
 
 		//Boucle d'évolution du jeu
-		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController);
+		this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController, gridMedicalServiceController);
 		jeu.runNextRound();
 
 	}
