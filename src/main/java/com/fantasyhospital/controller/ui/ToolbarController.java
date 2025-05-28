@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
+import com.fantasyhospital.controller.HospitalStructureController;
 
 @Component
 public class ToolbarController implements Initializable {
@@ -58,11 +59,14 @@ public class ToolbarController implements Initializable {
 	private final Simulation simulation;
 	private EvolutionGame jeu;
 
+	private final HospitalStructureController hospitalStructureController;
+
 	@Lazy
-	public ToolbarController(StageManager stageManager, Simulation simulation, ConsoleLogController consoleLogController) {
+	public ToolbarController(StageManager stageManager, Simulation simulation, ConsoleLogController consoleLogController, HospitalStructureController hospitalStructureController) {
 		this.simulation = simulation;
 		this.stageManager = stageManager;
 		this.consoleLogController = consoleLogController;
+		this.hospitalStructureController = hospitalStructureController;
 	}
 
 	@Override
@@ -130,6 +134,8 @@ public class ToolbarController implements Initializable {
 		consoleLogController.clearConsole();
 		consoleLogController.appendText("✅ Démarrage de la simulation...\n");
 
+		hospitalStructureController.startGame();
+
 		new Thread(() -> {
 			simulation.startSimulation();
 			Platform.runLater(() -> startSimulationButton.setDisable(false));
@@ -148,5 +154,6 @@ public class ToolbarController implements Initializable {
 			return;
 		}
 		jeu.runNextRound();
+		hospitalStructureController.updateWaitingRoom();
 	}
 }

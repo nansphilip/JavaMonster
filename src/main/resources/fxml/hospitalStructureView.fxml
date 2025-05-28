@@ -19,52 +19,16 @@
                              -fx-border-width: 3;
                              -fx-border-style: solid;
                              -fx-background-color: #f8f8f8;"
-                      minWidth="0.0"
-                      minHeight="0.0"
-                      maxWidth="Infinity"
-                      maxHeight="Infinity"
-                      VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                      prefWidth="800.0"
+                      prefHeight="600.0"
+                      maxWidth="1300.0"
+                      maxHeight="700.0">
                     <children>
                         <!-- Salle d'attente -->
-<!--                        <fx:include source="waitingRoomView.fxml" fx:id="waitingRoomInclude"  />-->
+                        <fx:include source="waitingRoomView.fxml" fx:id="waitingRoomInclude"  />
                         <!-- Services médicaux -->
-<!--                        <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"  />-->
-                        <!-- Zone de quarantaine (moitié inférieure) -->
-                        <Pane fx:id="quarantineZone"
-                              style="-fx-background-color: green; -fx-border-color: #000000; -fx-border-width: 2;"
-                              layoutX="600.0"
-                              layoutY="300.0"
-                              prefWidth="200.0"
-                              prefHeight="300.0">
-                            <children>
-                                <Label text="Zone de quarantaine"
-                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; -fx-wrap-text: true;"
-                                       layoutX="10.0"
-                                       layoutY="10.0"
-                                       maxWidth="92.5" />
-                            </children>
-                        </Pane>
-                        <!-- Crypte (moitié supérieure) -->
-                        <Pane fx:id="crypt"
-                              style="
-                                     -fx-border-color: #000000;
-                                     -fx-border-width: 2;
-                                     -fx-background-image: url('images/tiles/FloorCrypt.png');
-                                     -fx-background-size: 235px 285px;
-                                     -fx-background-position: center;"
-
-                              layoutX="600.0"
-                              layoutY="0.0"
-                              prefWidth="200.0"
-                              prefHeight="300.0">
-                            <children>
-                                <Label text="Crypte"
-                                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white; -fx-wrap-text: true;"
-                                       layoutX="10.0"
-                                       layoutY="10.0"
-                                       maxWidth="92.5" />
-                            </children>
-                        </Pane>
+                        <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"
+                                    layoutX="230.0" layoutY="40.0" />
                     </children>
                 </Pane>
             </center>

@@ -2,15 +2,13 @@ package com.fantasyhospital;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.controller.*;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.rooms.medicalservice.Crypt;
+import com.fantasyhospital.rooms.medicalservice.Quarantine;
 import org.springframework.stereotype.Service;
 
-import com.fantasyhospital.controller.GridMedicalServiceController;
-import com.fantasyhospital.controller.ListCreatureController;
-import com.fantasyhospital.controller.ListDoctorsController;
-import com.fantasyhospital.controller.WaitingRoomController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -31,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class Simulation {
 
 	private final PatientService patientService;
+	private final HospitalStructureController hospitalStructureController;
 	@Getter
 	private EvolutionGame jeu;
 
@@ -119,7 +118,7 @@ public class Simulation {
 
 		gridMedicalServiceController.setHospital(hospital);
 
-		waitingRoomController.setHospital(hospital);
+		hospitalStructureController.setHospital(hospital);
 
 		gridMedicalServiceController.setHospital(hospital);
 
