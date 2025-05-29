@@ -65,7 +65,7 @@ public class Simulation {
 		MedicalService test3 = new MedicalService("Gastrologie", 50.0, 10, BudgetType.MEDIOCRE);
 		MedicalService test4 = new MedicalService("Urgence", 50.0, 10, BudgetType.MEDIOCRE);
 		MedicalService test5 = new MedicalService("Cardiologie", 50.0, 10, BudgetType.MEDIOCRE);
-        Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.MEDIOCRE);
+        Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.MEDIOCRE, 10,5);
 
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
@@ -73,15 +73,15 @@ public class Simulation {
 		Room roomAttente = new Room("Room d'attente", 70, 100);
 
         // Création d'un médecin et affectation au service d'emergency
-        Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", lycanthrope);
+        Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
         doctor.addObserver(new MoralObserver(hospital));
-        lycanthrope.addDoctor(doctor);
-        Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", orc);
+        emergency.addDoctor(doctor);
+        Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", cardiac);
         doctor2.addObserver(new MoralObserver(hospital));
-        orc.addDoctor(doctor2);
-        Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", elf);
+        cardiac.addDoctor(doctor2);
+        Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", gastro);
         doctor3.addObserver(new MoralObserver(hospital));
-        elf.addDoctor(doctor3);
+        gastro.addDoctor(doctor3);
 
 		listCreatureController.setHospital(hospital);
 		// A revoir pour faire dynamiuquement !
