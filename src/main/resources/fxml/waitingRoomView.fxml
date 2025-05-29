@@ -8,12 +8,9 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.fantasyhospital.controller.WaitingRoomController"
       fx:id="waitingRoom"
-      layoutX="0.0"
-      layoutY="0.0"
-      prefWidth="150.0"
-      prefHeight="600.0"
       spacing="10"
-      style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;">
+      style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;"
+      prefWidth="300">
 
     <Label text="Salle d'attente"
            style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;"
@@ -21,5 +18,5 @@
 
     <ListView fx:id="waitingRoomListView"
               prefWidth="130.0"
-              prefHeight="550.0" />
+              VBox.vgrow="ALWAYS" />
 </VBox>

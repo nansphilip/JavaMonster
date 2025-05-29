@@ -17,112 +17,128 @@ import javafx.stage.Stage;
 
 public class MedicalServiceCellView {
 
-	public static Pane createView(MedicalService service, Hospital hospital) {
-		Pane pane = new Pane();
-		pane.setStyle("""
-            -fx-background-color: #add8e6;
-            -fx-border-color: #000000;
-            -fx-border-width: 1;
-        """);
-		pane.setPrefSize(112.5, 300.0);
-		pane.setCursor(Cursor.HAND);
+    public static Pane createView(MedicalService service, Hospital hospital) {
+        Pane pane = new Pane();
 
-		Label name = new Label("🩺 " + service.getName());
-		name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-		name.setLayoutX(10);
-		name.setLayoutY(10);
-		name.setMaxWidth(92.5);
+        Image tileImage = new Image(MedicalServiceCellView.class.getResourceAsStream("/images/tiles/RoomFloor.png"));
 
-		Label type = new Label("Type : " + service.getRoomType());
-		type.setLayoutX(10);
-		type.setLayoutY(40);
-		type.setMaxWidth(92.5);
+        BackgroundImage bgImage = new BackgroundImage(
+                tileImage,
+                BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT
+        );
+        pane.setBackground(new Background(bgImage));
 
-		Label occupied = new Label("Docteurs : " + service.getDoctors());
-		occupied.setLayoutX(10);
-		occupied.setLayoutY(60);
-		occupied.setMaxWidth(92.5);
 
-		Label budget = new Label("Budget : " + service.getBudgetType());
-		budget.setLayoutX(10);
-		budget.setLayoutY(80);
-		budget.setMaxWidth(92.5);
+        pane.setStyle("""
+                    -fx-border-color: #000000;
+                    -fx-border-width: 1;
+                """);
+        pane.setPrefHeight(350.0);
+        pane.setMaxWidth(Double.MAX_VALUE);
+        pane.setCursor(Cursor.HAND);
 
-		BudgetType budgetEnum = service.getBudgetType() != null ? service.getBudgetType() : BudgetType.INEXISTANT;
+        Label name = new Label("🩺 " + service.getName());
+        name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        name.setLayoutX(10);
+        name.setLayoutY(10);
+        name.setMaxWidth(92.5);
 
-		HBox bedsHBox = createBedsView(service.getMAX_CREATURE(), budgetEnum);
-		bedsHBox.setLayoutX(10);
-		bedsHBox.setLayoutY(110);
+        Label type = new Label("Type : " + service.getRoomType());
+        type.setLayoutX(10);
+        type.setLayoutY(40);
+        type.setMaxWidth(92.5);
 
-		int creatureCount = service.getCreatures() != null ? service.getCreatures().size() : 0;
-		Label creatureCountLabel = new Label("Créatures : " + creatureCount);
-		creatureCountLabel.setStyle("-fx-font-style: italic; -fx-text-fill: #555;");
-		creatureCountLabel.setLayoutX(10);
-		creatureCountLabel.setLayoutY(180);
+        Label occupied = new Label("Docteurs : " + service.getDoctors());
+        occupied.setLayoutX(10);
+        occupied.setLayoutY(60);
+        occupied.setMaxWidth(92.5);
 
-		pane.setOnMouseClicked(event -> openDetailPanel(service, hospital));
+        Label budget = new Label("Budget : " + service.getBudgetType());
+        budget.setLayoutX(10);
+        budget.setLayoutY(80);
+        budget.setMaxWidth(92.5);
 
-		pane.getChildren().addAll(name, type, occupied, budget, bedsHBox, creatureCountLabel);
-		return pane;
-	}
+        BudgetType budgetEnum = service.getBudgetType() != null ? service.getBudgetType() : BudgetType.INEXISTANT;
 
-	private static HBox createBedsView(int numberOfBeds, BudgetType budgetType) {
+        HBox bedsHBox = createBedsView(service.getMAX_CREATURE(), budgetEnum);
+        bedsHBox.setLayoutX(10);
+        bedsHBox.setLayoutY(110);
 
-		HBox bedsBox = new HBox(5);
-		for (int i = 0; i < numberOfBeds; i++) {
-			String bedImagePath = switch (budgetType) {
-				case MEDIOCRE -> getRandomImage(new String[]{
-						"/images/room/Bed.png",
-						"/images/room/Bedblood.png",
-						"/images/room/Bedbones.png"
-				});
-				case FAIBLE -> getRandomImage(new String[]{
-						"/images/room/Bedblood.png",
-						"/images/room/Bedbones.png"
-				});
-				case CORRECT -> getRandomImage(new String[]{
-						"/images/room/Bed.png",
-						"/images/room/Bedblood.png"
-				});
-				case BON -> "/images/room/Bed.png";
-				case INEXISTANT -> "/images/room/Bed.png";
-			};
+        int creatureCount = service.getCreatures() != null ? service.getCreatures().size() : 0;
+        Label creatureCountLabel = new Label("Créatures : " + creatureCount);
+        creatureCountLabel.setStyle("-fx-font-style: italic; -fx-text-fill: #555;");
+        creatureCountLabel.setLayoutX(10);
+        creatureCountLabel.setLayoutY(180);
 
-			ImageView bedView = new ImageView(new Image(MedicalServiceCellView.class.getResourceAsStream(bedImagePath)));
-			bedView.setFitWidth(30);
-			bedView.setFitHeight(54);
-			bedsBox.getChildren().add(bedView);
-		}
+        pane.setOnMouseClicked(event -> openDetailPanel(service, hospital));
 
-		return bedsBox;
-	}
-		private static String getRandomImage(String[] options) {
-			int randomIndex = (int) (Math.random() * options.length);
-			return options[randomIndex];
-		}
+        pane.getChildren().addAll(name, type, occupied, budget, bedsHBox, creatureCountLabel);
+        return pane;
+    }
 
-	private static void openDetailPanel(MedicalService service, Hospital hospital) {
-		Stage detailStage = new Stage();
-		detailStage.setTitle("Détails du service : " + service.getName());
+    private static HBox createBedsView(int numberOfBeds, BudgetType budgetType) {
 
-		VBox detailBox = new VBox(10);
-		detailBox.setPadding(new Insets(20));
-		detailBox.setStyle("-fx-background-color: #ffffff;");
+        HBox bedsBox = new HBox(5);
+        for (int i = 0; i < numberOfBeds; i++) {
+            String bedImagePath = switch (budgetType) {
+                case MEDIOCRE -> getRandomImage(new String[]{
+                        "/images/room/Bed.png",
+                        "/images/room/Bedblood.png",
+                        "/images/room/Bedbones.png"
+                });
+                case FAIBLE -> getRandomImage(new String[]{
+                        "/images/room/Bedblood.png",
+                        "/images/room/Bedbones.png"
+                });
+                case CORRECT -> getRandomImage(new String[]{
+                        "/images/room/Bed.png",
+                        "/images/room/Bedblood.png"
+                });
+                case BON -> getRandomImage(new String[]{
+                        "/images/room/Bed.png"
+                });
+                case INEXISTANT -> "/images/room/Bed.png";
+            };
 
-		Label title = new Label("🔍 Détails du service : " + service.getName());
-		title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+            ImageView bedView = new ImageView(new Image(MedicalServiceCellView.class.getResourceAsStream(bedImagePath)));
+            bedView.setFitWidth(30);
+            bedView.setFitHeight(54);
+            bedsBox.getChildren().add(bedView);
+        }
 
-		Label info = new Label("Type : " + service.getRoomType() +
-				"\nBudget : " + service.getBudgetType() +
-				"\nCréatures : " + service.getCreatures().size());
+        return bedsBox;
+    }
 
-		// Tu pourras plus tard ajouter ici : liste de créatures, actions, etc.
+    private static String getRandomImage(String[] options) {
+        int randomIndex = (int) (Math.random() * options.length);
+        return options[randomIndex];
+    }
 
-		detailBox.getChildren().addAll(title, info);
+    private static void openDetailPanel(MedicalService service, Hospital hospital) {
+        Stage detailStage = new Stage();
+        detailStage.setTitle("Détails du service : " + service.getName());
 
-		Scene scene = new Scene(detailBox, 300, 200);
-		detailStage.setScene(scene);
-		detailStage.initModality(Modality.APPLICATION_MODAL);
-		detailStage.show();
-	}
+        VBox detailBox = new VBox(10);
+        detailBox.setPadding(new Insets(20));
+        detailBox.setStyle("-fx-background-color: #ffffff;");
+
+        Label title = new Label("🔍 Détails du service : " + service.getName());
+        title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        Label info = new Label("Type : " + service.getRoomType() +
+                "\nBudget : " + service.getBudgetType() +
+                "\nCréatures : " + service.getCreatures().size());
+
+        // Tu pourras plus tard ajouter ici : liste de créatures, actions, etc.
+
+        detailBox.getChildren().addAll(title, info);
+
+        Scene scene = new Scene(detailBox, 300, 200);
+        detailStage.setScene(scene);
+        detailStage.initModality(Modality.APPLICATION_MODAL);
+        detailStage.show();
+    }
 }

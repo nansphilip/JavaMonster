@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            style="-fx-background-image: url('images/grass-background.png')">
+            style="-fx-background-image: url('images/tiles/FloorOutside.png')">
 
     <!-- Liste des créatures à droite && mini logo -->
     <right>
@@ -16,10 +16,17 @@
 
     <!-- Vue Hôpital au centre -->
     <center>
-        <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS"/>
-        <fx:include source="waitingRoomView.fxml" HBox.hgrow="ALWAYS"/>
-        <fx:include source="hospitalStructureView.fxml"/>
-
+        <StackPane>
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+            <children>
+                <HBox spacing="10" style="-fx-border-color: #555; -fx-background-color: #f8f8f8;">
+                    <fx:include source="waitingRoomView.fxml" HBox.hgrow="NEVER" />
+                    <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS" />
+                </HBox>
+            </children>
+        </StackPane>
     </center>
 
     <!-- Console des logs en bas -->
