@@ -3,7 +3,7 @@ package com.fantasyhospital.model.creatures.races;
 import com.fantasyhospital.model.creatures.VIPPatient;
 import com.fantasyhospital.model.creatures.interfaces.Demoralizing;
 import com.fantasyhospital.model.disease.Disease;
-import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.rooms.Room;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 

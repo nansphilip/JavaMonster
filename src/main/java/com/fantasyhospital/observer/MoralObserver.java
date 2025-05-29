@@ -4,8 +4,8 @@ import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.rooms.Room;
-import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.rooms.medicalservice.MedicalService;
 
 /**
  * Implémentation de l'interface Observer chargée de surveiller le moral des bêtes
