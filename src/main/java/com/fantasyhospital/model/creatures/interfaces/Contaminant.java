@@ -2,7 +2,7 @@ package com.fantasyhospital.model.creatures.interfaces;
 
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
-import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.rooms.Room;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.concurrent.CopyOnWriteArrayList;

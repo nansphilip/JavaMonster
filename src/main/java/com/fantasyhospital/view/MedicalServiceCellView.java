@@ -2,11 +2,7 @@ package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
-<<<<<<< HEAD
 import com.fantasyhospital.rooms.medicalservice.MedicalService;
-=======
-import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
->>>>>>> 5711fe2 (feat: squash branch before MR)
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;

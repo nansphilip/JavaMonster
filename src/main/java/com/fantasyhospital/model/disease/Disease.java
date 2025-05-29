@@ -7,8 +7,6 @@ import static com.fantasyhospital.model.disease.DiseaseUtils.getRandomType;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Objects;
-
 public class Disease {
 
     protected DiseaseType type;
@@ -71,14 +69,13 @@ public class Disease {
     //    }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Disease disease)) return false;
-        return type == disease.type;
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(type);
+        return super.hashCode();
     }
 
     @Override
