@@ -3,7 +3,7 @@ package com.fantasyhospital.model.creatures;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
-import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.rooms.Room;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CopyOnWriteArrayList;

@@ -13,8 +13,8 @@ import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.CreatureObserver;
-import com.fantasyhospital.model.rooms.Room;
-import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.rooms.medicalservice.MedicalService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -243,6 +243,7 @@ public class Doctor extends Beast {
     public void transferGroup(List<Creature> creatures, Room roomFrom, Room roomTo) {
         //Check si il y a bien de la place dans la room de destination
         if(roomTo.getCreatures().size() >= roomTo.getMAX_CREATURE()){
+            log.info("Le service de destination était déjà plein...");
             return;
         }
         boolean isTransferPossible = true;
@@ -251,9 +252,10 @@ public class Doctor extends Beast {
             CopyOnWriteArrayList<Creature> creaturesRoom = roomFrom.getCreatures();
 
             if(roomTo.getCreatures().size() >= roomTo.getMAX_CREATURE()) {
+                log.info("Le service de destination était déjà plein...");
                 break;
             }
-            if (!creaturesRoom.contains(creature)) {
+                if (!creaturesRoom.contains(creature)) {
                 log.error("[medecin][transferer()] La créature {} à transférer n'est pas présente dans la room {}.", creature.getFullName(), roomFrom.getName());
                 isTransferPossible = false;
             }

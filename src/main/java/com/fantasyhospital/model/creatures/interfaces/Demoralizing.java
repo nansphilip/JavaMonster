@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.rooms.Room;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

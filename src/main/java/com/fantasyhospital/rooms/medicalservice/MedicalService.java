@@ -1,4 +1,4 @@
-package com.fantasyhospital.model.rooms.medicalservice;
+package com.fantasyhospital.rooms.medicalservice;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,7 +8,7 @@ import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.rooms.Room;
 
 import lombok.Getter;
 import lombok.Setter;

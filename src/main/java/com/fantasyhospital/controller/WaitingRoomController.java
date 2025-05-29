@@ -2,7 +2,7 @@ package com.fantasyhospital.controller;
 
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.rooms.Room;
 import com.fantasyhospital.view.CreatureCellView;
 
 import javafx.application.Platform;

@@ -1,4 +1,4 @@
-package com.fantasyhospital.model.rooms.medicalservice;
+package com.fantasyhospital.rooms.medicalservice;
 
 import java.util.Arrays;
 import java.util.List;

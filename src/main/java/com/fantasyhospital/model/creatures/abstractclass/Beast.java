@@ -1,7 +1,7 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
 import com.fantasyhospital.enums.GenderType;
-import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.rooms.Room;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -7,9 +7,11 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Regenerating;
 import com.fantasyhospital.model.creatures.races.Vampire;
 import com.fantasyhospital.model.creatures.races.Zombie;
-import com.fantasyhospital.model.rooms.Room;
-import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.rooms.Room;
+import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 /**
  * Implémentation de l'interface Observer chargé de surveiller si une bête doit sortir de l'hopital
