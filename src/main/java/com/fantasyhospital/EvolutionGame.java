@@ -2,7 +2,6 @@ package com.fantasyhospital;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
@@ -120,6 +119,16 @@ public class EvolutionGame {
                 // Si la créature est en quarantaine, on ne lui ajoute pas de nouvelles maladies aléatoirement
                 boolean isInQuarantine = room instanceof Quarantine;
                 
+                // Fait monter 1 niveau maladies par tour et perdre 5 moral par maladie (sauf en quarantaine pour le moral)
+                for (Disease disease : creature.getDiseases()) {
+                    disease.increaseLevel();
+
+                    // En quarantaine, le moral ne change pas
+                    if (!isInQuarantine) {
+                        creature.setMorale(Math.max(creature.getMorale() - 5, 0));
+                    }
+                }
+
                 // 5% chance contracter nouvelle maladie (sauf en quarantaine)
                 if(!isInQuarantine && Math.random() < 0.05){
                     Disease disease = new Disease();
@@ -133,15 +142,6 @@ public class EvolutionGame {
                 //    dis.setCurrentLevel(new Random().nextInt(8)+1);
                 // }
 
-                // Fait monter 1 niveau maladies par tour et perdre 5 moral par maladie (sauf en quarantaine pour le moral)
-                for (Disease disease : creature.getDiseases()) {
-                    disease.increaseLevel();
-                    
-                    // En quarantaine, le moral ne change pas
-                    if (!isInQuarantine) {
-                        creature.setMorale(Math.max(creature.getMorale() - 5, 0));
-                    }
-                }
                 creature.notifyExitObservers();
             }
         }
