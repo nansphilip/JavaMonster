@@ -9,11 +9,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.fantasyhospital.util.CropImageUtils.cropImage;
+import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
 public class MedicalServiceCellView {
 
@@ -27,11 +32,21 @@ public class MedicalServiceCellView {
 		pane.setPrefSize(210.0, 290.0);
 		pane.setCursor(Cursor.HAND);
 
-		Label name = new Label("🩺 " + service.getName());
-		name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-		name.setLayoutX(10);
-		name.setLayoutY(10);
-		name.setMaxWidth(160);
+        Label name = new Label("🩺 " + service.getName());
+        name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        name.setMaxWidth(160);
+        name.setPrefWidth(160);
+
+        int creatureCount = service.getCreatures() != null ? service.getCreatures().size() : 0;
+        StackPane creatureCounter = CounterCellView.create(creatureCount, 15, Color.DARKRED);
+
+        HBox topRow = new HBox();
+        topRow.setSpacing(10);
+        topRow.setPadding(new Insets(10, 10, 0, 10));
+        topRow.setPrefWidth(200);
+        topRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+        topRow.getChildren().addAll(name, creatureCounter);
 
 		Label type = new Label("Type : " + service.getRoomType());
 		type.setLayoutX(10);
@@ -50,62 +65,85 @@ public class MedicalServiceCellView {
 
         BudgetType budgetEnum = service.getBudgetType() != null ? service.getBudgetType() : BudgetType.INEXISTANT;
 
-		VBox bedsContainer = new VBox(5);
-		bedsContainer.setLayoutX(10);
-		bedsContainer.setLayoutY(110);
-		bedsContainer.setMaxWidth(160);
-
-		// Création des lits avec une meilleure organisation (2 par ligne)
-		HBox row1 = new HBox(10);
-		HBox row2 = new HBox(10);
-
-		int numberOfBeds = service.getMAX_CREATURE();
-		for (int i = 0; i < numberOfBeds; i++) {
-			String bedImagePath = getBedImagePath(budgetEnum);
-			ImageView bedView = new ImageView(new Image(MedicalServiceCellView.class.getResourceAsStream(bedImagePath)));
-			bedView.setFitWidth(30);
-			bedView.setFitHeight(50);
-
-			if (i < numberOfBeds/2) {
-				row1.getChildren().add(bedView);
-			} else {
-				row2.getChildren().add(bedView);
-			}
-		}
-
-		bedsContainer.getChildren().addAll(row1, row2);
-
-		int creatureCount = service.getCreatures() != null ? service.getCreatures().size() : 0;
-		Label creatureCountLabel = new Label("Créatures : " + creatureCount);
-		creatureCountLabel.setStyle("-fx-font-style: italic; -fx-text-fill: #555;");
-		creatureCountLabel.setLayoutX(10);
-		creatureCountLabel.setLayoutY(230);
+        FlowPane bedsFlow = createBedsView(service.getMAX_CREATURE(), budgetEnum, service);
+        bedsFlow.setLayoutX(10);
+        bedsFlow.setLayoutY(110);
 
         pane.setOnMouseClicked(event -> openDetailPanel(service, hospital));
 
-		pane.getChildren().addAll(name, type, occupied, budget, bedsContainer, creatureCountLabel);
-		return pane;
-	}
+        pane.getChildren().addAll(topRow, type, occupied, budget, bedsFlow);
+        return pane;
+    }
 
-	private static String getBedImagePath(BudgetType budgetType) {
-		return switch (budgetType) {
-			case MEDIOCRE -> getRandomImage(new String[]{
-					"/images/room/Bed.png",
-					"/images/room/Bedblood.png",
-					"/images/room/Bedbones.png"
-			});
-			case FAIBLE -> getRandomImage(new String[]{
-					"/images/room/Bedblood.png",
-					"/images/room/Bedbones.png"
-			});
-			case CORRECT -> getRandomImage(new String[]{
-					"/images/room/Bed.png",
-					"/images/room/Bedblood.png"
-			});
-			case BON -> "/images/room/Bed.png";
-			case INEXISTANT -> "/images/room/Bed.png";
-		};
-	}
+    private static FlowPane createBedsView(int numberOfBeds, BudgetType budgetType, MedicalService service) {
+        FlowPane flowPane = new FlowPane();
+        flowPane.setHgap(5);
+        flowPane.setVgap(5);
+        flowPane.setPrefWrapLength(180);
+
+        if (service.getBedImagePaths() == null || service.getBedImagePaths().isEmpty()) {
+            List<String> generated = new ArrayList<>();
+            for (int i = 0; i < numberOfBeds; i++) {
+                String bedImagePath = switch (budgetType) {
+                    case MEDIOCRE -> getRandomImage(new String[]{
+                            "/images/room/Bed.png",
+                            "/images/room/Bedblood.png",
+                            "/images/room/Bedbones.png"
+                    });
+                    case FAIBLE -> getRandomImage(new String[]{
+                            "/images/room/Bedblood.png",
+                            "/images/room/Bedbones.png"
+                    });
+                    case CORRECT -> getRandomImage(new String[]{
+                            "/images/room/Bed.png",
+                            "/images/room/Bedblood.png"
+                    });
+                    case BON -> getRandomImage(new String[]{
+                            "/images/room/Bed.png"
+                    });
+                    case INEXISTANT -> "/images/room/Bed.png";
+                };
+                generated.add(bedImagePath);
+            }
+            service.setBedImagePaths(generated);
+        }
+
+
+        List<String> creatureImagePaths = List.of(
+                "/images/room/BedCreature.png"
+        );
+
+        int creaturesCount = service.getCreatures() != null ? service.getCreatures().size() : 0;
+
+        for (int i = 0; i < service.getBedImagePaths().size(); i++) {
+            String bedImagePath = service.getBedImagePaths().get(i);
+
+            ImageView bedView = new ImageView(new Image(MedicalServiceCellView.class.getResourceAsStream(bedImagePath)));
+            bedView.setFitWidth(30);
+            bedView.setFitHeight(54);
+
+            StackPane bedStack = new StackPane();
+            bedStack.getChildren().add(bedView);
+
+            if (i < creaturesCount) {
+                String creatureImage = creatureImagePaths.get(i % creatureImagePaths.size()); // pour varier
+                Image image = new Image(MedicalServiceCellView.class.getResourceAsStream(creatureImage));
+
+                Image transparentImage = removePngBackground(image);
+                Image croppedImage = cropImage(transparentImage);
+
+                ImageView creatureView = new ImageView(croppedImage);
+                creatureView.setFitWidth(30);
+                creatureView.setFitHeight(30);
+                StackPane.setAlignment(creatureView, javafx.geometry.Pos.CENTER);
+                bedStack.getChildren().add(creatureView);
+            }
+
+            flowPane.getChildren().add(bedStack);
+        }
+
+        return flowPane;
+    }
 
 	private static String getRandomImage(String[] options) {
 		int randomIndex = (int) (Math.random() * options.length);

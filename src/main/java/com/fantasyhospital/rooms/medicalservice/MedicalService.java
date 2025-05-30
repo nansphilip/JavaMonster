@@ -21,11 +21,7 @@ import lombok.Setter;
 @Getter
 public class MedicalService extends Room {
 
-    /**
-     *
-     */
-    @Getter @Setter
-    private RaceType expectedRace;
+    private List<String> bedImagePaths = new ArrayList<>();
 
     /**
      * List of doctors assigned to this service
