@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +32,21 @@ public class MedicalServiceCellView {
 		pane.setPrefSize(210.0, 290.0);
 		pane.setCursor(Cursor.HAND);
 
-		Label name = new Label("🩺 " + service.getName());
-		name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-		name.setLayoutX(10);
-		name.setLayoutY(10);
-		name.setMaxWidth(160);
+        Label name = new Label("🩺 " + service.getName());
+        name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        name.setMaxWidth(160);
+        name.setPrefWidth(160);
+
+        int creatureCount = service.getCreatures() != null ? service.getCreatures().size() : 0;
+        StackPane creatureCounter = CounterCellView.create(creatureCount, 15, Color.DARKRED);
+
+        HBox topRow = new HBox();
+        topRow.setSpacing(10);
+        topRow.setPadding(new Insets(10, 10, 0, 10));
+        topRow.setPrefWidth(200);
+        topRow.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+        topRow.getChildren().addAll(name, creatureCounter);
 
 		Label type = new Label("Type : " + service.getRoomType());
 		type.setLayoutX(10);
@@ -68,7 +79,7 @@ public class MedicalServiceCellView {
         FlowPane flowPane = new FlowPane();
         flowPane.setHgap(5);
         flowPane.setVgap(5);
-        flowPane.setPrefWrapLength(150);
+        flowPane.setPrefWrapLength(180);
 
         if (service.getBedImagePaths() == null || service.getBedImagePaths().isEmpty()) {
             List<String> generated = new ArrayList<>();
