@@ -3,6 +3,7 @@ package com.fantasyhospital.controller;
 import java.util.List;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 

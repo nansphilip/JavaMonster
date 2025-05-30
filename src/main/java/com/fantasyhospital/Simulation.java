@@ -59,11 +59,7 @@ public class Simulation {
         MedicalService emergency = new MedicalService("Urgence", 50.0, 10, BudgetType.MEDIOCRE);
         MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, BudgetType.MEDIOCRE);
         MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, BudgetType.MEDIOCRE);
-		MedicalService test1 = new MedicalService("Urgence", 50.0, 10, BudgetType.MEDIOCRE);
-		MedicalService test2 = new MedicalService("Cardiologie", 50.0, 10, BudgetType.MEDIOCRE);
-		MedicalService test3 = new MedicalService("Gastrologie", 50.0, 10, BudgetType.MEDIOCRE);
-		MedicalService test4 = new MedicalService("Urgence", 50.0, 10, BudgetType.MEDIOCRE);
-		MedicalService test5 = new MedicalService("Cardiologie", 50.0, 10, BudgetType.MEDIOCRE);
+
         Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.MEDIOCRE, 10,5);
 
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
@@ -108,11 +104,6 @@ public class Simulation {
         hospital.addService(cardiac);
         hospital.addService(gastro);
         hospital.addService(crypt);
-		hospital.addService(test1);
-		hospital.addService(test2);
-		hospital.addService(test3);
-		hospital.addService(test4);
-		hospital.addService(test5);
 
 		waitingRoomController.setHospital(hospital);
 
