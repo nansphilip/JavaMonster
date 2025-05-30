@@ -16,17 +16,9 @@
 
     <!-- Vue Hôpital au centre -->
     <center>
-        <StackPane>
-            <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
-            </padding>
-            <children>
-                <HBox spacing="10" style="-fx-border-color: #555; -fx-background-color: #f8f8f8;">
-                    <fx:include source="waitingRoomView.fxml" HBox.hgrow="NEVER" />
-                    <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS" />
-                </HBox>
-            </children>
-        </StackPane>
+        <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS"/>
+        <fx:include source="hospitalStructureView.fxml"/>
+
     </center>
 
     <!-- Console des logs en bas -->
