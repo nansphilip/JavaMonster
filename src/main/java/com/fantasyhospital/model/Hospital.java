@@ -12,6 +12,7 @@ import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 /**
  * Represents the Fantasy Hospital. Manages the list of services (rooms),
