@@ -71,7 +71,7 @@ public class EvolutionGame {
         if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
         if (executeAndCheckEnd(this::actionCrypte)) return true;
 
-        addRndCreatureRndRoom();
+        modifyGameRandomly();
 
         round++;
 
@@ -208,10 +208,12 @@ public class EvolutionGame {
     }
 
     /**
-     * Ajoute une nouvelle créature avec une maladie, un niveau aléatoire dans une room aléatoire chance 50%
-     * Ajoute un nouveau médecin 4% chance
+     * Call
+     * Add a new random creature with a disease, a random level in a random room by 50% chance
+     * Add a new doctor by 4% chance
      */
-    private void addRndCreatureRndRoom(){
+    private void modifyGameRandomly(){
+        // Ajout creature aléatoire
         if(Math.random() < 0.95){
             int rnd = new Random().nextInt(hospital.getServices().size());
             Room room = hospital.getServices().get(rnd);
@@ -247,6 +249,7 @@ public class EvolutionGame {
             }
         }
 
+        // Ajout médecin aléatoire
         if(Math.random() < 0.04){
             MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getMedicalServices().size()));
             Doctor doctor = new Doctor(BeastUtils.generateRandomName(GenderType.FEMALE), GenderType.FEMALE, 70, 175, 45, 100, "Lycanthrope", medicalService);

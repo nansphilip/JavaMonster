@@ -60,7 +60,6 @@ public class ConsoleLogController implements Initializable {
 			String[] parts = line.split(" - ", 2);
 			if (parts.length < 2) return line;
 
-			// Récupère l'heure au début de la ligne (facultatif)
 			String time = line.length() >= 8 ? line.substring(0, 19) : "";
 			return time + " - " + parts[1].trim();
 		}
