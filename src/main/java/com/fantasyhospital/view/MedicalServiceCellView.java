@@ -85,6 +85,9 @@ public class MedicalServiceCellView {
             List<String> generated = new ArrayList<>();
             for (int i = 0; i < numberOfBeds; i++) {
                 String bedImagePath = switch (budgetType) {
+                    case INSUFFISANT -> getRandomImage(new String[]{
+                            "/images/room/Bed.png",
+                    });
                     case MEDIOCRE -> getRandomImage(new String[]{
                             "/images/room/Bed.png",
                             "/images/room/Bedblood.png",
@@ -102,6 +105,9 @@ public class MedicalServiceCellView {
                             "/images/room/Bed.png"
                     });
                     case INEXISTANT -> "/images/room/Bed.png";
+                    case EXCELLENT -> getRandomImage(new String[]{
+                            "/images/room/Bed.png",
+                    });
                 };
                 generated.add(bedImagePath);
             }
