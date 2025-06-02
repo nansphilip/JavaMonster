@@ -208,12 +208,17 @@ public class EvolutionGame {
     }
 
     /**
-     * Call
-     * Add a new random creature with a disease, a random level in a random room by 50% chance
-     * Add a new doctor by 4% chance
+     * Call the several methods that modify the game randomly each tour
      */
     private void modifyGameRandomly(){
-        // Ajout creature aléatoire
+        addCreatureRandomly();
+        addDoctorRandomly();
+    }
+
+    /**
+     * Add a random creature to a random service with a random disease with a random level by 95% chance
+     */
+    public void addCreatureRandomly(){
         if(Math.random() < 0.95){
             int rnd = new Random().nextInt(hospital.getServices().size());
             Room room = hospital.getServices().get(rnd);
@@ -221,15 +226,15 @@ public class EvolutionGame {
 
             if(room != null){
                 if (Objects.equals(room.getName(), "Crypt") || Objects.equals(room.getName(), "Zombie")) {
+                    RaceType race;
                     if (room.getCreatures().isEmpty()) {
-                        RaceType race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
-                        creature = Game.randomCreature(race);
+                        race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
                     }
                     else
                     {
-                        RaceType race = RaceType.valueOf(room.getRoomType());
-                        creature = Game.randomCreature(race);
+                        race = RaceType.valueOf(room.getRoomType());
                     }
+                    creature = Game.randomCreature(race);
                 }
                 else if (!room.getCreatures().isEmpty())
                 {
@@ -248,7 +253,12 @@ public class EvolutionGame {
                 log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue",  creature.getFullName(), room.getName());
             }
         }
+    }
 
+    /**
+     * Add a new doctor randomly (4% chance) to a random medical service
+     */
+    public void addDoctorRandomly(){
         // Ajout médecin aléatoire
         if(Math.random() < 0.04){
             MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getMedicalServices().size()));
