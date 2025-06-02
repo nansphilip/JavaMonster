@@ -58,7 +58,7 @@ public class Simulation {
         CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
         // Create a hospital with a name and a maximum number of services
-        Hospital hospital = new Hospital("Marseille", 10);
+        Hospital hospital = new Hospital("Marseille");
 
         // Create medical services
         MedicalService emergency = new MedicalService("Urgence", 50.0, 10, BudgetType.getRandomBudget());
