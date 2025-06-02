@@ -87,16 +87,16 @@ public class MedicalServiceCellView {
                 String bedImagePath = switch (budgetType) {
                     case MEDIOCRE -> getRandomImage(new String[]{
                             "/images/room/Bed.png",
-                            "/images/room/Bedblood.png",
-                            "/images/room/Bedbones.png"
+                            "/images/room/bedblood.png",
+                            "/images/room/bedbones.png"
                     });
                     case FAIBLE -> getRandomImage(new String[]{
-                            "/images/room/Bedblood.png",
-                            "/images/room/Bedbones.png"
+                            "/images/room/bedblood.png",
+                            "/images/room/bedbones.png"
                     });
                     case CORRECT -> getRandomImage(new String[]{
                             "/images/room/Bed.png",
-                            "/images/room/Bedblood.png"
+                            "/images/room/bedblood.png"
                     });
                     case BON -> getRandomImage(new String[]{
                             "/images/room/Bed.png"
