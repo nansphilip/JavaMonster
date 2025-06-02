@@ -21,6 +21,15 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.gener
     protected int height;
     protected int age;
     protected int morale;
+    protected int previousMorale;
+
+    public boolean isMoraleIncreasing() {
+        return this.morale > previousMorale;
+    }
+
+    public boolean isMoraleDecreasing() {
+        return this.morale < previousMorale;
+    }
 
 
     public Beast() {
@@ -35,6 +44,7 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.gener
         this.height = height;
         this.age = age;
         this.morale = morale;
+        this.previousMorale = morale;
     }
 
     public abstract void waiting(Room room);
@@ -45,3 +55,4 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.gener
     }
 
 }
+

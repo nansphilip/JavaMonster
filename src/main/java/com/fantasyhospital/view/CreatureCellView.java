@@ -24,6 +24,7 @@ public class CreatureCellView extends ListCell<Creature> {
     private HBox topRow;
     private HBox nameGenderAgeBox;
     private HBox moraleBox;
+    private ImageView moraleTrendImageView;
     private VBox content;
     private VBox nameAndDiseasesBox;
     private VBox diseasesBox;
@@ -58,6 +59,11 @@ public class CreatureCellView extends ListCell<Creature> {
         genderImageView.setFitHeight(10);
         genderImageView.setFitWidth(10);
 
+        moraleTrendImageView = new ImageView();
+        moraleTrendImageView.setFitHeight(10);
+        moraleTrendImageView.setFitWidth(10);
+        moraleTrendImageView.setVisible(false);
+
         name = new Text();
         name.setStyle("-fx-font-weight: bold;");
 
@@ -85,7 +91,7 @@ public class CreatureCellView extends ListCell<Creature> {
 
         diseasesBox = new VBox(2);
 
-        moraleBox = new HBox(5, moraleImageView, moraleLabel);
+        moraleBox = new HBox(5,moraleTrendImageView, moraleImageView, moraleLabel);
         moraleBox.setAlignment(Pos.CENTER_LEFT);
 
         lifeAndDiseasesBox = new VBox(2, moraleBox, diseasesBox);
@@ -128,6 +134,17 @@ public class CreatureCellView extends ListCell<Creature> {
             creatureImageView.setImage(croppedImage);
 
             moraleImageView.setImage(getMoraleImageView(creature.getMorale()));
+
+            // Définir l'image de tendance du moral seulement si le moral a changé
+            if (creature.isMoraleIncreasing()) {
+                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/moral-up.png")));
+                moraleTrendImageView.setVisible(true);
+            } else if (creature.isMoraleDecreasing()) {
+                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/moral-down.png")));
+                moraleTrendImageView.setVisible(true);
+            } else {
+                moraleTrendImageView.setVisible(false);
+            }
 
             genderImageView.setImage(getGenderImageView(creature.getSex()));
 
