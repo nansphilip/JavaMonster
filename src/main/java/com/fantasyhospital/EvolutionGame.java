@@ -47,6 +47,8 @@ public class EvolutionGame {
     private static final double EVOLVE_BUDGET_CHANCE = 0.3;
     private static final double ADD_CREATURE_CHANCE = 0.95;
     private static final double ADD_DOCTOR_CHANCE = 0.04;
+    private static final double EVOLVE_MORAL_CHANCE = 0.95;
+    private static final int VARIATION_MORAL_LEVEL = 30;
 
     public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
         this.hospital = hospital;
@@ -132,6 +134,7 @@ public class EvolutionGame {
     /**
      * Applies the effects and evolutions of diseases to all creatures.
      * Also make creature sick (5%) and make the level of a random disease of a creature evolve (10%)
+     * And make the moral of a creature change (5% chance)
      */
     private void applyDiseasesEffects() {
         for (Room room : hospital.getServices()) {
@@ -176,6 +179,22 @@ public class EvolutionGame {
                 }
 
                 creature.notifyExitObservers();
+
+                // 5% chance que le moral evolue de manière random (entre 0 et 30 variation moral)
+                if(Math.random() < EVOLVE_MORAL_CHANCE && !isInQuarantine){
+                    int variationMoral;
+                    int newMorale;
+                    if(new Random().nextBoolean()){
+                        variationMoral = - (1 + new Random().nextInt(VARIATION_MORAL_LEVEL + 1));
+                        newMorale = Math.max(creature.getMorale() + variationMoral, 0);
+                        log.info("La créature {} n'a pas de chance car son moral évolue aléatoirement ({})", creature.getFullName(), variationMoral);
+                    } else {
+                        variationMoral = 1 + new Random().nextInt(VARIATION_MORAL_LEVEL - 1);
+                        newMorale = Math.min(creature.getMorale() + variationMoral, 100);
+                        log.info("La créature {} a de la chance car son moral évolue aléatoirement (+{})", creature.getFullName(), variationMoral);
+                    }
+                    creature.setMorale(newMorale);
+                }
             }
         }
     }
