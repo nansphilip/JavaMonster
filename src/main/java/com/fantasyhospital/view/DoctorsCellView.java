@@ -168,13 +168,15 @@ public class DoctorsCellView extends ListCell<Doctor> {
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.setTitle("Détails du docteur");
 
-        detailsLabel = new Label(doctor.toString());
-        detailsLabel.setWrapText(true);
+        Label nameLabel = new Label("Nom : " + doctor.getFullName());
+        Label ageLabel = new Label("Âge : " + doctor.getAge());
+        Label moraleLabel = new Label("Moral : " + doctor.getMorale() + "/100");
+        Label serviceLabel = new Label("Service : " + doctor.getMedicalService());
 
-        VBox detailContent = new VBox(10, detailsLabel);
+        VBox detailContent = new VBox(10, nameLabel, ageLabel, moraleLabel, serviceLabel);
         detailContent.setPadding(new Insets(10));
 
-        Scene scene = new Scene(detailContent, 300, 200); // Taille de la popup
+        Scene scene = new Scene(detailContent, 300, 200);
         popup.setScene(scene);
         popup.showAndWait();
     }
