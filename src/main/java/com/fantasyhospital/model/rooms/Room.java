@@ -44,6 +44,14 @@ public class Room {
     }
 
     /**
+     * Renvoi le nombre de lits disponibles dans la salle
+     * @return
+     */
+    public int getAvailableBeds(){
+        return this.MAX_CREATURE - this.creatures.size();
+    }
+
+    /**
      * Remove a creature from the list of the room
      * @param creature to remove
      * @return true if removed, false else
