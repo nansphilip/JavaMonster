@@ -8,7 +8,6 @@
     <!-- Liste des créatures à droite && mini logo -->
     <right>
         <VBox spacing="10" alignment="TOP_RIGHT" VBox.vgrow="ALWAYS">
-            <fx:include source="logoMiniView.fxml"/>
             <fx:include source="listCreatureView.fxml" VBox.vgrow="ALWAYS"/>
             <fx:include source="listDoctorsView.fxml" VBox.vgrow="ALWAYS"/>
         </VBox>

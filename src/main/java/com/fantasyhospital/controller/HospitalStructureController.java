@@ -12,13 +12,16 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 @Component
 public class HospitalStructureController implements Initializable {
 
     @FXML
     private Pane hospitalStructure;
-    private Label welcomeLabel;
+    private StackPane welcomeContainer;
     private Pane waitingRoomView;
     private WaitingRoomController waitingRoomController;
     private boolean gameStarted = false;
@@ -26,34 +29,53 @@ public class HospitalStructureController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Création du Label de bienvenue
-        welcomeLabel = new Label("Bienvenue à l'Hôpital Fantastique !");
-        welcomeLabel.setStyle("-fx-font-size: 30px; -fx-font-weight: bold;");
+        // Création d'un conteneur pour l'écran de bienvenue
+        welcomeContainer = new StackPane();
 
-        // Centrage du Label
-        welcomeLabel.layoutXProperty().bind(
-                hospitalStructure.widthProperty().subtract(welcomeLabel.widthProperty()).divide(2));
-        welcomeLabel.layoutYProperty().bind(
-                hospitalStructure.heightProperty().subtract(welcomeLabel.heightProperty()).divide(2));
+        // Ajout de l'image en arrière-plan
+        try {
+            ImageView backgroundLogo = new ImageView(new Image(getClass().getResourceAsStream("/images/logo/Logo.jpg")));
+            backgroundLogo.setPreserveRatio(false); // Permettre à l'image de s'adapter parfaitement
 
-        // Ajout du Label au Pane
-        hospitalStructure.getChildren().add(welcomeLabel);
+            // Lier les dimensions exactes de l'image à celles du conteneur hospitalStructure
+            backgroundLogo.fitWidthProperty().bind(hospitalStructure.widthProperty());
+            backgroundLogo.fitHeightProperty().bind(hospitalStructure.heightProperty());
 
-        // Préchargement de la vue de la salle d'attente pour l'utiliser plus tard
+            welcomeContainer.getChildren().add(backgroundLogo);
+        } catch (Exception e) {
+            System.err.println("Impossible de charger l'image de logo: " + e.getMessage());
+        }
+
+        // Création du Label de bienvenue par-dessus l'image
+        Label welcomeText = new Label("Bienvenue à l'Hôpital Fantastique !");
+        welcomeText.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white; " +
+                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
+        welcomeContainer.getChildren().add(welcomeText);
+
+        // Faire correspondre exactement le conteneur welcome avec hospitalStructure
+        welcomeContainer.prefWidthProperty().bind(hospitalStructure.widthProperty());
+        welcomeContainer.prefHeightProperty().bind(hospitalStructure.heightProperty());
+
+        // Placer le conteneur exactement aux mêmes coordonnées que l'hospitalStructure
+        welcomeContainer.setLayoutX(0);
+        welcomeContainer.setLayoutY(0);
+
+        // Ajout du conteneur au Pane
+        hospitalStructure.getChildren().add(welcomeContainer);
+
+        // Reste du code pour le chargement de la salle d'attente...
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/waitingRoomView.fxml"));
             waitingRoomView = loader.load();
             waitingRoomController = loader.getController();
-
-            // La salle d'attente n'est pas ajoutée au départ
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void hideWelcomeMessage() {
-        if (welcomeLabel != null && hospitalStructure.getChildren().contains(welcomeLabel)) {
-            hospitalStructure.getChildren().remove(welcomeLabel);
+        if (welcomeContainer != null && hospitalStructure.getChildren().contains(welcomeContainer)) {
+            hospitalStructure.getChildren().remove(welcomeContainer);
         }
     }
 
