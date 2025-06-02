@@ -2,7 +2,6 @@ package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.creatures.Doctor;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -80,7 +79,7 @@ public class DoctorsCellView extends ListCell<Doctor> {
             setText(null);
             setGraphic(null);
         } else {
-            String imagePath = "/images/races/Doctor.png";
+            String imagePath = "/images/races/doctor.png";
             Image image = new Image(getClass().getResourceAsStream(imagePath));
             Image transparentImage = removePngBackground(image);
             Image croppedImage = cropImage(transparentImage);
