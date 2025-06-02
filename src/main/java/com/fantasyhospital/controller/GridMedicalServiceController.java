@@ -70,7 +70,7 @@ public class GridMedicalServiceController {
 						continue;
 					}
 
-					Pane serviceView = MedicalServiceCellView.createView(service, hospital);
+					Pane serviceView = MedicalServiceCellView.createView(service, hospital, stageManager);
 					gridPane.add(serviceView, col, row);
 
 					col++;
@@ -103,7 +103,7 @@ public class GridMedicalServiceController {
 					continue;
 				}
 
-				Pane serviceView = MedicalServiceCellView.createView(service, hospital);
+				Pane serviceView = MedicalServiceCellView.createView(service, hospital, stageManager);
 				gridPane.add(serviceView, col, row);
 
 				col++;

@@ -26,7 +26,7 @@
                     <children>
                         <!-- Services médicaux -->
                         <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"
-                                    layoutX="230.0" layoutY="40.0" />
+                                    layoutX="300" layoutY="40.0" />
                     </children>
                 </Pane>
             </center>

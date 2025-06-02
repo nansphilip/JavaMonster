@@ -7,6 +7,7 @@ import com.fantasyhospital.model.disease.Disease;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -113,8 +114,15 @@ public class CreatureCellView extends ListCell<Creature> {
         this.setOnMouseClicked(event -> {
             Creature selected = getItem();
             if (selected != null) {
-                showCreaturePopup(selected);
+                openDetailPanel(selected);
             }
+        });
+        this.setOnMouseEntered(event -> {
+            setCursor(Cursor.HAND);
+        });
+
+        this.setOnMouseExited(event -> {
+            setCursor(Cursor.DEFAULT);
         });
     }
 
@@ -248,20 +256,46 @@ public class CreatureCellView extends ListCell<Creature> {
         return new Image(getClass().getResourceAsStream(imagePath));
     }
 
-    private void showCreaturePopup(Creature creature) {
-        Stage popup = new Stage();
-        popup.initModality(Modality.APPLICATION_MODAL);
-        popup.setTitle("Détails de la créature");
+    private void openDetailPanel(Creature creature) {
+        VBox box = new VBox(10);
+        box.setPadding(new Insets(10));
+        box.setStyle("-fx-background-color: #ffffff;");
+        box.setAlignment(Pos.TOP_CENTER);
 
-        detailsLabel = new Label(creature.toString());
-        detailsLabel.setWrapText(true);
+        String imagePath = "/images/races/" + creature.getRace().toLowerCase() + ".png";
+        Image image = new Image(getClass().getResourceAsStream(imagePath));
+        Image transparentImage = removePngBackground(image);
+        Image croppedImage = cropImage(transparentImage);
 
-        VBox detailContent = new VBox(10, detailsLabel);
-        detailContent.setPadding(new Insets(10));
+        ImageView largeCreatureImage = new ImageView(croppedImage);
+        largeCreatureImage.setPreserveRatio(true);
+        largeCreatureImage.setFitHeight(80);
 
-        Scene scene = new Scene(detailContent, 300, 200); // Taille de la popup
-        popup.setScene(scene);
-        popup.showAndWait();
+        ImageView genderView = new ImageView(getGenderImageView(creature.getSex()));
+        genderView.setFitHeight(14);
+        genderView.setFitWidth(14);
+        Label genderLabel = new Label("Genre : " + creature.getSex());
+        HBox genderBox = new HBox(5, genderView, genderLabel);
+        genderBox.setAlignment(Pos.CENTER_LEFT);
+
+        ImageView moraleView = new ImageView(getMoraleImageView(creature.getMorale()));
+        moraleView.setFitHeight(10);
+        moraleView.setFitWidth(65);
+        Label moraleLabel = new Label("Moral (" + creature.getMorale() + "/100)");
+        HBox moraleBox = new HBox(5, moraleView, moraleLabel);
+        moraleBox.setAlignment(Pos.CENTER_LEFT);
+
+        Label name = new Label("Nom : " + creature.getFullName());
+        Label age = new Label("Âge : " + creature.getAge());
+        Label gender = new Label("Genre : " + creature.getSex());
+        Label diseases = new Label("Maladies : " + creature.getDiseases().stream()
+                .map(Disease::getName)
+                .reduce((d1, d2) -> d1 + ", " + d2)
+                .orElse("Aucune"));
+
+        box.getChildren().addAll(largeCreatureImage, name, age, genderBox, moraleBox, diseases);
+
+        DetailsCellView.show("Détails de la créature", box, 300, 250);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.fantasyhospital.view;
 
+import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
@@ -7,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -22,7 +24,8 @@ import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackgro
 
 public class MedicalServiceCellView {
 
-	public static Pane createView(MedicalService service, Hospital hospital) {
+    public static Pane createView(MedicalService service, Hospital hospital, StageManager stageManager) {
+
 		Pane pane = new Pane();
 		pane.setStyle("""
                 -fx-background-color: #add8e6;
@@ -69,7 +72,7 @@ public class MedicalServiceCellView {
         bedsFlow.setLayoutX(10);
         bedsFlow.setLayoutY(110);
 
-        pane.setOnMouseClicked(event -> openDetailPanel(service, hospital));
+        pane.setOnMouseClicked(event -> openDetailPanel(service, hospital, stageManager));
 
         pane.getChildren().addAll(topRow, type, occupied, budget, bedsFlow);
         return pane;
@@ -156,28 +159,33 @@ public class MedicalServiceCellView {
 		return options[randomIndex];
 	}
 
-	private static void openDetailPanel(MedicalService service, Hospital hospital) {
-		Stage detailStage = new Stage();
-		detailStage.setTitle("Détails du service : " + service.getName());
+    private static void openDetailPanel(MedicalService service, Hospital hospital, StageManager stageManager) {
+        VBox detailBox = new VBox(10);
+        detailBox.setStyle("-fx-background-color: #ffffff;");
 
-		VBox detailBox = new VBox(10);
-		detailBox.setPadding(new Insets(20));
-		detailBox.setStyle("-fx-background-color: #ffffff;");
+        Label title = new Label("🔍 Détails du service : " + service.getName());
+        title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
-		Label title = new Label("🔍 Détails du service : " + service.getName());
-		title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        Label info = new Label("Type : " + service.getRoomType() +
+                "\nBudget : " + service.getBudgetType() +
+                "\nCréatures : " + service.getCreatures().size());
 
-		Label info = new Label("Type : " + service.getRoomType() +
-				"\nBudget : " + service.getBudgetType() +
-				"\nCréatures : " + service.getCreatures().size());
+        FlowPane bedsView = createBedsView(service.getMAX_CREATURE(), service.getBudgetType(), service);
 
-		// Tu pourras plus tard ajouter ici : liste de créatures, actions, etc.
+        detailBox.getChildren().addAll(title, info, bedsView);
 
-		detailBox.getChildren().addAll(title, info);
+        Scene scene = new Scene(detailBox);
 
-		Scene scene = new Scene(detailBox, 300, 200);
-		detailStage.setScene(scene);
-		detailStage.initModality(Modality.APPLICATION_MODAL);
-		detailStage.show();
-	}
+        Stage detailStage = new Stage();
+        detailStage.setTitle("Détails du service : " + service.getName());
+        detailStage.initModality(Modality.APPLICATION_MODAL);
+
+        double width = stageManager.getPrimaryStage().getWidth() * 0.8;
+        double height = stageManager.getPrimaryStage().getHeight() * 0.8;
+
+        detailStage.setWidth(width);
+        detailStage.setHeight(height);
+        detailStage.setScene(scene);
+        detailStage.showAndWait();
+    }
 }
