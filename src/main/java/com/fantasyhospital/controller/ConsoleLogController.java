@@ -10,6 +10,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.fantasyhospital.EvolutionGame;
+import com.fantasyhospital.config.FxmlView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import javafx.fxml.FXML;
@@ -33,13 +40,23 @@ public class ConsoleLogController implements Initializable {
 
 	private ScheduledExecutorService scheduler;
 
+	private final EvolutionGame evolutionGame;
 
-	public ConsoleLogController() {
+	public ConsoleLogController(EvolutionGame evolutionGame) {
+		this.evolutionGame = evolutionGame;
 	}
 
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		try {
+			if (Files.exists(logFilePath) && Files.size(logFilePath) > 0) {
+				clearConsole();
+				Files.newBufferedWriter(logFilePath, StandardCharsets.UTF_8).close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		scheduler = Executors.newSingleThreadScheduledExecutor();
 
 		LogTailListener listener = new LogTailListener();
@@ -83,6 +100,12 @@ public class ConsoleLogController implements Initializable {
 							javafx.application.Platform.runLater(() -> logConsole.appendText(cleanedLine + "\n"));
 
 							//javafx.application.Platform.runLater(() -> logConsole.appendText(logLine + "\n"));
+
+							if (cleanedLine.contains("FIN DU JEU")) {
+								javafx.application.Platform.runLater(() -> {
+									displayEndGameLog();
+								});
+							}
 						}
 						filePointer = raf.getFilePointer();
 					}
@@ -102,6 +125,26 @@ public class ConsoleLogController implements Initializable {
 	public void appendText(String text) {
 		if (logConsole != null) {
 			javafx.application.Platform.runLater(() -> logConsole.appendText(text));
+		}
+	}
+
+	private void displayEndGameLog() {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(FxmlView.END_GAME_LOG.getFxmlPath()));
+			Parent root = loader.load();
+
+			Stage stage = new Stage();
+			stage.setTitle("Fin de partie");
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(new Scene(root));
+
+			EndGameLogController controller = loader.getController();
+			controller.setDialogStage(stage);
+			controller.setSummary(evolutionGame.getEndGameSummary());
+
+			stage.showAndWait();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

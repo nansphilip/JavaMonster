@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;

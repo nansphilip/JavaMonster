@@ -37,6 +37,13 @@ public enum FxmlView {
 		}
 	},
 
+	END_GAME_LOG {
+		@Override
+		public String getFxmlPath() {
+			return "/fxml/endGameLogView.fxml";
+		}
+	},
+
 	MAIN {
 		@Override
 		public String getFxmlPath() {

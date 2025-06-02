@@ -25,8 +25,11 @@ import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Slf4j
+@Service
 public class EvolutionGame {
 
     /**
@@ -69,7 +72,7 @@ public class EvolutionGame {
 
         sc.close();
         logEndGame();
-        showCreaturesEndOfGame();
+        log.info(Singleton.getInstance().getEndGameLog());
     }
 
     public boolean runNextRound() {
@@ -102,7 +105,7 @@ public class EvolutionGame {
 
     public void showEndGame(){
         logEndGame();
-        showCreaturesEndOfGame();
+        log.info(Singleton.getInstance().getEndGameLog());
     }
 
     private boolean executeAndCheckEnd(Runnable action) {
@@ -317,41 +320,13 @@ public class EvolutionGame {
         log.info("#############################################", round);
     }
 
-    /**
-     * Récupère toutes les créatures soignées et trépassées des stack du singleton
-     * et les affiche
-     */
-    public void showCreaturesEndOfGame(){
-        Singleton instance = Singleton.getInstance();
-
-        log.info("#################################");
-        log.info("#### CREATURES TREPASSEES : #####");
-        log.info("#################################");
-
-        while(!instance.isStackEmpty(StackType.DIE)){
-            log.info("{}", instance.popBeastFromStack(StackType.DIE));
-        }
-
-        log.info("#################################");
-        log.info("###### CREATURES SOIGNEES : #####");
-        log.info("#################################");
-
-        while(!instance.isStackEmpty(StackType.HEAL)){
-            log.info("{}", instance.popBeastFromStack(StackType.HEAL));
-        }
-
-        log.info("#################################");
-        log.info("###### MEDECINS HARAKIRI : ######");
-        log.info("#################################");
-
-        while(!instance.isStackEmpty(StackType.DOCTOR)){
-            log.info("{}", instance.popBeastFromStack(StackType.DOCTOR));
-        }
-    }
-
     private void logEndGame() {
         log.info("#############################################");
         log.info("################ FIN DU JEU #################");
         log.info("#############################################");
+    }
+
+    public String getEndGameSummary() {
+        return Singleton.getInstance().getEndGameLog();
     }
 }
