@@ -5,6 +5,7 @@ import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.model.rooms.Room;
@@ -25,10 +26,10 @@ public class SimulationConsole {
         Hospital hospital = new Hospital("Marseille", 10);
 
         // Création des services medicaux
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 1, BudgetType.MEDIOCRE);
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 1, BudgetType.MEDIOCRE);
-        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, BudgetType.MEDIOCRE);
-        //Crypt crypt = new Crypt("Crypt", 50, 5, "Mediocre");
+        MedicalService emergency = new MedicalService("Urgence", 50.0, 1, BudgetType.getRandomBudget());
+        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 1, BudgetType.getRandomBudget());
+        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, BudgetType.getRandomBudget());
+        Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.getRandomBudget());
 
         // Création de la room d'attente
         Room roomAttente = new Room("Room d'attente", 70, 100);
@@ -62,7 +63,7 @@ public class SimulationConsole {
         hospital.addService(emergency);
         hospital.addService(cardiac);
         hospital.addService(gastro);
-        //hospital.addService(crypt);
+        hospital.addService(crypt);
 
         //Boucle d'évolution du jeu
         EvolutionGame jeu = new EvolutionGame(hospital, null, null, null, null);
