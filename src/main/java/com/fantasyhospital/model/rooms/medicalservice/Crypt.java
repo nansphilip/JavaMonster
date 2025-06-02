@@ -139,7 +139,7 @@ public final class Crypt extends MedicalService {
         } else if (!this.airflow && this.temperature < MAX_TEMPERATURE) {
             // More gradual increase based on current temperature
             int maxIncrease = Math.min(MAX_TEMPERATURE_INCREASE, (MAX_TEMPERATURE - this.temperature) / 5 + 1);
-            int increase = MIN_TEMPERATURE_INCREASE + random.nextInt(maxIncrease - MIN_TEMPERATURE_INCREASE + 1);
+            int increase = MIN_TEMPERATURE_INCREASE + random.nextInt(Math.min(1,maxIncrease - MIN_TEMPERATURE_INCREASE + 1));
             this.temperature = Math.min(MAX_TEMPERATURE, this.temperature + increase);
             
             log.info("La température augmente dans la crypt : {}°C (+{}°C) !", this.temperature, this.temperature - previousTemperature);

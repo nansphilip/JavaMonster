@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
-import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
@@ -41,6 +40,16 @@ public class EvolutionGame {
     private WaitingRoomController waitingRoomController;
     private GridMedicalServiceController gridMedicalServiceController;
 
+    //Constants for the random evolutions
+    private static final double GET_NEW_DISEASE_CHANCE = 0.05;
+    private static final int DECREASE_DISEASE_MORAL = 5;
+    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.10;
+    private static final double EVOLVE_BUDGET_CHANCE = 0.3;
+    private static final double ADD_CREATURE_CHANCE = 0.95;
+    private static final double ADD_DOCTOR_CHANCE = 0.04;
+    private static final double EVOLVE_MORAL_CHANCE = 0.95;
+    private static final int VARIATION_MORAL_LEVEL = 30;
+
     public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
         this.hospital = hospital;
         this.listCreatureController = listCreatureController;
@@ -71,7 +80,7 @@ public class EvolutionGame {
         if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
         if (executeAndCheckEnd(this::actionCrypte)) return true;
 
-        addRndCreatureRndRoom();
+        modifyGameRandomly();
 
         round++;
 
@@ -124,7 +133,8 @@ public class EvolutionGame {
 
     /**
      * Applies the effects and evolutions of diseases to all creatures.
-     * Also make creature sick (5%) and make evolve the diseases randomly
+     * Also make creature sick (5%) and make the level of a random disease of a creature evolve (10%)
+     * And make the moral of a creature change (5% chance)
      */
     private void applyDiseasesEffects() {
         for (Room room : hospital.getServices()) {
@@ -133,17 +143,17 @@ public class EvolutionGame {
                 boolean isInQuarantine = room instanceof Quarantine;
 
                 // 5% chance contracter nouvelle maladie (sauf en quarantaine)
-                if(!isInQuarantine && Math.random() < 0.05){
+                if(!isInQuarantine && Math.random() < GET_NEW_DISEASE_CHANCE){
                     Disease disease = new Disease();
-                    creature.fallSick(disease);
                     log.info("La créature {} n'a pas de chance, elle vient de contracter la maladie {} de manière complétement aléatoire.", creature.getFullName(), disease.getName());
+                    creature.fallSick(disease);
                 }
 
-                // Récupère maladie random creature et modifie current level random
-                // if(Math.random() < 0.10){
-                //    Disease dis = creature.getRandomDisease();
-                //    dis.setCurrentLevel(new Random().nextInt(8)+1);
-                // }
+                // A chaque fois que notifyExitObserver est appelé sur la creature, on vérifie si la creature n'a pas été sortie de l'hopital
+                // Si c'est le cas, on passe à la creature suivante de la boucle for (pour ne pas effectuer les traitements suivants puisque ça n'aurait pas de sens)
+                if(hospital.getRoomOfCreature(creature) == null){
+                    continue;
+                }
 
                 // Fait monter 1 niveau maladies par tour et perdre 5 moral par maladie (sauf en quarantaine pour le moral)
                 for (Disease disease : creature.getDiseases()) {
@@ -151,10 +161,40 @@ public class EvolutionGame {
 
                     // En quarantaine, le moral ne change pas
                     if (!isInQuarantine) {
-                        creature.setMorale(Math.max(creature.getMorale() - 5, 0));
+                        creature.setMorale(Math.max(creature.getMorale() - DECREASE_DISEASE_MORAL, 0));
                     }
                 }
+
                 creature.notifyExitObservers();
+                if(hospital.getRoomOfCreature(creature) == null){
+                    continue;
+                }
+
+                // 10% chance que le niveau d'une de ses maladies évolue de manière aléatoire
+                // On vérifie que la créature ne soit pas sortie de l'hopital avec modifs précédentes
+                if(Math.random() < EVOLVE_LEVEL_DISEASE_CHANCE){
+                    Disease dis = creature.getRandomDisease();
+                    dis.setCurrentLevel(Math.min(dis.getCurrentLevel() + new Random().nextInt(8), dis.getLEVEL_MAX() - 1));
+                    log.info("La créature {} n'a pas de chance, sa maladie {} passe au niveau {} de manière aléatoire...", creature.getFullName(), dis.getName(), dis.getCurrentLevel());
+                }
+
+                creature.notifyExitObservers();
+
+                // 5% chance que le moral evolue de manière random (entre 0 et 30 variation moral)
+                if(Math.random() < EVOLVE_MORAL_CHANCE && !isInQuarantine){
+                    int variationMoral;
+                    int newMorale;
+                    if(new Random().nextBoolean()){
+                        variationMoral = - (1 + new Random().nextInt(VARIATION_MORAL_LEVEL + 1));
+                        newMorale = Math.max(creature.getMorale() + variationMoral, 0);
+                        log.info("La créature {} n'a pas de chance car son moral évolue aléatoirement ({})", creature.getFullName(), variationMoral);
+                    } else {
+                        variationMoral = 1 + new Random().nextInt(VARIATION_MORAL_LEVEL - 1);
+                        newMorale = Math.min(creature.getMorale() + variationMoral, 100);
+                        log.info("La créature {} a de la chance car son moral évolue aléatoirement (+{})", creature.getFullName(), variationMoral);
+                    }
+                    creature.setMorale(newMorale);
+                }
             }
         }
     }
@@ -189,10 +229,10 @@ public class EvolutionGame {
     }
 
     /**
-     *
+     * Make a random budget of the hospital change randomly (30% chance)
      */
     private void reviewRndBudget(Hospital hospital) {
-        if (Math.random() < 0.1 && !hospital.getMedicalServices().isEmpty()) {
+        if (Math.random() < EVOLVE_BUDGET_CHANCE && !hospital.getMedicalServices().isEmpty()) {
             int rnd = new Random().nextInt(hospital.getMedicalServices().size());
             MedicalService service = hospital.getMedicalServices().get(rnd);
 
@@ -208,26 +248,35 @@ public class EvolutionGame {
     }
 
     /**
-     * Ajoute une nouvelle créature avec une maladie, un niveau aléatoire dans une room aléatoire chance 50%
-     * Ajoute un nouveau médecin 4% chance
+     * Call the several methods that modify the game randomly each tour
      */
-    private void addRndCreatureRndRoom(){
-        if(Math.random() < 0.95){
+    private void modifyGameRandomly(){
+        addCreatureRandomly();
+        addDoctorRandomly();
+        reviewRndBudget(hospital);
+    }
+
+    /**
+     * Add a random creature to a random service with a random disease with a random level by 95% chance
+     */
+    private void addCreatureRandomly(){
+        if(Math.random() < ADD_CREATURE_CHANCE){
             int rnd = new Random().nextInt(hospital.getServices().size());
             Room room = hospital.getServices().get(rnd);
             Creature creature = null;
 
             if(room != null){
                 if (Objects.equals(room.getName(), "Crypt") || Objects.equals(room.getName(), "Zombie")) {
+                    RaceType race;
                     if (room.getCreatures().isEmpty()) {
-                        RaceType race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
-                        creature = Game.randomCreature(race);
+                        race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
                     }
                     else
                     {
-                        RaceType race = RaceType.valueOf(room.getRoomType());
-                        creature = Game.randomCreature(race);
+                        String Racetype = room.getRoomType().toUpperCase();
+                        race = RaceType.valueOf(Racetype);
                     }
+                    creature = Game.randomCreature(race);
                 }
                 else if (!room.getCreatures().isEmpty())
                 {
@@ -246,8 +295,14 @@ public class EvolutionGame {
                 log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue",  creature.getFullName(), room.getName());
             }
         }
+    }
 
-        if(Math.random() < 0.04){
+    /**
+     * Add a new doctor randomly (4% chance) to a random medical service
+     */
+    private void addDoctorRandomly(){
+        // Ajout médecin aléatoire
+        if(Math.random() < ADD_DOCTOR_CHANCE){
             MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getMedicalServices().size()));
             Doctor doctor = new Doctor(BeastUtils.generateRandomName(GenderType.FEMALE), GenderType.FEMALE, 70, 175, 45, 100, "Lycanthrope", medicalService);
             doctor.addObserver(new MoralObserver(hospital));
