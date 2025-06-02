@@ -10,7 +10,7 @@
       fx:id="waitingRoom"
       layoutX="20.0"
       layoutY="50.0"
-      prefWidth="200.0"
+      prefWidth="270.0"
       prefHeight="600.0"
       style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;">
 
@@ -18,11 +18,11 @@
            style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;"
            layoutX="10.0"
            layoutY="10.0"
-           maxWidth="180.0" />
+           maxWidth="250.0" />
 
     <ListView fx:id="waitingRoomListView"
               layoutX="10.0"
               layoutY="40.0"
-              prefWidth="180.0"
+              prefWidth="250.0"
               prefHeight="550.0" />
 </Pane>

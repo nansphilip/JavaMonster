@@ -2,6 +2,7 @@ package com.fantasyhospital.config;
 
 import java.io.IOException;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import javafx.scene.Parent;
@@ -12,7 +13,8 @@ import javafx.stage.Stage;
 @Component
 public class StageManager {
 
-	private final Stage primaryStage;
+	@Getter
+    private final Stage primaryStage;
 	private final FxmlLoader fxmlLoader;
 
 	public StageManager(FxmlLoader fxmlLoader,
@@ -59,7 +61,7 @@ public class StageManager {
 		return rootNode;
 	}
 
-	public void switchToFullScreenMode() {
+    public void switchToFullScreenMode() {
 		primaryStage.setFullScreen(true);
 	}
 
