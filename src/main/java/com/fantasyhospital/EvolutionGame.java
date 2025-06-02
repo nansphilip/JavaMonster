@@ -2,9 +2,11 @@ package com.fantasyhospital;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
+import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
@@ -190,18 +192,32 @@ public class EvolutionGame {
      * Ajoute un nouveau médecin 4% chance
      */
     private void addRndCreatureRndRoom(){
-        if(Math.random() < 0.50){
+        if(Math.random() < 0.95){
             int rnd = new Random().nextInt(hospital.getServices().size());
             Room room = hospital.getServices().get(rnd);
+            Creature creature = null;
 
-            if(room != null && room.getCreatures().size() < room.getMAX_CREATURE()){
-                Creature creature = null;
-                if(room.getCreatures().isEmpty()){
-                    creature = Game.randomCreature();
-                } else {
-                    String type = room.getRoomType().toUpperCase();
-                    RaceType race = RaceType.valueOf(type);
+            if(room != null){
+                if (Objects.equals(room.getName(), "Crypt") || Objects.equals(room.getName(), "Zombie")) {
+                    if (room.getCreatures().isEmpty()) {
+                        RaceType race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
+                        creature = Game.randomCreature(race);
+                    }
+                    else
+                    {
+                        RaceType race = RaceType.valueOf(room.getRoomType());
+                        creature = Game.randomCreature(race);
+                    }
+                }
+                else if (!room.getCreatures().isEmpty())
+                {
+                    String Racetype = room.getRoomType().toUpperCase();
+                    RaceType race = RaceType.valueOf(Racetype);
                     creature = Game.randomCreature(race);
+                }
+                else
+                {
+                    creature = Game.randomCreature();
                 }
                 creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8)+1);
                 creature.addExitObserver(new ExitObserver(hospital));

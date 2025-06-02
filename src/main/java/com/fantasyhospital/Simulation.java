@@ -91,19 +91,19 @@ public class Simulation {
 			creature.addExitObserver(new ExitObserver(hospital));
 			creature.addMoralObserver(new MoralObserver(hospital));
 			creatures.add(creature);
-			crypt.addCreature(creature);
 			log.info("Créature générée : {}", creature);
 
 			// TODO: use patientRepository
 			listCreatureController.addCreature(creature);
 		}
 
+        //roomAttente.setCreatures(creatures);
         roomAttente.setCreatures(creatures);
         hospital.addService(roomAttente);
         hospital.addService(emergency);
+        hospital.addService(crypt);
         hospital.addService(cardiac);
         hospital.addService(gastro);
-		hospital.addService(crypt);
 
 		waitingRoomController.setHospital(hospital);
 
