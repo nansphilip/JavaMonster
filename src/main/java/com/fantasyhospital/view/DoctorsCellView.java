@@ -25,8 +25,10 @@ public class DoctorsCellView extends ListCell<Doctor> {
     private ImageView doctorImageView;
     private ImageView moraleImageView;
     private ImageView genderImageView;
+    private ImageView moraleTrendImageView;
     private HBox moraleBox;
     private VBox infoBox;
+    private HBox nameGenderBox;
     private Text name;
     private Label serviceLabel;
     private Label ageLabel;
@@ -49,8 +51,16 @@ public class DoctorsCellView extends ListCell<Doctor> {
         genderImageView.setFitHeight(10);
         genderImageView.setFitWidth(10);
 
+        moraleTrendImageView = new ImageView();
+        moraleTrendImageView.setFitHeight(10);
+        moraleTrendImageView.setFitWidth(10);
+        moraleTrendImageView.setVisible(false);
+
         name = new Text();
         name.setStyle("-fx-font-weight: bold;");
+
+        nameGenderBox = new HBox(5, name, genderImageView);
+        nameGenderBox.setAlignment(Pos.CENTER_LEFT);
 
         serviceLabel = new Label();
         serviceLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 10px;");
@@ -61,11 +71,10 @@ public class DoctorsCellView extends ListCell<Doctor> {
         moraleLabel = new Label();
         moraleLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 10px;");
 
-        moraleBox = new HBox(5, moraleImageView, moraleLabel);
+        moraleBox = new HBox(5, moraleTrendImageView, moraleImageView, moraleLabel);
         moraleBox.setAlignment(Pos.CENTER_LEFT);
 
-        infoBox = new VBox(2, name, ageLabel);
-//        infoBox = new VBox(2, name, serviceLabel, ageLabel, moraleLabel);
+        infoBox = new VBox(2, nameGenderBox, ageLabel);
         infoBox.setAlignment(Pos.CENTER_LEFT);
 
         content = new HBox(10, doctorImageView, infoBox, moraleBox);
@@ -87,6 +96,17 @@ public class DoctorsCellView extends ListCell<Doctor> {
             doctorImageView.setImage(croppedImage);
 
             moraleImageView.setImage(getMoraleImageView(doctor.getMorale()));
+
+            // Définir l'image de tendance du moral seulement si le moral a changé
+            if (doctor.isMoraleIncreasing()) {
+                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/moral-up.png")));
+                moraleTrendImageView.setVisible(true);
+            } else if (doctor.isMoraleDecreasing()) {
+                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/moral-down.png")));
+                moraleTrendImageView.setVisible(true);
+            } else {
+                moraleTrendImageView.setVisible(false);
+            }
 
             genderImageView.setImage(getGenderImageView(doctor.getSex()));
 
@@ -159,3 +179,4 @@ public class DoctorsCellView extends ListCell<Doctor> {
         popup.showAndWait();
     }
 }
+

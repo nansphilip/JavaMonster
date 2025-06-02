@@ -56,6 +56,7 @@ public class Doctor extends Beast {
         super(name, sex, weight, height, age, morale);
         this.race = race;
         this.medicalService = medicalService;
+        this.previousMorale = morale;
     }
 
     /**
@@ -81,6 +82,13 @@ public class Doctor extends Beast {
         for (CreatureObserver observer : observers) {
             observer.onStateChanged(this);
         }
+    }
+
+    @Override
+    public void setMorale(int morale) {
+        this.previousMorale = this.morale;
+        this.morale = morale;
+        notifyObservers();
     }
 
     /**
@@ -203,6 +211,7 @@ public class Doctor extends Beast {
             //for(Creature creatureService : this.medicalService.getCreatures()){
                 //creatureService.setMorale(Math.min(creatureService.getMorale() + healCreature, 100));
             //}
+
 
             log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
             //log.info("Soigner a redonné {} points de moral au médecin {} et {} points à toutes les créatures du service. Moral actuel du médecin : {}", heal, this.getFullName(), healCreature, this.morale);
