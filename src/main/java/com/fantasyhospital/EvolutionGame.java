@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
@@ -58,25 +57,18 @@ public class EvolutionGame {
 
         sc.close();
         logEndGame();
-        afficherCreaturesSortiesHospital();
+        showCreaturesEndOfGame();
     }
 
-    public void runNextRound() {
-        if (endOfGame) return;
-
+    public boolean runNextRound() {
         logRound(round);
-        endOfGame = checkEndOfGame();
-        applyDiseasesEffects();
-        endOfGame = checkEndOfGame();
-        doCreaturesWait();
-        endOfGame = checkEndOfGame();
-        doDoctorsExamine();
-        endOfGame = checkEndOfGame();
-        actionCrypte();
-        endOfGame = checkEndOfGame();
-        addRndCreatureRndRoom();
 
-        //hospital.displayServices();
+        if (executeAndCheckEnd(this::applyDiseasesEffects)) return true;
+        if (executeAndCheckEnd(this::doCreaturesWait)) return true;
+        if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
+        if (executeAndCheckEnd(this::actionCrypte)) return true;
+
+        addRndCreatureRndRoom();
 
         round++;
 
@@ -92,7 +84,21 @@ public class EvolutionGame {
         if (gridMedicalServiceController != null) {
             gridMedicalServiceController.updateServicesList();
         }
+        //hospital.displayServices();
+        return false;
     }
+
+    public void showEndGame(){
+        logEndGame();
+        showCreaturesEndOfGame();
+    }
+
+    private boolean executeAndCheckEnd(Runnable action) {
+        action.run();
+        endOfGame = checkEndOfGame();
+        return endOfGame;
+    }
+
 
 
     private void actionCrypte(){
@@ -224,7 +230,7 @@ public class EvolutionGame {
      * Récupère toutes les créatures soignées et trépassées des stack du singleton
      * et les affiche
      */
-    public void afficherCreaturesSortiesHospital(){
+    public void showCreaturesEndOfGame(){
         Singleton instance = Singleton.getInstance();
 
         log.info("#################################");

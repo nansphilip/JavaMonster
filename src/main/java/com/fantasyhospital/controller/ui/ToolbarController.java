@@ -153,7 +153,9 @@ public class ToolbarController implements Initializable {
 			consoleLogController.appendText("La simulation n'est pas démarrée.\n");
 			return;
 		}
-		jeu.runNextRound();
+		if(jeu.runNextRound()){
+			jeu.showEndGame();
+		}
 		hospitalStructureController.updateWaitingRoom();
 	}
 }

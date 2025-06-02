@@ -56,6 +56,17 @@ public class ConsoleLogController implements Initializable {
 
 		long filePointer;
 
+		private String cleanLogLineWithTime(String line) {
+			String[] parts = line.split(" - ", 2);
+			if (parts.length < 2) return line;
+
+			// Récupère l'heure au début de la ligne (facultatif)
+			String time = line.length() >= 8 ? line.substring(0, 19) : "";
+			return time + " - " + parts[1].trim();
+		}
+
+
+
 		void listen() {
 			try {
 				long len = Files.size(logFilePath);
@@ -68,7 +79,11 @@ public class ConsoleLogController implements Initializable {
 						String line;
 						while ((line = raf.readLine()) != null) {
 							final String logLine = new String(line.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-							javafx.application.Platform.runLater(() -> logConsole.appendText(logLine + "\n"));
+
+							String cleanedLine = cleanLogLineWithTime(logLine);
+							javafx.application.Platform.runLater(() -> logConsole.appendText(cleanedLine + "\n"));
+
+							//javafx.application.Platform.runLater(() -> logConsole.appendText(logLine + "\n"));
 						}
 						filePointer = raf.getFilePointer();
 					}
