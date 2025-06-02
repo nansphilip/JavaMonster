@@ -1,11 +1,13 @@
 package com.fantasyhospital;
 
-import com.fantasyhospital.controller.GridMedicalServiceController;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
+import org.springframework.stereotype.Service;
+
+import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
@@ -18,210 +20,265 @@ import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.BeastUtils;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
-import com.fantasyhospital.observer.ExitObserver;
-import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import com.fantasyhospital.observer.ExitObserver;
+import com.fantasyhospital.observer.MoralObserver;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Main simulation engine for Fantasy Hospital. Manages the temporal evolution
+ * of the simulation through game rounds.
+ */
 @Slf4j
 @Service
 public class EvolutionGame {
 
-    /**
-     * Game hospital
-     */
-    private Hospital hospital;
-    private int round = 1;
-    private boolean endOfGame = false;
-    private ListCreatureController listCreatureController;
-    private ListDoctorsController listDoctorsController;
-    private WaitingRoomController waitingRoomController;
-    private GridMedicalServiceController gridMedicalServiceController;
+	/**
+	 * The hospital being simulated.
+	 */
+	final private Hospital hospital;
 
-    //Constants for the random evolutions
-    private static final double GET_NEW_DISEASE_CHANCE = 0.05;
-    private static final int DECREASE_DISEASE_MORAL = 5;
-    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.10;
-    private static final double EVOLVE_BUDGET_CHANCE = 0.3;
-    private static final double ADD_CREATURE_CHANCE = 0.95;
-    private static final double ADD_DOCTOR_CHANCE = 0.04;
-    private static final double EVOLVE_MORAL_CHANCE = 0.95;
-    private static final int VARIATION_MORAL_LEVEL = 30;
+	/**
+	 * Current round number.
+	 */
+	private int round = 1;
 
-    public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
-        this.hospital = hospital;
-        this.listCreatureController = listCreatureController;
-        this.listDoctorsController = listDoctorsController;
-        this.waitingRoomController = waitingRoomController;
-        this.gridMedicalServiceController = gridMedicalServiceController;
-    }
+	/**
+	 * Game end flag.
+	 */
+	private boolean endOfGame = false;
 
-    public void run() {
-        Scanner sc = new Scanner(System.in);
+	/**
+	 * JavaFX controller for creature list.
+	 */
+	final private ListCreatureController listCreatureController;
 
-        while (!endOfGame) {
-            log.info("Appuie sur Entrée pour lancer le prochain tour...");
-            sc.nextLine();
-            runNextRound();
-        }
+	/**
+	 * JavaFX controller for doctors list.
+	 */
+	final private ListDoctorsController listDoctorsController;
 
-        sc.close();
-        logEndGame();
-        log.info(Singleton.getInstance().getEndGameLog());
-    }
+	/**
+	 * JavaFX controller for waiting room.
+	 */
+	final private WaitingRoomController waitingRoomController;
 
-    public boolean runNextRound() {
-        logRound(round);
+	/**
+	 * JavaFX controller for medical services grid.
+	 */
+	final private GridMedicalServiceController gridMedicalServiceController;
 
-        if (executeAndCheckEnd(this::applyDiseasesEffects)) return true;
-        if (executeAndCheckEnd(this::doCreaturesWait)) return true;
-        //if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
-        if (executeAndCheckEnd(this::actionCrypte)) return true;
+	//Constants for the random evolutions
+	private static final double GET_NEW_DISEASE_CHANCE = 0.05;
+	private static final int DECREASE_DISEASE_MORAL = 5;
+	private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.10;
+	private static final double EVOLVE_BUDGET_CHANCE = 0.3;
+	private static final double ADD_CREATURE_CHANCE = 0.95;
+	private static final double ADD_DOCTOR_CHANCE = 0.04;
+	private static final double EVOLVE_MORAL_CHANCE = 0.95;
+	private static final int VARIATION_MORAL_LEVEL = 30;
 
-        modifyGameRandomly();
+	/**
+	 * Creates a new evolution game.
+	 *
+	 * @param hospital the hospital to simulate
+	 * @param listCreatureController creature list controller (can be null)
+	 * @param listDoctorsController doctors list controller (can be null)
+	 * @param waitingRoomController waiting room controller (can be null)
+	 * @param gridMedicalServiceController medical services controller (can be
+	 * null)
+	 */
+	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
+		this.hospital = hospital;
+		this.listCreatureController = listCreatureController;
+		this.listDoctorsController = listDoctorsController;
+		this.waitingRoomController = waitingRoomController;
+		this.gridMedicalServiceController = gridMedicalServiceController;
+	}
 
-        round++;
+	/**
+	 * Runs the simulation in interactive console mode.
+	 */
+	public void run() {
+		Scanner sc = new Scanner(System.in);
 
-        if (listCreatureController != null) {
-            listCreatureController.updateCreaturesList();
-        }
-        if (listDoctorsController != null) {
-            listDoctorsController.updateDoctorsList();
-        }
-        if (waitingRoomController != null) {
-            waitingRoomController.updateWaitingRoom();
-        }
-        if (gridMedicalServiceController != null) {
-            gridMedicalServiceController.updateServicesList();
-        }
-        //hospital.displayServices();
-        return false;
-    }
+		while (!endOfGame) {
+			log.info("Appuie sur Entrée pour lancer le prochain tour...");
+			sc.nextLine();
+			runNextRound();
+		}
 
-    public void showEndGame(){
-        logEndGame();
-        log.info(Singleton.getInstance().getEndGameLog());
-    }
+		sc.close();
+		logEndGame();
+		log.info(Singleton.getInstance().getEndGameLog());
+	}
 
-    private boolean executeAndCheckEnd(Runnable action) {
-        action.run();
-        endOfGame = checkEndOfGame();
-        return endOfGame;
-    }
+	/**
+	 * Executes the next round of simulation.
+	 *
+	 * @return true if game ended, false otherwise
+	 */
+	public boolean runNextRound() {
+		logRound(round);
 
+		if (executeAndCheckEnd(this::applyDiseasesEffects)) {
+			return true;
+		}
+		if (executeAndCheckEnd(this::doCreaturesWait)) {
+			return true;
+		}
+		// if (executeAndCheckEnd(this::doDoctorsExamine)) {
+		//     return true;
+		// }
+		if (executeAndCheckEnd(this::actionCrypte)) {
+			return true;
+		}
 
+		// modifyGameRandomly();
+		round++;
 
-    private void actionCrypte(){
-        List<Crypt> cryptList =  hospital.getCrypts();
-        if(!cryptList.isEmpty()){
-            for(Crypt crypt : cryptList){
-                crypt.manageCrypt();
-            }
-        }
-    }
+		if (listCreatureController != null) {
+			listCreatureController.updateCreaturesList();
+		}
+		if (listDoctorsController != null) {
+			listDoctorsController.updateDoctorsList();
+		}
+		if (waitingRoomController != null) {
+			waitingRoomController.updateWaitingRoom();
+		}
+		if (gridMedicalServiceController != null) {
+			gridMedicalServiceController.updateServicesList();
+		}
+		return false;
+	}
 
-    /**
-     * Checks if the hospital is empty.
-     * @return true if it is, false otherwise.
-     */
-    private boolean checkEndOfGame() {
-        int TotalCreatures = hospital.getTotalCreaturesHospital();
-        return TotalCreatures == 0;
-    }
+	/**
+	 * Shows end game statistics.
+	 */
+	public void showEndGame() {
+		logEndGame();
+		log.info(Singleton.getInstance().getEndGameLog());
+	}
 
-    /**
-     * Applies the effects and evolutions of diseases to all creatures.
-     * Also make creature sick (5%) and make the level of a random disease of a creature evolve (10%)
-     * And make the moral of a creature change (5% chance)
-     */
-    private void applyDiseasesEffects() {
-        for (Room room : hospital.getServices()) {
-            for (Creature creature : room.getCreatures()) {
-                // Si la créature est en quarantaine, on ne lui ajoute pas de nouvelles maladies aléatoirement
-                boolean isInQuarantine = room instanceof Quarantine;
+	/**
+	 * Executes an action and checks if game should end.
+	 *
+	 * @param action the action to execute
+	 * @return true if game ended, false otherwise
+	 */
+	private boolean executeAndCheckEnd(Runnable action) {
+		action.run();
+		endOfGame = checkEndOfGame();
+		return endOfGame;
+	}
 
-                // 5% chance contracter nouvelle maladie (sauf en quarantaine)
-                if(!isInQuarantine && Math.random() < GET_NEW_DISEASE_CHANCE){
-                    Disease disease = new Disease();
-                    log.info("La créature {} n'a pas de chance, elle vient de contracter la maladie {} de manière complétement aléatoire.", creature.getFullName(), disease.getName());
-                    creature.fallSick(disease);
-                }
+	/**
+	 * Manages crypt actions.
+	 */
+	private void actionCrypte() {
+		List<Crypt> cryptList = hospital.getCrypts();
+		if (!cryptList.isEmpty()) {
+			for (Crypt crypt : cryptList) {
+				crypt.manageCrypt();
+			}
+		}
+	}
 
-                // A chaque fois que notifyExitObserver est appelé sur la creature, on vérifie si la creature n'a pas été sortie de l'hopital
-                // Si c'est le cas, on passe à la creature suivante de la boucle for (pour ne pas effectuer les traitements suivants puisque ça n'aurait pas de sens)
-                if(hospital.getRoomOfCreature(creature) == null){
-                    continue;
-                }
+	/**
+	 * Checks if the hospital is empty.
+	 *
+	 * @return true if hospital is empty, false otherwise
+	 */
+	private boolean checkEndOfGame() {
+		int totalCreatures = hospital.getTotalCreaturesHospital();
+		return totalCreatures == 0;
+	}
 
-                // Fait monter 1 niveau maladies par tour et perdre 5 moral par maladie (sauf en quarantaine pour le moral)
-                for (Disease disease : creature.getDiseases()) {
-                    disease.increaseLevel();
+	/**
+	 * Applies disease effects and evolutions to all creatures. Makes creatures
+	 * sick (5% chance) and evolves diseases.
+	 */
+	private void applyDiseasesEffects() {
+		for (Room room : hospital.getServices()) {
+			for (Creature creature : room.getCreatures()) {
+				// If creature is in quarantine, don't add new random diseases
+				boolean isInQuarantine = room instanceof Quarantine;
 
-                    // En quarantaine, le moral ne change pas
-                    if (!isInQuarantine) {
-                        creature.setMorale(Math.max(creature.getMorale() - DECREASE_DISEASE_MORAL, 0));
-                    }
-                }
+				// 5% chance to contract new disease (except in quarantine)
+				if (!isInQuarantine && Math.random() < GET_NEW_DISEASE_CHANCE) {
+					Disease disease = new Disease();
+					log.info("La créature {} n'a pas de chance, elle vient de contracter la maladie {} de manière complétement aléatoire.", creature.getFullName(), disease.getName());
+					creature.fallSick(disease);
+				}
 
-                creature.notifyExitObservers();
-                if(hospital.getRoomOfCreature(creature) == null){
-                    continue;
-                }
+				// Increase disease level by 1 per turn and lose 5 morale per disease (except in quarantine for morale)
+				for (Disease disease : creature.getDiseases()) {
+					disease.increaseLevel();
 
-                // 10% chance que le niveau d'une de ses maladies évolue de manière aléatoire
-                // On vérifie que la créature ne soit pas sortie de l'hopital avec modifs précédentes
-                if(Math.random() < EVOLVE_LEVEL_DISEASE_CHANCE){
-                    Disease dis = creature.getRandomDisease();
-                    dis.setCurrentLevel(Math.min(dis.getCurrentLevel() + new Random().nextInt(8), dis.getLEVEL_MAX() - 1));
-                    log.info("La créature {} n'a pas de chance, sa maladie {} passe au niveau {} de manière aléatoire...", creature.getFullName(), dis.getName(), dis.getCurrentLevel());
-                }
+					// In quarantine, morale doesn't change
+					if (!isInQuarantine) {
+						creature.setMorale(Math.max(creature.getMorale() - DECREASE_DISEASE_MORAL, 0));
+					}
+				}
 
-                creature.notifyExitObservers();
+				creature.notifyExitObservers();
+				if (hospital.getRoomOfCreature(creature) == null) {
+					continue;
+				}
 
-                // 5% chance que le moral evolue de manière random (entre 0 et 30 variation moral)
-                if(Math.random() < EVOLVE_MORAL_CHANCE && !isInQuarantine){
-                    int variationMoral;
-                    int newMorale;
-                    if(new Random().nextBoolean()){
-                        variationMoral = - (1 + new Random().nextInt(VARIATION_MORAL_LEVEL + 1));
-                        newMorale = Math.max(creature.getMorale() + variationMoral, 0);
-                        log.info("La créature {} n'a pas de chance car son moral évolue aléatoirement ({})", creature.getFullName(), variationMoral);
-                    } else {
-                        variationMoral = 1 + new Random().nextInt(VARIATION_MORAL_LEVEL - 1);
-                        newMorale = Math.min(creature.getMorale() + variationMoral, 100);
-                        log.info("La créature {} a de la chance car son moral évolue aléatoirement (+{})", creature.getFullName(), variationMoral);
-                    }
-                    creature.setMorale(newMorale);
-                }
-            }
-        }
-    }
+				// 10% chance que le niveau d'une de ses maladies évolue de manière aléatoire
+				// On vérifie que la créature ne soit pas sortie de l'hopital avec modifs précédentes
+				if (Math.random() < EVOLVE_LEVEL_DISEASE_CHANCE) {
+					Disease dis = creature.getRandomDisease();
+					dis.setCurrentLevel(Math.min(dis.getCurrentLevel() + new Random().nextInt(8), dis.getLEVEL_MAX() - 1));
+					log.info("La créature {} n'a pas de chance, sa maladie {} passe au niveau {} de manière aléatoire...", creature.getFullName(), dis.getName(), dis.getCurrentLevel());
+				}
 
-    /**
-     * Makes all creatures wait with the associated effects.
-     * Les créatures en quarantaine n'attendent pas (leur moral est figé)
-     */
-    private void doCreaturesWait() {
-        for (Room room : hospital.getServices()) {
-            // Si c'est une quarantaine, les créatures n'attendent pas (moral figé)
-            if (room instanceof Quarantine) {
-                continue;
-            }
+				creature.notifyExitObservers();
 
-            for (Creature creature : room.getCreatures()) {
-                creature.waiting(hospital.getRoomOfCreature(creature));
-            }
-        }
-    }
+				// 5% chance que le moral evolue de manière random (entre 0 et 30 variation moral)
+				if (Math.random() < EVOLVE_MORAL_CHANCE && !isInQuarantine) {
+					int variationMoral;
+					int newMorale;
+					if (new Random().nextBoolean()) {
+						variationMoral = -(1 + new Random().nextInt(VARIATION_MORAL_LEVEL + 1));
+						newMorale = Math.max(creature.getMorale() + variationMoral, 0);
+						log.info("La créature {} n'a pas de chance car son moral évolue aléatoirement ({})", creature.getFullName(), variationMoral);
+					} else {
+						variationMoral = 1 + new Random().nextInt(VARIATION_MORAL_LEVEL - 1);
+						newMorale = Math.min(creature.getMorale() + variationMoral, 100);
+						log.info("La créature {} a de la chance car son moral évolue aléatoirement (+{})", creature.getFullName(), variationMoral);
+					}
+					creature.setMorale(newMorale);
+				}
+			}
+		}
+	}
 
-    /**
-     * Executes the actions of the doctors for the hospital.
-     */
+	/**
+	 * Makes all creatures wait with associated effects. Creatures in quarantine
+	 * don't wait (morale is frozen).
+	 */
+	private void doCreaturesWait() {
+		for (Room room : hospital.getServices()) {
+			// If it's quarantine, creatures don't wait (morale frozen)
+			if (room instanceof Quarantine) {
+				continue;
+			}
+
+			for (Creature creature : room.getCreatures()) {
+				creature.waiting(hospital.getRoomOfCreature(creature));
+			}
+		}
+	}
+
+	/**
+	 * Executes doctors' actions for the hospital.
+	 */
 //    private void doDoctorsExamine() {
 //        for (MedicalService service : hospital.getMedicalServices()) {
 //            List<Doctor> medecins = service.getDoctors();
@@ -230,103 +287,130 @@ public class EvolutionGame {
 //            }
 //        }
 //    }
+	/**
+	 * Randomly modifies a service's budget (10% chance).
+	 *
+	 * @param hospital the hospital to modify
+	 */
+	private void reviewRndBudget(Hospital hospital) {
+		if (Math.random() < EVOLVE_BUDGET_CHANCE && !hospital.getMedicalServices().isEmpty()) {
+			int rnd = new Random().nextInt(hospital.getMedicalServices().size());
+			MedicalService service = hospital.getMedicalServices().get(rnd);
 
-    /**
-     * Make a random budget of the hospital change randomly (30% chance)
-     */
-    private void reviewRndBudget(Hospital hospital) {
-        if (Math.random() < EVOLVE_BUDGET_CHANCE && !hospital.getMedicalServices().isEmpty()) {
-            int rnd = new Random().nextInt(hospital.getMedicalServices().size());
-            MedicalService service = hospital.getMedicalServices().get(rnd);
+			BudgetType oldBudget = service.getBudgetType();
+			BudgetType newBudget;
+			do {
+				newBudget = BudgetType.getRandomBudget();
+			} while (newBudget == oldBudget);
 
-            BudgetType oldBudget = service.getBudgetType();
-            BudgetType newBudget;
-            do {
-                newBudget = BudgetType.getRandomBudget();
-            } while (newBudget == oldBudget);
+			service.setBudgetType(newBudget);
+			log.info("Budget du service '{}' changé de {} à {}", service.getName(), oldBudget, newBudget);
+		}
+	}
 
-            service.setBudgetType(newBudget);
-            log.info("Budget du service '{}' changé de {} à {}", service.getName(), oldBudget, newBudget);
-        }
-    }
+	/**
+	 * Adds a new creature with random disease level to a random room (95%
+	 * chance). Adds a new doctor (4% chance).
+	 */
+	private void addCreatureRandomly() {
+		if (Math.random() < ADD_CREATURE_CHANCE) {
+			int rnd = new Random().nextInt(hospital.getServices().size());
+			Room room = hospital.getServices().get(rnd);
+			Creature creature = null;
 
-    /**
-     * Call the several methods that modify the game randomly each tour
-     */
-    private void modifyGameRandomly(){
-        addCreatureRandomly();
-        addDoctorRandomly();
-        reviewRndBudget(hospital);
-    }
+			if (room != null) {
+				if (Objects.equals(room.getName(), "Crypt") || Objects.equals(room.getName(), "Zombie")) {
+					RaceType race;
+					if (room.getCreatures().isEmpty()) {
+						race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
+					} else {
+						String Racetype = room.getRoomType().toUpperCase();
+						race = RaceType.valueOf(Racetype);
+					}
+					creature = Game.randomCreature(race);
+				} else if (!room.getCreatures().isEmpty()) {
+					String raceType = room.getRoomType().toUpperCase();
+					RaceType race = RaceType.valueOf(raceType);
+					creature = Game.randomCreature(race);
+				} else {
+					creature = Game.randomCreature();
+				}
+				creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8) + 1);
+				creature.addExitObserver(new ExitObserver(hospital));
+				creature.addMoralObserver(new MoralObserver(hospital));
+				room.addCreature(creature);
+				log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue", creature.getFullName(), room.getName());
+			}
+		}
+	}
 
-    /**
-     * Add a random creature to a random service with a random disease with a random level by 95% chance
-     */
-    private void addCreatureRandomly(){
-        if(Math.random() < ADD_CREATURE_CHANCE){
-            int rnd = new Random().nextInt(hospital.getServices().size());
-            Room room = hospital.getServices().get(rnd);
-            Creature creature = null;
+	/**
+	 * Add a new doctor randomly (4% chance) to a random medical service
+	 */
+	private void addDoctorRandomly() {
+		// Ajout médecin aléatoire
+		if (Math.random() < ADD_DOCTOR_CHANCE) {
+			MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getMedicalServices().size()));
+			Doctor doctor = new Doctor(BeastUtils.generateRandomName(GenderType.FEMALE), GenderType.FEMALE, 70, 175, 45, 100, "Lycanthrope", medicalService);
+			doctor.addObserver(new MoralObserver(hospital));
+			medicalService.addDoctor(doctor);
+			log.info("Le médecin {} vient d'arriver dans le service {} !", doctor.getFullName(), medicalService.getName());
+		}
+	}
 
-            if(room != null){
-                if (Objects.equals(room.getName(), "Crypt") || Objects.equals(room.getName(), "Zombie")) {
-                    RaceType race;
-                    if (room.getCreatures().isEmpty()) {
-                        race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
-                    }
-                    else
-                    {
-                        String Racetype = room.getRoomType().toUpperCase();
-                        race = RaceType.valueOf(Racetype);
-                    }
-                    creature = Game.randomCreature(race);
-                }
-                else if (!room.getCreatures().isEmpty())
-                {
-                    String Racetype = room.getRoomType().toUpperCase();
-                    RaceType race = RaceType.valueOf(Racetype);
-                    creature = Game.randomCreature(race);
-                }
-                else
-                {
-                    creature = Game.randomCreature();
-                }
-                creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8)+1);
-                creature.addExitObserver(new ExitObserver(hospital));
-                creature.addMoralObserver(new MoralObserver(hospital));
-                room.addCreature(creature);
-                log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue",  creature.getFullName(), room.getName());
-            }
-        }
-    }
+	/**
+	 * Logs the current round header.
+	 *
+	 * @param round the round number
+	 */
+	private void logRound(int round) {
+		log.info("#############################################", round);
+		log.info("################ TOUR : {} ###################", round);
+		log.info("#############################################", round);
+	}
 
-    /**
-     * Add a new doctor randomly (4% chance) to a random medical service
-     */
-    private void addDoctorRandomly(){
-        // Ajout médecin aléatoire
-        if(Math.random() < ADD_DOCTOR_CHANCE){
-            MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getMedicalServices().size()));
-            Doctor doctor = new Doctor(BeastUtils.generateRandomName(GenderType.FEMALE), GenderType.FEMALE, 70, 175, 45, 100, "Lycanthrope", medicalService);
-            doctor.addObserver(new MoralObserver(hospital));
-            medicalService.addDoctor(doctor);
-            log.info("Le médecin {} vient d'arriver dans le service {} !", doctor.getFullName(), medicalService.getName());
-        }
-    }
+	/**
+	 * Retrieves and displays all healed and deceased creatures from singleton
+	 * stacks.
+	 */
+	public void showCreaturesEndOfGame() {
+		Singleton instance = Singleton.getInstance();
 
-    private void logRound(int round) {
-        log.info("#############################################", round);
-        log.info("################ TOUR : {} ###################", round);
-        log.info("#############################################", round);
-    }
+		log.info("#################################");
+		log.info("#### CREATURES TREPASSEES : #####");
+		log.info("#################################");
 
-    private void logEndGame() {
-        log.info("#############################################");
-        log.info("################ FIN DU JEU #################");
-        log.info("#############################################");
-    }
+		while (!instance.isStackEmpty(StackType.DIE)) {
+			log.info("{}", instance.popBeastFromStack(StackType.DIE));
+		}
 
-    public String getEndGameSummary() {
-        return Singleton.getInstance().getEndGameLog();
-    }
+		log.info("#################################");
+		log.info("###### CREATURES SOIGNEES : #####");
+		log.info("#################################");
+
+		while (!instance.isStackEmpty(StackType.HEAL)) {
+			log.info("{}", instance.popBeastFromStack(StackType.HEAL));
+		}
+
+		log.info("#################################");
+		log.info("###### MEDECINS HARAKIRI : ######");
+		log.info("#################################");
+
+		while (!instance.isStackEmpty(StackType.DOCTOR)) {
+			log.info("{}", instance.popBeastFromStack(StackType.DOCTOR));
+		}
+	}
+
+	/**
+	 * Logs the end game message.
+	 */
+	private void logEndGame() {
+		log.info("#############################################");
+		log.info("################ FIN DU JEU #################");
+		log.info("#############################################");
+	}
+
+	public String getEndGameSummary() {
+		return Singleton.getInstance().getEndGameLog();
+	}
 }

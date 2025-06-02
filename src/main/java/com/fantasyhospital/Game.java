@@ -5,13 +5,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.races.Elf;
-import com.fantasyhospital.model.creatures.races.Werebeast;
-import com.fantasyhospital.model.creatures.races.Lycanthrope;
 import com.fantasyhospital.model.creatures.races.Dwarf;
+import com.fantasyhospital.model.creatures.races.Elf;
+import com.fantasyhospital.model.creatures.races.Lycanthrope;
 import com.fantasyhospital.model.creatures.races.Orc;
 import com.fantasyhospital.model.creatures.races.Reptilian;
 import com.fantasyhospital.model.creatures.races.Vampire;
+import com.fantasyhospital.model.creatures.races.Werebeast;
 import com.fantasyhospital.model.creatures.races.Zombie;
 import com.fantasyhospital.model.disease.Disease;
 

@@ -15,37 +15,41 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * Represents the Fantasy Hospital. Manages the list of services (rooms),
- * doctors, and global operations within the hospital.
+ * Represents the Fantasy Hospital managing services, doctors, and creatures.
+ * The hospital can contain 8-12 services randomly determined at creation.
  */
 @Slf4j
 public class Hospital {
 
     /**
-     * Name of the hospital
+     * Hospital name.
      */
     @Setter
     @Getter
     private String name;
 
     /**
-     * Maximum number of services the hospital can contain.
+     * Maximum number of services (8-12, randomly generated).
      */
     @Getter
     private final int MAX_SERVICE_COUNT;
 
     /**
-     * List of the hospital's services (rooms)
+     * List of hospital services (rooms).
      */
     @Setter
     @Getter
     private List<Room> services = new ArrayList<Room>();
 
     /**
-     * Creates a new hospital. Randomly generate the maximum number of services
-     * between 8 and 12 included.
+     * List of hospital doctors.
+     */
+    private List<Doctor> doctors = new ArrayList<>();
+
+    /**
+     * Creates a new hospital with random service capacity (8-12).
      *
-     * @param name the name of the hospital
+     * @param name the hospital name
      */
     public Hospital(String name) {
         this.name = name;
@@ -53,7 +57,7 @@ public class Hospital {
     }
 
     /**
-     * Displays information about each of the hospital's services in the logs.
+     * Displays all services information in logs.
      */
     public void displayServices() {
         for (Room room : this.services) {
@@ -62,7 +66,9 @@ public class Hospital {
     }
 
     /**
-     * Displays the total number of creatures in the hospital (to be completed).
+     * Returns all creatures in the hospital.
+     * 
+     * @return list of all creatures across all services
      */
     public List<Creature> displayCreaturesList() {
         List<Creature> allCreatures = new ArrayList<>();
@@ -75,7 +81,9 @@ public class Hospital {
     }
 
     /**
-     * Displays the total number of doctors in the hospital.
+     * Returns the list of all doctors.
+     * 
+     * @return the doctors list
      */
     public List<Doctor> getDoctorsList() {
         List<Doctor> allDoctors = new ArrayList<>();
@@ -88,7 +96,7 @@ public class Hospital {
     }
 
     /**
-     * Displays all creatures present in all the hospital's services.
+     * Displays all creatures in logs.
      */
     public void displayAllCreatures() {
         for (Room room : this.services) {
@@ -99,43 +107,48 @@ public class Hospital {
     }
 
     /**
-     * Randomly modifies creatures (to be completed).
+     * Randomly modifies creatures (not implemented).
+     * 
+     * @deprecated Logic moved to EvolutionGame
      */
     public void modifyRandomCreatures() {
 
     }
 
     /**
-     * Randomly modifies services (to be completed).
+     * Randomly modifies services (not implemented).
+     * 
+     * @deprecated Logic moved to EvolutionGame
      */
     public void modifyRandomServices() {
 
     }
 
     /**
-     * Adds a service (room) to the hospital.
+     * Adds a service to the hospital.
      *
-     * @param room the room to add
+     * @param room the service to add
      */
     public void addService(Room room) {
         services.add(room);
     }
 
     /**
-     * Starts the hospital simulation (to be completed).
+     * Starts hospital simulation (not implemented).
+     * 
+     * @deprecated Use EvolutionGame instead
      */
     public void simulation() {
     }
 
     /**
-     * Returns the room where a given creature is located.
+     * Finds the room containing a specific creature.
      *
-     * @param creature the creature to search for
+     * @param creature the creature to locate
      * @return the room containing the creature, or null if not found
      */
     public Room getRoomOfCreature(Creature creature) {
         for (Room room : this.services) {
-            //log.info("room : {}", room.getNom());
             if (room.getCreatures().contains(creature)) {
                 return room;
             }
@@ -144,10 +157,10 @@ public class Hospital {
     }
 
     /**
-     * Searches and returns a room by its name.
+     * Finds a room by name.
      *
-     * @param name the name of the service to search for
-     * @return the searched room, or null if not found
+     * @param name the room name to search for
+     * @return the room if found, null otherwise
      */
     public Room getRoomByName(String name) {
         for (Room room : services) {
@@ -159,9 +172,9 @@ public class Hospital {
     }
 
     /**
-     * Returns only the medical service rooms in the hospital.
+     * Returns only medical services from the hospital.
      *
-     * @return List<MedicalService>
+     * @return list of medical services
      */
     public List<MedicalService> getMedicalServices() {
         List<MedicalService> servicesList = new ArrayList<>();
@@ -174,9 +187,9 @@ public class Hospital {
     }
 
     /**
-     * Returns only the crypts in the hospital.
+     * Returns only crypts from the hospital.
      *
-     * @return List<Crypt>
+     * @return list of crypts
      */
     public List<Crypt> getCrypts() {
         List<Crypt> cryptList = new ArrayList<>();
@@ -189,20 +202,22 @@ public class Hospital {
     }
 
     /**
-     * Returns the total number of creatures in the hospital.
+     * Returns total number of creatures in the hospital.
      *
-     * @return int
+     * @return total creature count
      */
     public int getTotalCreaturesHospital() {
-        int TotalCreatures = 0;
+        int totalCreatures = 0;
         for (Room room : this.services) {
-            TotalCreatures += room.getCreatures().size();
+            totalCreatures += room.getCreatures().size();
         }
-        return TotalCreatures;
+        return totalCreatures;
     }
 
     /**
-     * Display all creatures in waiting room
+     * Returns the waiting room.
+     *
+     * @return the waiting room if found, null otherwise
      */
     public Room getWaitingRoom() {
         for (Room service : services) {

@@ -56,7 +56,10 @@ public class SimulationConsole {
             log.info("Créature générée : {}", creature);
         }
 
+        // Add creatures to the waiting room
         roomAttente.setCreatures(creatures);
+
+        // Add services to the hospital
         hospital.addService(roomAttente);
         hospital.addService(emergency);
         hospital.addService(cardiac);

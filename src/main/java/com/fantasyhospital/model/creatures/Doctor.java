@@ -12,9 +12,9 @@ import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
-import com.fantasyhospital.observer.CreatureObserver;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.observer.CreatureObserver;
 
 import lombok.Getter;
 import lombok.Setter;

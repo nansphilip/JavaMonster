@@ -29,15 +29,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class Simulation {
 
-    private final HospitalStructureController hospitalStructureController;
-
-    @Getter
+	
+	@Getter
     private EvolutionGame jeu;
-
+	
     @Getter
     private volatile boolean running = false;
-
+	
     // Controllers lists for JavaFX
+    private final HospitalStructureController hospitalStructureController;
     private final ListCreatureController listCreatureController;
     private final ListDoctorsController listDoctorsController;
     private final GridMedicalServiceController gridMedicalServiceController;
