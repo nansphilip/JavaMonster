@@ -4,19 +4,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.controller.*;
 import com.fantasyhospital.enums.BudgetType;
-import com.fantasyhospital.enums.RaceType;
-import com.fantasyhospital.rooms.medicalservice.Crypt;
-import com.fantasyhospital.rooms.medicalservice.Quarantine;
+import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import org.springframework.stereotype.Service;
 
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
-import com.fantasyhospital.rooms.Room;
-import com.fantasyhospital.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.service.PatientService;
 
 import lombok.Getter;
@@ -59,8 +57,7 @@ public class Simulation {
         MedicalService emergency = new MedicalService("Urgence", 50.0, 10, BudgetType.MEDIOCRE);
         MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, BudgetType.MEDIOCRE);
         MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, BudgetType.MEDIOCRE);
-
-        Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.MEDIOCRE, 10,5);
+        Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.MEDIOCRE);
 
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 
@@ -68,15 +65,18 @@ public class Simulation {
 		Room roomAttente = new Room("Room d'attente", 70, 100);
 
         // Création d'un médecin et affectation au service d'emergency
-        Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
+        Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", cardiac);
         doctor.addObserver(new MoralObserver(hospital));
-        emergency.addDoctor(doctor);
-        Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", cardiac);
+        cardiac.addDoctor(doctor);
+        Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
         doctor2.addObserver(new MoralObserver(hospital));
-        cardiac.addDoctor(doctor2);
+        emergency.addDoctor(doctor2);
         Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", gastro);
         doctor3.addObserver(new MoralObserver(hospital));
         gastro.addDoctor(doctor3);
+        //Doctor doctor4 = new Doctor("Dr Crypt", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", crypt);
+        //doctor4.addObserver(new MoralObserver(hospital));
+        //crypt.addDoctor(doctor4);
 
 		listCreatureController.setHospital(hospital);
 		// A revoir pour faire dynamiuquement !
@@ -91,19 +91,19 @@ public class Simulation {
 			creature.addExitObserver(new ExitObserver(hospital));
 			creature.addMoralObserver(new MoralObserver(hospital));
 			creatures.add(creature);
+			crypt.addCreature(creature);
 			log.info("Créature générée : {}", creature);
 
 			// TODO: use patientRepository
 			listCreatureController.addCreature(creature);
 		}
 
-        //roomAttente.setCreatures(creatures);
         roomAttente.setCreatures(creatures);
         hospital.addService(roomAttente);
         hospital.addService(emergency);
         hospital.addService(cardiac);
         hospital.addService(gastro);
-        hospital.addService(crypt);
+		hospital.addService(crypt);
 
 		waitingRoomController.setHospital(hospital);
 

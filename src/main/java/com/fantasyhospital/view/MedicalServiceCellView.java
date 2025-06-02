@@ -2,7 +2,7 @@ package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;

@@ -2,6 +2,10 @@ package com.fantasyhospital.controller;
 
 import java.util.List;
 
+import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.Crypt;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import org.springframework.context.annotation.Lazy;
@@ -9,10 +13,6 @@ import org.springframework.stereotype.Component;
 
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.rooms.Room;
-import com.fantasyhospital.rooms.medicalservice.Crypt;
-import com.fantasyhospital.rooms.medicalservice.MedicalService;
-import com.fantasyhospital.rooms.medicalservice.Quarantine;
 import com.fantasyhospital.view.MedicalServiceCellView;
 
 import javafx.application.Platform;
