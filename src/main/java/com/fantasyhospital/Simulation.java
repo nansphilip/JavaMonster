@@ -54,10 +54,10 @@ public class Simulation {
             Hospital hospital = new Hospital("Marseille", 10);
 
         // Création des services medicaux
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, BudgetType.MEDIOCRE);
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, BudgetType.MEDIOCRE);
-        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, BudgetType.MEDIOCRE);
-        Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.MEDIOCRE);
+        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, BudgetType.getRandomBudget());
+        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, BudgetType.getRandomBudget());
+        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, BudgetType.getRandomBudget());
+        Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.getRandomBudget());
 
         //  ServiceMedical psychologie = new ServiceMedical("Psychologie", 100.0, 10, "Moyen");
 

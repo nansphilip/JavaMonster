@@ -8,6 +8,7 @@ import java.util.Scanner;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
+import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
@@ -182,6 +183,25 @@ public class EvolutionGame {
             for (Doctor medecin : medecins) {
                 medecin.examine(hospital);
             }
+        }
+    }
+
+    /**
+     *
+     */
+    private void reviewRndBudget(Hospital hospital) {
+        if (Math.random() < 0.1 && !hospital.getMedicalServices().isEmpty()) {
+            int rnd = new Random().nextInt(hospital.getMedicalServices().size());
+            MedicalService service = hospital.getMedicalServices().get(rnd);
+
+            BudgetType oldBudget = service.getBudgetType();
+            BudgetType newBudget;
+            do {
+                newBudget = BudgetType.getRandomBudget();
+            } while (newBudget == oldBudget);
+
+            service.setBudgetType(newBudget);
+            log.info("Budget du service '{}' changé de {} à {}", service.getName(), oldBudget, newBudget);
         }
     }
 
