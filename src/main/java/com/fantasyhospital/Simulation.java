@@ -2,14 +2,11 @@ package com.fantasyhospital;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.controller.*;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import org.springframework.stereotype.Service;
 
-import com.fantasyhospital.controller.GridMedicalServiceController;
-import com.fantasyhospital.controller.ListCreatureController;
-import com.fantasyhospital.controller.ListDoctorsController;
-import com.fantasyhospital.controller.WaitingRoomController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;

@@ -76,7 +76,7 @@ public class EvolutionGame {
         endOfGame = checkEndOfGame();
         addRndCreatureRndRoom();
 
-        hospital.displayServices();
+        //hospital.displayServices();
 
         round++;
 
