@@ -40,6 +40,10 @@ public abstract class Creature extends Beast {
      */
     private int howlCount;
 
+    @Getter
+    @Setter
+    private boolean recentlyHealed = false;
+
     private List<CreatureObserver> exitObservers = new ArrayList<>();
     private List<CreatureObserver> moralObservers = new ArrayList<>();
 
@@ -260,6 +264,7 @@ public abstract class Creature extends Beast {
         }
 
         this.diseases.remove(disease);
+        this.recentlyHealed = true;
         notifyExitObservers();
         return true;
     }

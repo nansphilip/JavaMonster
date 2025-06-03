@@ -5,18 +5,18 @@ import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 
+import javafx.animation.Animation;
+import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
@@ -39,6 +39,9 @@ public class CreatureCellView extends ListCell<Creature> {
     private Label moraleLabel;
     private Label detailsLabel;
     private Label roomLabel;
+    private TranslateTransition moraleAnimation;
+    private ImageView healingImageView;
+
 
     private Hospital hospital;
 
@@ -64,6 +67,11 @@ public class CreatureCellView extends ListCell<Creature> {
         moraleTrendImageView.setFitHeight(10);
         moraleTrendImageView.setFitWidth(10);
         moraleTrendImageView.setVisible(false);
+
+        healingImageView = new ImageView();
+        healingImageView.setFitHeight(10);
+        healingImageView.setFitWidth(10);
+        healingImageView.setVisible(false);
 
         name = new Text();
         name.setStyle("-fx-font-weight: bold;");
@@ -104,7 +112,15 @@ public class CreatureCellView extends ListCell<Creature> {
         nameAndDiseasesBox = new VBox(2, nameGenderAgeBox, lifeAndDiseasesBox);
         nameAndDiseasesBox.setAlignment(Pos.CENTER_LEFT);
 
-        topRow = new HBox(10, creatureImageView, nameAndDiseasesBox);
+        StackPane creatureImageStack = new StackPane(creatureImageView, moraleTrendImageView, healingImageView);
+        StackPane.setAlignment(moraleTrendImageView, Pos.TOP_RIGHT);
+        StackPane.setAlignment(healingImageView, Pos.TOP_LEFT);
+        creatureImageStack.setPrefSize(30, 30);
+
+        moraleTrendImageView.setPickOnBounds(false);
+        healingImageView.setPickOnBounds(false);
+
+        topRow = new HBox(10, creatureImageStack, nameAndDiseasesBox);
         topRow.setAlignment(Pos.CENTER_LEFT);
 
         content = new VBox(5, topRow);
@@ -143,15 +159,43 @@ public class CreatureCellView extends ListCell<Creature> {
 
             moraleImageView.setImage(getMoraleImageView(creature.getMorale()));
 
+            if (moraleAnimation != null) {
+                moraleAnimation.stop();
+                moraleTrendImageView.setTranslateY(0);
+            }
             // Définir l'image de tendance du moral seulement si le moral a changé
             if (creature.isMoraleIncreasing()) {
-                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/moral-up.png")));
+                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/MoraleUp.png")));
                 moraleTrendImageView.setVisible(true);
+
+                moraleAnimation = new TranslateTransition(Duration.millis(500), moraleTrendImageView);
+                moraleAnimation.setFromY(0);
+                moraleAnimation.setToY(-3); // vers le haut
+                moraleAnimation.setCycleCount(Animation.INDEFINITE);
+                moraleAnimation.setAutoReverse(true);
+                moraleAnimation.play();
+
             } else if (creature.isMoraleDecreasing()) {
-                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/moral-down.png")));
+                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/MoraleDown.png")));
                 moraleTrendImageView.setVisible(true);
+
+                moraleAnimation = new TranslateTransition(Duration.millis(500), moraleTrendImageView);
+                moraleAnimation.setFromY(0);
+                moraleAnimation.setToY(3); // vers le bas
+                moraleAnimation.setCycleCount(Animation.INDEFINITE);
+                moraleAnimation.setAutoReverse(true);
+                moraleAnimation.play();
+
             } else {
                 moraleTrendImageView.setVisible(false);
+            }
+
+            if (creature.isRecentlyHealed()) {
+                healingImageView.setImage(new Image(getClass().getResourceAsStream("/images/diseases/Heal.png")));
+                healingImageView.setVisible(true);
+                creature.setRecentlyHealed(false);
+            } else {
+                healingImageView.setVisible(false);
             }
 
             genderImageView.setImage(getGenderImageView(creature.getSex()));
