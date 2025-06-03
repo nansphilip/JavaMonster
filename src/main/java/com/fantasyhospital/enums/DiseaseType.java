@@ -32,7 +32,7 @@ public enum DiseaseType {
     /**
      * Undetermined disease (UDD)
      */
-    NDMAD("XXX", -5);
+    NDMAD("Neo Diarrhée Monolithique Avec Débit", -5);
 
     private final String fullName;
     private final int moralImpact;
