@@ -1,20 +1,16 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.config.StageManager;
-import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.MedicalServiceDetailsController;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -99,16 +95,16 @@ public class MedicalServiceCellView {
                     });
                     case MEDIOCRE -> getRandomImage(new String[]{
                             "/images/room/Bed.png",
-                            "/images/room/Bedblood.png",
-                            "/images/room/Bedbones.png"
+                            "/images/room/BedBlood.png",
+                            "/images/room/BedBones.png"
                     });
                     case FAIBLE -> getRandomImage(new String[]{
-                            "/images/room/Bedblood.png",
-                            "/images/room/Bedbones.png"
+                            "/images/room/BedBlood.png",
+                            "/images/room/BedBones.png"
                     });
                     case CORRECT -> getRandomImage(new String[]{
                             "/images/room/Bed.png",
-                            "/images/room/Bedblood.png"
+                            "/images/room/BedBlood.png"
                     });
                     case BON -> getRandomImage(new String[]{
                             "/images/room/Bed.png"
