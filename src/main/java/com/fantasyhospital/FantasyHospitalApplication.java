@@ -1,5 +1,6 @@
 package com.fantasyhospital;
 
+import javafx.scene.image.Image;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -24,6 +25,9 @@ public class FantasyHospitalApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		stage = primaryStage;
+
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon/Icon.png")));
+
 		stageManager = applicationContext.getBean(StageManager.class,
 			applicationContext.getBean(FxmlLoader.class),
 			primaryStage);

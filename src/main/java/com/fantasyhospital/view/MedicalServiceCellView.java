@@ -37,7 +37,7 @@ public class MedicalServiceCellView {
 		pane.setPrefSize(210.0, 290.0);
 		pane.setCursor(Cursor.HAND);
 
-        Label name = new Label("🩺 " + service.getName());
+        Label name = new Label("Service Medical : " + service.getName());
         name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
         name.setMaxWidth(160);
         name.setPrefWidth(160);
@@ -190,8 +190,8 @@ public class MedicalServiceCellView {
             detailStage.initModality(Modality.APPLICATION_MODAL);
             detailStage.initOwner(stageManager.getPrimaryStage());
 
-            double width = stageManager.getPrimaryStage().getWidth() * 0.8;
-            double height = stageManager.getPrimaryStage().getHeight() * 0.8;
+            double width = stageManager.getPrimaryStage().getWidth() * 0.5;
+            double height = stageManager.getPrimaryStage().getHeight() * 0.5;
 
             detailStage.setWidth(width);
             detailStage.setHeight(height);
