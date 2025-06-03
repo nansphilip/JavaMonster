@@ -7,7 +7,6 @@ import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +18,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 @Component
 public class GridMedicalServiceController {

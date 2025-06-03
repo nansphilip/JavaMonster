@@ -1,11 +1,17 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.config.StageManager;
+import com.fantasyhospital.controller.GridMedicalServiceController;
+import com.fantasyhospital.controller.MedicalServiceDetailsController;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import javafx.collections.FXCollections;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -78,7 +84,7 @@ public class MedicalServiceCellView {
         return pane;
     }
 
-    private static FlowPane createBedsView(int numberOfBeds, BudgetType budgetType, MedicalService service) {
+    public static FlowPane createBedsView(int numberOfBeds, BudgetType budgetType, MedicalService service) {
         FlowPane flowPane = new FlowPane();
         flowPane.setHgap(5);
         flowPane.setVgap(5);
@@ -172,20 +178,32 @@ public class MedicalServiceCellView {
 
         FlowPane bedsView = createBedsView(service.getMAX_CREATURE(), service.getBudgetType(), service);
 
-        detailBox.getChildren().addAll(title, info, bedsView);
+        try {
+            FXMLLoader loader = new FXMLLoader(MedicalServiceCellView.class.getResource("/fxml/medicalServiceListCreatureView.fxml"));
+            Parent root = loader.load();
 
-        Scene scene = new Scene(detailBox);
+            MedicalServiceDetailsController controller = loader.getController();
+            controller.setHospital(hospital);
+            controller.setService(service); // IMPORTANT pour mettre à jour la vue avec le service
 
-        Stage detailStage = new Stage();
-        detailStage.setTitle("Détails du service : " + service.getName());
-        detailStage.initModality(Modality.APPLICATION_MODAL);
+            // Crée la scène et la fenêtre modale
+            Scene scene = new Scene(root);
 
-        double width = stageManager.getPrimaryStage().getWidth() * 0.8;
-        double height = stageManager.getPrimaryStage().getHeight() * 0.8;
+            Stage detailStage = new Stage();
+            detailStage.setTitle("Détails du service : " + service.getName());
+            detailStage.initModality(Modality.APPLICATION_MODAL);
+            detailStage.initOwner(stageManager.getPrimaryStage());
 
-        detailStage.setWidth(width);
-        detailStage.setHeight(height);
-        detailStage.setScene(scene);
-        detailStage.showAndWait();
+            double width = stageManager.getPrimaryStage().getWidth() * 0.8;
+            double height = stageManager.getPrimaryStage().getHeight() * 0.8;
+
+            detailStage.setWidth(width);
+            detailStage.setHeight(height);
+            detailStage.setScene(scene);
+            detailStage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

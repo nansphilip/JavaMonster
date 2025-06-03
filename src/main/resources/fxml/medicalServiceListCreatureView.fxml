@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.fantasyhospital.controller.MedicalServiceDetailsController"
+      spacing="20"
+      prefWidth="600"
+      prefHeight="400"
+      style="-fx-padding: 20; -fx-background-color: #f4f4f4;">
+
+    <!-- Partie gauche : titre, info, lits -->
+    <VBox spacing="10">
+        <Label fx:id="title"
+               text="Détails du service médical"
+               style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+
+        <Label fx:id="info"
+               text=""
+               wrapText="true"
+               style="-fx-font-size: 14px;" />
+
+        <FlowPane fx:id="bedsView"
+                  hgap="5"
+                  vgap="5"
+                  prefWrapLength="200"
+                  style="-fx-background-color: #e0e0e0; -fx-padding: 10;" />
+    </VBox>
+
+    <!-- Partie droite : liste des créatures -->
+    <ListView fx:id="medicalServiceListView"
+              prefWidth="300"
+              prefHeight="350" />
+</HBox>
