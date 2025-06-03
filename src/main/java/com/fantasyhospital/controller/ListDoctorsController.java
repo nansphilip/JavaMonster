@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import com.fantasyhospital.view.DoctorsCellView;
+import javafx.application.Platform;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -36,15 +37,21 @@ public class ListDoctorsController {
 	}
 
 	@FXML
+	public void addDoctor(Doctor doctor) {
+		observableDoctors.add(doctor);
+		doctorsListView.refresh();
+	}
+
+	@FXML
 	public void initialize() {
 		doctorsListView.setItems(observableDoctors);
-		doctorsListView.setCellFactory(listView -> new DoctorsCellView());
+		doctorsListView.setCellFactory(listView -> new DoctorsCellView(hospital));
 		scheduler = Executors.newSingleThreadScheduledExecutor();
 		loadDoctors();
 	}
 
 	public void updateDoctorsList() {
-		loadDoctors();
+		Platform.runLater(this::loadDoctors);
 	}
 
 	private void loadDoctors() {
@@ -54,14 +61,9 @@ public class ListDoctorsController {
 		}
 	}
 
-	@FXML
-	public void addDoctor(Doctor doctor) {
-		observableDoctors.add(doctor);
-		doctorsListView.refresh();
-	}
-
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
+		doctorsListView.setCellFactory(listView -> new DoctorsCellView(hospital));
 		loadDoctors();
 	}
 }

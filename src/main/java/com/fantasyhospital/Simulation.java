@@ -83,13 +83,6 @@ public class Simulation {
         doctor3.addObserver(new MoralObserver(hospital));
         gastro.addDoctor(doctor3);
 
-        // TODO: Faire dynamiquement ? Docs en du pour l'instant
-        // Provide hospital and doctors list to JavaFX controllers
-        listCreatureController.setHospital(hospital);
-        listDoctorsController.addDoctor(doctor);
-        listDoctorsController.addDoctor(doctor2);
-        listDoctorsController.addDoctor(doctor3);
-
         // Generate 10 random creatures and add them to the list
         for (int i = 0; i < 10; i++) {
             Creature creature = Game.randomCreature();
@@ -117,6 +110,15 @@ public class Simulation {
         waitingRoomController.setHospital(hospital);
         gridMedicalServiceController.setHospital(hospital);
         hospitalStructureController.setHospital(hospital);
+
+        // TODO: Faire dynamiquement ? Docs en du pour l'instant
+        // Provide hospital and doctors list to JavaFX controllers
+        listCreatureController.setHospital(hospital);
+        listDoctorsController.setHospital(hospital);
+
+        listDoctorsController.addDoctor(doctor);
+        listDoctorsController.addDoctor(doctor2);
+        listDoctorsController.addDoctor(doctor3);
 
         // Evolution game loop
         this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController, gridMedicalServiceController);

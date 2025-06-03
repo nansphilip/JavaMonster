@@ -42,11 +42,6 @@ public class Hospital {
     private List<Room> services = new ArrayList<Room>();
 
     /**
-     * List of the hospital's doctors
-     */
-    private List<Doctor> doctors = new ArrayList<>();
-
-    /**
      * Creates a new hospital. Randomly generate the maximum number of services
      * between 8 and 12 included.
      *
@@ -80,10 +75,16 @@ public class Hospital {
     }
 
     /**
-     * Displays the total number of doctors in the hospital (to be completed).
+     * Displays the total number of doctors in the hospital.
      */
     public List<Doctor> getDoctorsList() {
-        return this.doctors;
+        List<Doctor> allDoctors = new ArrayList<>();
+        for (Room room : this.services) {
+            if (room instanceof MedicalService medicalService) {
+                allDoctors.addAll(medicalService.getDoctors());
+            }
+        }
+        return allDoctors;
     }
 
     /**

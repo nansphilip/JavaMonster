@@ -80,7 +80,7 @@ public class EvolutionGame {
 
         if (executeAndCheckEnd(this::applyDiseasesEffects)) return true;
         if (executeAndCheckEnd(this::doCreaturesWait)) return true;
-        if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
+        //if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
         if (executeAndCheckEnd(this::actionCrypte)) return true;
 
         modifyGameRandomly();
@@ -222,14 +222,14 @@ public class EvolutionGame {
     /**
      * Executes the actions of the doctors for the hospital.
      */
-    private void doDoctorsExamine() {
-        for (MedicalService service : hospital.getMedicalServices()) {
-            List<Doctor> medecins = service.getDoctors();
-            for (Doctor medecin : medecins) {
-                medecin.examine(hospital);
-            }
-        }
-    }
+//    private void doDoctorsExamine() {
+//        for (MedicalService service : hospital.getMedicalServices()) {
+//            List<Doctor> medecins = service.getDoctors();
+//            for (Doctor medecin : medecins) {
+//                medecin.examine(hospital);
+//            }
+//        }
+//    }
 
     /**
      * Make a random budget of the hospital change randomly (30% chance)

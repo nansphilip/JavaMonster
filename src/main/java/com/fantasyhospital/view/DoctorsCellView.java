@@ -1,8 +1,12 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.GenderType;
+import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 
+import javafx.animation.Animation;
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,10 +15,12 @@ import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
@@ -27,16 +33,21 @@ public class DoctorsCellView extends ListCell<Doctor> {
     private ImageView genderImageView;
     private ImageView moraleTrendImageView;
     private HBox moraleBox;
-    private VBox infoBox;
-    private HBox nameGenderBox;
     private Text name;
-    private Label serviceLabel;
-    private Label ageLabel;
     private Label moraleLabel;
-    private Label detailsLabel;
+    private HBox topRow;
+    private HBox nameGenderAgeBox;
+    private Label roomLabel;
+    private Label ageLabel;
+    private TranslateTransition moraleAnimation;
+    private VBox lifeBox;
+    private VBox nameBox;
 
-    public DoctorsCellView() {
+    private Hospital hospital;
+
+    public DoctorsCellView(Hospital hospital) {
         super();
+        this.hospital = hospital;
 
         doctorImageView = new ImageView();
         doctorImageView.setFitHeight(30);
@@ -59,33 +70,54 @@ public class DoctorsCellView extends ListCell<Doctor> {
         name = new Text();
         name.setStyle("-fx-font-weight: bold;");
 
-        nameGenderBox = new HBox(5, name, genderImageView);
-        nameGenderBox.setAlignment(Pos.CENTER_LEFT);
-
-        serviceLabel = new Label();
-        serviceLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 10px;");
-
         ageLabel = new Label();
         ageLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 10px;");
+
+        roomLabel = new Label();
+        roomLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: gray; -fx-font-size: 10px;");
 
         moraleLabel = new Label();
         moraleLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 10px;");
 
-        moraleBox = new HBox(5, moraleTrendImageView, moraleImageView, moraleLabel);
+        moraleBox = new HBox(5,moraleTrendImageView, moraleImageView, moraleLabel);
         moraleBox.setAlignment(Pos.CENTER_LEFT);
 
-        infoBox = new VBox(2, nameGenderBox, ageLabel);
-        infoBox.setAlignment(Pos.CENTER_LEFT);
+        lifeBox = new VBox(2, moraleBox);
+        lifeBox.setAlignment(Pos.CENTER_LEFT);
 
-        content = new HBox(10, doctorImageView, infoBox, moraleBox);
+        nameGenderAgeBox = new HBox(5, name, genderImageView, ageLabel, roomLabel);
+        nameGenderAgeBox.setAlignment(Pos.CENTER_LEFT);
+
+        nameBox = new VBox(2, nameGenderAgeBox, lifeBox);
+        nameBox.setAlignment(Pos.CENTER_LEFT);
+
+        StackPane creatureImageStack = new StackPane(doctorImageView, moraleTrendImageView);
+        StackPane.setAlignment(moraleTrendImageView, Pos.TOP_RIGHT);
+        creatureImageStack.setPrefSize(30, 30);
+
+        moraleTrendImageView.setPickOnBounds(false);
+
+        topRow = new HBox(10, creatureImageStack, nameBox);
+        topRow.setAlignment(Pos.CENTER_LEFT);
+
+        content = new HBox(5, topRow);
+//        content = new VBox(5, topRow, detailsLabel);
         content.setAlignment(Pos.CENTER_LEFT);
+
+        this.setOnMouseClicked(event -> {
+            Doctor selected = getItem();
+            if (selected != null) {
+                showDoctorPopup(selected);
+            }
+        });
     }
 
     @Override
     protected void updateItem(Doctor doctor, boolean empty) {
+        String roomName = "";
+
         super.updateItem(doctor, empty);
-        if (empty || doctor == null) {
-            setText(null);
+        if (doctor == null || empty) {
             setGraphic(null);
         } else {
             String imagePath = "/images/races/doctor.png";
@@ -98,31 +130,52 @@ public class DoctorsCellView extends ListCell<Doctor> {
             moraleImageView.setImage(getMoraleImageView(doctor.getMorale()));
 
             // Définir l'image de tendance du moral seulement si le moral a changé
+            if (moraleAnimation != null) {
+                moraleAnimation.stop();
+                moraleTrendImageView.setTranslateY(0);
+            }
+            // Définir l'image de tendance du moral seulement si le moral a changé
             if (doctor.isMoraleIncreasing()) {
-                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/moral-up.png")));
+                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/MoraleUp.png")));
                 moraleTrendImageView.setVisible(true);
+
+                moraleAnimation = new TranslateTransition(Duration.millis(500), moraleTrendImageView);
+                moraleAnimation.setFromY(0);
+                moraleAnimation.setToY(-3); // vers le haut
+                moraleAnimation.setCycleCount(Animation.INDEFINITE);
+                moraleAnimation.setAutoReverse(true);
+                moraleAnimation.play();
+
             } else if (doctor.isMoraleDecreasing()) {
-                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/moral-down.png")));
+                moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/MoraleDown.png")));
                 moraleTrendImageView.setVisible(true);
+
+                moraleAnimation = new TranslateTransition(Duration.millis(500), moraleTrendImageView);
+                moraleAnimation.setFromY(0);
+                moraleAnimation.setToY(3); // vers le bas
+                moraleAnimation.setCycleCount(Animation.INDEFINITE);
+                moraleAnimation.setAutoReverse(true);
+                moraleAnimation.play();
+
             } else {
                 moraleTrendImageView.setVisible(false);
+            }
+
+            if (doctor.isHarakiriTriggered()) {
+                Platform.runLater(HarakiriCellView::show);
+                doctor.setHarakiriTriggered(false);
             }
 
             genderImageView.setImage(getGenderImageView(doctor.getSex()));
 
             name.setText(doctor.getFullName());
             ageLabel.setText("(" + doctor.getAge() + ")");
+            roomLabel.setText(roomName);
+
             moraleLabel.setText("Moral (" + doctor.getMorale() + "/100)");
 //            serviceLabel.setText("Service: " + doctor.getMedicalService());
 
             setGraphic(content);
-
-            this.setOnMouseClicked(event -> {
-                Doctor selected = getItem();
-                if (selected != null) {
-                    showDoctorPopup(selected);
-                }
-            });
         }
     }
 

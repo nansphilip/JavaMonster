@@ -2,13 +2,11 @@ package com.fantasyhospital.model.creatures;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.Singleton;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.enums.GenderType;
-import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
@@ -38,6 +36,10 @@ public class Doctor extends Beast {
     @Setter
     @Getter
     protected String race;
+
+    @Getter
+    @Setter
+    private boolean harakiriTriggered = false;
 
     /**
      * Medical service to which the doctor is assigned
@@ -194,10 +196,10 @@ public class Doctor extends Beast {
             log.error("[medecin][soigner()] La créature {} n'a pas de disease", creature.getFullName());
             return;
         }
-        
+
         // On récupère la room où se trouve la créature pour le passage à beCured
         Room room = this.medicalService;
-        
+
         if (!creature.beCured(disease, room)) {
             log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", creature.getFullName(), disease.getName());
         } else {
@@ -328,6 +330,7 @@ public class Doctor extends Beast {
      */
     private void haraKiri() {
         this.medicalService.removeDoctor(this);
+        this.harakiriTriggered = true;
     }
 
     @Override

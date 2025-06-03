@@ -78,10 +78,6 @@ public class ToolbarController implements Initializable {
 		}
 	}
 
-	public void goToHomeScreen() {
-		stageManager.switchToNextScene(FxmlView.MAIN);
-	}
-
 	public void goFullScreen() {
 		stageManager.switchToFullScreenMode();
 		setWindowedGraphicsAndAction();

@@ -84,6 +84,7 @@ public class ListCreatureController {
 
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
+		creatureListView.setCellFactory(listView -> new CreatureCellView(hospital));
 		loadCreatures();
 	}
 }

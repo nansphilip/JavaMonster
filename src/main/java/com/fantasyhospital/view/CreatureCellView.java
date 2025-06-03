@@ -37,7 +37,6 @@ public class CreatureCellView extends ListCell<Creature> {
     private Text name;
     private Label ageLabel;
     private Label moraleLabel;
-    private Label detailsLabel;
     private Label roomLabel;
     private TranslateTransition moraleAnimation;
     private ImageView healingImageView;
