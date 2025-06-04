@@ -23,7 +23,7 @@ public class MoralObserver implements CreatureObserver {
     private Hospital hospital;
 
     // Constants of variation
-    private static final int DECREASE_BUDGET = 5;
+    private static final int DECREASE_BUDGET = 20;
 
     public MoralObserver(Hospital hospital) {
         this.hospital = hospital;

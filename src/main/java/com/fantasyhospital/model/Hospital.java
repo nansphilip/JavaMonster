@@ -53,15 +53,6 @@ public class Hospital {
     }
 
     /**
-     * Displays information about each of the hospital's services in the logs.
-     */
-    public void displayServices() {
-        for (Room room : this.services) {
-            log.info("{}", room);
-        }
-    }
-
-    /**
      * Displays the total number of creatures in the hospital (to be completed).
      */
     public List<Creature> displayCreaturesList() {
@@ -72,6 +63,38 @@ public class Hospital {
             }
         }
         return allCreatures;
+    }
+
+    /**
+     * Check all the medical services's budget, if the budget is at 0 the medical service has to close
+     */
+    public void checkBudgetServices(){
+        for(MedicalService medicalService : getMedicalServices()){
+            if(medicalService.getBudget() == 0){
+                medicalService.setHasServiceToClose(true);
+                log.info("Le service {} a un budget terrible, l'état ordonne sa fermeture d'ici le mois prochain.", medicalService.getName());
+            }
+        }
+    }
+
+    /**
+     * Check all the medical services, and close the service if needed
+     */
+    public void reviewBudgetServices() {
+        for(MedicalService medicalService : getMedicalServices()){
+            if(medicalService.isHasServiceToClose() == true){
+                // Transfer all the creatures to waiting room
+                medicalService.transferAllCreaturesToWaitingRoom(this);
+
+                // Fire the doctor(s)
+                for(Doctor doctor : medicalService.getDoctors()){
+                    doctor.setMorale(0);
+                }
+                // Remove the service
+                removeService(medicalService);
+                log.info("Le service {} ferme car il avait un budget trop catastrophique, le capitalisme frappe à nouveau...", medicalService.getName());
+            }
+        }
     }
 
     /**
@@ -119,6 +142,14 @@ public class Hospital {
      */
     public void addService(Room room) {
         services.add(room);
+    }
+
+    /**
+     * Remove the specified service from the hospital
+     * @param room the room
+     */
+    public void removeService(Room room) {
+        services.remove(room);
     }
 
     /**

@@ -27,10 +27,10 @@ public class SimulationConsole {
         Hospital hospital = new Hospital("Marseille");
 
         // Create medical services
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, new Random().nextInt(100));
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, new Random().nextInt(100));
-        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, new Random().nextInt(100));
-        Crypt crypt = new Crypt("Crypt", 50, 5, new Random().nextInt(100));
+        MedicalService emergency = new MedicalService("Urgence", 50.0, 5, new Random().nextInt(100));
+        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 5, new Random().nextInt(100));
+        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 5, new Random().nextInt(100));
+        Crypt crypt = new Crypt("Crypt", 50, 2, new Random().nextInt(100));
 
         // Create a waiting room
         Room roomAttente = new Room("Room d'attente", 70, 100);
