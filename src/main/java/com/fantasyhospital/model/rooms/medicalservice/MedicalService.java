@@ -3,14 +3,19 @@ package com.fantasyhospital.model.rooms.medicalservice;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.BudgetType;
+import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
 
+import com.fantasyhospital.observer.MoralObserver;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.print.Doc;
 
 /**
  * Represents a specialized medical service in Fantasy Hospital.
@@ -25,22 +30,18 @@ public class MedicalService extends Room {
     /**
      * List of doctors assigned to this service
      */
-    protected List<Doctor> doctors = new ArrayList<>();
+    protected CopyOnWriteArrayList<Doctor> doctors = new CopyOnWriteArrayList<>();
 
     /**
      * Service budget (e.g., nonexistent, poor, insufficient, low)
      */
-    //protected BudgetType budgetType;
     protected int budget;
+
+    protected boolean hasServiceToClose = false;
 
     /**
      * Creates a medical service with name, area, capacity, and budget.
      */
-//    public MedicalService(String name, double area, int MAX_CREATURE, BudgetType budgetType) {
-//        super(name, area, MAX_CREATURE);
-//        this.budgetType = budgetType;
-//    }
-
     public MedicalService(String name, double area, int MAX_CREATURE, int budget) {
         super(name, area, MAX_CREATURE);
         this.budget = budget;
@@ -99,10 +100,22 @@ public class MedicalService extends Room {
     }
 
     /**
-     * Heals a creature by a doctor (to be completed).
+     * Transfer all the creatures to the waiting room
+     * If there is no doctor in the service, a new one appears, transfer creatures and then will die
      */
-    public void healCreatures(Doctor doctor, Creature creature) {
-
+    public void transferAllCreaturesToWaitingRoom(Hospital hospital) {
+        Doctor doctor = null;
+        if(this.doctors.isEmpty()) {
+            String race = this.getRoomType();
+            doctor = new Doctor(race, this);
+            doctor.addObserver(new MoralObserver(hospital));
+            this.addDoctor(doctor);
+        } else {
+            doctor = this.doctors.get(0);
+        }
+        doctor.resetForNewTurn();
+        Room waitingRoom = hospital.getWaitingRoom();
+        doctor.transferGroup(this.creatures, this, waitingRoom, true);
     }
 
     /**

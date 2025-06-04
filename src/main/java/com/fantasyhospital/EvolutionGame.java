@@ -1,31 +1,24 @@
 package com.fantasyhospital;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
-
-import java.util.*;
-
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
-import com.fantasyhospital.enums.BudgetType;
-import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.RaceType;
-import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
-import com.fantasyhospital.model.creatures.abstractclass.BeastUtils;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.interfaces.Contaminant;
 import com.fantasyhospital.model.disease.Disease;
-import com.fantasyhospital.observer.ExitObserver;
-import com.fantasyhospital.observer.MoralObserver;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
+import com.fantasyhospital.observer.ExitObserver;
+import com.fantasyhospital.observer.MoralObserver;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Slf4j
 @Service
@@ -42,16 +35,16 @@ public class EvolutionGame {
 	private WaitingRoomController waitingRoomController;
 	private GridMedicalServiceController gridMedicalServiceController;
 
-	//Constants for the random evolutions
-	private static final double GET_NEW_DISEASE_CHANCE = 0.1;
-	private static final int DECREASE_DISEASE_MORAL = 5;
-	private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.05;
-	private static final double EVOLVE_BUDGET_CHANCE = 0.05;
-	private static final double ADD_CREATURE_CHANCE = 0.95;
-	private static final double ADD_DOCTOR_CHANCE = 0.05;
-	private static final double EVOLVE_MORAL_CHANCE = 0.05;
-	private static final int VARIATION_MORAL_LEVEL = 30;
-	private static final int NB_RANDOM_ADD_CREATURE = 5;
+    //Constants for the random evolutions
+    private static final double GET_NEW_DISEASE_CHANCE = 0.1;
+    private static final int DECREASE_DISEASE_MORAL = 5;
+    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.05;
+    private static final double EVOLVE_BUDGET_CHANCE = 0.05;
+    private static final double ADD_CREATURE_CHANCE = 0.95;
+    private static final double ADD_DOCTOR_CHANCE = 0.05;
+    private static final double EVOLVE_MORAL_CHANCE = 0.05;
+    private static final int VARIATION_MORAL_LEVEL = 30;
+	private static final int NB_RANDOM_ADD_CREATURE = 8;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
 		this.hospital = hospital;
@@ -80,8 +73,9 @@ public class EvolutionGame {
 
 		if (executeAndCheckEnd(this::applyDiseasesEffects)) return true;
 		if (executeAndCheckEnd(this::doCreaturesWait)) return true;
-//		if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
+		if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
 		if (executeAndCheckEnd(this::actionCrypte)) return true;
+		if (executeAndCheckEnd(this::reviewHospitalBudget)) return true;
 
 		modifyGameRandomly();
 
@@ -108,13 +102,20 @@ public class EvolutionGame {
 		log.info(Singleton.getInstance().getEndGameLog());
 	}
 
+	/**
+	 * Execute the method given in param and checks if the game is over
+	 * @param action the method to execute
+	 * @return boolean true if the game is over, false otherwise
+	 */
 	private boolean executeAndCheckEnd(Runnable action) {
 		action.run();
 		endOfGame = checkEndOfGame();
 		return endOfGame;
 	}
 
-
+	/**
+	 * Do the actions for the crypt
+	 */
 	private void actionCrypte() {
 		List<Crypt> cryptList = hospital.getCrypts();
 		if (!cryptList.isEmpty()) {
@@ -125,13 +126,21 @@ public class EvolutionGame {
 	}
 
 	/**
-	 * Checks if the hospital is empty.
+	 * Check all the medical services's budget, if the budget is at 0 the medical service close
+	 */
+	private void reviewHospitalBudget(){
+		hospital.reviewBudgetServices();
+		hospital.checkBudgetServices();
+	}
+
+	/**
+	 * Checks if the hospital is empty (creatures) or if there is only a crypt or quarantine remaining
 	 *
 	 * @return true if it is, false otherwise.
 	 */
 	private boolean checkEndOfGame() {
 		int TotalCreatures = hospital.getTotalCreaturesHospital();
-		return TotalCreatures == 0;
+		return TotalCreatures == 0 || hospital.getMedicalServices().isEmpty();
 	}
 
 	/**
@@ -252,12 +261,16 @@ public class EvolutionGame {
 			int rnd = new Random().nextInt(hospital.getMedicalServices().size());
 			MedicalService service = hospital.getMedicalServices().get(rnd);
 
-			int oldBudget = service.getBudget();
-			int variation = new Random().nextInt(41) - 20;
-			service.setBudget(oldBudget + variation);
-			log.info("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
-		}
-	}
+            int oldBudget = service.getBudget();
+            int variation = new Random().nextInt(41) - 20;
+			if(variation < 0){
+				service.setBudget(Math.max(oldBudget + variation,0));
+			} else {
+				service.setBudget(Math.min(oldBudget + variation,100));
+			}
+            log.info("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
+        }
+    }
 
 	/**
 	 * Call the several methods that modify the game randomly each tour
@@ -297,7 +310,7 @@ public class EvolutionGame {
 						RaceType race;
 						if (room.getCreatures().isEmpty()) {
 							String randomContaminatingRace = Quarantine.getRandomContaminatingRace();
-							race = RaceType.valueOf(randomContaminatingRace);
+							race = RaceType.valueOf(randomContaminatingRace.toUpperCase());
 							creature = Game.randomCreature(race);
 						}
 						if (!room.getCreatures().isEmpty()) {

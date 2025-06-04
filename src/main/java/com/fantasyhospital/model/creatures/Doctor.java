@@ -59,8 +59,8 @@ public class Doctor extends Beast {
 
 	private boolean hasMovedThisTurn = false;
 
-	// Constants of modification
-	private static final int INCREASE_BUDGET_SERVICE = 5;
+    // Constants of modification
+    public static final int INCREASE_BUDGET_SERVICE = 2;
 
 	/**
 	 * Constructs a doctor with their characteristics and assigned service.
@@ -151,7 +151,7 @@ public class Doctor extends Beast {
 								return;
 							}
 							if (!this.medicalService.getName().equals("Quarantaine")) {
-								transferGroup(creaturesToTransfer, waitingRoom, this.medicalService);
+								transferGroup(creaturesToTransfer, waitingRoom, this.medicalService, false);
 								return;
 							}
 						}
@@ -161,12 +161,12 @@ public class Doctor extends Beast {
 								goTo(this.medicalService, quarantine);
 								return;
 							} else if (!this.medicalService.getName().equals("Crypt")) {
-								transferGroup(creaturesToTransfer, waitingRoom, this.medicalService);
+								transferGroup(creaturesToTransfer, waitingRoom, this.medicalService, false);
 								return;
 							}
 						}
 						if (!authorizedToGoToCrypt(creaturesToTransfer) && !authorizedToGoToQuarantine(creaturesToTransfer)) {
-							transferGroup(creaturesToTransfer, waitingRoom, this.medicalService);
+							transferGroup(creaturesToTransfer, waitingRoom, this.medicalService, false);
 							return;
 						}
 					}
@@ -301,12 +301,12 @@ public class Doctor extends Beast {
 				if (authorizedToGoToCrypt(creaturesToTransfer)) {
 					if (!room.getCreatures().isEmpty()) {
 						if (Objects.equals(creaturesToTransfer.getFirst().getRace(), room.getRoomType())) {
-							transferGroup(creaturesToTransfer, waitingRoom, room);
+							transferGroup(creaturesToTransfer, waitingRoom, room, false);
 							return true;
 						}
 						return false;
 					}
-					transferGroup(creaturesToTransfer, waitingRoom, room);
+					transferGroup(creaturesToTransfer, waitingRoom, room, false);
 					return true;
 				}
 			}
@@ -314,12 +314,12 @@ public class Doctor extends Beast {
 				if (authorizedToGoToQuarantine(creaturesToTransfer)) {
 					if (!room.getCreatures().isEmpty()) {
 						if (Objects.equals(creaturesToTransfer.getFirst().getRace(), room.getRoomType())) {
-							transferGroup(creaturesToTransfer, waitingRoom, room);
+							transferGroup(creaturesToTransfer, waitingRoom, room, false);
 							return true;
 						}
 						return false;
 					}
-					transferGroup(creaturesToTransfer, waitingRoom, room);
+					transferGroup(creaturesToTransfer, waitingRoom, room, false);
 					return true;
 				}
 			}
@@ -327,12 +327,6 @@ public class Doctor extends Beast {
 			return false;
 		}
 		return false;
-	}
-
-	/**
-	 * Revises the medical service's budget (to be completed).
-	 */
-	public void reviseBudget(int value) {
 	}
 
 	/**
@@ -377,7 +371,7 @@ public class Doctor extends Beast {
 	 * @param roomTo    the room to transfer to
 	 * @return true if the transfer was successful, false otherwise
 	 */
-	public void transferGroup(List<Creature> creatures, Room roomFrom, Room roomTo) {
+	public void transferGroup(List<Creature> creatures, Room roomFrom, Room roomTo, boolean transferWaitingRoom) {
 		//Check si il y a bien de la place dans la room de destination
 		if (roomTo.getCreatures().size() >= roomTo.getMAX_CREATURE()) {
 			return;
@@ -397,7 +391,8 @@ public class Doctor extends Beast {
 
 			String roomType = roomTo.getRoomType();
 			//Si la room de destination n'est pas vide, on vérifie que la race de la creature correspond au type de la room
-			if (!roomTo.getCreatures().isEmpty()) {
+			// Sauf si c'est un transfert des creatures d'un service vers salle d'attente, param transferWaitingRoom à true (cas où service ferme)
+			if (!roomTo.getCreatures().isEmpty() && !transferWaitingRoom) {
 				if (!creature.getRace().equals(roomType)) {
 					log.error("[medecin][transferer()] Transfert impossible, le type du service de destination ({}) n'est pas du type de la créature ({}).", roomType, creature.getRace());
 					isTransferPossible = false;
@@ -408,7 +403,11 @@ public class Doctor extends Beast {
 				roomTo.addCreature(creature);
 			}
 		}
-		log.info("Le médecin {} transfère un groupe de {} de {} vers {}.", this.fullName, creatures.getFirst().getRace(), roomFrom.getName(), roomTo.getName());
+		if(transferWaitingRoom){
+			log.info("Le médecin {} transfère les créatures du service {} vers la salle d'attente", this.fullName, roomFrom.getName());
+		} else {
+			log.info("Le médecin {} transfère un groupe de {} de {} vers {}.", this.fullName, creatures.getFirst().getRace(), roomFrom.getName(), this.medicalService.getName());
+		}
 	}
 
 	/**

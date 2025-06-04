@@ -11,6 +11,8 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.fantasyhospital.model.creatures.Doctor.INCREASE_BUDGET_SERVICE;
+
 /**
  * Class of the special room crypt
  * The airflow regulate the temperature to 20°C when it works, or reduce by 10°C each tour if the temperature is over 20°C
@@ -128,6 +130,16 @@ public final class Crypt extends MedicalService {
     }
 
     /**
+     * Service budget (e.g., nonexistent, poor, insufficient, low)
+     */
+    @Override
+    public int getBudget() {
+        // The temperature and airflow is included in the calcul of the crypt budget
+
+        return super.getBudget();
+    }
+
+    /**
      * Make the airflow break down
      */
     public void airflowBreakDown() {
@@ -160,7 +172,7 @@ public final class Crypt extends MedicalService {
         } else if (!this.airflow && this.temperature < MAX_TEMPERATURE) {
             // More gradual increase based on current temperature
             int maxIncrease = Math.min(MAX_TEMPERATURE_INCREASE, (MAX_TEMPERATURE - this.temperature) / 5 + 1);
-            int increase = MIN_TEMPERATURE_INCREASE + random.nextInt(Math.min(1,maxIncrease - MIN_TEMPERATURE_INCREASE + 1));
+            int increase = MIN_TEMPERATURE_INCREASE + random.nextInt(Math.max(1,maxIncrease - MIN_TEMPERATURE_INCREASE + 1));
             this.temperature = Math.min(MAX_TEMPERATURE, this.temperature + increase);
             
             log.info("La température augmente dans la crypt : {}°C (+{}°C) !", this.temperature, this.temperature - previousTemperature);
@@ -202,6 +214,8 @@ public final class Crypt extends MedicalService {
                 //Cure the creature
                 log.info("La créature {} a attendu {} tours au frais de la crypte, elle est soignée !", creature.getFullName(), REQUIRED_HEALING_TOURS);
                 ((Regenerating) creature).cureCreatureInCrypt(creature);
+                this.setBudget(Math.min(this.getBudget() + INCREASE_BUDGET_SERVICE,100));
+                log.info("Le soin fait augmenter le budget du service {} de {} points ({} pts)", this.getName(), INCREASE_BUDGET_SERVICE, this.getBudget());
             } else if(chanceToGetSick == 0.0){
                 nb++;
                 creatureWaitNbTour.replace(creature, nb);
