@@ -50,6 +50,7 @@ public class EvolutionGame {
     private static final double ADD_DOCTOR_CHANCE = 0.05;
     private static final double EVOLVE_MORAL_CHANCE = 0.05;
     private static final int VARIATION_MORAL_LEVEL = 30;
+	private static final int NB_RANDOM_ADD_CREATURE = 5;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
 		this.hospital = hospital;
@@ -270,7 +271,7 @@ public class EvolutionGame {
 	 * Add a random creature to a random service with a random disease with a random level by 95% chance
 	 */
 	private void addCreatureRandomly() {
-		int nbCreatures = new Random().nextInt(5);
+		int nbCreatures = new Random().nextInt(NB_RANDOM_ADD_CREATURE);
 		for(int i = 0; i < nbCreatures; i++) {
 			if (Math.random() < ADD_CREATURE_CHANCE) {
 				int rnd = new Random().nextInt(hospital.getServices().size());
