@@ -52,18 +52,20 @@ public class Doctor extends Beast {
 	 */
 	private List<CreatureObserver> observers = new ArrayList<>();
 
-	/**
-	 * Constructs a doctor with their characteristics and assigned service.
-	 */
+    private boolean hasMovedThisTurn = false;
 
-	private boolean hasMovedThisTurn = false;
+    // Constants of modification
+    private static final int INCREASE_BUDGET_SERVICE = 5;
 
-	public Doctor(String name, GenderType sex, int weight, int height, int age, int morale, String race, MedicalService medicalService) {
-		super(name, sex, weight, height, age, morale);
-		this.race = race;
-		this.medicalService = medicalService;
-		this.previousMorale = morale;
-	}
+    /**
+     * Constructs a doctor with their characteristics and assigned service.
+     */
+    public Doctor(String name, GenderType sex, int weight, int height, int age, int morale, String race, MedicalService medicalService) {
+        super(name, sex, weight, height, age, morale);
+        this.race = race;
+        this.medicalService = medicalService;
+        this.previousMorale = morale;
+    }
 
 	/**
 	 * Doctor's waiting action (to be completed if needed).
@@ -261,26 +263,25 @@ public class Doctor extends Beast {
 			return;
 		}
 
-		// On récupère la room où se trouve la créature pour le passage à beCured
-		Room room = this.medicalService;
+        // On récupère la room où se trouve la créature pour le passage à beCured
+        MedicalService medicalService = this.medicalService;
 
-		if (!creature.beCured(disease, room)) {
-			log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", creature.getFullName(), disease.getName());
-		} else {
-			int heal = ActionType.DOCTOR_HEALS.getMoraleVariation();
-			this.morale = Math.min(this.morale + heal, 100);
+        if (!creature.beCured(disease, medicalService)) {
+            log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", creature.getFullName(), disease.getName());
+        } else {
+            int heal = ActionType.DOCTOR_HEALS.getMoraleVariation();
+            this.morale = Math.min(this.morale + heal, 100);
 
-			int healCreature = ActionType.CREATURE_TREATED.getMoraleVariation();
-			// creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
-			creature.setMoraleWithRoom(Math.min(creature.getMorale() + healCreature, 100), room);
-			//for(Creature creatureService : this.medicalService.getCreatures()){
-			//creatureService.setMorale(Math.min(creatureService.getMorale() + healCreature, 100));
-			//}
+            int healCreature = ActionType.CREATURE_TREATED.getMoraleVariation();
+            // creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
+            creature.setMoraleWithRoom(Math.min(creature.getMorale() + healCreature, 100), medicalService);
 
-			log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
-			//log.info("Soigner a redonné {} points de moral au médecin {} et {} points à toutes les créatures du service. Moral actuel du médecin : {}", heal, this.getFullName(), healCreature, this.morale);
-		}
-	}
+            // The value of the budget increase by healing the creature
+            medicalService.setBudget(Math.min(medicalService.getBudget() + INCREASE_BUDGET_SERVICE,100));
+            log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
+            log.info("Le soin fait augmenter le budget du service de {} points ({} pts)", medicalService.getName(), medicalService.getBudget());
+        }
+    }
 
 	public boolean transferToSpecialService(Hospital hospital, String serviceName, List<Creature> creaturesToTransfer, Room waitingRoom) {
 		Room room = hospital.getRoomByName(serviceName);

@@ -10,6 +10,7 @@ import com.fantasyhospital.Singleton;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.disease.Disease;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.observer.CreatureObserver;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
@@ -253,13 +254,13 @@ public abstract class Creature extends Beast {
      * @param room La salle où se trouve la créature (pour vérifier si c'est une quarantaine)
      * @return true if the disease was removed.
      */
-    public boolean beCured(Disease disease, Room room) {
+    public boolean beCured(Disease disease, MedicalService medicalService) {
         if(!this.diseases.contains(disease)){
             return false;
         }
 
         // Si la créature est en quarantaine, on ne modifie pas son moral
-        if (room == null || !(room instanceof Quarantine)) {
+        if (medicalService == null || !(medicalService instanceof Quarantine)) {
             this.morale = Math.min(this.morale + ActionType.CREATURE_TREATED.getMoraleVariation(), 100);
         }
 

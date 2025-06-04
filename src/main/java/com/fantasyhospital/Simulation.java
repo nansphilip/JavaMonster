@@ -1,5 +1,6 @@
 package com.fantasyhospital;
 
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Service;
@@ -9,7 +10,6 @@ import com.fantasyhospital.controller.HospitalStructureController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
-import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -61,11 +61,11 @@ public class Simulation {
         Hospital hospital = new Hospital("Marseille");
 
         // Create medical services
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, BudgetType.getRandomBudget());
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, BudgetType.getRandomBudget());
-        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, BudgetType.getRandomBudget());
-        Crypt crypt = new Crypt("Crypt", 50, 3, BudgetType.getRandomBudget());
-        //Quarantine quarantine = new Quarantine("Quarantaine", 50, 3, BudgetType.MEDIOCRE);
+        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, new Random().nextInt(100));
+        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, new Random().nextInt(100));
+        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, new Random().nextInt(100));
+        Crypt crypt = new Crypt("Crypt", 50, 5, new Random().nextInt(100));
+        // Quarantine quarantine = new Quarantine("Quarantine", 50, 5, BudgetType.MEDIOCRE);
 
         // Create a waiting room
         Room roomAttente = new Room("Room d'attente", 70, 100);

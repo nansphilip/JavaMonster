@@ -23,6 +23,9 @@ public class ExitObserver implements CreatureObserver {
      */
     private Hospital hospital;
 
+    // Constants of variation
+    private static final int DECREASE_BUDGET = 15;
+
     public ExitObserver(Hospital hospital) {
         this.hospital = hospital;
     }
@@ -80,6 +83,13 @@ public class ExitObserver implements CreatureObserver {
                 }
             }
             salleCreature.removeCreature(creature);
+
+            // Decrease the budget of the service if it was in a medical service
+            if(salleCreature instanceof MedicalService medicalService){
+                medicalService.setBudget(Math.max(medicalService.getBudget() - DECREASE_BUDGET,0));
+                log.info("La mort de la créature fait perdre {} points de budget au service {} ({} pts)", DECREASE_BUDGET, medicalService.getName(), medicalService.getBudget());
+            }
+
         }
 
         //Si regenerant qui meurt mais reste quand même dans l'hopital après avoir regénéré, applique depression a medecin
