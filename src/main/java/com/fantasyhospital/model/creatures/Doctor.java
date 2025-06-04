@@ -279,7 +279,7 @@ public class Doctor extends Beast {
             // The value of the budget increase by healing the creature
             medicalService.setBudget(Math.min(medicalService.getBudget() + INCREASE_BUDGET_SERVICE,100));
             log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
-            log.info("Le soin fait augmenter le budget du service de {} points ({} pts)", medicalService.getName(), medicalService.getBudget());
+            log.info("Le soin fait augmenter le budget du service {} de {} points ({} pts)", medicalService.getName(), INCREASE_BUDGET_SERVICE, medicalService.getBudget());
         }
     }
 
@@ -318,40 +318,6 @@ public class Doctor extends Beast {
 			}
 		} else {
 			return false;
-		}
-		return false;
-	}
-
-	public boolean transferToSpecialService(Hospital hospital, String serviceName, Creature creatureToTransfer, Room waitingRoom) {
-		Room room = hospital.getRoomByName(serviceName);
-		if (room == null) {
-			return false;
-		}
-		if (room.getAvailableBeds() > 0) {
-			if (room.getName().equals("Crypt")) {
-				if (creatureToTransfer.getRace().equals("Zombie") || creatureToTransfer.getRace().equals("Vampire")) {
-					if (!room.getCreatures().isEmpty()) {
-						if (Objects.equals(creatureToTransfer.getRace(), room.getRoomType())) {
-							transfer(creatureToTransfer, waitingRoom, room);
-							return true;
-						} else {
-							return false;
-						}
-					} else {
-						transfer(creatureToTransfer, waitingRoom, room);
-						log.info("La créature {} de race {} a été transférée dans la crypt !", creatureToTransfer.getFullName(), creatureToTransfer.getRace());
-						log.info("Lit disponibles dans la {} : {}", room.getName(), room.getAvailableBeds());
-						return true;
-					}
-				}
-			} else if (room.getName().equals("Quarantaine")) {
-				if (creatureToTransfer.getRace().equals("Orc") || creatureToTransfer.getRace().equals("Werebeast") || creatureToTransfer.getRace().equals("Lycanthrope") || creatureToTransfer.getRace().equals("Vampire"))
-					if (Objects.equals(creatureToTransfer.getRace(), room.getRoomType())) {
-						transfer(creatureToTransfer, waitingRoom, room);
-						log.info("La créature {} de race {} a été transférée dans la crypt !", creatureToTransfer.getFullName(), creatureToTransfer.getRace());
-						return true;
-					}
-			}
 		}
 		return false;
 	}
@@ -468,6 +434,7 @@ public class Doctor extends Beast {
 	 * Removes the doctor from their medical service.
 	 */
 	private void haraKiri() {
+		this.harakiriTriggered = true;
 		this.medicalService.removeDoctor(this);
 	}
 
