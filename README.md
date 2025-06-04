@@ -47,6 +47,20 @@ mvn clean javafx:run
 
 L'application s'ouvre dans une fenêtre native.
 
+### Compilation et distribution
+
+Créer le JAR exécutable :
+
+```sh
+mvn clean package
+```
+
+Exécuter le JAR :
+
+```sh
+java -jar target/FantasyHospital.jar
+```
+
 ## Architecture du projet
 
 - `src/main/java/com/fantasyhospital/` : code source principal
