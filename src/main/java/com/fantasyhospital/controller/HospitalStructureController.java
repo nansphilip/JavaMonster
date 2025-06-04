@@ -54,7 +54,7 @@ public class HospitalStructureController implements Initializable {
         welcomeContainer.getChildren().add(welcomeText);
 
         // Faire correspondre exactement le conteneur welcome avec hospitalStructure
-        welcomeContainer.prefWidthProperty().bind(hospitalStructure.widthProperty());
+        welcomeContainer.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.3));
         welcomeContainer.prefHeightProperty().bind(hospitalStructure.heightProperty());
 
         // Placer le conteneur exactement aux mêmes coordonnées que l'hospitalStructure
@@ -64,11 +64,17 @@ public class HospitalStructureController implements Initializable {
         // Ajout du conteneur au Pane
         hospitalStructure.getChildren().add(welcomeContainer);
 
-        // Reste du code pour le chargement de la salle d'attente...
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/waitingRoomView.fxml"));
             waitingRoomView = loader.load();
             waitingRoomController = loader.getController();
+
+            // Rendre la salle d'attente responsive
+            waitingRoomView.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.3)); // 30% de la largeur
+            waitingRoomView.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.9)); // 90% de la hauteur
+            waitingRoomView.layoutXProperty().bind(hospitalStructure.widthProperty().multiply(0.01)); // 1% de marge à gauche
+            waitingRoomView.layoutYProperty().bind(hospitalStructure.heightProperty().multiply(0.05)); // 5% de marge en haut
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -123,3 +129,4 @@ public class HospitalStructureController implements Initializable {
         }
     }
 }
+

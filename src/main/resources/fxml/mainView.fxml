@@ -5,7 +5,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             style="-fx-background-image: url('images/tiles/FloorOutside.png')">
 
-    <!-- Liste des créatures à droite && mini logo -->
+    <!-- Liste des créatures & Docteurs à droite -->
     <right>
         <VBox spacing="10" alignment="TOP_RIGHT" VBox.vgrow="ALWAYS">
             <fx:include source="listCreatureView.fxml" VBox.vgrow="ALWAYS"/>
@@ -20,7 +20,7 @@
 
     </center>
 
-    <!-- Console des logs en bas -->
+    <!-- Boutons & Console des logs & Compteurs en bas -->
     <bottom>
         <HBox alignment="CENTER" spacing="20">
             <VBox alignment="BOTTOM_LEFT">
@@ -33,6 +33,12 @@
             </HBox>
 
             <VBox minWidth="320"/>
+
+            <HBox>
+                <VBox alignment="BOTTOM_RIGHT" prefWidth="300" minWidth="300">
+                    <fx:include source="counterView.fxml"/>
+                </VBox>
+            </HBox>
 
             <padding>
                 <Insets top="10.0" bottom="10.0" left="10.0"/>

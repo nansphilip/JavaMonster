@@ -12,6 +12,7 @@ import com.fantasyhospital.Simulation;
 import com.fantasyhospital.config.FxmlView;
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.controller.ConsoleLogController;
+import com.fantasyhospital.controller.CounterController;
 import com.fantasyhospital.util.LogsUtils;
 
 import javafx.application.Platform;
@@ -47,10 +48,9 @@ public class ToolbarController implements Initializable {
 	@FXML
 	private TextArea logConsole;
 
-
-
 	private final ConsoleLogController consoleLogController;
 	private final StageManager stageManager;
+	private final CounterController counterController;
 
 	private static final PseudoClass maximizeIcon = PseudoClass.getPseudoClass("max");
 	private static final PseudoClass minimizeIcon = PseudoClass.getPseudoClass("min");
@@ -62,11 +62,13 @@ public class ToolbarController implements Initializable {
 	private final HospitalStructureController hospitalStructureController;
 
 	@Lazy
-	public ToolbarController(StageManager stageManager, Simulation simulation, ConsoleLogController consoleLogController, HospitalStructureController hospitalStructureController) {
+	public ToolbarController(StageManager stageManager, Simulation simulation, ConsoleLogController consoleLogController,
+	                          HospitalStructureController hospitalStructureController, CounterController counterController) {
 		this.simulation = simulation;
 		this.stageManager = stageManager;
 		this.consoleLogController = consoleLogController;
 		this.hospitalStructureController = hospitalStructureController;
+		this.counterController = counterController;
 	}
 
 	@Override
@@ -149,9 +151,18 @@ public class ToolbarController implements Initializable {
 			consoleLogController.appendText("La simulation n'est pas démarrée.\n");
 			return;
 		}
+
+		// Incrémenter le compteur de tours
+		counterController.incrementTurnCounter();
+
 		if(jeu.runNextRound()){
 			jeu.showEndGame();
 		}
+
+		// Mettre à jour les compteurs de créatures soignées et décédées
+		counterController.updateHealedCounter();
+		counterController.updateDeathCounter();
+
 		hospitalStructureController.updateWaitingRoom();
 	}
 }
