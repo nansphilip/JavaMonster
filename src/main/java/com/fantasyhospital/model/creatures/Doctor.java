@@ -43,9 +43,9 @@ public class Doctor extends Beast {
 	@Getter
 	protected String race;
 
-    @Getter
-    @Setter
-    private boolean harakiriTriggered = false;
+	@Getter
+	@Setter
+	private boolean harakiriTriggered = false;
 
 	/**
 	 * Medical service to which the doctor is assigned
@@ -57,20 +57,20 @@ public class Doctor extends Beast {
 	 */
 	private List<CreatureObserver> observers = new ArrayList<>();
 
-    private boolean hasMovedThisTurn = false;
+	private boolean hasMovedThisTurn = false;
 
-    // Constants of modification
-    private static final int INCREASE_BUDGET_SERVICE = 5;
+	// Constants of modification
+	private static final int INCREASE_BUDGET_SERVICE = 5;
 
-    /**
-     * Constructs a doctor with their characteristics and assigned service.
-     */
-    public Doctor(String name, GenderType sex, int weight, int height, int age, int morale, String race, MedicalService medicalService) {
-        super(name, sex, weight, height, age, morale);
-        this.race = race;
-        this.medicalService = medicalService;
-        this.previousMorale = morale;
-    }
+	/**
+	 * Constructs a doctor with their characteristics and assigned service.
+	 */
+	public Doctor(String name, GenderType sex, int weight, int height, int age, int morale, String race, MedicalService medicalService) {
+		super(name, sex, weight, height, age, morale);
+		this.race = race;
+		this.medicalService = medicalService;
+		this.previousMorale = morale;
+	}
 
 	public Doctor(String race, MedicalService medicalService) {
 		super(null, generateRandomSex(), generateWeight(), generateHeight(), generateAge(), generateMorale());
@@ -237,11 +237,7 @@ public class Doctor extends Beast {
 
 
 	public boolean authorizedToGoToQuarantine(List<Creature> creatures) {
-		if (creatures.getFirst().getRace().equals("Orc") || creatures.getFirst().getRace().equals("Werebeast") || creatures.getFirst().getRace().equals("Lycanthrope") || creatures.getFirst().getRace().equals("Vampire")) {
-			return true;
-		} else {
-			return false;
-		}
+		return creatures.getFirst().getRace().equals("Orc") || creatures.getFirst().getRace().equals("Werebeast") || creatures.getFirst().getRace().equals("Lycanthrope") || creatures.getFirst().getRace().equals("Vampire");
 	}
 
 	/**
@@ -275,25 +271,25 @@ public class Doctor extends Beast {
 			return;
 		}
 
-        // On récupère la room où se trouve la créature pour le passage à beCured
-        MedicalService medicalService = this.medicalService;
+		// On récupère la room où se trouve la créature pour le passage à beCured
+		MedicalService medicalService = this.medicalService;
 
-        if (!creature.beCured(disease, medicalService)) {
-            log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", creature.getFullName(), disease.getName());
-        } else {
-            int heal = ActionType.DOCTOR_HEALS.getMoraleVariation();
-            this.morale = Math.min(this.morale + heal, 100);
+		if (!creature.beCured(disease, medicalService)) {
+			log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", creature.getFullName(), disease.getName());
+		} else {
+			int heal = ActionType.DOCTOR_HEALS.getMoraleVariation();
+			this.morale = Math.min(this.morale + heal, 100);
 
-            int healCreature = ActionType.CREATURE_TREATED.getMoraleVariation();
-            // creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
-            creature.setMoraleWithRoom(Math.min(creature.getMorale() + healCreature, 100), medicalService);
+			int healCreature = ActionType.CREATURE_TREATED.getMoraleVariation();
+			// creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
+			creature.setMoraleWithRoom(Math.min(creature.getMorale() + healCreature, 100), medicalService);
 
-            // The value of the budget increase by healing the creature
-            medicalService.setBudget(Math.min(medicalService.getBudget() + INCREASE_BUDGET_SERVICE,100));
-            log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
-            log.info("Le soin fait augmenter le budget du service {} de {} points ({} pts)", medicalService.getName(), INCREASE_BUDGET_SERVICE, medicalService.getBudget());
-        }
-    }
+			// The value of the budget increase by healing the creature
+			medicalService.setBudget(Math.min(medicalService.getBudget() + INCREASE_BUDGET_SERVICE, 100));
+			log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
+			log.info("Le soin fait augmenter le budget du service {} de {} points ({} pts)", medicalService.getName(), INCREASE_BUDGET_SERVICE, medicalService.getBudget());
+		}
+	}
 
 	public boolean transferToSpecialService(Hospital hospital, String serviceName, List<Creature> creaturesToTransfer, Room waitingRoom) {
 		Room room = hospital.getRoomByName(serviceName);
@@ -302,29 +298,28 @@ public class Doctor extends Beast {
 		}
 		if (room.getAvailableBeds() > 0) {
 			if (room.getName().equals("Crypt")) {
-				if (creaturesToTransfer.getFirst().getRace().equals("Zombie") || creaturesToTransfer.getFirst().getRace().equals("Vampire")) {
+				if (authorizedToGoToCrypt(creaturesToTransfer)) {
 					if (!room.getCreatures().isEmpty()) {
 						if (Objects.equals(creaturesToTransfer.getFirst().getRace(), room.getRoomType())) {
-							for (Creature creature : creaturesToTransfer) {
-								transfer(creature, waitingRoom, room);
-							}
+							transferGroup(creaturesToTransfer, waitingRoom, room);
 							return true;
-						} else {
-							return false;
 						}
-					} else {
-						for (Creature creature : creaturesToTransfer) {
-							transfer(creature, waitingRoom, room);
-						}
-						return true;
+						return false;
 					}
+					transferGroup(creaturesToTransfer, waitingRoom, room);
+					return true;
 				}
-			} else if (room.getName().equals("Quarantaine")) {
-
-				if (Objects.equals(creaturesToTransfer.getFirst().getRace(), room.getRoomType())) {
-					for (Creature creature : creaturesToTransfer) {
-						transfer(creature, waitingRoom, room);
+			}
+			if (room.getName().equals("Quarantaine")) {
+				if (authorizedToGoToQuarantine(creaturesToTransfer)) {
+					if (!room.getCreatures().isEmpty()) {
+						if (Objects.equals(creaturesToTransfer.getFirst().getRace(), room.getRoomType())) {
+							transferGroup(creaturesToTransfer, waitingRoom, room);
+							return true;
+						}
+						return false;
 					}
+					transferGroup(creaturesToTransfer, waitingRoom, room);
 					return true;
 				}
 			}
@@ -413,7 +408,7 @@ public class Doctor extends Beast {
 				roomTo.addCreature(creature);
 			}
 		}
-		log.info("Le médecin {} transfère un groupe de {} de {} vers {}.", this.fullName, creatures.getFirst().getRace(), roomFrom.getName(), this.medicalService.getName());
+		log.info("Le médecin {} transfère un groupe de {} de {} vers {}.", this.fullName, creatures.getFirst().getRace(), roomFrom.getName(), roomTo.getName());
 	}
 
 	/**

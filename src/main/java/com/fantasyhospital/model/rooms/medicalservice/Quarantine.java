@@ -2,6 +2,7 @@ package com.fantasyhospital.model.rooms.medicalservice;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -12,21 +13,29 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Quarantine extends MedicalService {
 
+
     @Getter
     private final boolean isolation;
-    private final MedicalService parentService;
-    private static final List<String> CONTAMINATING_RACES = Arrays.asList("Orque", "HommeBete", "Lycanthrope", "Vampire");
+    public static final List<String> CONTAMINATING_RACES = Arrays.asList("Orc", "Werebeast", "Lycanthrope", "Vampire");
 
     /**
      * Crée une salle de quarantaine liée à un service médical parent
      * La capacité maximale est automatiquement calculée à 10% de celle du service parent
      */
-    public Quarantine(String name, double area, MedicalService parentService, int budgetType) {
+    public Quarantine(String name, double area,int MAX_CAPACITY, int budgetType) {
         // La capacité maximale est de 10% de celle du service médical parent
-        super(name, area, (int) Math.ceil(parentService.getMAX_CREATURE() * 0.1), budgetType);
+        super(name, area, MAX_CAPACITY, budgetType);
         this.isolation = true;
-        this.parentService = parentService;
     }
+
+    public static String getRandomContaminatingRace() {
+        if (CONTAMINATING_RACES.isEmpty()) {
+            return null; // Ou gérer autrement si la liste peut être vide
+        }
+        Random random = new Random();
+        return CONTAMINATING_RACES.get(random.nextInt(CONTAMINATING_RACES.size()));
+    }
+
 
     /**
      * Surcharge de la méthode addCreature pour n'accepter que les créatures contaminantes
@@ -82,10 +91,7 @@ public class Quarantine extends MedicalService {
     /**
      * Retourne le service médical parent de cette quarantaine
      */
-    public MedicalService getParentService() {
-        return parentService;
-    }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -97,7 +103,6 @@ public class Quarantine extends MedicalService {
         sb.append("Budget : ").append(budgetEnum).append(" (").append(this.budget).append(") ").append("\n");
         //sb.append("Budget : ").append(budgetType).append("\n");
         sb.append("Isolation : ").append(isolation).append("\n");
-        sb.append("Service parent : ").append(parentService.getName()).append("\n");
 
         sb.append("\n👾 Créatures en quarantaine :\n");
         if (creatures.isEmpty()) {
