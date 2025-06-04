@@ -1,5 +1,8 @@
 package com.fantasyhospital.observer;
 
+import com.fantasyhospital.enums.FemaleNameType;
+import com.fantasyhospital.enums.GenderType;
+import com.fantasyhospital.enums.MaleNameType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
@@ -81,15 +84,26 @@ public class ExitObserver implements CreatureObserver {
                         log.info("Il n'y avait aucun médecin à déprimer dans le service.");
                     }
                 }
+                // Decrease the budget of the service if it was in a medical service
+                if(salleCreature instanceof MedicalService medicalService){
+                    medicalService.setBudget(Math.max(medicalService.getBudget() - DECREASE_BUDGET,0));
+                    log.info("La mort de la créature {} fait perdre {} points de budget au service {} ({} pts)", creature.getFullName(), DECREASE_BUDGET, medicalService.getName(), medicalService.getBudget());
+                }
             }
             salleCreature.removeCreature(creature);
 
-            // Decrease the budget of the service if it was in a medical service
-            if(salleCreature instanceof MedicalService medicalService){
-                medicalService.setBudget(Math.max(medicalService.getBudget() - DECREASE_BUDGET,0));
-                log.info("La mort de la créature fait perdre {} points de budget au service {} ({} pts)", DECREASE_BUDGET, medicalService.getName(), medicalService.getBudget());
+            // Make the name of the creature available again
+            String name = creature.getFullName();
+            switch (creature.getSex()){
+                case FEMALE:
+                    FemaleNameType enumName = FemaleNameType.valueOf(name.toUpperCase());
+                    enumName.setSelected(false);
+                    break;
+                case MALE:
+                    MaleNameType enumMaleName = MaleNameType.valueOf(name.toUpperCase());
+                    enumMaleName.setSelected(false);
+                    break;
             }
-
         }
 
         //Si regenerant qui meurt mais reste quand même dans l'hopital après avoir regénéré, applique depression a medecin
