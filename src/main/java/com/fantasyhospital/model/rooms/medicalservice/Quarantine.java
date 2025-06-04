@@ -2,6 +2,7 @@ package com.fantasyhospital.model.rooms.medicalservice;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -12,9 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Quarantine extends MedicalService {
 
+
     @Getter
     private final boolean isolation;
-    private static final List<String> CONTAMINATING_RACES = Arrays.asList("Orc", "Werebeast", "Lycanthrope", "Vampire");
+    public static final List<String> CONTAMINATING_RACES = Arrays.asList("Orc", "Werebeast", "Lycanthrope", "Vampire");
 
     /**
      * Crée une salle de quarantaine liée à un service médical parent
@@ -25,6 +27,15 @@ public class Quarantine extends MedicalService {
         super(name, area, MAX_CAPACITY, budgetType);
         this.isolation = true;
     }
+
+    public static String getRandomContaminatingRace() {
+        if (CONTAMINATING_RACES.isEmpty()) {
+            return null; // Ou gérer autrement si la liste peut être vide
+        }
+        Random random = new Random();
+        return CONTAMINATING_RACES.get(random.nextInt(CONTAMINATING_RACES.size()));
+    }
+
 
     /**
      * Surcharge de la méthode addCreature pour n'accepter que les créatures contaminantes

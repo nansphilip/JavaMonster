@@ -15,6 +15,7 @@ import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.BeastUtils;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.creatures.interfaces.Contaminant;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
@@ -41,15 +42,15 @@ public class EvolutionGame {
 	private WaitingRoomController waitingRoomController;
 	private GridMedicalServiceController gridMedicalServiceController;
 
-    //Constants for the random evolutions
-    private static final double GET_NEW_DISEASE_CHANCE = 0.1;
-    private static final int DECREASE_DISEASE_MORAL = 5;
-    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.05;
-    private static final double EVOLVE_BUDGET_CHANCE = 0.05;
-    private static final double ADD_CREATURE_CHANCE = 0.95;
-    private static final double ADD_DOCTOR_CHANCE = 0.05;
-    private static final double EVOLVE_MORAL_CHANCE = 0.05;
-    private static final int VARIATION_MORAL_LEVEL = 30;
+	//Constants for the random evolutions
+	private static final double GET_NEW_DISEASE_CHANCE = 0.1;
+	private static final int DECREASE_DISEASE_MORAL = 5;
+	private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.05;
+	private static final double EVOLVE_BUDGET_CHANCE = 0.05;
+	private static final double ADD_CREATURE_CHANCE = 0.95;
+	private static final double ADD_DOCTOR_CHANCE = 0.05;
+	private static final double EVOLVE_MORAL_CHANCE = 0.05;
+	private static final int VARIATION_MORAL_LEVEL = 30;
 	private static final int NB_RANDOM_ADD_CREATURE = 5;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
@@ -251,12 +252,12 @@ public class EvolutionGame {
 			int rnd = new Random().nextInt(hospital.getMedicalServices().size());
 			MedicalService service = hospital.getMedicalServices().get(rnd);
 
-            int oldBudget = service.getBudget();
-            int variation = new Random().nextInt(41) - 20;
-            service.setBudget(oldBudget + variation);
-            log.info("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
-        }
-    }
+			int oldBudget = service.getBudget();
+			int variation = new Random().nextInt(41) - 20;
+			service.setBudget(oldBudget + variation);
+			log.info("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
+		}
+	}
 
 	/**
 	 * Call the several methods that modify the game randomly each tour
@@ -272,29 +273,54 @@ public class EvolutionGame {
 	 */
 	private void addCreatureRandomly() {
 		int nbCreatures = new Random().nextInt(NB_RANDOM_ADD_CREATURE);
-		for(int i = 0; i < nbCreatures; i++) {
+		for (int i = 0; i < nbCreatures; i++) {
 			if (Math.random() < ADD_CREATURE_CHANCE) {
 				int rnd = new Random().nextInt(hospital.getServices().size());
 				Room room = hospital.getServices().get(rnd);
 				Creature creature = null;
 
 				if (room != null) {
-					if (Objects.equals(room.getName(), "Crypt") || Objects.equals(room.getName(), "Zombie")) {
+					if (Objects.equals(room.getName(), "Crypt")) {
 						RaceType race;
 						if (room.getCreatures().isEmpty()) {
 							race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
-						} else {
-							String Racetype = room.getRoomType().toUpperCase();
-							race = RaceType.valueOf(Racetype);
+							creature = Game.randomCreature(race);
+
 						}
-						creature = Game.randomCreature(race);
-					} else if (!room.getCreatures().isEmpty()) {
-						String Racetype = room.getRoomType().toUpperCase();
-						RaceType race = RaceType.valueOf(Racetype);
-						creature = Game.randomCreature(race);
-					} else {
+						if (!room.getCreatures().isEmpty()) {
+							String racetype = room.getRoomType().toUpperCase();
+							race = RaceType.valueOf(racetype);
+							creature = Game.randomCreature(race);
+						}
+					}
+					if (Objects.equals(room.getName(), "Quarantaine")) {
+						RaceType race;
+						if (room.getCreatures().isEmpty()) {
+							String randomContaminatingRace = Quarantine.getRandomContaminatingRace();
+							race = RaceType.valueOf(randomContaminatingRace);
+							creature = Game.randomCreature(race);
+						}
+						if (!room.getCreatures().isEmpty()) {
+							String racetype = room.getRoomType().toUpperCase();
+							race = RaceType.valueOf(racetype);
+							creature = Game.randomCreature(race);
+						}
+					}
+					if (!Objects.equals(room.getName(), "Room d'attente") && !Objects.equals(room.getName(), "Quarantaine") && !Objects.equals(room.getName(), "Crypt")) {
+						if (!room.getCreatures().isEmpty()) {
+							String Racetype = room.getRoomType().toUpperCase();
+							RaceType race = RaceType.valueOf(Racetype);
+							creature = Game.randomCreature(race);
+						}
+						if (room.getCreatures().isEmpty()) {
+							creature = Game.randomCreature();
+						}
+					}
+					if (room.getName().equals("Room d'attente")) {
 						creature = Game.randomCreature();
 					}
+
+					creature.setMorale(0);
 					creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8) + 1);
 					creature.addExitObserver(new ExitObserver(hospital));
 					creature.addMoralObserver(new MoralObserver(hospital));
