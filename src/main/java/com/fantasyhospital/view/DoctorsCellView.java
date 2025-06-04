@@ -180,6 +180,10 @@ public class DoctorsCellView extends ListCell<Doctor> {
                 deadDoctor.setHarakiriTriggered(false);
             }
 
+            if (doctor.getMedicalService() != null) {
+                roomName = doctor.getMedicalService().getName();
+            }
+
             genderImageView.setImage(getGenderImageView(doctor.getSex()));
 
             name.setText(doctor.getFullName());
@@ -187,7 +191,7 @@ public class DoctorsCellView extends ListCell<Doctor> {
             roomLabel.setText(roomName);
 
             moraleLabel.setText("Moral (" + doctor.getMorale() + "/100)");
-//            serviceLabel.setText("Service: " + doctor.getMedicalService());
+//          serviceLabel.setText("Service: " + doctor.getMedicalService());
 
             setGraphic(content);
         }
@@ -256,7 +260,10 @@ public class DoctorsCellView extends ListCell<Doctor> {
         for (MedicalService service : services) {
             if (!service.equals(doctor.getMedicalService())) {
                 MenuItem item = new MenuItem(service.getName());
-//                item.setOnAction(e -> assignDoctorToService(doctor, service));
+                item.setOnAction(e -> {
+                    doctor.goTo(doctor.getMedicalService(), service);
+                    updateItem(doctor, false);
+                });
                 contextMenu.getItems().add(item);
             }
         }
