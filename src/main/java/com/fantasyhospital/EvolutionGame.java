@@ -44,11 +44,11 @@ public class EvolutionGame {
     //Constants for the random evolutions
     private static final double GET_NEW_DISEASE_CHANCE = 0.1;
     private static final int DECREASE_DISEASE_MORAL = 5;
-    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.10;
+    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.05;
     private static final double EVOLVE_BUDGET_CHANCE = 0.05;
     private static final double ADD_CREATURE_CHANCE = 0.95;
-    private static final double ADD_DOCTOR_CHANCE = 0.04;
-    private static final double EVOLVE_MORAL_CHANCE = 0.1;
+    private static final double ADD_DOCTOR_CHANCE = 0.05;
+    private static final double EVOLVE_MORAL_CHANCE = 0.05;
     private static final int VARIATION_MORAL_LEVEL = 30;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
@@ -308,7 +308,9 @@ public class EvolutionGame {
 		// Ajout médecin aléatoire
 		if (Math.random() < ADD_DOCTOR_CHANCE) {
 			MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getMedicalServices().size()));
-			Doctor doctor = new Doctor(BeastUtils.generateRandomName(GenderType.FEMALE), GenderType.FEMALE, 70, 175, 45, 100, "Lycanthrope", medicalService);
+
+			String race = medicalService.getRoomType();
+			Doctor doctor = new Doctor(race, medicalService);
 			doctor.addObserver(new MoralObserver(hospital));
 			medicalService.addDoctor(doctor);
 			log.info("Le médecin {} vient d'arriver dans le service {} !", doctor.getFullName(), medicalService.getName());

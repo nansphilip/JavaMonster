@@ -21,6 +21,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.*;
+import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.generateAge;
+import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.generateMorale;
+import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.generateRandomName;
+
 /**
  * Represents a doctor in Fantasy Hospital. A doctor can heal,
  * transfer creatures, review the budget, and manage their own morale.
@@ -66,6 +71,13 @@ public class Doctor extends Beast {
         this.medicalService = medicalService;
         this.previousMorale = morale;
     }
+
+	public Doctor(String race, MedicalService medicalService) {
+		super(null, generateRandomSex(), generateWeight(), generateHeight(), generateAge(), generateMorale());
+		this.fullName = "Dr. " + generateRandomName(this.sex);
+		this.race = race;
+		this.medicalService = medicalService;
+	}
 
 	/**
 	 * Doctor's waiting action (to be completed if needed).
