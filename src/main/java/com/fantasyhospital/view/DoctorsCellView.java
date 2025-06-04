@@ -1,5 +1,6 @@
 package com.fantasyhospital.view;
 
+import com.fantasyhospital.Singleton;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -161,9 +162,11 @@ public class DoctorsCellView extends ListCell<Doctor> {
                 moraleTrendImageView.setVisible(false);
             }
 
-            if (doctor.isHarakiriTriggered()) {
-                Platform.runLater(HarakiriCellView::show);
-                doctor.setHarakiriTriggered(false);
+            Doctor deadDoctor = Singleton.getInstance().peekDoctorStack();
+
+            if (deadDoctor != null && deadDoctor.isHarakiriTriggered()) {
+                Platform.runLater(() -> HarakiriCellView.show(deadDoctor));
+                deadDoctor.setHarakiriTriggered(false);
             }
 
             genderImageView.setImage(getGenderImageView(doctor.getSex()));
