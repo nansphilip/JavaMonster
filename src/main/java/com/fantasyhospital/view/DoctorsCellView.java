@@ -5,16 +5,21 @@ import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -22,6 +27,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.List;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
@@ -108,7 +115,11 @@ public class DoctorsCellView extends ListCell<Doctor> {
         this.setOnMouseClicked(event -> {
             Doctor selected = getItem();
             if (selected != null) {
-                showDoctorPopup(selected);
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    showDoctorPopup(selected);
+                } else if (event.getButton() == MouseButton.SECONDARY) {
+                    showDoctorMenu(event, selected);
+                }
             }
         });
     }
@@ -235,6 +246,22 @@ public class DoctorsCellView extends ListCell<Doctor> {
         Scene scene = new Scene(detailContent, 300, 200);
         popup.setScene(scene);
         popup.showAndWait();
+    }
+
+    private void showDoctorMenu(MouseEvent event, Doctor doctor) {
+        ContextMenu contextMenu = new ContextMenu();
+
+        List<MedicalService> services = hospital.getMedicalServices();
+
+        for (MedicalService service : services) {
+            if (!service.equals(doctor.getMedicalService())) {
+                MenuItem item = new MenuItem(service.getName());
+//                item.setOnAction(e -> assignDoctorToService(doctor, service));
+                contextMenu.getItems().add(item);
+            }
+        }
+
+        contextMenu.show((javafx.scene.Node) event.getSource(), event.getScreenX(), event.getScreenY());
     }
 }
 
