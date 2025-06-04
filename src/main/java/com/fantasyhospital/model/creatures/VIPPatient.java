@@ -24,7 +24,7 @@ public abstract class VIPPatient extends Creature {
             this.waitingRounds = 0;
             log.info("La créature {} a attendu 4 tours sans être soigné, son moral tombe à 0.", this.fullName);
         } else {
-            log.info("La créature {} attend.", this.fullName);
+            //log.info("La créature {} attend.", this.fullName);
         }
         notifyMoralObservers();
     }

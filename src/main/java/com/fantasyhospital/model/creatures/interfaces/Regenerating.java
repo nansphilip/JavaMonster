@@ -57,8 +57,8 @@ public interface Regenerating {
     }
 
     default void cureCreatureInCrypt(Creature creature) {
-        CopyOnWriteArrayList<Disease> list = new CopyOnWriteArrayList<>();
-        list = creature.getDiseases();
+        CopyOnWriteArrayList<Disease> list = new CopyOnWriteArrayList<>(creature.getDiseases());
+        //list = creature.getDiseases();
         for(Disease disease : list){
             creature.beCured(disease);
         }

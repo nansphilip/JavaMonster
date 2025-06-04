@@ -60,7 +60,7 @@ public class Doctor extends Beast {
 	private boolean hasMovedThisTurn = false;
 
     // Constants of modification
-    private static final int INCREASE_BUDGET_SERVICE = 2;
+    public static final int INCREASE_BUDGET_SERVICE = 2;
 
 	/**
 	 * Constructs a doctor with their characteristics and assigned service.
