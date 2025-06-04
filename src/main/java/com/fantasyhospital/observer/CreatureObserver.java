@@ -10,7 +10,7 @@ public interface CreatureObserver {
 
     /**
      * Méthode appelée à chaque modification (maladie, moral) d'une bête
-     * @param bete
+     * @param beast
      */
     void onStateChanged(Beast beast);
 }

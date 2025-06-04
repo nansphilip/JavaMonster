@@ -50,6 +50,7 @@ public class EvolutionGame {
     private static final double ADD_DOCTOR_CHANCE = 0.05;
     private static final double EVOLVE_MORAL_CHANCE = 0.05;
     private static final int VARIATION_MORAL_LEVEL = 30;
+	private static final int NB_RANDOM_ADD_CREATURE = 5;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
 		this.hospital = hospital;
@@ -270,33 +271,36 @@ public class EvolutionGame {
 	 * Add a random creature to a random service with a random disease with a random level by 95% chance
 	 */
 	private void addCreatureRandomly() {
-		if (Math.random() < ADD_CREATURE_CHANCE) {
-			int rnd = new Random().nextInt(hospital.getServices().size());
-			Room room = hospital.getServices().get(rnd);
-			Creature creature = null;
+		int nbCreatures = new Random().nextInt(NB_RANDOM_ADD_CREATURE);
+		for(int i = 0; i < nbCreatures; i++) {
+			if (Math.random() < ADD_CREATURE_CHANCE) {
+				int rnd = new Random().nextInt(hospital.getServices().size());
+				Room room = hospital.getServices().get(rnd);
+				Creature creature = null;
 
-			if (room != null) {
-				if (Objects.equals(room.getName(), "Crypt") || Objects.equals(room.getName(), "Zombie")) {
-					RaceType race;
-					if (room.getCreatures().isEmpty()) {
-						race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
-					} else {
+				if (room != null) {
+					if (Objects.equals(room.getName(), "Crypt") || Objects.equals(room.getName(), "Zombie")) {
+						RaceType race;
+						if (room.getCreatures().isEmpty()) {
+							race = new Random().nextBoolean() ? RaceType.ZOMBIE : RaceType.VAMPIRE;
+						} else {
+							String Racetype = room.getRoomType().toUpperCase();
+							race = RaceType.valueOf(Racetype);
+						}
+						creature = Game.randomCreature(race);
+					} else if (!room.getCreatures().isEmpty()) {
 						String Racetype = room.getRoomType().toUpperCase();
-						race = RaceType.valueOf(Racetype);
+						RaceType race = RaceType.valueOf(Racetype);
+						creature = Game.randomCreature(race);
+					} else {
+						creature = Game.randomCreature();
 					}
-					creature = Game.randomCreature(race);
-				} else if (!room.getCreatures().isEmpty()) {
-					String Racetype = room.getRoomType().toUpperCase();
-					RaceType race = RaceType.valueOf(Racetype);
-					creature = Game.randomCreature(race);
-				} else {
-					creature = Game.randomCreature();
+					creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8) + 1);
+					creature.addExitObserver(new ExitObserver(hospital));
+					creature.addMoralObserver(new MoralObserver(hospital));
+					room.addCreature(creature);
+					log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue", creature.getFullName(), room.getName());
 				}
-				creature.getDiseases().get(0).setCurrentLevel(new Random().nextInt(8) + 1);
-				creature.addExitObserver(new ExitObserver(hospital));
-				creature.addMoralObserver(new MoralObserver(hospital));
-				room.addCreature(creature);
-				log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue", creature.getFullName(), room.getName());
 			}
 		}
 	}
