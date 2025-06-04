@@ -6,6 +6,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import com.fantasyhospital.view.DoctorsCellView;
 import javafx.application.Platform;
+import lombok.Setter;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,10 @@ public class ListDoctorsController {
 	@FXML
 	private ListView<Doctor> doctorsListView;
 
+	@Setter
+    private DoomController doomController;
+
+
 	private ObservableList<Doctor> observableDoctors = FXCollections.observableArrayList();
 
 	private final StageManager stageManager;
@@ -32,8 +37,9 @@ public class ListDoctorsController {
 	private ScheduledExecutorService scheduler;
 
 	@Lazy
-	public ListDoctorsController(StageManager stageManager) {
+	public ListDoctorsController(StageManager stageManager, DoomController doomController) {
 		this.stageManager = stageManager;
+		this.doomController = doomController;
 	}
 
 	@FXML
@@ -45,7 +51,6 @@ public class ListDoctorsController {
 	@FXML
 	public void initialize() {
 		doctorsListView.setItems(observableDoctors);
-		doctorsListView.setCellFactory(listView -> new DoctorsCellView(hospital));
 		scheduler = Executors.newSingleThreadScheduledExecutor();
 		loadDoctors();
 	}
@@ -54,7 +59,7 @@ public class ListDoctorsController {
 		Platform.runLater(this::loadDoctors);
 	}
 
-	private void loadDoctors() {
+    private void loadDoctors() {
 		if (hospital != null) {
 			List<Doctor> doctors = hospital.getDoctorsList();
 			observableDoctors.setAll(doctors);
@@ -63,7 +68,7 @@ public class ListDoctorsController {
 
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
-		doctorsListView.setCellFactory(listView -> new DoctorsCellView(hospital));
+		doctorsListView.setCellFactory(listView -> new DoctorsCellView(hospital, doomController));
 		loadDoctors();
 	}
 }

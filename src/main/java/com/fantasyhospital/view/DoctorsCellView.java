@@ -1,6 +1,7 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.Singleton;
+import com.fantasyhospital.controller.DoomController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -52,10 +53,13 @@ public class DoctorsCellView extends ListCell<Doctor> {
     private VBox nameBox;
 
     private Hospital hospital;
+    private DoomController doomController;
 
-    public DoctorsCellView(Hospital hospital) {
+
+    public DoctorsCellView(Hospital hospital, DoomController doomController) {
         super();
         this.hospital = hospital;
+        this.doomController = doomController;
 
         doctorImageView = new ImageView();
         doctorImageView.setFitHeight(30);
@@ -176,7 +180,7 @@ public class DoctorsCellView extends ListCell<Doctor> {
             Doctor deadDoctor = Singleton.getInstance().peekDoctorStack();
 
             if (deadDoctor != null && deadDoctor.isHarakiriTriggered()) {
-                Platform.runLater(() -> HarakiriCellView.show(deadDoctor));
+                Platform.runLater(() -> doomController.showHarakiriForDoctor(deadDoctor));
                 deadDoctor.setHarakiriTriggered(false);
             }
 

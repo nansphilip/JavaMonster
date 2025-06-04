@@ -168,14 +168,6 @@ public class MedicalServiceCellView {
         Label title = new Label("🔍 Détails du service : " + service.getName());
         title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
-        Label budget = new Label("Budget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") ");
-
-        Label info = new Label("Type : " + service.getRoomType() +
-                "\nBudget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") " +
-                "\nCréatures : " + service.getCreatures().size());
-
-        FlowPane bedsView = createBedsView(service.getMAX_CREATURE(), BudgetType.fromRatio(service.getBudget()), service);
-
         try {
             FXMLLoader loader = new FXMLLoader(MedicalServiceCellView.class.getResource("/fxml/medicalServiceListCreatureView.fxml"));
             Parent root = loader.load();

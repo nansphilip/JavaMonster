@@ -80,7 +80,7 @@ public class EvolutionGame {
 
 		if (executeAndCheckEnd(this::applyDiseasesEffects)) return true;
 		if (executeAndCheckEnd(this::doCreaturesWait)) return true;
-		if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
+//		if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
 		if (executeAndCheckEnd(this::actionCrypte)) return true;
 
 		modifyGameRandomly();
