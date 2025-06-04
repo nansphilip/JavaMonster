@@ -24,7 +24,7 @@ public class ExitObserver implements CreatureObserver {
     private Hospital hospital;
 
     // Constants of variation
-    private static final int DECREASE_BUDGET = 15;
+    private static final int DECREASE_BUDGET = 5;
 
     public ExitObserver(Hospital hospital) {
         this.hospital = hospital;
