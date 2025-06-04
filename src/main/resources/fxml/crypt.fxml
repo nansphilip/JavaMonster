@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+
+<GridPane fx:id="cryptGridPane" xmlns:fx="http://javafx.com/fxml"
+          fx:controller="com.fantasyhospital.controller.CryptViewController"
+          hgap="10" vgap="15" alignment="CENTER"
+          style="-fx-background-color: #202020; -fx-border-color: #444444; -fx-border-width: 1px; -fx-background-image: url('/images/tiles/FloorCrypt.png'); -fx-background-size: auto;">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <Label text="CRYPTE" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #cccccc;"
+           GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <!-- Zone pour afficher l'état de ventilation -->
+    <Label text="Ventilation: En attente..." style="-fx-text-fill: #cccccc;"
+           GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <!-- Zone pour afficher la température -->
+    <Label text="Température: 0°C" style="-fx-text-fill: #cccccc;"
+           GridPane.rowIndex="2" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <!-- Barre de progression de température -->
+    <ProgressBar prefWidth="200" progress="0.4"
+                GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <!-- Titre pour la liste des créatures -->
+    <Label text="Créatures en repos: 0" style="-fx-text-fill: #cccccc;"
+           GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <!-- Zone pour la liste des créatures avec défilement -->
+    <ScrollPane fitToWidth="true" prefHeight="150" style="-fx-background: transparent; -fx-background-color: transparent;"
+                GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="2">
+        <VBox spacing="8" style="-fx-background-color: transparent;">
+            <!-- Cette zone sera remplie dynamiquement par le contrôleur -->
+        </VBox>
+    </ScrollPane>
+
+    <!-- Instruction -->
+    <Label text="Les créatures doivent passer 3 tours à une température ≤ 30°C pour être guéries"
+           style="-fx-text-fill: #888888; -fx-font-size: 10px; -fx-font-style: italic;"
+           wrapText="true"
+           GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+</GridPane>

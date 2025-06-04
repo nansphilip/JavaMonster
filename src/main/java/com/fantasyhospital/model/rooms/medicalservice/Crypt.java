@@ -6,6 +6,7 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Regenerating;
 import com.fantasyhospital.model.disease.Disease;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,11 +60,31 @@ public final class Crypt extends MedicalService {
         this.temperature = MIN_TEMPERATURE;
     }
 
+    // Ajout des getters manquants
     /**
-     * Adds a creature to the crypte if the capacity and interface (regenerating) are compatible.
-     *
-     * @param creature the creature to add to the service
+     * Retourne l'état actuel du système de ventilation
+     * @return true si le système fonctionne, false sinon
      */
+    public boolean isAirflow() {
+        return airflow;
+    }
+
+    /**
+     * Retourne la température actuelle de la crypte
+     * @return température en degrés Celsius
+     */
+    public int getTemperature() {
+        return temperature;
+    }
+
+    /**
+     * Retourne la map des créatures et de leur nombre de tours d'attente
+     * @return la map des créatures et de leur nombre de tours d'attente
+     */
+    public Map<Creature, Integer> getCreatureWaitNbTour() {
+        return creatureWaitNbTour;
+    }
+
     /**
      * Adds a creature to the crypt if it implements Regenerating interface and there's space available.
      *

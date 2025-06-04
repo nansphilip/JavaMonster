@@ -27,6 +27,10 @@
                         <!-- Services médicaux -->
                         <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"
                                     layoutX="300" layoutY="40.0" />
+
+                        <!-- Vue de la crypte à droite -->
+                        <fx:include source="crypt.fxml" fx:id="cryptViewInclude"
+                                    layoutX="1000" layoutY="40.0" />
                     </children>
                 </Pane>
             </center>
