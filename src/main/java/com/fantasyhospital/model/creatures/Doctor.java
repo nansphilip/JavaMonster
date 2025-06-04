@@ -59,8 +59,8 @@ public class Doctor extends Beast {
 
 	private boolean hasMovedThisTurn = false;
 
-    // Constants of modification
-    public static final int INCREASE_BUDGET_SERVICE = 2;
+	// Constants of modification
+	public static final int INCREASE_BUDGET_SERVICE = 2;
 
 	/**
 	 * Constructs a doctor with their characteristics and assigned service.
@@ -176,17 +176,19 @@ public class Doctor extends Beast {
 					//S'il ne reste qu'une créature dans l'hôpital (donc dans un service) et qu'il y a un médecin dans le service, il laisse l'autre médecin la soigner.
 					for (MedicalService service : hospital.getMedicalServices()) {
 						Creature creatureToHeal = service.getCreatureWithHighLevelDisease();
-						if (creatureToHeal != null && service.getDoctors().isEmpty()) {
-							goTo(this.medicalService, service);
-							return;
-						}
-						if (creatureToHeal != null && hospital.getTotalCreaturesHospital() == 1 && !service.getDoctors().isEmpty()) {
-							doctorWait();
-							return;
-						}
-						if (creatureToHeal != null && service.getCreatures().size() > service.getDoctors().size()) {
-							goTo(this.medicalService, service);
-							return;
+						if (creatureToHeal != null && !service.getName().equals("Crypt")) {
+							if (service.getDoctors().isEmpty()) {
+								goTo(this.medicalService, service);
+								return;
+							}
+							if (hospital.getTotalCreaturesHospital() == 1 && !service.getDoctors().isEmpty()) {
+								doctorWait();
+								return;
+							}
+							if (service.getCreatures().size() > service.getDoctors().size()) {
+								goTo(this.medicalService, service);
+								return;
+							}
 						}
 					}
 				}
@@ -403,7 +405,7 @@ public class Doctor extends Beast {
 				roomTo.addCreature(creature);
 			}
 		}
-		if(transferWaitingRoom){
+		if (transferWaitingRoom) {
 			log.info("Le médecin {} transfère les créatures du service {} vers la salle d'attente", this.fullName, roomFrom.getName());
 		} else {
 			log.info("Le médecin {} transfère un groupe de {} de {} vers {}.", this.fullName, creatures.getFirst().getRace(), roomFrom.getName(), this.medicalService.getName());
