@@ -84,6 +84,19 @@ public final class Singleton {
     }
 
     /**
+     * Récupère le dernier Doctor de la stack DOCTOR sans le retirer (ou le remet aussitôt).
+     *
+     * @return le dernier médecin mort ou null si la stack est vide
+     */
+    public synchronized Doctor peekDoctorStack() {
+        if (!doctorStack.isEmpty()) {
+            return doctorStack.peek(); // peek() ne retire pas l'élément
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Méthode qui retourne true si la stack correspondate est vide, false sinon
      * @param stackType le type de stack
      * @return boolean
