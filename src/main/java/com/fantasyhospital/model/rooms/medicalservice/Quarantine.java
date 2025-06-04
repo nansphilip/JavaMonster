@@ -16,6 +16,7 @@ public class Quarantine extends MedicalService {
 
     @Getter
     private final boolean isolation;
+
     public static final List<String> CONTAMINATING_RACES = Arrays.asList("Orc", "Werebeast", "Lycanthrope", "Vampire");
 
     /**

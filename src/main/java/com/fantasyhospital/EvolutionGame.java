@@ -8,7 +8,6 @@ import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
-import com.fantasyhospital.model.creatures.interfaces.Contaminant;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
@@ -311,7 +310,7 @@ public class EvolutionGame {
 						RaceType race;
 						if (room.getCreatures().isEmpty()) {
 							String randomContaminatingRace = Quarantine.getRandomContaminatingRace();
-							race = RaceType.valueOf(randomContaminatingRace);
+							race = RaceType.valueOf(randomContaminatingRace.toUpperCase());
 							creature = Game.randomCreature(race);
 						}
 						if (!room.getCreatures().isEmpty()) {
