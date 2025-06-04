@@ -63,12 +63,12 @@ public class MedicalServiceCellView {
 		occupied.setLayoutY(60);
 		occupied.setMaxWidth(160);
 
-		Label budget = new Label("Budget : " + service.getBudgetType());
+		Label budget = new Label("Budget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") ");
 		budget.setLayoutX(10);
 		budget.setLayoutY(80);
 		budget.setMaxWidth(160);
 
-        BudgetType budgetEnum = service.getBudgetType() != null ? service.getBudgetType() : BudgetType.INEXISTANT;
+        BudgetType budgetEnum = BudgetType.fromRatio(service.getBudget()) != null ? BudgetType.fromRatio(service.getBudget()) : BudgetType.INEXISTANT;
 
         FlowPane bedsFlow = createBedsView(service.getMAX_CREATURE(), budgetEnum, service);
         bedsFlow.setLayoutX(10);
@@ -168,11 +168,13 @@ public class MedicalServiceCellView {
         Label title = new Label("🔍 Détails du service : " + service.getName());
         title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
+        Label budget = new Label("Budget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") ");
+
         Label info = new Label("Type : " + service.getRoomType() +
-                "\nBudget : " + service.getBudgetType() +
+                "\nBudget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") " +
                 "\nCréatures : " + service.getCreatures().size());
 
-        FlowPane bedsView = createBedsView(service.getMAX_CREATURE(), service.getBudgetType(), service);
+        FlowPane bedsView = createBedsView(service.getMAX_CREATURE(), BudgetType.fromRatio(service.getBudget()), service);
 
         try {
             FXMLLoader loader = new FXMLLoader(MedicalServiceCellView.class.getResource("/fxml/medicalServiceListCreatureView.fxml"));

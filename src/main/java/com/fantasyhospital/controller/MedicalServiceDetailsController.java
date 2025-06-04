@@ -1,5 +1,6 @@
 package com.fantasyhospital.controller;
 
+import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.view.MedicalServiceCellView;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -65,12 +66,12 @@ public class MedicalServiceDetailsController {
         if (service != null) {
             title.setText("🔍 Détails du service : " + service.getName());
             info.setText("Type : " + service.getRoomType() +
-                    "\nBudget : " + service.getBudgetType() +
+                    "\nBudget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") " +
                     "\nCréatures : " + (service.getCreatures() != null ? service.getCreatures().size() : 0));
 
             bedsView.getChildren().clear();
             bedsView.getChildren().addAll(MedicalServiceCellView.createBedsView(
-                    service.getMAX_CREATURE(), service.getBudgetType(), service));
+                    service.getMAX_CREATURE(), BudgetType.fromRatio(service.getBudget()), service));
 
             observableCreatures.setAll(service.getCreatures());
 

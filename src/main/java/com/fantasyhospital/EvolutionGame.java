@@ -41,15 +41,15 @@ public class EvolutionGame {
 	private WaitingRoomController waitingRoomController;
 	private GridMedicalServiceController gridMedicalServiceController;
 
-	//Constants for the random evolutions
-	private static final double GET_NEW_DISEASE_CHANCE = 0.05;
-	private static final int DECREASE_DISEASE_MORAL = 5;
-	private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.10;
-	private static final double EVOLVE_BUDGET_CHANCE = 0.3;
-	private static final double ADD_CREATURE_CHANCE = 0.95;
-	private static final double ADD_DOCTOR_CHANCE = 0.04;
-	private static final double EVOLVE_MORAL_CHANCE = 0.95;
-	private static final int VARIATION_MORAL_LEVEL = 30;
+    //Constants for the random evolutions
+    private static final double GET_NEW_DISEASE_CHANCE = 0.1;
+    private static final int DECREASE_DISEASE_MORAL = 5;
+    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.10;
+    private static final double EVOLVE_BUDGET_CHANCE = 0.05;
+    private static final double ADD_CREATURE_CHANCE = 0.95;
+    private static final double ADD_DOCTOR_CHANCE = 0.04;
+    private static final double EVOLVE_MORAL_CHANCE = 0.1;
+    private static final int VARIATION_MORAL_LEVEL = 30;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
 		this.hospital = hospital;
@@ -250,16 +250,12 @@ public class EvolutionGame {
 			int rnd = new Random().nextInt(hospital.getMedicalServices().size());
 			MedicalService service = hospital.getMedicalServices().get(rnd);
 
-			BudgetType oldBudget = service.getBudgetType();
-			BudgetType newBudget;
-			do {
-				newBudget = BudgetType.getRandomBudget();
-			} while (newBudget == oldBudget);
-
-			service.setBudgetType(newBudget);
-			log.info("Budget du service '{}' changé de {} à {}", service.getName(), oldBudget, newBudget);
-		}
-	}
+            int oldBudget = service.getBudget();
+            int variation = new Random().nextInt(41) - 20;
+            service.setBudget(oldBudget + variation);
+            log.info("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
+        }
+    }
 
 	/**
 	 * Call the several methods that modify the game randomly each tour

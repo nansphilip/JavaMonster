@@ -53,7 +53,7 @@ public final class Crypt extends MedicalService {
     
     private final Random random = new Random();
 
-    public Crypt(String name, double area, int MAX_CAPACITY, BudgetType budget) {
+    public Crypt(String name, double area, int MAX_CAPACITY, int budget) {
         super(name, area, MAX_CAPACITY, budget);
         this.airflow = true;
         this.temperature = MIN_TEMPERATURE;

@@ -31,14 +31,20 @@ public class MedicalService extends Room {
     /**
      * Service budget (e.g., nonexistent, poor, insufficient, low)
      */
-    protected BudgetType budgetType;
+    //protected BudgetType budgetType;
+    protected int budget;
 
     /**
      * Creates a medical service with name, area, capacity, and budget.
      */
-    public MedicalService(String name, double area, int MAX_CREATURE, BudgetType budgetType) {
+//    public MedicalService(String name, double area, int MAX_CREATURE, BudgetType budgetType) {
+//        super(name, area, MAX_CREATURE);
+//        this.budgetType = budgetType;
+//    }
+
+    public MedicalService(String name, double area, int MAX_CREATURE, int budget) {
         super(name, area, MAX_CREATURE);
-        this.budgetType = budgetType;
+        this.budget = budget;
     }
 
     /**
@@ -119,7 +125,10 @@ public class MedicalService extends Room {
         sb.append("\n--- Service : ").append(name).append(" ---\n");
         sb.append("Superficie : ").append(area).append(" m²\n");
         sb.append("Nombre de créatures maximale : ").append(MAX_CREATURE).append("\n");
-        sb.append("Budget : ").append(budgetType).append("\n");
+
+        //Get the enum budgetType from the int budget
+        BudgetType budgetEnum = BudgetType.fromRatio(this.budget);
+        sb.append("Budget : ").append(budgetEnum).append(" (").append(this.budget).append(") ").append("\n");
 
         sb.append("\n🧍 Médecins :\n");
         if (doctors.isEmpty()) {

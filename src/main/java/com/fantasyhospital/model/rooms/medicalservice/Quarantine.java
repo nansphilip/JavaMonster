@@ -21,7 +21,7 @@ public class Quarantine extends MedicalService {
      * Crée une salle de quarantaine liée à un service médical parent
      * La capacité maximale est automatiquement calculée à 10% de celle du service parent
      */
-    public Quarantine(String name, double area, MedicalService parentService, BudgetType budgetType) {
+    public Quarantine(String name, double area, MedicalService parentService, int budgetType) {
         // La capacité maximale est de 10% de celle du service médical parent
         super(name, area, (int) Math.ceil(parentService.getMAX_CREATURE() * 0.1), budgetType);
         this.isolation = true;
@@ -92,7 +92,10 @@ public class Quarantine extends MedicalService {
         sb.append("\n--- Quarantaine : ").append(name).append(" ---\n");
         sb.append("Superficie : ").append(area).append(" m²\n");
         sb.append("Nombre de créatures maximale : ").append(MAX_CREATURE).append("\n");
-        sb.append("Budget : ").append(budgetType).append("\n");
+        //Get the enum budgetType from the int budget
+        BudgetType budgetEnum = BudgetType.fromRatio(this.budget);
+        sb.append("Budget : ").append(budgetEnum).append(" (").append(this.budget).append(") ").append("\n");
+        //sb.append("Budget : ").append(budgetType).append("\n");
         sb.append("Isolation : ").append(isolation).append("\n");
         sb.append("Service parent : ").append(parentService.getName()).append("\n");
 
