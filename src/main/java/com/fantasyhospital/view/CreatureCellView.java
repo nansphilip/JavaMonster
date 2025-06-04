@@ -319,26 +319,27 @@ public class CreatureCellView extends ListCell<Creature> {
         genderView.setFitWidth(14);
         Label genderLabel = new Label("Genre : " + creature.getSex());
         HBox genderBox = new HBox(5, genderView, genderLabel);
-        genderBox.setAlignment(Pos.CENTER_LEFT);
+        genderBox.setAlignment(Pos.CENTER);
 
         ImageView moraleView = new ImageView(getMoraleImageView(creature.getMorale()));
         moraleView.setFitHeight(10);
         moraleView.setFitWidth(65);
         Label moraleLabel = new Label("Moral (" + creature.getMorale() + "/100)");
         HBox moraleBox = new HBox(5, moraleView, moraleLabel);
-        moraleBox.setAlignment(Pos.CENTER_LEFT);
+        moraleBox.setAlignment(Pos.CENTER);
 
         Label name = new Label("Nom : " + creature.getFullName());
         Label age = new Label("Âge : " + creature.getAge());
-        Label gender = new Label("Genre : " + creature.getSex());
-        Label diseases = new Label("Maladies : " + creature.getDiseases().stream()
-                .map(Disease::getName)
-                .reduce((d1, d2) -> d1 + ", " + d2)
+        Label diseases = new Label("Maladies :\n" + creature.getDiseases().stream()
+                .map(Disease::getFullName)
+                .reduce((d1, d2) -> d1 + "\n" + d2)
                 .orElse("Aucune"));
+        diseases.setWrapText(true);
+
 
         box.getChildren().addAll(largeCreatureImage, name, age, genderBox, moraleBox, diseases);
 
-        DetailsCellView.show("Détails de la créature", box, 300, 250);
+        DetailsCellView.show("Détails de la créature", box, 350, 350);
     }
 }
 
