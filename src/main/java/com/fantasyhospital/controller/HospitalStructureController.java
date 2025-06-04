@@ -25,6 +25,12 @@ public class HospitalStructureController implements Initializable {
     private StackPane welcomeContainer;
     private Pane waitingRoomView;
     private WaitingRoomController waitingRoomController;
+
+    @FXML
+    private Pane cryptViewInclude;
+    @FXML
+    private CryptViewController cryptViewIncludeController;
+
     private boolean gameStarted = false;
     private Hospital hospital;
 
@@ -117,10 +123,15 @@ public class HospitalStructureController implements Initializable {
         if (waitingRoomController != null) {
             waitingRoomController.setHospital(hospital);
         }
+
+        // Mise à jour de la vue de la crypte
+        if (cryptViewIncludeController != null) {
+            cryptViewIncludeController.setHospital(hospital);
+        }
     }
 
     /**
-     * Met à jour l'affichage de la salle d'attente avec les données actuelles
+     * Met à jour l'affichage de la salle d'attente et de la crypte avec les données actuelles
      * Doit être appelée après chaque tour de jeu
      */
     public void updateWaitingRoom() {
@@ -128,5 +139,13 @@ public class HospitalStructureController implements Initializable {
             waitingRoomController.updateWaitingRoom();
         }
     }
-}
 
+    /**
+     * Met à jour l'affichage de la crypte avec les données actuelles
+     */
+    public void updateCrypt() {
+        if (cryptViewIncludeController != null && hospital != null) {
+            cryptViewIncludeController.updateCryptView();
+        }
+    }
+}
