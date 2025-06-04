@@ -64,8 +64,8 @@ public class Simulation {
         MedicalService emergency = new MedicalService("Urgence", 50.0, 10, BudgetType.getRandomBudget());
         MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, BudgetType.getRandomBudget());
         MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, BudgetType.getRandomBudget());
-        Crypt crypt = new Crypt("Crypt", 50, 5, BudgetType.getRandomBudget());
-        // Quarantine quarantine = new Quarantine("Quarantine", 50, 5, BudgetType.MEDIOCRE);
+        Crypt crypt = new Crypt("Crypt", 50, 3, BudgetType.getRandomBudget());
+        //Quarantine quarantine = new Quarantine("Quarantaine", 50, 3, BudgetType.MEDIOCRE);
 
         // Create a waiting room
         Room roomAttente = new Room("Room d'attente", 70, 100);

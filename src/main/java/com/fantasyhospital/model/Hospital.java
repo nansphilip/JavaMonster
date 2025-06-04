@@ -212,4 +212,15 @@ public class Hospital {
         }
         return null;
     }
+
+    public MedicalService getMedicalServiceByName(String name) {
+        List<MedicalService> allServices = this.getMedicalServices();
+
+        for (MedicalService medicalService : allServices ) {
+            if (medicalService.getName().equals("Crypt")) {
+                return medicalService;
+            }
+        }
+        return null;
+    }
 }

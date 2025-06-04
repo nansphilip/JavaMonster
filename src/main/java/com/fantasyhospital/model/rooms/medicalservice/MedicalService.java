@@ -108,8 +108,6 @@ public class MedicalService extends Room {
     }
 
 
-
-
     /**
      * Returns a textual representation of the medical service, its doctors,
      * and its creatures.
