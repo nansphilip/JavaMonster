@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
+
 <VBox spacing="10"
       style="-fx-background-color: #1e1e1e; -fx-padding: 10px; -fx-max-height: 800px; -fx-min-height: 200px; -fx-max-width: 800px; -fx-pref-width: 800px;"
       xmlns="http://javafx.com/javafx/21.0.2"

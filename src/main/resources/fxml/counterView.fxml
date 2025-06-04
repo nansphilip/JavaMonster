@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" alignment="CENTER"
+      style="-fx-background-color: #1e1e1e; -fx-padding: 10px; -fx-border-color: #333333; -fx-border-width: 1px; -fx-border-radius: 5px;"
+      xmlns="http://javafx.com/javafx/21.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.fantasyhospital.controller.CounterController">
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <!-- Titre du panneau -->
+    <Label text="STATISTIQUES"
+           style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14px; -fx-underline: true;" />
+
+    <Region prefHeight="5" />
+
+    <!-- Compteur de tours -->
+    <VBox spacing="5" style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
+                <Image url="@../images/counter/turn-logo.png"/>
+            </ImageView>
+            <Label text="Tours : " style="-fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 80;" wrapText="true"/>
+            <Label fx:id="turnCounter" text="0" style="-fx-text-fill: yellow; -fx-font-weight: bold; -fx-font-size: 16px;" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </VBox>
+
+    <Region prefHeight="5" />
+
+    <!-- Compteur de créatures soignées -->
+    <VBox spacing="5" style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
+                <Image url="@../images/counter/healed-logo.png"/>
+            </ImageView>
+            <Label text="Soignées : " style="-fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 80;" wrapText="true"/>
+            <Label fx:id="healedCounter" text="0" style="-fx-text-fill: #00ff00; -fx-font-weight: bold; -fx-font-size: 16px;" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </VBox>
+
+    <Region prefHeight="5" />
+
+    <!-- Compteur de morts -->
+    <VBox spacing="5" style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
+                <Image url="@../images/counter/death-logo.png"/>
+            </ImageView>
+            <Label text="Décès : " style="-fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 80;" wrapText="true"/>
+            <Label fx:id="deathCounter" text="0" style="-fx-text-fill: #ff3333; -fx-font-weight: bold; -fx-font-size: 16px;" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </VBox>
+</VBox>
