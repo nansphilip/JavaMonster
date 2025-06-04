@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.fantasyhospital.enums.BudgetType;
-import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
