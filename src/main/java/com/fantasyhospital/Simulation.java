@@ -3,6 +3,7 @@ package com.fantasyhospital;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import org.springframework.stereotype.Service;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
@@ -65,7 +66,7 @@ public class Simulation {
         MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, new Random().nextInt(100));
         MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, new Random().nextInt(100));
         Crypt crypt = new Crypt("Crypt", 50, 5, new Random().nextInt(100));
-        // Quarantine quarantine = new Quarantine("Quarantine", 50, 5, BudgetType.MEDIOCRE);
+        Quarantine quarantine = new Quarantine("Quarantaine", 50, 5, new Random().nextInt(100));
 
         // Create a waiting room
         Room roomAttente = new Room("Room d'attente", 70, 100);
@@ -104,7 +105,7 @@ public class Simulation {
         hospital.addService(cardiac);
         hospital.addService(gastro);
         hospital.addService(crypt);
-        // hospital.addService(quarantine);
+        hospital.addService(quarantine);
 
         // Provide hospital to JavaFX controllers
         waitingRoomController.setHospital(hospital);

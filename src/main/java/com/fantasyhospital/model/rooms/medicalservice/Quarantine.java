@@ -14,18 +14,16 @@ public class Quarantine extends MedicalService {
 
     @Getter
     private final boolean isolation;
-    private final MedicalService parentService;
-    private static final List<String> CONTAMINATING_RACES = Arrays.asList("Orque", "HommeBete", "Lycanthrope", "Vampire");
+    private static final List<String> CONTAMINATING_RACES = Arrays.asList("Orc", "Werebeast", "Lycanthrope", "Vampire");
 
     /**
      * Crée une salle de quarantaine liée à un service médical parent
      * La capacité maximale est automatiquement calculée à 10% de celle du service parent
      */
-    public Quarantine(String name, double area, MedicalService parentService, int budgetType) {
+    public Quarantine(String name, double area,int MAX_CAPACITY, int budgetType) {
         // La capacité maximale est de 10% de celle du service médical parent
-        super(name, area, (int) Math.ceil(parentService.getMAX_CREATURE() * 0.1), budgetType);
+        super(name, area, MAX_CAPACITY, budgetType);
         this.isolation = true;
-        this.parentService = parentService;
     }
 
     /**
@@ -82,10 +80,7 @@ public class Quarantine extends MedicalService {
     /**
      * Retourne le service médical parent de cette quarantaine
      */
-    public MedicalService getParentService() {
-        return parentService;
-    }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -97,7 +92,6 @@ public class Quarantine extends MedicalService {
         sb.append("Budget : ").append(budgetEnum).append(" (").append(this.budget).append(") ").append("\n");
         //sb.append("Budget : ").append(budgetType).append("\n");
         sb.append("Isolation : ").append(isolation).append("\n");
-        sb.append("Service parent : ").append(parentService.getName()).append("\n");
 
         sb.append("\n👾 Créatures en quarantaine :\n");
         if (creatures.isEmpty()) {

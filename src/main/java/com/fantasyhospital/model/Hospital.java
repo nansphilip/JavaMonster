@@ -217,7 +217,7 @@ public class Hospital {
         List<MedicalService> allServices = this.getMedicalServices();
 
         for (MedicalService medicalService : allServices ) {
-            if (medicalService.getName().equals("Crypt")) {
+            if (medicalService.getName().equals(name)) {
                 return medicalService;
             }
         }
