@@ -28,6 +28,8 @@ public class HospitalStructureController implements Initializable {
     private Pane waitingRoomView;
     @Getter
     private WaitingRoomController waitingRoomController;
+    @FXML
+    private Pane medicalServiceInclude;
 
     @FXML
     private Pane cryptViewInclude;
@@ -74,18 +76,40 @@ public class HospitalStructureController implements Initializable {
         // Ajout du conteneur au Pane
         hospitalStructure.getChildren().add(welcomeContainer);
 
+        // Ajuster le positionnement et la taille de la crypte
         if (cryptViewInclude != null) {
-            // Position X: à la largeur de hospitalStructure moins la largeur de cryptView moins une marge
+            // Position X: à droite avec une marge fixe
             cryptViewInclude.layoutXProperty().bind(
-                    hospitalStructure.widthProperty().subtract(cryptViewInclude.widthProperty()).subtract(20)
+                    hospitalStructure.widthProperty().subtract(cryptViewInclude.prefWidthProperty()).subtract(20)
             );
 
             // Position Y: simplement une marge depuis le haut
             cryptViewInclude.layoutYProperty().set(35);
 
-            // Limiter la taille de la crypte à un pourcentage de l'espace disponible
-            cryptViewInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.20)); // 20% de la largeur
-            cryptViewInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.45)); // 30% de la hauteur
+            // Limiter la taille de la crypte
+            cryptViewInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.18)); // Réduire à 18%
+            cryptViewInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.35)); // Réduire à 35%
+        }
+
+        // Positionnement et dimensionnement des services médicaux
+        if (medicalServiceInclude != null) {
+            // Position X: centrée mais légèrement décalée vers la gauche pour laisser de l'espace à la crypte
+            medicalServiceInclude.layoutXProperty().bind(
+                    Bindings.divide(
+                            Bindings.subtract(
+                                    hospitalStructure.widthProperty(),
+                                    medicalServiceInclude.prefWidthProperty()
+                            ).subtract(cryptViewInclude.prefWidthProperty().multiply(0.7)), // Décaler pour laisser place à la crypte
+                            2
+                    )
+            );
+
+            // Position Y: en haut avec une marge
+            medicalServiceInclude.layoutYProperty().set(10);
+
+            // Limiter la taille - réduire légèrement pour laisser de l'espace
+            medicalServiceInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.55)); // Réduire à 55%
+            medicalServiceInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.3));
         }
 
         try {

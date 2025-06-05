@@ -1,10 +1,13 @@
 package com.fantasyhospital.controller;
 
 import com.fantasyhospital.model.Hospital;
+import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
+import com.fantasyhospital.view.MedicalServiceCellView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -13,10 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
@@ -180,7 +180,14 @@ public class CryptViewController {
                     }
 
                     cryptGridPane.add(creatureProgressBox, 0, 6, 2, 1);
+
+                    List<Doctor> doctors = crypt.getDoctors() != null ? crypt.getDoctors() : Collections.emptyList();
+                    HBox doctorImageView = createDoctorImages(doctors);
+                    doctorImageView.setPadding(new Insets(10, 0, 0, 0));
+                    cryptGridPane.add(doctorImageView, 0, 7, 2, 1);
                 }
+
+
 
             } catch (Exception e) {
                 // Affichage d'un message d'erreur dans l'interface en cas de problème
@@ -270,5 +277,30 @@ public class CryptViewController {
         }
 
         return flowPane;
+    }
+    private static HBox createDoctorImages(List<Doctor> doctors) {
+        HBox hbox = new HBox(5);
+        hbox.setPadding(new Insets(0));
+        hbox.setAlignment(Pos.CENTER_LEFT);
+
+        Image doctorImage = new Image(MedicalServiceCellView.class.getResourceAsStream("/images/room/DoctorInRoom.png"));
+
+        for (Doctor doctor : doctors) {
+            VBox vbox = new VBox(5);
+            vbox.setAlignment(Pos.CENTER);
+
+            ImageView imageView = new ImageView(doctorImage);
+            imageView.setFitWidth(30);
+            imageView.setFitHeight(60);
+            imageView.setPreserveRatio(true);
+
+            Label nameLabel = new Label(doctor.getFullName());
+            nameLabel.setStyle("-fx-font-size: 10px;");
+
+            vbox.getChildren().addAll(imageView, nameLabel);
+            hbox.getChildren().add(vbox);
+        }
+
+        return hbox;
     }
 }

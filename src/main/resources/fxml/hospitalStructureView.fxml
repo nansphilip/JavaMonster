@@ -24,8 +24,7 @@
                               maxHeight="700.0">
                     <children>
                         <!-- Services médicaux -->
-                        <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"
-                                    layoutX="300" layoutY="40.0" />
+                        <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"/>
 
                         <!-- Vue de la crypte à droite -->
                         <fx:include source="crypt.fxml" fx:id="cryptViewInclude"/>
