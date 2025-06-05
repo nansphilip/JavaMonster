@@ -75,11 +75,6 @@ public class Simulation {
 
         Crypt crypt = new Crypt("Crypt", 50, 2, new Random().nextInt(100));
         Quarantine quarantine = new Quarantine("Quarantaine", 50, 2, new Random().nextInt(100));
-        // Create medical services
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 5, new Random().nextInt(100));
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 5, new Random().nextInt(100));
-        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 5, new Random().nextInt(100));
-
 
         // Create a waiting room
         Room roomAttente = new Room("Room d'attente", 70, 100);
@@ -101,9 +96,6 @@ public class Simulation {
 
         // Add services to the hospital
         hospital.addService(roomAttente);
-        hospital.addService(emergency);
-        hospital.addService(cardiac);
-        hospital.addService(gastro);
         hospital.addService(crypt);
         hospital.addService(quarantine);
 

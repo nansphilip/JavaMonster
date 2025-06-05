@@ -40,11 +40,25 @@ class DoctorTest {
     }
 
     @Test
-    void goTo() {
+    void goToRemoveDoctor() {
+        MedicalService medicalServiceTo = new MedicalService();
+        doctor.goTo(medicalService, medicalServiceTo);
+
+        assertThat(medicalService.getDoctors()).doesNotContain(doctor);
     }
 
     @Test
-    void heal() {
+    void goToAddDoctor() {
+        MedicalService medicalServiceTo = new MedicalService();
+        doctor.goTo(medicalService, medicalServiceTo);
+
+        assertThat(medicalServiceTo.getDoctors()).contains(doctor);
+    }
+
+
+    @Test
+    void healCreatureHasDisease() {
+
     }
 
     @Test

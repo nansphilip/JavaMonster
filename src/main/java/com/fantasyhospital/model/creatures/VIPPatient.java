@@ -3,6 +3,7 @@ package com.fantasyhospital.model.creatures;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,9 +30,17 @@ public abstract class VIPPatient extends Creature {
         notifyMoralObservers();
     }
 
+    /**
+     * Cures the creature of a given disease and give moral points
+     * (moral doesn't change if in quarantine)
+     *
+     * @param disease        La maladie à soigner
+     * @param medicalService La salle où se trouve la créature (pour vérifier si c'est une quarantaine)
+     * @return true if the disease was removed.
+     */
     @Override
-    public boolean beCured(Disease disease) {
+    public boolean beCured(Disease disease, MedicalService medicalService) {
         this.waitingRounds = 0;
-        return super.beCured(disease);
+        return super.beCured(disease, medicalService);
     }
 }
