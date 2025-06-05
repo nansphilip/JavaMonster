@@ -4,9 +4,11 @@ import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.controller.MedicalServiceDetailsController;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
+import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
@@ -77,6 +80,12 @@ public class MedicalServiceCellView {
         pane.setOnMouseClicked(event -> openDetailPanel(service, hospital, stageManager));
 
         pane.getChildren().addAll(topRow, type, occupied, budget, bedsFlow);
+
+        List<Doctor> doctors = service.getDoctors() != null ? service.getDoctors() : Collections.emptyList();
+        HBox doctorImageView = createDoctorImages(doctors);
+        doctorImageView.setLayoutX(10);
+        doctorImageView.setLayoutY(230);
+        pane.getChildren().add(doctorImageView);
         return pane;
     }
 
@@ -90,7 +99,7 @@ public class MedicalServiceCellView {
             List<String> generated = new ArrayList<>();
             for (int i = 0; i < numberOfBeds; i++) {
                 String bedImagePath = switch (budgetType) {
-                    case INSUFFISANT -> getRandomImage(new String[]{
+                    case INSUFFISANT, EXCELLENT -> getRandomImage(new String[]{
                             "/images/room/Bed.png",
                     });
                     case MEDIOCRE -> getRandomImage(new String[]{
@@ -110,9 +119,6 @@ public class MedicalServiceCellView {
                             "/images/room/Bed.png"
                     });
                     case INEXISTANT -> "/images/room/Bed.png";
-                    case EXCELLENT -> getRandomImage(new String[]{
-                            "/images/room/Bed.png",
-                    });
                 };
                 generated.add(bedImagePath);
             }
@@ -169,7 +175,7 @@ public class MedicalServiceCellView {
         title.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
         try {
-            FXMLLoader loader = new FXMLLoader(MedicalServiceCellView.class.getResource("/fxml/medicalServiceListCreatureView.fxml"));
+            FXMLLoader loader = new FXMLLoader(MedicalServiceCellView.class.getResource("/fxml/medicalServiceDetailsListView.fxml"));
             Parent root = loader.load();
 
             MedicalServiceDetailsController controller = loader.getController();
@@ -195,5 +201,31 @@ public class MedicalServiceCellView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static HBox createDoctorImages(List<Doctor> doctors) {
+        HBox hbox = new HBox(5);
+        hbox.setPadding(new Insets(0));
+        hbox.setAlignment(Pos.CENTER_LEFT);
+
+        Image doctorImage = new Image(MedicalServiceCellView.class.getResourceAsStream("/images/room/DoctorInRoom.png"));
+
+        for (Doctor doctor : doctors) {
+            VBox vbox = new VBox(5);
+            vbox.setAlignment(Pos.CENTER);
+
+            ImageView imageView = new ImageView(doctorImage);
+            imageView.setFitWidth(30);
+            imageView.setFitHeight(60);
+            imageView.setPreserveRatio(true);
+
+            Label nameLabel = new Label(doctor.getFullName());
+            nameLabel.setStyle("-fx-font-size: 10px;");
+
+            vbox.getChildren().addAll(imageView, nameLabel);
+            hbox.getChildren().add(vbox);
+        }
+
+        return hbox;
     }
 }

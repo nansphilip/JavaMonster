@@ -25,11 +25,11 @@ public class HarakiriCellView {
         VBox content = new VBox(10, imageView, nameLabel);
         content.setAlignment(Pos.CENTER);
 
-        doomController.clearHarakiri();
-        doomController.getHarakiriContainer().getChildren().add(content);
+        doomController.clearDoomBox();
+        doomController.getDoomBox().getChildren().add(content);
 
         PauseTransition delay = new PauseTransition(Duration.seconds(2));
-        delay.setOnFinished(e -> doomController.clearHarakiri());
+        delay.setOnFinished(e -> doomController.clearDoomBox());
         delay.play();
     }
 }

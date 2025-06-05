@@ -2,6 +2,7 @@ package com.fantasyhospital.controller;
 
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
+import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.view.MedicalServiceCellView;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
@@ -13,7 +14,11 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
@@ -26,13 +31,13 @@ public class MedicalServiceDetailsController {
     private Label title;
 
     @FXML
-    private Label info;
-
-    @FXML
-    private FlowPane bedsView;
+    private Label budget;
 
     @FXML
     private ListView<Creature> medicalServiceListView;
+
+    @FXML
+    private VBox doctorsContainer;
 
     private final ObservableList<Creature> observableCreatures = FXCollections.observableArrayList();
 
@@ -64,17 +69,32 @@ public class MedicalServiceDetailsController {
 
     private void updateView() {
         if (service != null) {
-            title.setText("🔍 Détails du service : " + service.getName());
-            info.setText("Type : " + service.getRoomType() +
-                    "\nBudget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") " +
-                    "\nCréatures : " + (service.getCreatures() != null ? service.getCreatures().size() : 0));
+            title.setText("Détails du service : " + service.getName());
+            budget.setText("Budget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ")");
 
-            bedsView.getChildren().clear();
-            bedsView.getChildren().addAll(MedicalServiceCellView.createBedsView(
-                    service.getMAX_CREATURE(), BudgetType.fromRatio(service.getBudget()), service));
 
             observableCreatures.setAll(service.getCreatures());
 
+            doctorsContainer.getChildren().clear();
+
+            if (service.getDoctors() == null || service.getDoctors().isEmpty()) {
+                doctorsContainer.getChildren().add(new Label("Aucun médecin disponible"));
+            } else {
+                for (Doctor doctor : service.getDoctors()) {
+                    HBox doctorBox = new HBox(5);
+                    ImageView doctorIcon = new ImageView(
+                            new Image(getClass().getResourceAsStream("/images/room/DoctorInRoom.png"))
+                    );
+                    doctorIcon.setFitWidth(30);
+                    doctorIcon.setFitHeight(60);
+
+                    Label nameLabel = new Label(doctor.getFullName());
+                    nameLabel.setStyle("-fx-font-weight: bold;");
+
+                    doctorBox.getChildren().addAll(doctorIcon, nameLabel);
+                    doctorsContainer.getChildren().add(doctorBox);
+                }
+            }
         }
     }
 }
