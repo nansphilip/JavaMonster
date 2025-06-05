@@ -269,8 +269,10 @@ public class CreatureCellView extends ListCell<Creature> {
 
         if (genderType == GenderType.MALE) {
             genderImagePath = "/images/gender/Male.png";
-        } else {
+        } else if (genderType == GenderType.FEMALE) {
             genderImagePath = "/images/gender/Female.png";
+        } else {
+            genderImagePath = "/images/gender/LgbtFlag.png";
         }
         return new Image(getClass().getResourceAsStream(genderImagePath));
     }

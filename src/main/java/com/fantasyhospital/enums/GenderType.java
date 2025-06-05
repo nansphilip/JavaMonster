@@ -1,5 +1,5 @@
 package com.fantasyhospital.enums;
 
 public enum GenderType {
-	MALE, FEMALE;
+	MALE, FEMALE, NON_BINARY;
 }

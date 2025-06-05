@@ -27,7 +27,7 @@
                         <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"/>
 
                         <!-- Vue de la crypte à droite -->
-                        <fx:include source="crypt.fxml" fx:id="cryptViewInclude"/>
+                        <fx:include source="cryptView.fxml" fx:id="cryptViewInclude"/>
                     </children>
                 </Pane>
             </center>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
 <VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.fantasyhospital.controller.EndGameLogController"
       spacing="10">
@@ -12,7 +14,24 @@
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    <TextArea fx:id="summaryTextArea" editable="false" prefHeight="300" prefWidth="400"/>
+    <Label text="Résumé des statistiques :" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+
+    <HBox spacing="20">
+        <VBox spacing="5">
+            <Label text="Créatures mortes" style="-fx-font-weight: bold;" />
+            <ListView fx:id="listViewCreaturesDead" prefHeight="150" prefWidth="200"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Créatures soignées" style="-fx-font-weight: bold;" />
+            <ListView fx:id="listViewCreaturesHealed" prefHeight="150" prefWidth="200"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Docteurs morts" style="-fx-font-weight: bold;" />
+            <ListView fx:id="listViewDoctorsDead" prefHeight="150" prefWidth="200"/>
+        </VBox>
+    </HBox>
+
     <Button text="Fermer" onAction="#handleClose"/>
 </VBox>
-

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
 
+import com.fantasyhospital.util.Singleton;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -156,6 +157,8 @@ public class ToolbarController implements Initializable {
 		counterController.incrementTurnCounter();
 
 		if(jeu.runNextRound()){
+			Singleton singleton = Singleton.getInstance();
+			singleton.setEndGameSummary(singleton.buildEndGameSummary());
 			jeu.showEndGame();
 		}
 
