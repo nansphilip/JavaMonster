@@ -442,7 +442,7 @@ public class Doctor extends Beast {
 	/**
 	 * Removes the doctor from their medical service.
 	 */
-	private void haraKiri() {
+	public void haraKiri() {
 		this.harakiriTriggered = true;
 		this.medicalService.removeDoctor(this);
 	}
