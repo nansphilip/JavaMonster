@@ -23,6 +23,10 @@ public class StageManager {
 		this.fxmlLoader = fxmlLoader;
 	}
 
+	public void switchToMaximizedMode() {
+		primaryStage.setMaximized(true);
+	}
+
 	public void switchScene(final FxmlView view) {
 		primaryStage.setMinWidth(1200);
 		primaryStage.setMinHeight(800);

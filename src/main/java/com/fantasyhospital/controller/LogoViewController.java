@@ -18,5 +18,7 @@ public class LogoViewController {
 	@FXML
     private void startGame(ActionEvent event) {
         stageManager.switchScene(FxmlView.MAIN);
+
+        stageManager.switchToMaximizedMode();
     }
 }

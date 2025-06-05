@@ -30,15 +30,14 @@ import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackgro
 public class MedicalServiceCellView {
 
     public static Pane createView(MedicalService service, Hospital hospital, StageManager stageManager) {
-
-		Pane pane = new Pane();
-		pane.setStyle("""
+        Pane pane = new Pane();
+        pane.setStyle("""
                 -fx-background-color: #add8e6;
                 -fx-border-color: #000000;
                 -fx-border-width: 1;
             """);
-		pane.setPrefSize(210.0, 290.0);
-		pane.setCursor(Cursor.HAND);
+        pane.setPrefSize(210.0, 290.0);
+        pane.setCursor(Cursor.HAND);
 
         Label name = new Label(service.getName());
         name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
@@ -56,20 +55,20 @@ public class MedicalServiceCellView {
 
         topRow.getChildren().addAll(name, creatureCounter);
 
-		Label type = new Label("Type : " + service.getRoomType());
-		type.setLayoutX(10);
-		type.setLayoutY(40);
-		type.setMaxWidth(160);
+        Label type = new Label("Type : " + service.getRoomType());
+        type.setLayoutX(10);
+        type.setLayoutY(40);
+        type.setMaxWidth(160);
 
-		Label occupied = new Label("Docteurs : " + service.getDoctors());
-		occupied.setLayoutX(10);
-		occupied.setLayoutY(60);
-		occupied.setMaxWidth(160);
+        Label occupied = new Label("Docteurs : " + service.getDoctors());
+        occupied.setLayoutX(10);
+        occupied.setLayoutY(60);
+        occupied.setMaxWidth(160);
 
-		Label budget = new Label("Budget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") ");
-		budget.setLayoutX(10);
-		budget.setLayoutY(80);
-		budget.setMaxWidth(160);
+        Label budget = new Label("Budget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") ");
+        budget.setLayoutX(10);
+        budget.setLayoutY(80);
+        budget.setMaxWidth(160);
 
         BudgetType budgetEnum = BudgetType.fromRatio(service.getBudget()) != null ? BudgetType.fromRatio(service.getBudget()) : BudgetType.INEXISTANT;
 
@@ -81,10 +80,25 @@ public class MedicalServiceCellView {
 
         pane.getChildren().addAll(topRow, type, occupied, budget, bedsFlow);
 
+        // S'assurer que les éléments internes ne débordent pas
+        pane.setClip(new javafx.scene.shape.Rectangle(
+                pane.getPrefWidth(),
+                pane.getPrefHeight()
+        ));
+
+        // Mise à jour du clip lorsque la taille change
+        pane.layoutBoundsProperty().addListener((obs, oldBounds, newBounds) -> {
+            pane.setClip(new javafx.scene.shape.Rectangle(
+                    newBounds.getWidth(),
+                    newBounds.getHeight()
+            ));
+        });
+
+
         List<Doctor> doctors = service.getDoctors() != null ? service.getDoctors() : Collections.emptyList();
         HBox doctorImageView = createDoctorImages(doctors);
         doctorImageView.setLayoutX(10);
-        doctorImageView.setLayoutY(230);
+        doctorImageView.setLayoutY(165);
         pane.getChildren().add(doctorImageView);
         return pane;
     }
