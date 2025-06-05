@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.beans.binding.Bindings;
 
 @Component
 public class HospitalStructureController implements Initializable {
@@ -72,6 +73,20 @@ public class HospitalStructureController implements Initializable {
 
         // Ajout du conteneur au Pane
         hospitalStructure.getChildren().add(welcomeContainer);
+
+        if (cryptViewInclude != null) {
+            // Position X: à la largeur de hospitalStructure moins la largeur de cryptView moins une marge
+            cryptViewInclude.layoutXProperty().bind(
+                    hospitalStructure.widthProperty().subtract(cryptViewInclude.widthProperty()).subtract(20)
+            );
+
+            // Position Y: simplement une marge depuis le haut
+            cryptViewInclude.layoutYProperty().set(35);
+
+            // Limiter la taille de la crypte à un pourcentage de l'espace disponible
+            cryptViewInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.20)); // 20% de la largeur
+            cryptViewInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.45)); // 30% de la hauteur
+        }
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/waitingRoomView.fxml"));

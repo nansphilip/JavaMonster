@@ -81,37 +81,7 @@ public class GridMedicalServiceController {
 		}
 	}
 
-//	private void displayServices() {
-//		gridPane.getChildren().clear();
-//
-//		// Configuration du GridPane
-//		gridPane.setHgap(10);
-//		gridPane.setVgap(15);
-//		gridPane.setAlignment(Pos.CENTER);
-//
-//		int maxColsPerRow = 4; // 4 services par ligne maximum
-//		int row = 0;
-//		int col = 0;
-//
-//		if (services != null) {
-//			for (MedicalService service : services) {
-//				// Ignorer certains services spéciaux
-//				if (service.getName().equals("Crypte") || service.getName().equals("Room d'attente") ||
-//						service instanceof Crypt || service instanceof Quarantine) {
-//					continue;
-//				}
-//
-//				Pane serviceView = MedicalServiceCellView.createView(service, hospital, stageManager);
-//				gridPane.add(serviceView, col, row);
-//
-//				col++;
-//				if (col >= maxColsPerRow) {
-//					col = 0;
-//					row++;
-//				}
-//			}
-//		}
-//	}
+
 
 	public void updateServicesList() {
 		if (hospital != null) {

@@ -7,7 +7,9 @@
 
     <!-- Liste des créatures & Docteurs à droite -->
     <right>
-        <VBox spacing="10" alignment="TOP_RIGHT" VBox.vgrow="ALWAYS">
+        <VBox spacing="10" alignment="TOP_RIGHT"
+              VBox.vgrow="ALWAYS"
+              style="-fx-padding: 10;">
             <fx:include source="listCreatureView.fxml" VBox.vgrow="ALWAYS"/>
             <fx:include source="listDoctorsView.fxml" VBox.vgrow="ALWAYS"/>
         </VBox>
@@ -17,7 +19,6 @@
     <center>
 <!--        <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS"/>-->
         <fx:include source="hospitalStructureView.fxml"/>
-
     </center>
 
     <!-- Boutons & Console des logs & Compteurs en bas -->
@@ -34,7 +35,8 @@
 
             <Region HBox.hgrow="ALWAYS"/>
 
-            <VBox alignment="BOTTOM_RIGHT" prefWidth="300" minWidth="300">
+            <VBox alignment="BOTTOM_RIGHT" prefWidth="300" minWidth="300"
+            VBox.vgrow="ALWAYS" style="-fx-padding: 10;">
                 <fx:include source="counterView.fxml"/>
             </VBox>
 
