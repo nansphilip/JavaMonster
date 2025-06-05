@@ -227,7 +227,7 @@ public final class Crypt extends MedicalService {
             if(nb == REQUIRED_HEALING_TOURS){
                 //Cure the creature
                 log.info("La créature {} a attendu {} tours au frais de la crypte, elle est soignée !", creature.getFullName(), REQUIRED_HEALING_TOURS);
-                ((Regenerating) creature).cureCreatureInCrypt(creature);
+                ((Regenerating) creature).cureCreatureInCrypt(creature, this);
                 this.setBudget(Math.min(this.getBudget() + INCREASE_BUDGET_SERVICE,100));
                 log.info("Le soin fait augmenter le budget du service {} de {} points ({} pts)", this.getName(), INCREASE_BUDGET_SERVICE, this.getBudget());
             } else if(chanceToGetSick == 0.0){

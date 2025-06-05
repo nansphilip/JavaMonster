@@ -2,6 +2,7 @@ package com.fantasyhospital.model.creatures.interfaces;
 
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,11 +57,11 @@ public interface Regenerating {
         return creature.getDiseases().size() >= 4;
     }
 
-    default void cureCreatureInCrypt(Creature creature) {
+    default void cureCreatureInCrypt(Creature creature, MedicalService medicalService) {
         CopyOnWriteArrayList<Disease> list = new CopyOnWriteArrayList<>(creature.getDiseases());
         //list = creature.getDiseases();
         for(Disease disease : list){
-            creature.beCured(disease);
+            creature.beCured(disease, medicalService);
         }
     }
 } 

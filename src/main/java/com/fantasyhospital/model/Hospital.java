@@ -56,7 +56,7 @@ public class Hospital {
      */
     public Hospital(String name) {
         this.name = name;
-        this.MAX_SERVICE_COUNT = 4 + new Random().nextInt(4);
+        this.MAX_SERVICE_COUNT = 9; //6 + new Random().nextInt(3);
     }
 
     /**
@@ -124,7 +124,7 @@ public class Hospital {
             totalBudget += medicalService instanceof Crypt ? ((Crypt) medicalService).getCryptBudget() : medicalService.getBudget();
         }
         int averageBudget = Math.round((float) totalBudget / getMedicalServices().size());
-        log.info("Budget global : {}", averageBudget);
+        log.info("Budget global : {} nbservices {} sur {}", averageBudget, this.services.size(), this.MAX_SERVICE_COUNT);
 
         // Creation of a new Service with a doctor if there is enough space in the hospital
         if(averageBudget >= NB_AVERAGE_BUDGET_NEEDED && this.services.size() < this.MAX_SERVICE_COUNT){

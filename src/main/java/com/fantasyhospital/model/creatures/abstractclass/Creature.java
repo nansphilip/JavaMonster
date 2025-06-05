@@ -26,15 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class Creature extends Beast {
 
+    // Constants
+    private static final double CONTAMINATE_WHEN_LOSING_CONTROL_CHANCE = 0.3;
+    private static final double TREPASSING_CHANCE = 0.4;
+
     /**
      * Set of diseases contracted by the creature
      */
     @Setter @Getter protected CopyOnWriteArrayList<Disease> diseases = new CopyOnWriteArrayList<>();
-
-    /**
-     * Shared random generator
-     */
-    protected static final Random RANDOM = new Random();
 
     /**
      * Number of howl the beast has done
@@ -79,7 +78,7 @@ public abstract class Creature extends Beast {
         if (room instanceof Quarantine) {
             log.info("La créature {} s'emporte, mais comme elle est en quarantaine, elle ne peut pas contaminer d'autres créatures.", this.fullName);
             // Elle peut toujours mourir en s'emportant, même en quarantaine
-            if(Math.random() < 0.30){
+            if(Math.random() < TREPASSING_CHANCE){
                 log.info("La créature {} s'emporte trop fort, elle trépasse.", this.fullName);
                 Singleton instanceSingleton = Singleton.getInstance();
                 instanceSingleton.addBeastToStack(this, StackType.DIE);
@@ -88,7 +87,7 @@ public abstract class Creature extends Beast {
             return false;
         }
 
-        if(Math.random() < 0.30){
+        if(Math.random() < TREPASSING_CHANCE){
             log.info("La créature {} s'emporte trop fort, elle trépasse.", this.fullName);
             Singleton instanceSingleton = Singleton.getInstance();
             instanceSingleton.addBeastToStack(this, StackType.DIE);
@@ -96,7 +95,7 @@ public abstract class Creature extends Beast {
         }
 
         //15% de chance de contaminer creature lorsqu'il s'emporte
-        if(Math.random() < 0.15){
+        if(Math.random() < CONTAMINATE_WHEN_LOSING_CONTROL_CHANCE){
             Creature creature = room.getRandomCreatureWithoutThisOne(this);
             Disease disease = this.getRandomDisease();
 
@@ -119,11 +118,6 @@ public abstract class Creature extends Beast {
      */
     public boolean checkMorale(Room room) {
         if(room == null){
-            return false;
-        }
-
-        // Si la créature est en quarantaine, son moral est figé, on ne fait rien
-        if (room instanceof Quarantine) {
             return false;
         }
 
@@ -222,15 +216,6 @@ public abstract class Creature extends Beast {
     /**
      * Cures the creature of a given disease and give moral points
      * (moral doesn't change if in quarantine)
-     * @return true if the disease was removed.
-     */
-    public boolean beCured(Disease disease) {
-        return beCured(disease, null);
-    }
-
-    /**
-     * Cures the creature of a given disease and give moral points
-     * (moral doesn't change if in quarantine)
      * @param disease La maladie à soigner
      * @param medicalService La salle où se trouve la créature (pour vérifier si c'est une quarantaine)
      * @return true if the disease was removed.
@@ -249,19 +234,6 @@ public abstract class Creature extends Beast {
         this.recentlyHealed = true;
         notifyExitObservers();
         return true;
-    }
-
-    /**
-     * Trouve la room dans laquelle se trouve la créature
-     * Cette méthode est utile pour les vérifications de quarantaine
-     * @return la room ou null si non trouvée
-     */
-    private Room findRoomOfCreature() {
-        // On doit parcourir les services pour trouver où est la créature
-        // Cette méthode serait mieux implémentée avec un accès direct à l'hôpital
-        // Mais pour cette implémentation simple, on retourne null
-        // (sera à compléter selon l'architecture exacte du projet)
-        return null;
     }
 
     /**
