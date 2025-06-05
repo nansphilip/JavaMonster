@@ -138,6 +138,24 @@ public class Doctor extends Beast {
 		// Get creatures list
 		CopyOnWriteArrayList<Creature> listeCreatures = this.medicalService.getCreatures();
 
+		// Si il est dans un service avec au moins un autre médecin, il se transfère dans un service sans médecin/avec le plus
+		// Grand nombre de créatures
+		if(this.medicalService.getDoctors().size() >= 2){
+			MedicalService medicalServiceWithNoDoctor = hospital.getMedicalServiceWithNoDoctor();
+			if(medicalServiceWithNoDoctor != null) {
+				log.info("Le médecin {} se transfère de {} vers {} car il etait dans un service avec d'autres médecins", this.fullName, this.medicalService.getName(), medicalServiceWithNoDoctor.getName());
+				goTo(this.medicalService, medicalServiceWithNoDoctor);
+				return;
+			}
+
+			MedicalService medicalServiceWithNbMaxCreatures = hospital.getMedicalServiceWithNbMaxCreatures();
+			if(medicalServiceWithNbMaxCreatures != null) {
+				log.info("Le médecin {} se transfere de {} vers {} car le service de destination a plein de creatures",  this.fullName, this.medicalService.getName(), medicalServiceWithNbMaxCreatures.getName());
+				goTo(this.medicalService, medicalServiceWithNbMaxCreatures);
+				return;
+			}
+		}
+
 		// Si son service médical est vide, il essaie de transférer une créature de la room d'attente vers son service.
 		// Il doit chercher un service du type de la créature, sinon choisir une autre créature.
 		if (listeCreatures.isEmpty()) {
@@ -196,22 +214,7 @@ public class Doctor extends Beast {
 			}
 		}
 
-
-
-
-        /* Room crypt = hospital.getRoomByName("Crypt");
-        log.info("Lit disponibles dans la crypte : {}", crypt.getAvailableBeds());
-        if (crypt.getAvailableBeds() > 0 && (creaturesToTransfer.getFirst().getRace().equals("Zombie") || creaturesToTransfer.getFirst().getRace().equals("Vampire"))) {
-            if (Objects.equals(creaturesToTransfer.getFirst().getRace(), crypt.getRoomType())) {
-                for (Creature creature : creaturesToTransfer) {
-                    transfer(creature, waitingRoom, crypt);
-                    log.info("La créature {} de race {} a été transférée dans la crypt !", creatureToTransfer.getFullName(), creatureToTransfer.getRace());
-                }
-                return;
-            }
-        } */
-
-// Récupération de la créature avec le niveau de disease le plus avancé et le nombre de diseases le plus élevé
+		// Récupération de la créature avec le niveau de disease le plus avancé et le nombre de diseases le plus élevé
 		Creature creatureMaxLvlDisease = this.medicalService.getCreatureWithHighLevelDisease();
 		Creature creatureMaxDiseases = this.medicalService.getCreatureWithNbMaxDisease();
 
@@ -220,11 +223,11 @@ public class Doctor extends Beast {
 			return;
 		}
 
-		//Soigne créature si niveau disease >= 8
+		//Soigne créature si niveau disease >= 8, sinon si nombre maladies >= 3
 		if (creatureMaxLvlDisease.getHighLevelDisease().getCurrentLevel() >= 8) {
 			heal(creatureMaxLvlDisease, creatureMaxLvlDisease.getHighLevelDisease());
 			return;
-		} else if (creatureMaxDiseases.getDiseases().size() >= 3) {  //Soigne créature si nombre de disease >= 3
+		} else if (creatureMaxDiseases.getDiseases().size() >= 3) {
 			heal(creatureMaxDiseases, creatureMaxDiseases.getHighLevelDisease());
 			return;
 		}
