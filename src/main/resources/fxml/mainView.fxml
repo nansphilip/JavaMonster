@@ -15,7 +15,7 @@
 
     <!-- Vue Hôpital au centre -->
     <center>
-        <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS"/>
+<!--        <fx:include source="medicalServiceView.fxml" HBox.hgrow="ALWAYS"/>-->
         <fx:include source="hospitalStructureView.fxml"/>
 
     </center>

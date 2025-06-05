@@ -1,6 +1,5 @@
 package com.fantasyhospital.controller;
 
-import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
@@ -38,10 +37,10 @@ public class CryptViewController {
     @FXML
     public void initialize() {
         // Initialisation de base de la grille
-        if (cryptGridPane != null) {
-            cryptGridPane.getChildren().clear();
-            cryptGridPane.setStyle("-fx-background-color: #202020; -fx-border-color: #444444; -fx-border-width: 1px; -fx-background-image: url('/images/tiles/FloorCrypt.png')");
-        }
+//        if (cryptGridPane != null) {
+//            cryptGridPane.getChildren().clear();
+//            cryptGridPane.setStyle("-fx-background-color: #202020; -fx-border-color: #444444; -fx-border-width: 1px; -fx-background-image: url('/images/tiles/FloorCrypt.png')");
+//        }
     }
 
     /**

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Pos?>
+
+<HBox xmlns="http://javafx.com/javafx/17"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.fantasyhospital.controller.MedicalServiceDetailsController"
+      spacing="20"
+      prefWidth="600"
+      prefHeight="400"
+      style="-fx-padding: 20; -fx-background-color: #f4f4f4;">
+
+    <VBox spacing="15" prefWidth="600">
+
+        <!-- Ligne titre + budget -->
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label fx:id="title"
+                   text="Détails du service médical"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <Label fx:id="budget"
+                   text="Budget : --"
+                   style="-fx-font-size: 14px;"
+                   HBox.hgrow="ALWAYS"
+                   alignment="CENTER_RIGHT" />
+        </HBox>
+
+        <!-- Ligne listes créatures + médecins -->
+        <HBox spacing="20" prefHeight="300" prefWidth="600">
+
+            <VBox spacing="10" prefWidth="280" style="-fx-background-color: #ffffff; -fx-padding: 10; -fx-border-color: #cccccc; -fx-border-width: 1;">
+                <Label text="Créatures" style="-fx-font-weight: bold;" />
+                <ListView fx:id="medicalServiceListView"
+                          prefWidth="260"
+                          prefHeight="250" />
+            </VBox>
+
+            <VBox spacing="10" prefWidth="280" style="-fx-background-color: #ffffff; -fx-padding: 10; -fx-border-color: #cccccc; -fx-border-width: 1;">
+                <Label text="Docteurs" style="-fx-font-weight: bold;" />
+                <VBox fx:id="doctorsContainer"
+                      spacing="10"
+                      prefHeight="250"
+                      prefWidth="260" />
+            </VBox>
+
+        </HBox>
+    </VBox>
+</HBox>

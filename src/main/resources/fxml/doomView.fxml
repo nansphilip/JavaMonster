@@ -12,6 +12,6 @@
       minWidth="200" minHeight="200"
       maxWidth="200" maxHeight="200">
 
-    <StackPane fx:id="harakiriContainer" prefWidth="128" prefHeight="128">
+    <StackPane fx:id="doomContainer" prefWidth="128" prefHeight="128">
     </StackPane>
 </VBox>

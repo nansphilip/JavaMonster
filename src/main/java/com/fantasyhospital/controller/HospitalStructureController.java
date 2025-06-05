@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,7 @@ public class HospitalStructureController implements Initializable {
     private Pane hospitalStructure;
     private StackPane welcomeContainer;
     private Pane waitingRoomView;
+    @Getter
     private WaitingRoomController waitingRoomController;
 
     @FXML
@@ -31,6 +33,7 @@ public class HospitalStructureController implements Initializable {
     @FXML
     private CryptViewController cryptViewIncludeController;
 
+    @Getter
     private boolean gameStarted = false;
     private Hospital hospital;
 
@@ -102,14 +105,6 @@ public class HospitalStructureController implements Initializable {
         }
 
         gameStarted = true;
-    }
-
-    public WaitingRoomController getWaitingRoomController() {
-        return waitingRoomController;
-    }
-
-    public boolean isGameStarted() {
-        return gameStarted;
     }
 
     /**
