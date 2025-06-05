@@ -2,7 +2,6 @@ package com.fantasyhospital.model.creatures;
 
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.model.Hospital;
-import com.fantasyhospital.model.creatures.races.Zombie;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.observer.MoralObserver;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.print.Doc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -93,7 +90,7 @@ class DoctorTest {
     }
 
     @Test
-    void doctorHarakiriDepression(){
+    void doctorHarakiriDepression() {
         doctor.setMorale(10);
         Doctor spyDoctor = spy(doctor); //spy permet d'exécuter la logique de l'objet et donc l'appel de méthodes en cascade
         spyDoctor.depression();
