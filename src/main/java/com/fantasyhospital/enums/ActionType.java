@@ -19,7 +19,7 @@ public enum ActionType {
     /**
      * Doctor's morale increase after treating a creature
      */
-    DOCTOR_HEALS(15),
+    DOCTOR_HEALS(10),
 
     /**
      * Creature in triage queue, accompanied
