@@ -2,26 +2,44 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.fantasyhospital.controller.WaitingRoomController"
-      fx:id="waitingRoom"
-      prefWidth="230.0"
-      maxWidth="230.0"
-      style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;">
+<GridPane xmlns="http://javafx.com/javafx/17"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.fantasyhospital.controller.WaitingRoomController"
+          fx:id="waitingRoom"
+          prefWidth="230.0"
+          maxWidth="230.0"
+          style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;"
+          hgap="10" vgap="10">
 
+    <!-- Ajout de padding pour éviter que les éléments soient collés aux bords -->
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+
+    <!-- Configuration des colonnes -->
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" />
+    </columnConstraints>
+
+    <!-- Configuration des lignes -->
+    <rowConstraints>
+        <RowConstraints vgrow="NEVER" /> <!-- Pour le titre -->
+        <RowConstraints vgrow="ALWAYS" /> <!-- Pour la ListView -->
+    </rowConstraints>
+
+    <!-- Label dans la première ligne (index 0) et première colonne (index 0) -->
     <Label text="Salle d'attente"
            style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;"
-           AnchorPane.topAnchor="10.0"
-           AnchorPane.leftAnchor="10.0"
-           AnchorPane.rightAnchor="10.0" />
+           GridPane.rowIndex="0"
+           GridPane.columnIndex="0" />
 
+    <!-- ListView dans la deuxième ligne (index 1) et première colonne (index 0) -->
     <ListView fx:id="waitingRoomListView"
-              AnchorPane.topAnchor="40.0"
-              AnchorPane.leftAnchor="10.0"
-              AnchorPane.rightAnchor="10.0"
-              AnchorPane.bottomAnchor="10.0"/>
-</AnchorPane>
-
+              GridPane.rowIndex="1"
+              GridPane.columnIndex="0" />
+</GridPane>

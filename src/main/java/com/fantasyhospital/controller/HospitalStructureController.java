@@ -35,6 +35,8 @@ public class HospitalStructureController implements Initializable {
     private Pane cryptViewInclude;
     @FXML
     private CryptViewController cryptViewIncludeController;
+    @FXML
+    WaitingRoomController waitingRoomIncludeController;
 
     @Getter
     private boolean gameStarted = false;
@@ -112,20 +114,20 @@ public class HospitalStructureController implements Initializable {
             medicalServiceInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.3));
         }
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/waitingRoomView.fxml"));
-            waitingRoomView = loader.load();
-            waitingRoomController = loader.getController();
-
-            // Rendre la salle d'attente responsive
-            waitingRoomView.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.3)); // 30% de la largeur
-            waitingRoomView.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.9)); // 90% de la hauteur
-            waitingRoomView.layoutXProperty().bind(hospitalStructure.widthProperty().multiply(0.01)); // 1% de marge à gauche
-            waitingRoomView.layoutYProperty().bind(hospitalStructure.heightProperty().multiply(0.05)); // 5% de marge en haut
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/waitingRoomView.fxml"));
+//            waitingRoomView = loader.load();
+//            waitingRoomController = loader.getController();
+//
+//            // Rendre la salle d'attente responsive
+//            waitingRoomView.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.3)); // 30% de la largeur
+//            waitingRoomView.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.9)); // 90% de la hauteur
+//            waitingRoomView.layoutXProperty().bind(hospitalStructure.widthProperty().multiply(0.01)); // 1% de marge à gauche
+//            waitingRoomView.layoutYProperty().bind(hospitalStructure.heightProperty().multiply(0.05)); // 5% de marge en haut
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void hideWelcomeMessage() {
@@ -139,9 +141,9 @@ public class HospitalStructureController implements Initializable {
         hideWelcomeMessage();
 
         // Afficher la salle d'attente
-        if (waitingRoomView != null && !hospitalStructure.getChildren().contains(waitingRoomView)) {
-            hospitalStructure.getChildren().add(waitingRoomView);
-        }
+//        if (waitingRoomView != null && !hospitalStructure.getChildren().contains(waitingRoomView)) {
+//            hospitalStructure.getChildren().add(waitingRoomView);
+//        }
 
         gameStarted = true;
     }
@@ -154,8 +156,8 @@ public class HospitalStructureController implements Initializable {
      */
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
-        if (waitingRoomController != null) {
-            waitingRoomController.setHospital(hospital);
+        if (waitingRoomIncludeController != null) {
+            waitingRoomIncludeController.setHospital(hospital);
         }
 
         // Mise à jour de la vue de la crypte

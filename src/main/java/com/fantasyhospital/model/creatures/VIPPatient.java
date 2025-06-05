@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 public abstract class VIPPatient extends Creature {
-    public int waitingRounds;
+    private int waitingRounds;
 
     public VIPPatient( CopyOnWriteArrayList<Disease> diseases) {
         super(diseases);

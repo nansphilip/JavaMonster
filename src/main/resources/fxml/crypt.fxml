@@ -28,15 +28,19 @@
 
     <!-- Barre de progression de température -->
     <ProgressBar prefWidth="200" progress="0.4"
-                GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+                 GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+    <!-- Affichage du budget -->
+    <Label text="Budget: 0%" style="-fx-text-fill: #ffcc00;"
+           GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
     <!-- Titre pour la liste des créatures -->
     <Label text="Créatures en repos: 0" style="-fx-text-fill: #cccccc;"
-           GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+           GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 
     <!-- Zone pour la liste des créatures avec défilement -->
     <ScrollPane fitToWidth="true" prefHeight="150" style="-fx-background: transparent; -fx-background-color: transparent;"
-                GridPane.rowIndex="5" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2">
         <VBox spacing="8" style="-fx-background-color: transparent;">
             <!-- Cette zone sera remplie dynamiquement par le contrôleur -->
         </VBox>
@@ -46,5 +50,5 @@
     <Label text="Les créatures doivent passer 3 tours à une température ≤ 30°C pour être guéries"
            style="-fx-text-fill: #888888; -fx-font-size: 10px; -fx-font-style: italic;"
            wrapText="true"
-           GridPane.rowIndex="6" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+           GridPane.rowIndex="7" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
 </GridPane>

@@ -234,12 +234,12 @@ public class Doctor extends Beast {
 	}
 
 
-	public boolean authorizedToGoToCrypt(List<Creature> creatures) {
+	private boolean authorizedToGoToCrypt(List<Creature> creatures) {
 		return creatures.getFirst().getRace().equals("Zombie") || creatures.getFirst().getRace().equals("Vampire");
 	}
 
 
-	public boolean authorizedToGoToQuarantine(List<Creature> creatures) {
+	private boolean authorizedToGoToQuarantine(List<Creature> creatures) {
 		return creatures.getFirst().getRace().equals("Orc") || creatures.getFirst().getRace().equals("Werebeast") || creatures.getFirst().getRace().equals("Lycanthrope") || creatures.getFirst().getRace().equals("Vampire");
 	}
 

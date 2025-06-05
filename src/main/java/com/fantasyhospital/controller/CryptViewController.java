@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import org.springframework.stereotype.Component;
+import com.fantasyhospital.enums.BudgetType;
 
 import java.util.*;
 
@@ -41,6 +42,24 @@ public class CryptViewController {
 //            cryptGridPane.getChildren().clear();
 //            cryptGridPane.setStyle("-fx-background-color: #202020; -fx-border-color: #444444; -fx-border-width: 1px; -fx-background-image: url('/images/tiles/FloorCrypt.png')");
 //        }
+
+            if (cryptGridPane != null) {
+                cryptGridPane.getChildren().clear();
+                cryptGridPane.setStyle("-fx-background-color: #202020; -fx-border-color: #444444; -fx-border-width: 1px; -fx-background-image: url('/images/tiles/FloorCrypt.png'); -fx-background-size: cover;");
+
+                // Configuration des contraintes de colonne pour donner plus d'espace
+                ColumnConstraints column1 = new ColumnConstraints();
+                column1.setPercentWidth(100); // Utilise toute la largeur disponible
+                cryptGridPane.getColumnConstraints().addAll(column1);
+
+                // Ajouter plus de hauteur aux lignes pour les barres de progression et labels
+                for (int i = 0; i < 8; i++) {
+                    RowConstraints row = new RowConstraints();
+                    row.setMinHeight(30); // Hauteur minimale pour chaque ligne
+                    cryptGridPane.getRowConstraints().add(row);
+                }
+            }
+
     }
 
     /**
@@ -114,6 +133,7 @@ public class CryptViewController {
             cryptGridPane.add(titleLabel, 0, 0, 2, 1);
 
             try {
+
                 // État du système de ventilation
                 boolean airflowStatus = crypt.isAirflow();
                 Label airflowLabel = new Label("Ventilation: " + (airflowStatus ? "Fonctionnelle ✓" : "En panne ✗"));
@@ -138,16 +158,24 @@ public class CryptViewController {
                 ProgressBar tempProgressBar = new ProgressBar((double)temperature / 50);
                 tempProgressBar.setPrefWidth(200);
                 tempProgressBar.setStyle("-fx-accent: " + tempColor + ";");
+                tempProgressBar.setPrefHeight(20); // Hauteur explicite pour la barre
+                GridPane.setMargin(tempProgressBar, new Insets(5, 0, 5, 0)); // Ajoute une marge
                 cryptGridPane.add(tempProgressBar, 0, 3, 2, 1);
 
-                // Liste des créatures dans la crypte
-                Label creaturesLabel = new Label("Créatures en repos: " + crypt.getCreatures().size());
-                creaturesLabel.setStyle("-fx-text-fill: #cccccc;");
-                cryptGridPane.add(creaturesLabel, 0, 4, 2, 1);
+                int budgetValue = crypt.getCryptBudget();
+                BudgetType budgetType = BudgetType.fromRatio(budgetValue);
+                Label budgetLabel = new Label("BUDGET: " + budgetType);
+                budgetLabel.setStyle("-fx-text-fill: #ffcc00;");
+                cryptGridPane.add(budgetLabel, 0, 4, 2, 1);
+
+//                // Liste des créatures dans la crypte
+//                Label creaturesLabel = new Label("Créatures en repos: " + crypt.getCreatures().size());
+//                creaturesLabel.setStyle("-fx-text-fill: #cccccc;");
+//                cryptGridPane.add(creaturesLabel, 0, 5, 2, 1);
 
                 // Affichage visuel des lits et des créatures
                 FlowPane bedsFlowPane = createBedsView();
-                cryptGridPane.add(bedsFlowPane, 0, 5, 2, 1);
+                cryptGridPane.add(bedsFlowPane, 0, 6, 2, 1);
 
                 // Affichage des créatures et de leur progression de guérison
                 if (crypt.getCreatureWaitNbTour() != null && !crypt.getCreatureWaitNbTour().isEmpty()) {

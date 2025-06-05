@@ -23,6 +23,10 @@
                               maxWidth="1300.0"
                               maxHeight="700.0">
                     <children>
+
+                        <!-- Vue de la salle d'attente -->
+                        <fx:include source="waitingRoomView.fxml" fx:id="waitingRoomInclude"/>
+
                         <!-- Services médicaux -->
                         <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"/>
 

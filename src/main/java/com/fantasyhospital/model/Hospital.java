@@ -142,9 +142,6 @@ public class Hospital {
     /**
      * Check the budget of the hospital, and creates a new service if the budget is good
      */
-    public void reviewBudgetServicesCreate(){
-
-    }
 
     /**
      * Displays the total number of doctors in the hospital.
