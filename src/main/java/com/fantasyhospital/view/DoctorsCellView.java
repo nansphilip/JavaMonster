@@ -1,6 +1,6 @@
 package com.fantasyhospital.view;
 
-import com.fantasyhospital.Singleton;
+import com.fantasyhospital.util.Singleton;
 import com.fantasyhospital.controller.DoomController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;

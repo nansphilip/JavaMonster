@@ -1,10 +1,11 @@
-package com.fantasyhospital;
+package com.fantasyhospital.util;
 
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Stack;
@@ -40,6 +41,13 @@ public final class Singleton {
      */
     @Getter
     private Stack<Doctor> doctorStack = new Stack<>();
+
+    /**
+     *  All stats for end game summary
+     */
+    @Getter
+    @Setter
+    private EndGameSummary endGameSummary;
 
     private Singleton(){
 
@@ -139,5 +147,13 @@ public final class Singleton {
             sb.append(stackDoctor.pop()).append("\n");
         }
         return sb.toString();
+    }
+
+    public EndGameSummary buildEndGameSummary() {
+        EndGameSummary summary = new EndGameSummary();
+        summary.setCreaturesDead(creatureDieStack);
+        summary.setCreaturesHealed(creatureHealStack);
+        summary.setDoctorsDead(doctorStack);
+        return summary;
     }
 }

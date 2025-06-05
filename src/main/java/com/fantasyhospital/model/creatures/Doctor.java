@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.fantasyhospital.Singleton;
+import com.fantasyhospital.util.Singleton;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.StackType;

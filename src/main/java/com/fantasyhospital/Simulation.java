@@ -75,7 +75,6 @@ public class Simulation {
 
         Crypt crypt = new Crypt("Crypt", 50, 2, new Random().nextInt(100));
         Quarantine quarantine = new Quarantine("Quarantaine", 50, 2, new Random().nextInt(100));
-
         // Create a waiting room
         Room roomAttente = new Room("Room d'attente", 70, 100);
 

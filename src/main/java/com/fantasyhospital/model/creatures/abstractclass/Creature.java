@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.fantasyhospital.Singleton;
+import com.fantasyhospital.util.Singleton;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.disease.Disease;

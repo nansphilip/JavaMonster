@@ -17,6 +17,8 @@ import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
+import com.fantasyhospital.util.EndGameSummary;
+import com.fantasyhospital.util.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -96,6 +98,10 @@ public class EvolutionGame {
 		if (gridMedicalServiceController != null) {
 			gridMedicalServiceController.updateServicesList();
 		}
+		// Pour voir la fin de partie
+//		if (round == 10) {
+//			return true;
+//		}
 		//hospital.displayServices();
 		return false;
 	}
@@ -385,7 +391,7 @@ public class EvolutionGame {
 		log.info("#############################################");
 	}
 
-	public String getEndGameSummary() {
-		return Singleton.getInstance().getEndGameLog();
+	public EndGameSummary getEndGameSummary() {
+		return Singleton.getInstance().getEndGameSummary();
 	}
 }

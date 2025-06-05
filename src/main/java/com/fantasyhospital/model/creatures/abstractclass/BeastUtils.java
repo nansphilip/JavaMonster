@@ -16,6 +16,12 @@ public abstract class BeastUtils {
 				yield MaleNameType.getRandomAvailable();
 			case FEMALE:
 				yield FemaleNameType.getRandomAvailable();
+			case NON_BINARY:
+				if (Math.random() < 0.5) {
+					yield MaleNameType.getRandomAvailable();
+				} else {
+					yield FemaleNameType.getRandomAvailable();
+				}
 		};
 	}
 
