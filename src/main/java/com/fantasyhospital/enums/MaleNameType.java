@@ -31,7 +31,8 @@ public enum MaleNameType {
         }
 
         if (available.isEmpty()) {
-            throw new IllegalStateException("Tous les prénoms masculins ont été utilisés !");
+            return "Mickael Martin Nevot";
+            //throw new IllegalStateException("Tous les prénoms masculins ont été utilisés !");
         }
 
         MaleNameType chosen = available.get(new Random().nextInt(available.size()));

@@ -56,7 +56,7 @@ public class Hospital {
      */
     public Hospital(String name) {
         this.name = name;
-        this.MAX_SERVICE_COUNT = 9; //6 + new Random().nextInt(3);
+        this.MAX_SERVICE_COUNT = 8; //6 + new Random().nextInt(3);
     }
 
     /**
@@ -124,7 +124,7 @@ public class Hospital {
             totalBudget += medicalService instanceof Crypt ? ((Crypt) medicalService).getCryptBudget() : medicalService.getBudget();
         }
         int averageBudget = Math.round((float) totalBudget / getMedicalServices().size());
-        log.info("Budget global : {} nbservices {} sur {}", averageBudget, this.services.size(), this.MAX_SERVICE_COUNT);
+        log.info("Budget global : {} nbservices {} sur {}", averageBudget, getMedicalServices().size(), this.MAX_SERVICE_COUNT);
 
         // Creation of a new Service with a doctor if there is enough space in the hospital
         if(averageBudget >= NB_AVERAGE_BUDGET_NEEDED && this.services.size() < this.MAX_SERVICE_COUNT){
@@ -137,13 +137,6 @@ public class Hospital {
         } else if(averageBudget >= NB_AVERAGE_BUDGET_NEEDED && this.services.size() == this.MAX_SERVICE_COUNT){
             log.info("L'hôpital a atteint son nombre maximum de services, de nouveaux services ne peuvent pas être créés...");
         }
-    }
-
-    /**
-     * Check the budget of the hospital, and creates a new service if the budget is good
-     */
-    public void reviewBudgetServicesCreate(){
-
     }
 
     /**
@@ -251,6 +244,19 @@ public class Hospital {
             }
         }
         return servicesList;
+    }
+
+    /**
+     * Returns the number of medical services in the hospital, excluding crypt and quarantine
+     */
+    public int getNbMedicalServicesExceptCryptQuarantine() {
+        int nb = 0;
+        for(MedicalService medicalService : getMedicalServices()){
+            if(!(medicalService instanceof Crypt || medicalService instanceof Quarantine)){
+                nb++;
+            }
+        }
+        return nb;
     }
 
     /**

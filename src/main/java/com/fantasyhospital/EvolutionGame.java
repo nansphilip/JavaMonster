@@ -4,6 +4,8 @@ import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
+import com.fantasyhospital.enums.FemaleNameType;
+import com.fantasyhospital.enums.MaleNameType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -75,6 +77,7 @@ public class EvolutionGame {
 		if (executeAndCheckEnd(this::doCreaturesWait)) return true;
 		if (executeAndCheckEnd(this::doDoctorsExamine)) return true;
 		if (executeAndCheckEnd(this::actionCrypte)) return true;
+		if (executeAndCheckEnd(this::reviewBudgetServicesClose)) return true;
 		if (executeAndCheckEnd(this::reviewHospitalBudget)) return true;
 
 		modifyGameRandomly();
@@ -99,7 +102,7 @@ public class EvolutionGame {
 
 	public void showEndGame() {
 		logEndGame();
-		log.info(Singleton.getInstance().getEndGameLog());
+		//log.info(Singleton.getInstance().getEndGameLog());
 	}
 
 	/**
@@ -130,9 +133,12 @@ public class EvolutionGame {
 	 * Check all the medical services's budget, if the budget is at 0 the medical service close
 	 */
 	private void reviewHospitalBudget(){
-		hospital.reviewBudgetServicesClose();
 		hospital.checkBudgetServices();
 		hospital.reviewBudgetServiceCreate();
+	}
+
+	private void reviewBudgetServicesClose(){
+		hospital.reviewBudgetServicesClose();
 	}
 
 	/**
@@ -141,8 +147,17 @@ public class EvolutionGame {
 	 * @return true if it is, false otherwise.
 	 */
 	private boolean checkEndOfGame() {
-		int TotalCreatures = hospital.getTotalCreaturesHospital();
-		return TotalCreatures == 0 || hospital.getMedicalServices().isEmpty();
+		int totalCreatures = hospital.getTotalCreaturesHospital();
+		boolean result = false;
+		if(totalCreatures == 0){
+			log.info("Partie terminée, il n'y a plus aucune créature dans l'hopital..");
+			result = true;
+		} else if(hospital.getNbMedicalServicesExceptCryptQuarantine() == 0){
+			log.info("Partie terminée, l'hopital ferme, tous les services ont fermé...");
+			result = true;
+		}
+		log.info("total services : {}", hospital.getNbMedicalServicesExceptCryptQuarantine());
+		return result;
 	}
 
 	/**

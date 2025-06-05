@@ -32,7 +32,8 @@ public enum FemaleNameType {
         }
 
         if (available.isEmpty()) {
-            throw new IllegalStateException("Tous les prénoms féminins ont été utilisés !");
+            return "Mickael Martin Nevot";
+            //throw new IllegalStateException("Tous les prénoms féminins ont été utilisés !");
         }
 
         FemaleNameType chosen = available.get(new Random().nextInt(available.size()));
