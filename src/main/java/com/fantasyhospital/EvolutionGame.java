@@ -35,15 +35,15 @@ public class EvolutionGame {
 	private WaitingRoomController waitingRoomController;
 	private GridMedicalServiceController gridMedicalServiceController;
 
-	//Constants for the random evolutions
-	private static final double GET_NEW_DISEASE_CHANCE = 0.1;
-	private static final int DECREASE_DISEASE_MORAL = 5;
-	private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.05;
-	private static final double EVOLVE_BUDGET_CHANCE = 0.05;
-	private static final double ADD_CREATURE_CHANCE = 0.95;
-	private static final double ADD_DOCTOR_CHANCE = 0.05;
-	private static final double EVOLVE_MORAL_CHANCE = 0.05;
-	private static final int VARIATION_MORAL_LEVEL = 30;
+    //Constants for the random evolutions
+    private static final double GET_NEW_DISEASE_CHANCE = 0.1;
+    private static final int DECREASE_DISEASE_MORAL = 5;
+    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.1;
+    private static final double EVOLVE_BUDGET_CHANCE = 0.05;
+    private static final double ADD_CREATURE_CHANCE = 0.95;
+    private static final double ADD_DOCTOR_CHANCE = 0.02;
+    private static final double EVOLVE_MORAL_CHANCE = 0.05;
+    private static final int VARIATION_MORAL_LEVEL = 30;
 	private static final int NB_RANDOM_ADD_CREATURE = 8;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
@@ -129,9 +129,10 @@ public class EvolutionGame {
 	/**
 	 * Check all the medical services's budget, if the budget is at 0 the medical service close
 	 */
-	private void reviewHospitalBudget() {
-		hospital.reviewBudgetServices();
+	private void reviewHospitalBudget(){
+		hospital.reviewBudgetServicesClose();
 		hospital.checkBudgetServices();
+		hospital.reviewBudgetServiceCreate();
 	}
 
 	/**
@@ -185,7 +186,7 @@ public class EvolutionGame {
 				if (Math.random() < EVOLVE_LEVEL_DISEASE_CHANCE) {
 					Disease dis = creature.getRandomDisease();
 					dis.setCurrentLevel(Math.min(dis.getCurrentLevel() + new Random().nextInt(8), dis.getLEVEL_MAX() - 1));
-					log.info("La créature {} n'a pas de chance, sa maladie {} passe au niveau {} de manière aléatoire...", creature.getFullName(), dis.getName(), dis.getCurrentLevel());
+					log.warn("La créature {} n'a pas de chance, sa maladie {} passe au niveau {} de manière aléatoire...", creature.getFullName(), dis.getName(), dis.getCurrentLevel());
 				}
 
 				creature.notifyExitObservers();
@@ -197,11 +198,11 @@ public class EvolutionGame {
 					if (new Random().nextBoolean()) {
 						variationMoral = -(1 + new Random().nextInt(VARIATION_MORAL_LEVEL + 1));
 						newMorale = Math.max(creature.getMorale() + variationMoral, 0);
-						log.info("La créature {} n'a pas de chance car son moral évolue aléatoirement ({})", creature.getFullName(), variationMoral);
+						log.warn("La créature {} n'a pas de chance car son moral évolue aléatoirement ({})", creature.getFullName(), variationMoral);
 					} else {
 						variationMoral = 1 + new Random().nextInt(VARIATION_MORAL_LEVEL - 1);
 						newMorale = Math.min(creature.getMorale() + variationMoral, 100);
-						log.info("La créature {} a de la chance car son moral évolue aléatoirement (+{})", creature.getFullName(), variationMoral);
+						log.warn("La créature {} a de la chance car son moral évolue aléatoirement (+{})", creature.getFullName(), variationMoral);
 					}
 					creature.setMorale(newMorale);
 				}
@@ -254,16 +255,14 @@ public class EvolutionGame {
 			int rnd = new Random().nextInt(hospital.getMedicalServices().size());
 			MedicalService service = hospital.getMedicalServices().get(rnd);
 
-			int oldBudget = service.getBudget();
-			int variation = new Random().nextInt(41) - 20;
-			if (variation < 0) {
-				service.setBudget(Math.max(oldBudget + variation, 0));
-			} else {
-				service.setBudget(Math.min(oldBudget + variation, 100));
-			}
-			log.info("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
-		}
-	}
+            int oldBudget = service.getBudget();
+            int variation = new Random().nextInt(41) - 20;
+			int newBudget = oldBudget + variation;
+			newBudget = Math.max(0, Math.min(100, newBudget));
+			service.setBudget(newBudget);
+            log.warn("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
+        }
+    }
 
 	/**
 	 * Call the several methods that modify the game randomly each tour
@@ -281,8 +280,14 @@ public class EvolutionGame {
 		int nbCreatures = new Random().nextInt(NB_RANDOM_ADD_CREATURE);
 		for (int i = 0; i < nbCreatures; i++) {
 			if (Math.random() < ADD_CREATURE_CHANCE) {
+
+				// Find a random service that has enough space in it
 				int rnd = new Random().nextInt(hospital.getServices().size());
 				Room room = hospital.getServices().get(rnd);
+				while(!(room.getAvailableBeds() > 0)){
+					rnd = new Random().nextInt(hospital.getServices().size());
+					room = hospital.getServices().get(rnd);
+				}
 				Creature creature = null;
 
 				if (room != null) {
@@ -331,7 +336,7 @@ public class EvolutionGame {
 					creature.addExitObserver(new ExitObserver(hospital));
 					creature.addMoralObserver(new MoralObserver(hospital));
 					room.addCreature(creature);
-					log.info("La créature {} vient d'arriver à l'hosto dans la salle {} ! Bienvenue", creature.getFullName(), room.getName());
+					log.info("Une créature sauvage apparait dans le service {}, bienvenue {} !", room.getName(), creature.getFullName());
 				}
 			}
 		}
@@ -346,7 +351,7 @@ public class EvolutionGame {
 			MedicalService medicalService = hospital.getMedicalServices().get(new Random().nextInt(hospital.getMedicalServices().size()));
 
 			String race = medicalService.getRoomType();
-			Doctor doctor = new Doctor(race, medicalService);
+			Doctor doctor = new Doctor(medicalService);
 			doctor.addObserver(new MoralObserver(hospital));
 			medicalService.addDoctor(doctor);
 			log.info("Le médecin {} vient d'arriver dans le service {} !", doctor.getFullName(), medicalService.getName());

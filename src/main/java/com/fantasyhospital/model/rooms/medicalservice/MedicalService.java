@@ -1,21 +1,21 @@
 package com.fantasyhospital.model.rooms.medicalservice;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
-
 import com.fantasyhospital.observer.MoralObserver;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.print.Doc;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import static com.fantasyhospital.model.rooms.medicalservice.MedicalServiceUtils.*;
+
 
 /**
  * Represents a specialized medical service in Fantasy Hospital.
@@ -45,6 +45,14 @@ public class MedicalService extends Room {
     public MedicalService(String name, double area, int MAX_CREATURE, int budget) {
         super(name, area, MAX_CREATURE);
         this.budget = budget;
+    }
+
+    /**
+     * Constructor with generated fields
+     */
+    public MedicalService() {
+        super(generateRandomName(), generateRandomArea(), NB_MAX_CREATURES_SERVICE);
+        this.budget = generateRandomBudget();
     }
 
     /**
@@ -107,7 +115,7 @@ public class MedicalService extends Room {
         Doctor doctor = null;
         if(this.doctors.isEmpty()) {
             String race = this.getRoomType();
-            doctor = new Doctor(race, this);
+            doctor = new Doctor(this);
             doctor.addObserver(new MoralObserver(hospital));
             this.addDoctor(doctor);
         } else {

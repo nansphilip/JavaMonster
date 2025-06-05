@@ -50,7 +50,7 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.gener
     public abstract void waiting(Room room);
 
     public boolean die(Room room) {
-        log.info("La créature {} se meurt.", this.fullName);
+        log.info("La créature {} vient de mourir...", this.fullName);
         return true;
     }
 

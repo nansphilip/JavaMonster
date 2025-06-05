@@ -14,6 +14,8 @@ import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.fantasyhospital.observer.MoralObserver.DECREASE_BUDGET;
+
 /**
  * Implémentation de l'interface Observer chargé de surveiller si une bête doit sortir de l'hopital
  * Soit parce qu'elle est soignée et n'a plus de maladie, soit parce qu'elle a trepassé
@@ -27,7 +29,6 @@ public class ExitObserver implements CreatureObserver {
     private Hospital hospital;
 
     // Constants of variation
-    private static final int DECREASE_BUDGET = 15;
 
     public ExitObserver(Hospital hospital) {
         this.hospital = hospital;

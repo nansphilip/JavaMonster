@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.fantasyhospital.enums.RaceType.generateRandomRace;
 import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.*;
 import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.generateAge;
 import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.generateMorale;
@@ -72,8 +73,8 @@ public class Doctor extends Beast {
 		this.previousMorale = morale;
 	}
 
-	public Doctor(String race, MedicalService medicalService) {
-		super(null, generateRandomSex(), generateWeight(), generateHeight(), generateAge(), generateMorale());
+	public Doctor(MedicalService medicalService) {
+		super(generateRandomRace(), generateRandomSex(), generateWeight(), generateHeight(), generateAge(), generateMorale());
 		this.fullName = "Dr. " + generateRandomName(this.sex);
 		this.race = race;
 		this.medicalService = medicalService;
@@ -284,7 +285,7 @@ public class Doctor extends Beast {
 
 			int healCreature = ActionType.CREATURE_TREATED.getMoraleVariation();
 			// creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
-			creature.setMoraleWithRoom(Math.min(creature.getMorale() + healCreature, 100));
+			creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
 
 			// The value of the budget increase by healing the creature
 			medicalService.setBudget(Math.min(medicalService.getBudget() + INCREASE_BUDGET_SERVICE, 100));

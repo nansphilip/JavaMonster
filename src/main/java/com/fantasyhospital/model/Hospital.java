@@ -2,13 +2,17 @@ package com.fantasyhospital.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import com.fantasyhospital.enums.ServiceNameType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 
+import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
+import com.fantasyhospital.observer.MoralObserver;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +45,9 @@ public class Hospital {
     @Getter
     private List<Room> services = new ArrayList<Room>();
 
+    //Constants
+    private static final int NB_AVERAGE_BUDGET_NEEDED = 75;
+
     /**
      * Creates a new hospital. Randomly generate the maximum number of services
      * between 8 and 12 included.
@@ -49,7 +56,7 @@ public class Hospital {
      */
     public Hospital(String name) {
         this.name = name;
-        this.MAX_SERVICE_COUNT = 8 + (int) (Math.random() * 5);
+        this.MAX_SERVICE_COUNT = 4 + new Random().nextInt(4);
     }
 
     /**
@@ -70,7 +77,8 @@ public class Hospital {
      */
     public void checkBudgetServices(){
         for(MedicalService medicalService : getMedicalServices()){
-            if(medicalService.getBudget() == 0){
+            // Si crypt, on appelle methode getcryptbudget qui est calculé en fonction temperature et clim
+            if((medicalService instanceof Crypt && ((Crypt) medicalService).getCryptBudget() == 0) || medicalService.getBudget() == 0){
                 medicalService.setHasServiceToClose(true);
                 log.info("Le service {} a un budget terrible, l'état ordonne sa fermeture d'ici le mois prochain.", medicalService.getName());
             }
@@ -80,9 +88,9 @@ public class Hospital {
     /**
      * Check all the medical services, and close the service if needed
      */
-    public void reviewBudgetServices() {
+    public void reviewBudgetServicesClose() {
         for(MedicalService medicalService : getMedicalServices()){
-            if(medicalService.isHasServiceToClose() == true){
+            if(medicalService.isHasServiceToClose()){
                 // Transfer all the creatures to waiting room
                 medicalService.transferAllCreaturesToWaitingRoom(this);
 
@@ -90,11 +98,52 @@ public class Hospital {
                 for(Doctor doctor : medicalService.getDoctors()){
                     doctor.setMorale(0);
                 }
+
+                // Make the name available again (except for crypt or quarantine)
+                if(!(medicalService instanceof Crypt || medicalService instanceof Quarantine)){
+                    ServiceNameType nameEnum = ServiceNameType.valueOf(medicalService.getName().toUpperCase());
+                    nameEnum.setSelected(false);
+                }
+
                 // Remove the service
                 removeService(medicalService);
+
                 log.info("Le service {} ferme car il avait un budget trop catastrophique, le capitalisme frappe à nouveau...", medicalService.getName());
             }
         }
+    }
+
+    /**
+     * Calculate the average global budget of the hospital
+     * If it is over 70, creates a new service with a new doctor
+     */
+    public void reviewBudgetServiceCreate(){
+        int totalBudget = 0;
+        for(MedicalService medicalService : getMedicalServices()){
+            // If crypt, calls special method to get budget
+            totalBudget += medicalService instanceof Crypt ? ((Crypt) medicalService).getCryptBudget() : medicalService.getBudget();
+        }
+        int averageBudget = Math.round((float) totalBudget / getMedicalServices().size());
+        log.info("Budget global : {}", averageBudget);
+
+        // Creation of a new Service with a doctor if there is enough space in the hospital
+        if(averageBudget >= NB_AVERAGE_BUDGET_NEEDED && this.services.size() < this.MAX_SERVICE_COUNT){
+            MedicalService medicalService = new MedicalService();
+            Doctor doctor = new Doctor(medicalService);
+            doctor.addObserver(new MoralObserver(this));
+            medicalService.addDoctor(doctor);
+            this.addService(medicalService);
+            log.info("Le budget de l'hosto est remarquable, le service {} vient d'être créé avec le docteur {} !!",  medicalService.getName(), doctor.getFullName());
+        } else if(averageBudget >= NB_AVERAGE_BUDGET_NEEDED && this.services.size() == this.MAX_SERVICE_COUNT){
+            log.info("L'hôpital a atteint son nombre maximum de services, de nouveaux services ne peuvent pas être créés...");
+        }
+    }
+
+    /**
+     * Check the budget of the hospital, and creates a new service if the budget is good
+     */
+    public void reviewBudgetServicesCreate(){
+
     }
 
     /**

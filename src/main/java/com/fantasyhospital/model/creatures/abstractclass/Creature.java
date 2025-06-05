@@ -212,22 +212,10 @@ public abstract class Creature extends Beast {
     }
 
     /**
-     * Surcharge de la méthode setMorale pour prendre en compte la quarantaine
-     * Si la créature est en quarantaine, son moral ne change pas
+     * Modify the moral of the creature
      */
     @Override
     public void setMorale(int morale) {
-        // Nous utilisons la méthode originale car nous n'avons pas accès à la room ici
-        // La vérification de quarantaine sera faite par l'appelant
-        this.morale = morale;
-    }
-
-    /**
-     * Permet de changer le moral de la créature
-     * @param morale Nouveau moral
-     * @param room Room où se trouve la créature
-     */
-    public void setMoraleWithRoom(int morale) {
         this.morale = morale;
     }
 
@@ -244,7 +232,7 @@ public abstract class Creature extends Beast {
      * Cures the creature of a given disease and give moral points
      * (moral doesn't change if in quarantine)
      * @param disease La maladie à soigner
-     * @param room La salle où se trouve la créature (pour vérifier si c'est une quarantaine)
+     * @param medicalService La salle où se trouve la créature (pour vérifier si c'est une quarantaine)
      * @return true if the disease was removed.
      */
     public boolean beCured(Disease disease, MedicalService medicalService) {
