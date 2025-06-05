@@ -42,7 +42,10 @@ public final class Crypt extends MedicalService {
     
     // Healing constants
     private static final int REQUIRED_HEALING_TOURS = 3;
-    
+
+    // Budget constants
+    private static final int DECREASE_CALCUL_BUDGET = 5;
+
     /**
      * Airflow, true if working false otherwise
      */
@@ -130,13 +133,24 @@ public final class Crypt extends MedicalService {
     }
 
     /**
-     * Service budget (e.g., nonexistent, poor, insufficient, low)
+     * Calculate the real crypt budget according to the temperature and the airflow
      */
-    @Override
-    public int getBudget() {
+    public int getCryptBudget() {
         // The temperature and airflow is included in the calcul of the crypt budget
-
-        return super.getBudget();
+        int calculatedBudget = this.budget;
+        calculatedBudget += this.airflow ? DECREASE_CALCUL_BUDGET : - DECREASE_CALCUL_BUDGET;
+        if(this.temperature < HEALING_MAX_TEMPERATURE){
+            calculatedBudget += DECREASE_CALCUL_BUDGET;
+        } else {
+            calculatedBudget -= DECREASE_CALCUL_BUDGET;
+        }
+        if(calculatedBudget < 0){
+            calculatedBudget = 0;
+        } else if(calculatedBudget > 100){
+            calculatedBudget = 100;
+        }
+        log.info("budget crypt : {}",  calculatedBudget);
+        return calculatedBudget;
     }
 
     /**

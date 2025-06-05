@@ -227,7 +227,14 @@ public abstract class Creature extends Beast {
      * @param morale Nouveau moral
      * @param room Room où se trouve la créature
      */
-    public void setMoraleWithRoom(int morale) {
+    public void setMoraleWithRoom(int morale, Room room) {
+        if (room instanceof Quarantine) {
+            // En quarantaine, le moral est figé, on ne fait rien
+            log.warn("La créature {} est en quarantaine, son moral reste à {}.", this.fullName, this.morale);
+            return;
+        }
+
+        // Sinon, on change le moral normalement
         this.morale = morale;
     }
 

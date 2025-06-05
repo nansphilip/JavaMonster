@@ -40,7 +40,7 @@ public class MedicalServiceCellView {
 		pane.setPrefSize(210.0, 290.0);
 		pane.setCursor(Cursor.HAND);
 
-        Label name = new Label("Service Medical : " + service.getName());
+        Label name = new Label(service.getName());
         name.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
         name.setMaxWidth(160);
         name.setPrefWidth(160);

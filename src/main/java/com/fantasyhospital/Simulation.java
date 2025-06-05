@@ -3,6 +3,8 @@ package com.fantasyhospital;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.enums.ServiceNameType;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalServiceUtils;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import org.springframework.stereotype.Service;
 
@@ -61,28 +63,21 @@ public class Simulation {
         // Create a hospital with a name and a maximum number of services
         Hospital hospital = new Hospital("Marseille");
 
-        // Create medical services
-        MedicalService emergency = new MedicalService("Urgence", 50.0, 10, new Random().nextInt(100));
-        MedicalService cardiac = new MedicalService("Cardiologie", 50.0, 10, new Random().nextInt(100));
-        MedicalService gastro = new MedicalService("Gastrologie", 50.0, 10, new Random().nextInt(100));
-        Crypt crypt = new Crypt("Crypt", 50, 5, new Random().nextInt(100));
-        Quarantine quarantine = new Quarantine("Quarantaine", 50, 5, new Random().nextInt(100));
+        // Create medical services and doctor
+        for(int i = 0; i < 3; i++){
+            MedicalService medicalService = new MedicalService();
+            Doctor doctor = new Doctor(medicalService);
+            doctor.addObserver(new MoralObserver(hospital));
+            medicalService.addDoctor(doctor);
+            hospital.addService(medicalService);
+            listDoctorsController.addDoctor(doctor);
+        }
+
+        Crypt crypt = new Crypt("Crypt", 50, 2, new Random().nextInt(100));
+        Quarantine quarantine = new Quarantine("Quarantaine", 50, 2, new Random().nextInt(100));
 
         // Create a waiting room
         Room roomAttente = new Room("Room d'attente", 70, 100);
-
-        // Create a doctor and assign it to the emergency service
-        Doctor doctor = new Doctor("Dr Cardio", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", cardiac);
-        doctor.addObserver(new MoralObserver(hospital));
-        cardiac.addDoctor(doctor);
-
-        Doctor doctor2 = new Doctor("Dr Urgence", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", emergency);
-        doctor2.addObserver(new MoralObserver(hospital));
-        emergency.addDoctor(doctor2);
-
-        Doctor doctor3 = new Doctor("Dr Gastro", GenderType.MALE, 70, 175, 45, 100, "Lycanthrope", gastro);
-        doctor3.addObserver(new MoralObserver(hospital));
-        gastro.addDoctor(doctor3);
 
         // Generate 10 random creatures and add them to the list
         for (int i = 0; i < 10; i++) {
@@ -90,7 +85,7 @@ public class Simulation {
             creature.addExitObserver(new ExitObserver(hospital));
             creature.addMoralObserver(new MoralObserver(hospital));
             creatures.add(creature);
-            log.info("Créature générée : {}", creature);
+            //log.info("Créature générée : {}", creature);
 
             // TODO: use patientRepository ?
             listCreatureController.addCreature(creature);
@@ -101,9 +96,6 @@ public class Simulation {
 
         // Add services to the hospital
         hospital.addService(roomAttente);
-        hospital.addService(emergency);
-        hospital.addService(cardiac);
-        hospital.addService(gastro);
         hospital.addService(crypt);
         hospital.addService(quarantine);
 
@@ -116,10 +108,6 @@ public class Simulation {
         // Provide hospital and doctors list to JavaFX controllers
         listCreatureController.setHospital(hospital);
         listDoctorsController.setHospital(hospital);
-
-        listDoctorsController.addDoctor(doctor);
-        listDoctorsController.addDoctor(doctor2);
-        listDoctorsController.addDoctor(doctor3);
 
         // Evolution game loop
         this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController, gridMedicalServiceController);

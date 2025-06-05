@@ -58,7 +58,7 @@ public class GridMedicalServiceController {
 		if (hospital != null && hospital.getServices() != null) {
 			int col = 0;
 			int row = 0;
-			int maxColsPerRow = 4; // 4 services par ligne maximum
+			int maxColsPerRow = 3; // 4 services par ligne maximum
 
 			for (Room room : hospital.getServices()) {
 				if (room instanceof MedicalService service) {
