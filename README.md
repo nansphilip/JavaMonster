@@ -16,7 +16,7 @@
   ```sh
   brew install openjdk maven
   ```
-- **Sur Ubuntu (avec apt) :**
+- **Sur Linux (avec apt) :**
   ```sh
   sudo apt update
   sudo apt install openjdk-17-jdk maven
@@ -59,6 +59,12 @@ Exécuter le JAR :
 
 ```sh
 java -jar target/FantasyHospital.jar
+```
+
+### Lancer les tests
+
+```sh
+mvn clean test
 ```
 
 ## Architecture du projet
