@@ -1,11 +1,13 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.config.StageManager;
+import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.MedicalServiceDetailsController;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,7 +31,7 @@ import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackgro
 
 public class MedicalServiceCellView {
 
-    public static Pane createView(MedicalService service, Hospital hospital, StageManager stageManager) {
+    public static Pane createView(MedicalService service, Hospital hospital, StageManager stageManager, GridMedicalServiceController gridMedicalServiceController) {
         Pane pane = new Pane();
         pane.setStyle("""
                 -fx-background-color: #add8e6;
@@ -100,6 +102,12 @@ public class MedicalServiceCellView {
         doctorImageView.setLayoutX(10);
         doctorImageView.setLayoutY(165);
         pane.getChildren().add(doctorImageView);
+
+        // cas ou le service ferme
+        if (service.isHasServiceToClose()) {
+            Platform.runLater(gridMedicalServiceController::showCloseDoor);
+        }
+
         return pane;
     }
 
