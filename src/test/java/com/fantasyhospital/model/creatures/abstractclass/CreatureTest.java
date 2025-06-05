@@ -6,6 +6,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -233,5 +235,116 @@ class CreatureTest {
         // Should cap morale at 100
         assertTrue(result);
         assertEquals(100, creature.getMorale());
+    }
+
+    @Test
+    void getRandomDiseaseWithNoDiseasesShouldReturnNull() {
+        // Ensure creature has no diseases
+        creature.getDiseases().clear();
+        
+        // Call getRandomDisease
+        Disease result = creature.getRandomDisease();
+        
+        // Should return null
+        assertNull(result);
+    }
+
+    @Test
+    void getRandomDiseaseWithOneDiseaseShouldReturnThatDisease() {
+        // Add one disease to the creature
+        Disease disease = new Disease(DiseaseType.MDC, 10, 5);
+        creature.getDiseases().add(disease);
+        
+        // Call getRandomDisease
+        Disease result = creature.getRandomDisease();
+        
+        // Should return the only disease
+        assertNotNull(result);
+        assertEquals(disease, result);
+    }
+
+    @Test
+    void getRandomDiseaseWithMultipleDiseasesShouldReturnADisease() {
+        // Add multiple diseases to the creature
+        Disease disease1 = new Disease(DiseaseType.MDC, 10, 3);
+        Disease disease2 = new Disease(DiseaseType.FOMO, 10, 7);
+        Disease disease3 = new Disease(DiseaseType.DRS, 10, 5);
+        creature.getDiseases().add(disease1);
+        creature.getDiseases().add(disease2);
+        creature.getDiseases().add(disease3);
+        
+        // Call getRandomDisease multiple times to check it returns valid diseases
+        for (int i = 0; i < 10; i++) {
+            Disease result = creature.getRandomDisease();
+            assertNotNull(result);
+            assertTrue(creature.getDiseases().contains(result));
+        }
+    }
+
+    @Test
+    void getHighLevelDiseaseWithNoDiseasesShouldReturnNull() {
+        // Ensure creature has no diseases
+        creature.getDiseases().clear();
+        
+        // Call getHighLevelDisease
+        Disease result = creature.getHighLevelDisease();
+        
+        // Should return null
+        assertNull(result);
+    }
+
+    @Test
+    void getHighLevelDiseaseWithOneDiseaseShouldReturnThatDisease() {
+        // Add one disease to the creature
+        Disease disease = new Disease(DiseaseType.MDC, 10, 5);
+        creature.getDiseases().add(disease);
+        
+        // Call getHighLevelDisease
+        Disease result = creature.getHighLevelDisease();
+        
+        // Should return the only disease
+        assertNotNull(result);
+        assertEquals(disease, result);
+    }
+
+    @Test
+    void getHighLevelDiseaseWithMultipleDiseasesShouldReturnHighestLevel() {
+        // Add multiple diseases with different levels
+        Disease lowLevelDisease = new Disease(DiseaseType.MDC, 10, 3);
+        Disease highLevelDisease = new Disease(DiseaseType.FOMO, 10, 8);
+        Disease mediumLevelDisease = new Disease(DiseaseType.DRS, 10, 5);
+        
+        creature.getDiseases().add(lowLevelDisease);
+        creature.getDiseases().add(highLevelDisease);
+        creature.getDiseases().add(mediumLevelDisease);
+        
+        // Call getHighLevelDisease
+        Disease result = creature.getHighLevelDisease();
+        
+        // Should return the disease with highest level
+        assertNotNull(result);
+        assertEquals(highLevelDisease, result);
+        assertEquals(8, result.getCurrentLevel());
+    }
+
+    @Test
+    void getHighLevelDiseaseWithEqualLevelsShouldReturnFirst() {
+        // Add multiple diseases with equal highest levels
+        Disease firstDisease = new Disease(DiseaseType.MDC, 10, 7);
+        Disease secondDisease = new Disease(DiseaseType.FOMO, 10, 7);
+        Disease lowerDisease = new Disease(DiseaseType.DRS, 10, 5);
+        
+        creature.getDiseases().add(firstDisease);
+        creature.getDiseases().add(secondDisease);
+        creature.getDiseases().add(lowerDisease);
+        
+        // Call getHighLevelDisease
+        Disease result = creature.getHighLevelDisease();
+        
+        // Should return the first disease found with highest level
+        assertNotNull(result);
+        assertEquals(7, result.getCurrentLevel());
+        // Should be either firstDisease or secondDisease (both have level 7)
+        assertTrue(result.equals(firstDisease) || result.equals(secondDisease));
     }
 }
