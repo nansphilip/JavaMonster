@@ -11,8 +11,8 @@ public class CloseDoorCellView {
     public static void show(GridMedicalServiceController gridMedicalServiceController) {
         Image image = new Image(HarakiriCellView.class.getResource("/images/room/CloseDoor.png").toExternalForm());
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(150);
-        imageView.setFitHeight(150);
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(100);
         imageView.setPreserveRatio(true);
 
 

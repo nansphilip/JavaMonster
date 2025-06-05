@@ -10,11 +10,11 @@ import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+@Getter
 @Slf4j
 public class Quarantine extends MedicalService {
 
 
-    @Getter
     private final boolean isolation;
 
     public static final List<String> CONTAMINATING_RACES = Arrays.asList("Orc", "Werebeast", "Lycanthrope", "Vampire");

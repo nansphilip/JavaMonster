@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -35,6 +34,17 @@ public class HospitalStructureController implements Initializable {
     private Pane cryptViewInclude;
     @FXML
     private CryptViewController cryptViewIncludeController;
+
+    @FXML
+    private Pane quarantineViewInclude;
+    @FXML
+    private QuarantineViewController quarantineViewIncludeController;
+
+    @FXML
+    private Pane waitingRoomInclude;
+
+    @FXML
+    private WaitingRoomController waitingRoomIncludeController;
 
     @Getter
     private boolean gameStarted = false;
@@ -91,40 +101,53 @@ public class HospitalStructureController implements Initializable {
             cryptViewInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.35)); // Réduire à 35%
         }
 
+        if (quarantineViewInclude != null && cryptViewInclude != null) {
+            // Position X : même que la crypte
+            quarantineViewInclude.layoutXProperty().bind(
+                    cryptViewInclude.layoutXProperty()
+            );
+
+            // Position Y : juste en dessous de la crypte avec un petit espacement
+            quarantineViewInclude.layoutYProperty().bind(
+                    cryptViewInclude.layoutYProperty().add(cryptViewInclude.prefHeightProperty()).add(50) // 10px d'espace
+            );
+
+            // Taille identique ou ajustée
+            quarantineViewInclude.prefWidthProperty().bind(
+                    cryptViewInclude.prefWidthProperty()
+            );
+
+            quarantineViewInclude.prefHeightProperty().bind(
+                    hospitalStructure.heightProperty().multiply(0.35)
+            );
+        }
+
         // Positionnement et dimensionnement des services médicaux
         if (medicalServiceInclude != null) {
-            // Position X: centrée mais légèrement décalée vers la gauche pour laisser de l'espace à la crypte
             medicalServiceInclude.layoutXProperty().bind(
-                    Bindings.divide(
-                            Bindings.subtract(
-                                    hospitalStructure.widthProperty(),
-                                    medicalServiceInclude.prefWidthProperty()
-                            ).subtract(cryptViewInclude.prefWidthProperty().multiply(0.7)), // Décaler pour laisser place à la crypte
-                            2
+                    Bindings.max(
+                            Bindings.createDoubleBinding(() -> 290.0, hospitalStructure.widthProperty()),
+                            Bindings.divide(
+                                    Bindings.subtract(
+                                            hospitalStructure.widthProperty(),
+                                            medicalServiceInclude.prefWidthProperty()
+                                    ).subtract(cryptViewInclude.prefWidthProperty().multiply(0.7)),
+                                    2
+                            )
                     )
             );
 
-            // Position Y: en haut avec une marge
             medicalServiceInclude.layoutYProperty().set(10);
 
-            // Limiter la taille - réduire légèrement pour laisser de l'espace
-            medicalServiceInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.55)); // Réduire à 55%
+            medicalServiceInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.55));
             medicalServiceInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.3));
         }
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/waitingRoomView.fxml"));
-            waitingRoomView = loader.load();
-            waitingRoomController = loader.getController();
-
-            // Rendre la salle d'attente responsive
-            waitingRoomView.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.3)); // 30% de la largeur
-            waitingRoomView.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.9)); // 90% de la hauteur
-            waitingRoomView.layoutXProperty().bind(hospitalStructure.widthProperty().multiply(0.01)); // 1% de marge à gauche
-            waitingRoomView.layoutYProperty().bind(hospitalStructure.heightProperty().multiply(0.05)); // 5% de marge en haut
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (waitingRoomInclude != null) {
+            waitingRoomInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.3));
+            waitingRoomInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.9));
+            waitingRoomInclude.layoutXProperty().bind(hospitalStructure.widthProperty().multiply(0.01));
+            waitingRoomInclude.layoutYProperty().bind(hospitalStructure.heightProperty().multiply(0.05));
         }
     }
 
@@ -155,12 +178,17 @@ public class HospitalStructureController implements Initializable {
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
         if (waitingRoomController != null) {
-            waitingRoomController.setHospital(hospital);
+            waitingRoomIncludeController.setHospital(hospital);
         }
 
         // Mise à jour de la vue de la crypte
         if (cryptViewIncludeController != null) {
             cryptViewIncludeController.setHospital(hospital);
+        }
+
+        // Mise à jour de la vue de la crypte
+        if (quarantineViewIncludeController != null) {
+            quarantineViewIncludeController.setHospital(hospital);
         }
     }
 
@@ -180,6 +208,15 @@ public class HospitalStructureController implements Initializable {
     public void updateCrypt() {
         if (cryptViewIncludeController != null && hospital != null) {
             cryptViewIncludeController.updateCryptView();
+        }
+    }
+
+    /**
+     * Met à jour l'affichage de la crypte avec les données actuelles
+     */
+    public void updateQuarantine() {
+        if (quarantineViewIncludeController != null && hospital != null) {
+            quarantineViewIncludeController.updateQuarantineView();
         }
     }
 }

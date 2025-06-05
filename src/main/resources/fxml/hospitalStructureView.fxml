@@ -23,11 +23,15 @@
                               maxWidth="1300.0"
                               maxHeight="700.0">
                     <children>
+                        <!-- Waiting Room -->
+                        <fx:include source="waitingRoomView.fxml" fx:id="waitingRoomInclude" />
                         <!-- Services médicaux -->
                         <fx:include source="medicalServiceView.fxml" fx:id="medicalServiceInclude"/>
 
                         <!-- Vue de la crypte à droite -->
                         <fx:include source="cryptView.fxml" fx:id="cryptViewInclude"/>
+                        <!-- Vue de la quarantaine à droite -->
+                        <fx:include source="quarantineView.fxml" fx:id="quarantineViewInclude"/>
                     </children>
                 </Pane>
             </center>

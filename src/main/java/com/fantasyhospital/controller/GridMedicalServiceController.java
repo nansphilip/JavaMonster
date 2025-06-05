@@ -142,7 +142,7 @@ public class GridMedicalServiceController {
 	public void updateServicesList() {
 		if (hospital != null) {
 			this.services = hospital.getMedicalServices();
-			Platform.runLater(() -> updateMedicalServices());
+			Platform.runLater(this::updateMedicalServices);
 		}
 	}
 
@@ -150,7 +150,7 @@ public class GridMedicalServiceController {
 		this.hospital = hospital;
 		if (hospital != null) {
 			this.services = hospital.getMedicalServices();
-			Platform.runLater(() -> updateMedicalServices());
+			Platform.runLater(this::updateMedicalServices);
 		}
 	}
 

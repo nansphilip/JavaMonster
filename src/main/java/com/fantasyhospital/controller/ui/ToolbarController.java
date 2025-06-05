@@ -167,5 +167,6 @@ public class ToolbarController implements Initializable {
 		counterController.updateDeathCounter();
 		hospitalStructureController.updateWaitingRoom();
 		hospitalStructureController.updateCrypt();
+		hospitalStructureController.updateQuarantine();
 	}
 }
