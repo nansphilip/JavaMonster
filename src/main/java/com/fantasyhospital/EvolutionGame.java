@@ -35,15 +35,15 @@ public class EvolutionGame {
 	private WaitingRoomController waitingRoomController;
 	private GridMedicalServiceController gridMedicalServiceController;
 
-    //Constants for the random evolutions
-    private static final double GET_NEW_DISEASE_CHANCE = 0.1;
-    private static final int DECREASE_DISEASE_MORAL = 5;
-    private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.05;
-    private static final double EVOLVE_BUDGET_CHANCE = 0.05;
-    private static final double ADD_CREATURE_CHANCE = 0.95;
-    private static final double ADD_DOCTOR_CHANCE = 0.05;
-    private static final double EVOLVE_MORAL_CHANCE = 0.05;
-    private static final int VARIATION_MORAL_LEVEL = 30;
+	//Constants for the random evolutions
+	private static final double GET_NEW_DISEASE_CHANCE = 0.1;
+	private static final int DECREASE_DISEASE_MORAL = 5;
+	private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.05;
+	private static final double EVOLVE_BUDGET_CHANCE = 0.05;
+	private static final double ADD_CREATURE_CHANCE = 0.95;
+	private static final double ADD_DOCTOR_CHANCE = 0.05;
+	private static final double EVOLVE_MORAL_CHANCE = 0.05;
+	private static final int VARIATION_MORAL_LEVEL = 30;
 	private static final int NB_RANDOM_ADD_CREATURE = 8;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
@@ -104,6 +104,7 @@ public class EvolutionGame {
 
 	/**
 	 * Execute the method given in param and checks if the game is over
+	 *
 	 * @param action the method to execute
 	 * @return boolean true if the game is over, false otherwise
 	 */
@@ -128,7 +129,7 @@ public class EvolutionGame {
 	/**
 	 * Check all the medical services's budget, if the budget is at 0 the medical service close
 	 */
-	private void reviewHospitalBudget(){
+	private void reviewHospitalBudget() {
 		hospital.reviewBudgetServices();
 		hospital.checkBudgetServices();
 	}
@@ -169,11 +170,8 @@ public class EvolutionGame {
 
 				// Fait monter 1 niveau maladies par tour et perdre 5 moral par maladie (sauf en quarantaine pour le moral)
 				for (Disease disease : creature.getDiseases()) {
-					disease.increaseLevel();
-
-					// En quarantaine, le moral ne change pas
 					if (!isInQuarantine) {
-						creature.setMorale(Math.max(creature.getMorale() - DECREASE_DISEASE_MORAL, 0));
+						disease.increaseLevel();
 					}
 				}
 
@@ -183,7 +181,7 @@ public class EvolutionGame {
 				}
 
 				// 10% chance que le niveau d'une de ses maladies évolue de manière aléatoire
-				// On vérifie que la créature ne soit pas sortie de l'hopital avec modifs précédentes
+				// On vérifie que la créature ne soit pas sortie de l'hôpital avec modifs précédentes
 				if (Math.random() < EVOLVE_LEVEL_DISEASE_CHANCE) {
 					Disease dis = creature.getRandomDisease();
 					dis.setCurrentLevel(Math.min(dis.getCurrentLevel() + new Random().nextInt(8), dis.getLEVEL_MAX() - 1));
@@ -193,7 +191,7 @@ public class EvolutionGame {
 				creature.notifyExitObservers();
 
 				// 5% chance que le moral evolue de manière random (entre 0 et 30 variation moral)
-				if (Math.random() < EVOLVE_MORAL_CHANCE && !isInQuarantine) {
+				if (Math.random() < EVOLVE_MORAL_CHANCE) {
 					int variationMoral;
 					int newMorale;
 					if (new Random().nextBoolean()) {
@@ -217,11 +215,6 @@ public class EvolutionGame {
 	 */
 	private void doCreaturesWait() {
 		for (Room room : hospital.getServices()) {
-			// Si c'est une quarantaine, les créatures n'attendent pas (moral figé)
-			if (room instanceof Quarantine) {
-				continue;
-			}
-
 			for (Creature creature : room.getCreatures()) {
 				creature.waiting(hospital.getRoomOfCreature(creature));
 			}
@@ -261,16 +254,16 @@ public class EvolutionGame {
 			int rnd = new Random().nextInt(hospital.getMedicalServices().size());
 			MedicalService service = hospital.getMedicalServices().get(rnd);
 
-            int oldBudget = service.getBudget();
-            int variation = new Random().nextInt(41) - 20;
-			if(variation < 0){
-				service.setBudget(Math.max(oldBudget + variation,0));
+			int oldBudget = service.getBudget();
+			int variation = new Random().nextInt(41) - 20;
+			if (variation < 0) {
+				service.setBudget(Math.max(oldBudget + variation, 0));
 			} else {
-				service.setBudget(Math.min(oldBudget + variation,100));
+				service.setBudget(Math.min(oldBudget + variation, 100));
 			}
-            log.info("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
-        }
-    }
+			log.info("Le budget du service {} varie aléatoirement, il passe de {} à {}.", service.getName(), oldBudget, service.getBudget());
+		}
+	}
 
 	/**
 	 * Call the several methods that modify the game randomly each tour

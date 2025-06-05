@@ -284,7 +284,7 @@ public class Doctor extends Beast {
 
 			int healCreature = ActionType.CREATURE_TREATED.getMoraleVariation();
 			// creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
-			creature.setMoraleWithRoom(Math.min(creature.getMorale() + healCreature, 100), medicalService);
+			creature.setMoraleWithRoom(Math.min(creature.getMorale() + healCreature, 100));
 
 			// The value of the budget increase by healing the creature
 			medicalService.setBudget(Math.min(medicalService.getBudget() + INCREASE_BUDGET_SERVICE, 100));
