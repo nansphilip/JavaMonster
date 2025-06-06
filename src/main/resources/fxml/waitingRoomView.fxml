@@ -5,23 +5,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.fantasyhospital.controller.WaitingRoomController"
-      fx:id="waitingRoom"
-      prefWidth="230.0"
-      maxWidth="230.0"
-      style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;">
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.fantasyhospital.controller.WaitingRoomController"
+            fx:id="waitingRoom"
+            prefWidth="280.0"
+            maxWidth="280.0"
+            style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;">
 
+    <!-- Titre centré -->
     <Label text="Salle d'attente"
-           style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-wrap-text: true;"
+           style="-fx-font-size: 14px; -fx-font-weight: bold;"
            AnchorPane.topAnchor="10.0"
-           AnchorPane.leftAnchor="10.0"
-           AnchorPane.rightAnchor="10.0" />
+           AnchorPane.leftAnchor="0.0"
+           AnchorPane.rightAnchor="0.0"
+           alignment="CENTER" />
 
+    <!-- Liste plus large et marges réduites -->
     <ListView fx:id="waitingRoomListView"
               AnchorPane.topAnchor="40.0"
-              AnchorPane.leftAnchor="10.0"
-              AnchorPane.rightAnchor="10.0"
+              AnchorPane.leftAnchor="5.0"
+              AnchorPane.rightAnchor="5.0"
               AnchorPane.bottomAnchor="10.0"/>
 </AnchorPane>
-

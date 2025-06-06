@@ -1,6 +1,7 @@
 package com.fantasyhospital.model.rooms.medicalservice;
 
 import com.fantasyhospital.enums.BudgetType;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Regenerating;
@@ -48,8 +49,21 @@ public final class Crypt extends MedicalService {
 
     /**
      * Airflow, true if working false otherwise
+     * -- GETTER --
+     *  Retourne l'état actuel du système de ventilation
+     *
+     * @return true si le système fonctionne, false sinon
+
      */
+    @Getter
     private boolean airflow;
+    /**
+     * -- GETTER --
+     *  Retourne la température actuelle de la crypte
+     *
+     * @return température en degrés Celsius
+     */
+    @Getter
     private int temperature;
 
     /**
@@ -66,21 +80,6 @@ public final class Crypt extends MedicalService {
     }
 
     // Ajout des getters manquants
-    /**
-     * Retourne l'état actuel du système de ventilation
-     * @return true si le système fonctionne, false sinon
-     */
-    public boolean isAirflow() {
-        return airflow;
-    }
-
-    /**
-     * Retourne la température actuelle de la crypte
-     * @return température en degrés Celsius
-     */
-    public int getTemperature() {
-        return temperature;
-    }
 
     /**
      * Retourne la map des créatures et de leur nombre de tours d'attente
