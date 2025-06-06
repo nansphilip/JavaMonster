@@ -10,6 +10,4 @@ public class FantasyHospitalStarter {
 	public static void main(String[] args) {
 		Application.launch(FantasyHospitalApplication.class, args);
 	}
-
-
 }

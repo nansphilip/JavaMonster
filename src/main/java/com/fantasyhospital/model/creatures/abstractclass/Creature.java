@@ -6,14 +6,14 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.fantasyhospital.util.Singleton;
 import com.fantasyhospital.enums.ActionType;
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.disease.Disease;
-import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
-import com.fantasyhospital.observer.CreatureObserver;
 import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
+import com.fantasyhospital.observer.CreatureObserver;
+import com.fantasyhospital.util.Singleton;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -208,10 +208,10 @@ public abstract class Creature extends Beast {
     /**
      * Modify the moral of the creature
      */
-    @Override
-    public void setMorale(int morale) {
-        this.morale = morale;
-    }
+    // @Override
+    // public void setMorale(int morale) {
+    //     this.morale = morale;
+    // }
 
     /**
      * Cures the creature of a given disease and give moral points
@@ -285,8 +285,6 @@ public abstract class Creature extends Beast {
         Creature creature = (Creature) o;
         return Objects.equals(fullName, creature.fullName) && Objects.equals(height, creature.height) && Objects.equals(weight, creature.weight);
     }
-
-
 
     @Override
     public int hashCode() {

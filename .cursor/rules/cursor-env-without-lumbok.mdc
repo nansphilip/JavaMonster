@@ -1,0 +1,52 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Environnement de développement Cursor
+
+## Contexte
+- **Éditeur** : Cursor (fork de VS Code)
+- **Problème connu** : Intégration Lombok incomplète
+
+## Impact sur l'affichage des erreurs
+
+### Lombok et les erreurs d'affichage
+- Les annotations Lombok (`@Getter`, `@Setter`, `@Slf4j`, etc.) ne sont pas parfaitement reconnues par l'analyseur statique de Cursor
+- Des **erreurs peuvent s'afficher dans l'éditeur** même si le code est correct
+- La **compilation Maven fonctionne normalement** (`mvn clean compile`, `mvn test`)
+
+### Comportement typique observé
+- Erreurs de type "Cannot resolve symbol" sur les getters/setters générés par `@Getter`/`@Setter`
+- Erreurs sur les loggers générés par `@Slf4j` 
+- Suggestions de l'IDE parfois incorrectes ou manquantes
+
+## Recommandations pour le développement
+
+### Pour l'IA assistant
+1. **Ne pas se fier uniquement aux erreurs affichées** dans l'éditeur Cursor
+2. **Toujours vérifier par compilation Maven** : `mvn clean compile` ou `mvn test`
+3. Si la compilation Maven réussit, le code est probablement correct malgré les erreurs affichées
+4. Ne pas proposer de "corrections" pour des erreurs liées à Lombok si la compilation fonctionne
+
+### Flux de validation
+1. Écrire le code avec les annotations Lombok
+2. Ignorer les erreurs d'affichage liées à Lombok dans Cursor
+3. Valider par compilation : `mvn clean test` ou `mvn clean compile`
+4. Si la compilation échoue → vraie erreur à corriger
+5. Si la compilation réussit → les erreurs d'affichage sont des faux positifs
+
+### Exemple typique
+```java
+@Getter @Setter
+public class Example {
+    private String name; // Cursor peut signaler "getter/setter manquants"
+}
+
+// Usage elsewhere:
+example.getName(); // Cursor peut signaler "Cannot resolve method"
+```
+→ Mais `mvn compile` fonctionnera parfaitement car Lombok génère les méthodes à la compilation.
+
+## Note importante
+Ce problème est spécifique à l'environnement Cursor et ne reflète pas un problème dans le code source du projet.
