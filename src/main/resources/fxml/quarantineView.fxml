@@ -4,5 +4,8 @@
 <GridPane fx:id="quarantineGridPane" xmlns:fx="http://javafx.com/fxml"
           fx:controller="com.fantasyhospital.controller.QuarantineViewController"
           hgap="10" vgap="15" alignment="CENTER"
-          style="-fx-background-image: url('/images/tiles/FloorQuarantine.png'); -fx-background-size: auto;">
+          style="-fx-background-image: url('/images/tiles/FloorQuarantine.jpg');
+          -fx-background-repeat: no-repeat;
+       -fx-background-position: center center;
+       -fx-background-size: 100% 100%;">
 </GridPane>

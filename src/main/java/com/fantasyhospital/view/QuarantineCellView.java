@@ -1,9 +1,11 @@
 package com.fantasyhospital.view;
 
+import com.fantasyhospital.controller.QuarantineViewController;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -24,13 +26,15 @@ import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackgro
 public class QuarantineCellView {
 
     private final Quarantine quarantine;
+    private final QuarantineViewController quarantineViewController;
     private final List<String> bedImagePaths = new ArrayList<>();
     private final List<Doctor> doctors;
     private final Random random = new Random();
 
-    public QuarantineCellView(Quarantine quarantine, List<Doctor> doctors) {
+    public QuarantineCellView(Quarantine quarantine, List<Doctor> doctors, QuarantineViewController quarantineViewController) {
         this.quarantine = quarantine;
         this.doctors = doctors;
+        this.quarantineViewController = quarantineViewController;
         generateBedImagePaths(quarantine.getMAX_CREATURE());
     }
 
@@ -86,6 +90,11 @@ public class QuarantineCellView {
         // Doctors
         HBox doctorImages = createDoctorImages(doctors);
         container.getChildren().add(doctorImages);
+
+        // cas ou le service ferme
+        if (quarantine.isHasServiceToClose()) {
+            Platform.runLater(() -> quarantineViewController.showCloseDoor(container));
+        }
 
         return container;
     }
@@ -157,6 +166,7 @@ public class QuarantineCellView {
 
             Label nameLabel = new Label(doctor.getFullName());
             nameLabel.setStyle("-fx-font-size: 10px;");
+            nameLabel.setStyle("-fx-text-fill: white;");
 
             vbox.getChildren().addAll(imageView, nameLabel);
             hbox.getChildren().add(vbox);

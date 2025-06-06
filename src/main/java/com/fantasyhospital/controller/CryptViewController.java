@@ -2,10 +2,12 @@ package com.fantasyhospital.controller;
 
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
+import com.fantasyhospital.view.CloseDoorCellView;
 import com.fantasyhospital.view.CryptCellView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 
@@ -67,12 +69,14 @@ public class CryptViewController {
             cryptGridPane.getChildren().clear();
 
             // Appel à ta vue custom
-            CryptCellView view = new CryptCellView(crypt,crypt.getDoctors());
+            CryptCellView view = new CryptCellView(crypt,crypt.getDoctors(), this);
             VBox viewContent = view.render();
 
             cryptGridPane.add(viewContent, 0, 0);
         });
     }
 
-
+    public void showCloseDoor(VBox closeServiceDoor) {
+        CloseDoorCellView.show(closeServiceDoor);
+    }
 }

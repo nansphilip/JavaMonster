@@ -14,10 +14,13 @@
         <BorderPane>
             <center>
                 <Pane fx:id="hospitalStructure"
-                      style="-fx-border-color: #555555;
-                             -fx-border-width: 3;
-                             -fx-border-style: solid;
-                             -fx-background-color: #f8f8f8;"
+                      style="-fx-background-image: url('/images/tiles/HospitalBackground.jpg');
+             -fx-background-repeat: no-repeat;
+             -fx-background-position: center center;
+             -fx-background-size: cover;
+             -fx-border-color: #555555;
+             -fx-border-width: 3;
+             -fx-border-style: solid;"
                               prefWidth="800.0"
                               prefHeight="600.0"
                               maxWidth="1300.0"
