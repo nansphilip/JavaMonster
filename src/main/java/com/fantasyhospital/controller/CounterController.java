@@ -34,10 +34,6 @@ public class CounterController implements Initializable {
 
     private int turns = 0;
 
-    @Setter
-    @FXML
-    private Hospital hospital;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Initialisation des compteurs à 0
@@ -91,26 +87,5 @@ public class CounterController implements Initializable {
     public void setTurnCounter(int value) {
         turns = value;
         javafx.application.Platform.runLater(() -> turnCounter.setText(String.valueOf(value)));
-    }
-
-    /**
-     * Retourne la valeur actuelle du compteur de tours
-     */
-    public int getTurnCount() {
-        return turns;
-    }
-
-    /**
-     * Retourne le nombre actuel de créatures soignées depuis le Singleton
-     */
-    public int getHealedCount() {
-        return Singleton.getInstance().getCreatureHealStack().size();
-    }
-
-    /**
-     * Retourne le nombre actuel de décès depuis le Singleton
-     */
-    public int getDeathCount() {
-        return Singleton.getInstance().getCreatureDieStack().size();
     }
 }

@@ -7,7 +7,6 @@ import com.fantasyhospital.view.CryptCellView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 
@@ -20,18 +19,12 @@ public class CryptViewController {
     private GridPane cryptGridPane;
 
     private Crypt crypt;
-    private final Random random = new Random();
 
     /**
      * Initialise la vue de la crypte
      */
     @FXML
     public void initialize() {
-        // Initialisation de base de la grille
-//        if (cryptGridPane != null) {
-//            cryptGridPane.getChildren().clear();
-//            cryptGridPane.setStyle("-fx-background-color: #202020; -fx-border-color: #444444; -fx-border-width: 1px; -fx-background-image: url('/images/tiles/FloorCrypt.png')");
-//        }
     }
 
     /**

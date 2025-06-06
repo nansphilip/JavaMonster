@@ -1,25 +1,22 @@
 package com.fantasyhospital.controller;
 
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
-
-import com.fantasyhospital.config.FxmlView;
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.view.CreatureCellView;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import lombok.Getter;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  *
@@ -28,7 +25,8 @@ import javafx.stage.Stage;
 @Component
 public class ListCreatureController {
 
-	private final StageManager stageManager;
+	@Getter
+    private final StageManager stageManager;
 	private Hospital hospital;
 
 	@Lazy
@@ -41,9 +39,6 @@ public class ListCreatureController {
 		observableCreatures.add(creature);
 		creatureListView.refresh();
 	}
-
-	@FXML
-	private ImageView creatureImage;
 
 	@FXML
 	private ListView<Creature> creatureListView;
@@ -87,4 +82,5 @@ public class ListCreatureController {
 		creatureListView.setCellFactory(listView -> new CreatureCellView(hospital));
 		loadCreatures();
 	}
+
 }

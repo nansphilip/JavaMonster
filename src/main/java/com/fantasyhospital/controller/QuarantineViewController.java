@@ -20,7 +20,6 @@ public class QuarantineViewController {
     private GridPane quarantineGridPane;
 
     private Quarantine quarantine;
-    private final Random random = new Random();
 
     /**
      * Initialize quarantine service

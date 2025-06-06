@@ -58,13 +58,6 @@ public class MedicalServiceDetailsController {
         medicalServiceListView.setItems(FXCollections.observableArrayList(creatures));
     }
 
-    public void loadCreaturesFromService(MedicalService service) {
-        if (service != null) {
-            List<Creature> creatures = service.getCreatures();
-            Platform.runLater(() -> observableCreatures.setAll(creatures));
-        }
-    }
-
     private void updateView() {
         if (service != null) {
             title.setText("Détails du service : " + service.getName());

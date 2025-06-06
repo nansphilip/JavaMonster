@@ -25,8 +25,7 @@ public class GridMedicalServiceController {
 
 	private final StageManager stageManager;
 	private Hospital hospital;
-	private List<MedicalService> services;
-	private DoomController doomController;
+    private DoomController doomController;
 
 	@Lazy
 	public GridMedicalServiceController(StageManager stageManager, DoomController doomController) {
@@ -60,8 +59,7 @@ public class GridMedicalServiceController {
 	}
 
 	public void setServices(List<MedicalService> medicalServices) {
-		this.services = medicalServices;
-		updateMedicalServices();
+        updateMedicalServices();
 	}
 
 	public void updateMedicalServices() {
@@ -140,21 +138,17 @@ public class GridMedicalServiceController {
 
 	public void updateServicesList() {
 		if (hospital != null) {
-			this.services = hospital.getMedicalServices();
-			Platform.runLater(this::updateMedicalServices);
+            hospital.getMedicalServices();
+            Platform.runLater(this::updateMedicalServices);
 		}
 	}
 
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 		if (hospital != null) {
-			this.services = hospital.getMedicalServices();
-			Platform.runLater(this::updateMedicalServices);
+            hospital.getMedicalServices();
+            Platform.runLater(this::updateMedicalServices);
 		}
-	}
-
-	public Pane getServiceView() {
-		return gridPane;
 	}
 
 	public void showCloseDoor(Pane closeServiceDoor) {

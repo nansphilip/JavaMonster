@@ -6,6 +6,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import com.fantasyhospital.view.DoctorsCellView;
 import javafx.application.Platform;
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -26,14 +27,17 @@ public class ListDoctorsController {
 	private ListView<Doctor> doctorsListView;
 
 	@Setter
-    private DoomController doomController;
+	private DoomController doomController;
 
 
 	private ObservableList<Doctor> observableDoctors = FXCollections.observableArrayList();
 
+	@Getter
 	private final StageManager stageManager;
 	private Hospital hospital;
 
+	@Setter
+	@Getter
 	private ScheduledExecutorService scheduler;
 
 	@Lazy
@@ -59,7 +63,7 @@ public class ListDoctorsController {
 		Platform.runLater(this::loadDoctors);
 	}
 
-    private void loadDoctors() {
+	private void loadDoctors() {
 		if (hospital != null) {
 			List<Doctor> doctors = hospital.getDoctorsList();
 			observableDoctors.setAll(doctors);
