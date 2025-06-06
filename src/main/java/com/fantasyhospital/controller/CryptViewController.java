@@ -58,19 +58,6 @@ public class CryptViewController {
     }
 
     /**
-     * Sélectionne aléatoirement une image de lit pour la crypte
-     * @return le chemin de l'image sélectionnée
-     */
-    private String getRandomCryptBedImage() {
-        // Images de lits spécifiques à la crypte avec une ambiance plus sombre/froide
-        String[] options = {
-            "/images/room/BedBones.png",  // Lit avec des os pour l'ambiance crypte
-            "/images/room/Bed.png"        // Lit standard en alternative
-        };
-        return options[random.nextInt(options.length)];
-    }
-
-    /**
      * Met à jour l'affichage de la crypte
      */
     public void updateCryptView() {

@@ -65,31 +65,28 @@ public class CryptCellView {
         airflowLabel.setStyle("-fx-text-fill: " + (airflowStatus ? "#00ff00" : "#ff0000") + ";");
         container.getChildren().add(airflowLabel);
 
-        // Température
+        HBox tempBox = new HBox(8);
+        tempBox.setAlignment(Pos.CENTER_LEFT);
+
         int temperature = crypt.getTemperature();
+
+        ImageView tempImageView = new ImageView(getTemperatureImage(temperature));
+        tempImageView.setFitWidth(20);
+        tempImageView.setFitHeight(60);
+        tempImageView.setPreserveRatio(true);
+
         Label tempLabel = new Label("Température: " + temperature + "°C");
-        String tempColor = temperature <= 20 ? "#00ffff" : temperature <= 30 ? "#00ff00" : temperature <= 40 ? "#ffff00" : "#ff0000";
+        String tempColor = temperature <= 20 ? "#00ffff"
+                : temperature <= 30 ? "#00ff00"
+                : temperature <= 40 ? "#ffff00"
+                : "#ff0000";
         tempLabel.setStyle("-fx-text-fill: " + tempColor + ";");
-        container.getChildren().add(tempLabel);
 
-        // Barre de progression pour la température
-        ProgressBar tempProgressBar = new ProgressBar((double)temperature / 50);
-        tempProgressBar.setPrefWidth(200);
-        tempProgressBar.setStyle("-fx-accent: " + tempColor + ";");
-        container.getChildren().add(tempProgressBar);
+        tempBox.getChildren().addAll(tempImageView, tempLabel);
+        container.getChildren().add(tempBox);
 
-        // Créatures
-        Label creaturesLabel = new Label("Créatures en repos: " + crypt.getCreatures().size());
-        creaturesLabel.setStyle("-fx-text-fill: #cccccc;");
-        container.getChildren().add(creaturesLabel);
-
-        // Vue des lits
         FlowPane beds = createBedsView();
         container.getChildren().add(beds);
-
-        // Progression
-        VBox progress = createCreatureProgress();
-        container.getChildren().add(progress);
 
         // Doctors
         HBox doctorImages = createDoctorImages(doctors);
@@ -114,6 +111,8 @@ public class CryptCellView {
         }
 
         List<Creature> creatures = new ArrayList<>(crypt.getCreatures());
+        Map<Creature, Integer> waiting = crypt.getCreatureWaitNbTour();
+
         String creatureImagePath = "/images/room/BedCreature.png";
 
         for (int i = 0; i < bedImagePaths.size(); i++) {
@@ -121,49 +120,73 @@ public class CryptCellView {
             bed.setFitWidth(30);
             bed.setFitHeight(54);
 
+            VBox bedWithProgress = new VBox(2);
+            bedWithProgress.setAlignment(Pos.CENTER);
+
             StackPane bedStack = new StackPane(bed);
 
             if (i < creatures.size()) {
+                Creature creature = creatures.get(i);
+
                 Image img = new Image(getClass().getResourceAsStream(creatureImagePath));
                 ImageView creatureImg = new ImageView(cropImage(removePngBackground(img)));
                 creatureImg.setFitWidth(30);
                 creatureImg.setFitHeight(30);
                 bedStack.getChildren().add(creatureImg);
+
+                if (waiting.containsKey(creature)) {
+                    int tours = waiting.get(creature);
+                    double progress = 1.0 - Math.min(tours / 3.0, 1.0);
+                    if (progress <= 0.0) progress = 0.01;
+
+                    ProgressBar bar = new ProgressBar(progress);
+                    bar.setPrefWidth(30);
+                    bar.setPrefHeight(12);
+                    bar.setStyle("-fx-accent: #00ff77;");
+
+                    bedWithProgress.getChildren().addAll(bedStack, bar);
+                } else {
+                    bedWithProgress.getChildren().add(bedStack);
+                }
+
+            } else {
+                // Aucun patient
+                bedWithProgress.getChildren().add(bedStack);
             }
 
-            pane.getChildren().add(bedStack);
+            pane.getChildren().add(bedWithProgress);
         }
 
         return pane;
     }
 
-    private VBox createCreatureProgress() {
-        VBox box = new VBox(5);
-        Map<Creature, Integer> waiting = crypt.getCreatureWaitNbTour();
 
-        if (waiting == null || waiting.isEmpty()) return box;
+//    private VBox createCreatureProgress() {
+//        VBox box = new VBox(5);
+//        Map<Creature, Integer> waiting = crypt.getCreatureWaitNbTour();
+//
+//        if (waiting == null || waiting.isEmpty()) return box;
+//
+//        for (Map.Entry<Creature, Integer> entry : waiting.entrySet()) {
+//            int tours = entry.getValue();
+//
+//            HBox hbox = new HBox(10);
+//            hbox.setAlignment(Pos.CENTER_LEFT);
+//
+//            ProgressBar bar = new ProgressBar(tours / 3.0);
+//            bar.setPrefWidth(30);
+//            bar.setMinWidth(30);
+//            bar.setPrefHeight(12);
+//            bar.setMinHeight(12);
+//            bar.setStyle("-fx-accent: #00ff77;");
+//
+//            hbox.getChildren().add(bar);
+//            box.getChildren().add(hbox);
+//        }
+//
+//        return box;
+//    }
 
-        for (Map.Entry<Creature, Integer> entry : waiting.entrySet()) {
-            Creature creature = entry.getKey();
-            int tours = entry.getValue();
-
-            HBox hbox = new HBox(10);
-            hbox.setAlignment(Pos.CENTER_LEFT);
-
-            Label name = new Label(creature.getFullName());
-            name.setStyle("-fx-text-fill: #cccccc;");
-            name.setPrefWidth(120);
-
-            ProgressBar bar = new ProgressBar(tours / 3.0);
-            bar.setPrefWidth(80);
-            bar.setStyle("-fx-accent: #00ff77;");
-
-            hbox.getChildren().addAll(name, bar);
-            box.getChildren().add(hbox);
-        }
-
-        return box;
-    }
     private static HBox createDoctorImages(List<Doctor> doctors) {
         HBox hbox = new HBox(5);
         hbox.setPadding(new Insets(0));
@@ -188,5 +211,31 @@ public class CryptCellView {
         }
 
         return hbox;
+    }
+
+    private Image getTemperatureImage(int temperature) {
+        String temperatureImagePath;
+
+        if (temperature <= 0) {
+            temperatureImagePath = "/images/crypt/CryptTemp1.png";
+        } else if (temperature <= 21) {
+            temperatureImagePath = "/images/crypt/CryptTemp2.png";
+        } else if (temperature <= 25) {
+            temperatureImagePath = "/images/crypt/CryptTemp3.png";
+        } else if (temperature <= 30) {
+            temperatureImagePath = "/images/crypt/CryptTemp4.png";
+        } else if (temperature <= 35) {
+            temperatureImagePath = "/images/crypt/CryptTemp5.png";
+        } else if (temperature <= 37) {
+            temperatureImagePath = "/images/crypt/CryptTemp6.png";
+        } else if (temperature <= 40) {
+            temperatureImagePath = "/images/crypt/CryptTemp7.png";
+        } else if (temperature <= 45) {
+            temperatureImagePath = "/images/crypt/CryptTemp8.png";
+        } else {
+            temperatureImagePath = "/images/crypt/CryptTemp9.png";
+        }
+
+        return new Image(getClass().getResourceAsStream(temperatureImagePath));
     }
 }

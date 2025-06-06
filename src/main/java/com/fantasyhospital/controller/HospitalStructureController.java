@@ -94,7 +94,7 @@ public class HospitalStructureController implements Initializable {
             );
 
             // Position Y: simplement une marge depuis le haut
-            cryptViewInclude.layoutYProperty().set(35);
+            cryptViewInclude.layoutYProperty().set(20);
 
             // Limiter la taille de la crypte
             cryptViewInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.18)); // Réduire à 18%
@@ -109,7 +109,7 @@ public class HospitalStructureController implements Initializable {
 
             // Position Y : juste en dessous de la crypte avec un petit espacement
             quarantineViewInclude.layoutYProperty().bind(
-                    cryptViewInclude.layoutYProperty().add(cryptViewInclude.prefHeightProperty()).add(50) // 10px d'espace
+                    cryptViewInclude.layoutYProperty().add(cryptViewInclude.prefHeightProperty()).add(70) // 10px d'espace
             );
 
             // Taille identique ou ajustée
