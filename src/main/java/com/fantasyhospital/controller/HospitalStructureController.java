@@ -98,7 +98,7 @@ public class HospitalStructureController implements Initializable {
 
             // Limiter la taille de la crypte
             cryptViewInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.18)); // Réduire à 18%
-            cryptViewInclude.prefHeightProperty().bind(hospitalStructure.heightProperty().multiply(0.35)); // Réduire à 35%
+            cryptViewInclude.setPrefHeight(250);
         }
 
         if (quarantineViewInclude != null && cryptViewInclude != null) {
@@ -109,7 +109,7 @@ public class HospitalStructureController implements Initializable {
 
             // Position Y : juste en dessous de la crypte avec un petit espacement
             quarantineViewInclude.layoutYProperty().bind(
-                    cryptViewInclude.layoutYProperty().add(cryptViewInclude.prefHeightProperty()).add(70) // 10px d'espace
+                    cryptViewInclude.layoutYProperty().add(cryptViewInclude.prefHeightProperty()).add(20) // 10px d'espace
             );
 
             // Taille identique ou ajustée
@@ -117,9 +117,7 @@ public class HospitalStructureController implements Initializable {
                     cryptViewInclude.prefWidthProperty()
             );
 
-            quarantineViewInclude.prefHeightProperty().bind(
-                    hospitalStructure.heightProperty().multiply(0.35)
-            );
+            quarantineViewInclude.setPrefHeight(250);
         }
 
         // Positionnement et dimensionnement des services médicaux

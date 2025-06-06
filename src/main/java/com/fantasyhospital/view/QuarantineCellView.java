@@ -1,5 +1,6 @@
 package com.fantasyhospital.view;
 
+import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
@@ -51,16 +52,32 @@ public class QuarantineCellView {
     public VBox render() {
         VBox container = new VBox(8);
         container.setPadding(new Insets(10));
+        container.setAlignment(Pos.TOP_CENTER);
 
         // Titre
         Label titleLabel = new Label("QUARANTAINE");
         titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #cccccc;");
         container.getChildren().add(titleLabel);
 
-        // Créatures
-        Label creaturesLabel = new Label("Créatures en isolement: " + quarantine.getCreatures().size());
-        creaturesLabel.setStyle("-fx-text-fill: #cccccc;");
-        container.getChildren().add(creaturesLabel);
+        // Budget
+        Label budget = new Label("Budget : " + BudgetType.fromRatio(quarantine.getBudget()) + " (" + quarantine.getBudget() + ") ");
+        budget.setLayoutX(10);
+        budget.setLayoutY(80);
+        budget.setMaxWidth(160);
+        budget.setStyle("-fx-text-fill: #cccccc;");
+        container.getChildren().add(budget);
+
+        Label type = new Label("Type : " + quarantine.getRoomType());
+        type.setLayoutX(10);
+        type.setLayoutY(40);
+        type.setMaxWidth(160);
+        type.setStyle("-fx-text-fill: #cccccc;");
+        container.getChildren().add(type);
+
+//        // Créatures
+//        Label creaturesLabel = new Label("Créatures en isolement: " + quarantine.getCreatures().size());
+//        creaturesLabel.setStyle("-fx-text-fill: #cccccc;");
+//        container.getChildren().add(creaturesLabel);
 
         // Vue des lits
         FlowPane beds = createBedsView();
@@ -80,7 +97,18 @@ public class QuarantineCellView {
      */
     private FlowPane createBedsView() {
         FlowPane pane = new FlowPane(5, 5);
-        pane.setPrefWrapLength(200);
+
+        int bedWidth = 30;
+        int margin = 5;
+        int padding = 10;
+
+        int totalWidth = bedImagePaths.size() * (bedWidth + margin) + padding;
+
+        pane.setPrefWidth(totalWidth);
+        pane.setMaxWidth(totalWidth);
+        pane.setMinWidth(totalWidth);
+        pane.setPrefWrapLength(totalWidth);
+
         pane.setStyle("-fx-background-color: #333333; -fx-padding: 5; -fx-border-color: #555555;");
 
         while (bedImagePaths.size() < quarantine.getMAX_CREATURE()) {

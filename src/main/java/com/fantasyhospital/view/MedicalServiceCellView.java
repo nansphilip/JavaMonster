@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
@@ -59,13 +60,13 @@ public class MedicalServiceCellView {
 
         Label type = new Label("Type : " + service.getRoomType());
         type.setLayoutX(10);
-        type.setLayoutY(40);
+        type.setLayoutY(60);
         type.setMaxWidth(160);
 
-        Label occupied = new Label("Docteurs : " + service.getDoctors());
-        occupied.setLayoutX(10);
-        occupied.setLayoutY(60);
-        occupied.setMaxWidth(160);
+//        Label occupied = new Label("Docteurs : " + service.getDoctors().stream().map(Doctor::getFullName).collect(Collectors.joining(", ")));
+//        occupied.setLayoutX(10);
+//        occupied.setLayoutY(60);
+//        occupied.setMaxWidth(160);
 
         Label budget = new Label("Budget : " + BudgetType.fromRatio(service.getBudget()) + " (" + service.getBudget() + ") ");
         budget.setLayoutX(10);
@@ -80,7 +81,7 @@ public class MedicalServiceCellView {
 
         pane.setOnMouseClicked(event -> openDetailPanel(service, hospital, stageManager));
 
-        pane.getChildren().addAll(topRow, type, occupied, budget, bedsFlow);
+        pane.getChildren().addAll(topRow, type, budget, bedsFlow);
 
         // S'assurer que les éléments internes ne débordent pas
         pane.setClip(new javafx.scene.shape.Rectangle(
@@ -112,60 +113,47 @@ public class MedicalServiceCellView {
     }
 
     public static FlowPane createBedsView(int numberOfBeds, BudgetType budgetType, MedicalService service) {
-        FlowPane flowPane = new FlowPane();
-        flowPane.setHgap(5);
-        flowPane.setVgap(5);
-        flowPane.setPrefWrapLength(180);
+        generateBedImagePathsIfNeeded(numberOfBeds, budgetType, service);
+        return buildBedsPane(service);
+    }
 
-        if (service.getBedImagePaths() == null || service.getBedImagePaths().isEmpty()) {
+    private static void generateBedImagePathsIfNeeded(int numberOfBeds, BudgetType budgetType, MedicalService service) {
             List<String> generated = new ArrayList<>();
             for (int i = 0; i < numberOfBeds; i++) {
                 String bedImagePath = switch (budgetType) {
-                    case INSUFFISANT, EXCELLENT -> getRandomImage(new String[]{
-                            "/images/room/Bed.png",
-                    });
-                    case MEDIOCRE -> getRandomImage(new String[]{
-                            "/images/room/Bed.png",
-                            "/images/room/BedBlood.png",
-                            "/images/room/BedBones.png"
-                    });
-                    case FAIBLE -> getRandomImage(new String[]{
-                            "/images/room/BedBlood.png",
-                            "/images/room/BedBones.png"
-                    });
-                    case CORRECT -> getRandomImage(new String[]{
-                            "/images/room/Bed.png",
-                            "/images/room/BedBlood.png"
-                    });
-                    case BON -> getRandomImage(new String[]{
-                            "/images/room/Bed.png"
-                    });
+                    case INSUFFISANT, EXCELLENT -> getRandomImage(new String[]{"/images/room/Bed.png"});
+                    case MEDIOCRE -> getRandomImage(new String[]{"/images/room/Bed.png", "/images/room/BedBlood.png", "/images/room/BedBones.png"});
+                    case FAIBLE -> getRandomImage(new String[]{"/images/room/BedBlood.png", "/images/room/BedBones.png"});
+                    case CORRECT -> getRandomImage(new String[]{"/images/room/Bed.png", "/images/room/BedBlood.png"});
+                    case BON -> getRandomImage(new String[]{"/images/room/Bed.png"});
                     case INEXISTANT -> "/images/room/Bed.png";
                 };
                 generated.add(bedImagePath);
             }
             service.setBedImagePaths(generated);
-        }
+    }
 
+    private static FlowPane buildBedsPane(MedicalService service) {
+        FlowPane flowPane = new FlowPane();
+        flowPane.setHgap(5);
+        flowPane.setVgap(5);
+        flowPane.setPrefWrapLength(180);
 
-        List<String> creatureImagePaths = List.of(
-                "/images/room/BedCreature.png"
-        );
-
+        List<String> creatureImagePaths = List.of("/images/room/BedCreature.png");
         int creaturesCount = service.getCreatures() != null ? service.getCreatures().size() : 0;
 
         for (int i = 0; i < service.getBedImagePaths().size(); i++) {
             String bedImagePath = service.getBedImagePaths().get(i);
 
-            ImageView bedView = new ImageView(new Image(MedicalServiceCellView.class.getResourceAsStream(bedImagePath)));
+            Image bedImage = new Image(MedicalServiceCellView.class.getResourceAsStream(bedImagePath));
+            ImageView bedView = new ImageView(bedImage);
             bedView.setFitWidth(30);
             bedView.setFitHeight(54);
 
-            StackPane bedStack = new StackPane();
-            bedStack.getChildren().add(bedView);
+            StackPane bedStack = new StackPane(bedView);
 
             if (i < creaturesCount) {
-                String creatureImage = creatureImagePaths.get(i % creatureImagePaths.size()); // pour varier
+                String creatureImage = creatureImagePaths.get(i % creatureImagePaths.size());
                 Image image = new Image(MedicalServiceCellView.class.getResourceAsStream(creatureImage));
 
                 Image transparentImage = removePngBackground(image);
@@ -184,7 +172,7 @@ public class MedicalServiceCellView {
         return flowPane;
     }
 
-	private static String getRandomImage(String[] options) {
+    private static String getRandomImage(String[] options) {
 		int randomIndex = (int) (Math.random() * options.length);
 		return options[randomIndex];
 	}
