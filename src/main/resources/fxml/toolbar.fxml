@@ -1,51 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-
 
 <VBox spacing="10"
       style="-fx-background-color: #1e1e1e; -fx-padding: 10px;"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.fantasyhospital.controller.ui.ToolbarController">
+      fx:controller="com.fantasyhospital.controller.ui.ToolbarController"
+      prefWidth="150">
 
-    <HBox spacing="10">
-        <Button fx:id="startSimulationButton"
-                text="Start"
-                onAction="#startSimulation"
-                prefHeight="45.0"
-                prefWidth="150.0"
-                style="-fx-background-color: #008800; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;"
-        />
+    <Button fx:id="startSimulationButton"
+            text="Start"
+            onAction="#startSimulation"
+            prefHeight="50.0"
+            prefWidth="150.0"
+            style="-fx-background-color: #008800; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;"
+    />
 
-        <Button fx:id="nextRoundButton"
-                onAction="#handleNextRound"
-                text="Next"
-                prefHeight="45.0"
-                prefWidth="150.0"
-                style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5"
-        />
-    </HBox>
+    <Button fx:id="nextRoundButton"
+            onAction="#handleNextRound"
+            text="Next"
+            prefHeight="50.0"
+            prefWidth="150.0"
+            style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;"
+    />
 
-    <HBox spacing="10">
-        <Button fx:id="fullScreenButton"
-                text="Full Screen"
-                mnemonicParsing="false"
-                onAction="#goFullScreen"
-                prefHeight="45.0"
-                prefWidth="150.0"
-                style="-fx-background-color: #444444; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;"
-        />
+    <Button fx:id="fullScreenButton"
+            text="Full Screen"
+            onAction="#goFullScreen"
+            prefHeight="50.0"
+            prefWidth="150.0"
+            style="-fx-background-color: #444444; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;"
+    />
 
-        <Button text="Clear Log"
-                onAction="#clearLog"
-                prefHeight="45.0"
-                prefWidth="150.0"
-                style="-fx-background-color: #ff0000; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5"
-        />
-
-    </HBox>
+    <Button text="Clear Log"
+            onAction="#clearLog"
+            prefHeight="50.0"
+            prefWidth="150.0"
+            style="-fx-background-color: #ff0000; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;"
+    />
 </VBox>

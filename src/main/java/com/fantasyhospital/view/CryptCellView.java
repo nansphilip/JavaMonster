@@ -1,9 +1,11 @@
 package com.fantasyhospital.view;
 
+import com.fantasyhospital.controller.CryptViewController;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -23,13 +25,15 @@ import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackgro
 public class CryptCellView {
 
     private final Crypt crypt;
+    private final CryptViewController cryptViewController;
     private final List<String> bedImagePaths = new ArrayList<>();
     private final List<Doctor> doctors;
     private final Random random = new Random();
 
-    public CryptCellView(Crypt crypt,List<Doctor> doctors) {
+    public CryptCellView(Crypt crypt, List<Doctor> doctors, CryptViewController cryptViewController) {
         this.crypt = crypt;
         this.doctors = doctors;
+        this.cryptViewController = cryptViewController;
         generateBedImagePaths(crypt.getMAX_CREATURE());
     }
 
@@ -118,6 +122,11 @@ public class CryptCellView {
         // Doctors en bas
         HBox doctorImages = createDoctorImages(doctors);
         container.getChildren().add(doctorImages);
+
+        // cas ou le service ferme
+        if (crypt.isHasServiceToClose()) {
+            Platform.runLater(() -> cryptViewController.showCloseDoor(container));
+        }
 
         return container;
     }

@@ -1,6 +1,5 @@
 package com.fantasyhospital.view;
 
-import com.fantasyhospital.controller.GridMedicalServiceController;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,6 +9,9 @@ import javafx.scene.layout.VBox;
 
 public class CloseDoorCellView {
     public static void show(Pane closePane) {
+
+        closePane.getChildren().clear();
+
         Image image = new Image(CloseDoorCellView.class.getResource("/images/room/CloseDoor.png").toExternalForm());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(100);

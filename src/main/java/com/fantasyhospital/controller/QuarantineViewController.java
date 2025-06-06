@@ -2,10 +2,12 @@ package com.fantasyhospital.controller;
 
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
+import com.fantasyhospital.view.CloseDoorCellView;
 import com.fantasyhospital.view.QuarantineCellView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 
@@ -62,10 +64,14 @@ public class QuarantineViewController {
 
             quarantineGridPane.getChildren().clear();
 
-            QuarantineCellView view = new QuarantineCellView(quarantine, quarantine.getDoctors());
+            QuarantineCellView view = new QuarantineCellView(quarantine, quarantine.getDoctors(), this);
             VBox viewContent = view.render();
 
             quarantineGridPane.add(viewContent, 0, 0);
         });
+    }
+
+    public void showCloseDoor(VBox closeServiceDoor) {
+        CloseDoorCellView.show(closeServiceDoor);
     }
 }
