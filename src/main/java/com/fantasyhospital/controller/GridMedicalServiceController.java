@@ -2,11 +2,15 @@ package com.fantasyhospital.controller;
 
 import java.util.List;
 
+import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
+import com.fantasyhospital.view.CloseDoorCellView;
+import com.fantasyhospital.view.HarakiriCellView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -110,7 +114,7 @@ public class GridMedicalServiceController {
 				}
 
 				// Créer la vue du service médical
-				Pane serviceView = MedicalServiceCellView.createView(service, hospital, stageManager);
+				Pane serviceView = MedicalServiceCellView.createView(service, hospital, stageManager, this);
 
 				// Définir des dimensions fixes pour assurer 3 services par ligne
 				serviceView.setPrefWidth(cellWidth);
@@ -138,7 +142,7 @@ public class GridMedicalServiceController {
 	public void updateServicesList() {
 		if (hospital != null) {
 			this.services = hospital.getMedicalServices();
-			Platform.runLater(() -> updateMedicalServices());
+			Platform.runLater(this::updateMedicalServices);
 		}
 	}
 
@@ -146,7 +150,16 @@ public class GridMedicalServiceController {
 		this.hospital = hospital;
 		if (hospital != null) {
 			this.services = hospital.getMedicalServices();
-			Platform.runLater(() -> updateMedicalServices());
+			Platform.runLater(this::updateMedicalServices);
 		}
 	}
+
+	public Pane getServiceView() {
+		return gridPane;
+	}
+
+	public void showCloseDoor() {
+		CloseDoorCellView.show(this);
+	}
+
 }
