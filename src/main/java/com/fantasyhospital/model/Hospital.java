@@ -157,7 +157,6 @@ public class Hospital {
         }
 
         int averageBudget = Math.round((float) totalBudget / getMedicalServices().size());
-        log.info("Budget global : {} nbservices {} sur {}", averageBudget, this.services.size(), this.MAX_SERVICE_COUNT);
 
         // Creation of a new Service with a doctor if there is enough space in the hospital (- 3 avec salle attente et deux services medicaux speciaux)
         if(averageBudget >= NB_AVERAGE_BUDGET_NEEDED && nbMedicalServices < this.MAX_SERVICE_COUNT - 3){

@@ -149,7 +149,6 @@ public final class Crypt extends MedicalService {
         } else if(calculatedBudget > 100){
             calculatedBudget = 100;
         }
-        log.info("budget crypt : {}",  calculatedBudget);
         return calculatedBudget;
     }
 
