@@ -4,12 +4,13 @@ import com.fantasyhospital.controller.GridMedicalServiceController;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 
 public class CloseDoorCellView {
-    public static void show(GridMedicalServiceController gridMedicalServiceController) {
-        Image image = new Image(HarakiriCellView.class.getResource("/images/room/CloseDoor.png").toExternalForm());
+    public static void show(Pane closePane) {
+        Image image = new Image(CloseDoorCellView.class.getResource("/images/room/CloseDoor.png").toExternalForm());
         ImageView imageView = new ImageView(image);
         imageView.setFitWidth(100);
         imageView.setFitHeight(100);
@@ -19,7 +20,9 @@ public class CloseDoorCellView {
         VBox content = new VBox(10, imageView);
         content.setAlignment(Pos.CENTER);
 
-        gridMedicalServiceController.getServiceView();
-        gridMedicalServiceController.getServiceView().getChildren().add(content);
+        content.prefWidthProperty().bind(closePane.widthProperty());
+        content.prefHeightProperty().bind(closePane.heightProperty());
+
+        closePane.getChildren().add(content);
     }
 }

@@ -2,15 +2,12 @@ package com.fantasyhospital.controller;
 
 import java.util.List;
 
-import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import com.fantasyhospital.view.CloseDoorCellView;
-import com.fantasyhospital.view.HarakiriCellView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -158,8 +155,8 @@ public class GridMedicalServiceController {
 		return gridPane;
 	}
 
-	public void showCloseDoor() {
-		CloseDoorCellView.show(this);
+	public void showCloseDoor(Pane closeServiceDoor) {
+		CloseDoorCellView.show(closeServiceDoor);
 	}
 
 }

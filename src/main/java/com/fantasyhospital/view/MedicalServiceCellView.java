@@ -106,7 +106,7 @@ public class MedicalServiceCellView {
 
         // cas ou le service ferme
         if (service.isHasServiceToClose()) {
-            Platform.runLater(gridMedicalServiceController::showCloseDoor);
+            Platform.runLater(() -> gridMedicalServiceController.showCloseDoor(pane));
         }
 
         return pane;
