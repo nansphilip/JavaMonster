@@ -302,11 +302,17 @@ public class EvolutionGame {
 			if (Math.random() < ADD_CREATURE_CHANCE) {
 
 				// Find a random service that has enough space in it
-				int rnd = new Random().nextInt(hospital.getServices().size());
-				Room room = hospital.getServices().get(rnd);
-				while(!(room.getAvailableBeds() > 0)){
-					rnd = new Random().nextInt(hospital.getServices().size());
-					room = hospital.getServices().get(rnd);
+				Room room = null;
+				List<Room> roomsAvailable = new ArrayList<>();
+				for(Room roomFor : hospital.getServices()){
+					if(roomFor.getAvailableBeds() > 0){
+						roomsAvailable.add(roomFor);
+					}
+				}
+				int rnd = new Random().nextInt(roomsAvailable.size());
+				room = roomsAvailable.get(rnd);
+				if(room == null){
+					return;
 				}
 				Creature creature = null;
 
