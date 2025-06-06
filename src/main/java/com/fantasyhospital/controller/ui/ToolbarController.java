@@ -165,6 +165,8 @@ public class ToolbarController implements Initializable {
 		// Mettre à jour les compteurs de créatures soignées et décédées
 		counterController.updateHealedCounter();
 		counterController.updateDeathCounter();
+		counterController.updateGlobalBudget(hospitalStructureController.getHospital());
+
 		hospitalStructureController.updateWaitingRoom();
 		hospitalStructureController.updateCrypt();
 		hospitalStructureController.updateQuarantine();

@@ -21,6 +21,17 @@
 
     <Region prefHeight="5" />
 
+    <!-- Budget global -->
+    <VBox spacing="5" style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;">
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
+                <Image url="@../images/counter/BudgetChest.png"/>
+            </ImageView>
+            <Label text="Budget global : " style="-fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 80;" wrapText="true"/>
+            <Label fx:id="globalBudget" text="0" style="-fx-text-fill: #ff3333; -fx-font-weight: bold; -fx-font-size: 16px;" HBox.hgrow="ALWAYS"/>
+        </HBox>
+    </VBox>
+
     <!-- Compteur de tours -->
     <VBox spacing="5" style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;">
         <HBox alignment="CENTER_LEFT" spacing="10">

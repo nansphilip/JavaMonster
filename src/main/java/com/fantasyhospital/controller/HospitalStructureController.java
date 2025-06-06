@@ -48,6 +48,7 @@ public class HospitalStructureController implements Initializable {
 
     @Getter
     private boolean gameStarted = false;
+    @Getter
     private Hospital hospital;
 
     @Override

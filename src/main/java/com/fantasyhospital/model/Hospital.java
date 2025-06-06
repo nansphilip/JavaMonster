@@ -139,6 +139,21 @@ public class Hospital {
     }
 
     /**
+     * Calculate the global budget of the hospital
+     */
+    public int getGlobalBudget(){
+        int totalBudget = 0;
+        for(MedicalService medicalService : getMedicalServices()){
+            // If crypt, calls special method to get budget
+            totalBudget += medicalService instanceof Crypt ? ((Crypt) medicalService).getCryptBudget() : medicalService.getBudget();
+            if(medicalService instanceof Quarantine || medicalService instanceof Crypt){
+                continue;
+            }
+        }
+        return Math.round((float) totalBudget / getMedicalServices().size());
+    }
+
+    /**
      * Calculate the average global budget of the hospital
      * If it is over 70, creates a new service with a new doctor
      */

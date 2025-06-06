@@ -24,7 +24,6 @@ public class GifCellView {
             "/images/gif/Creature4.gif",
             "/images/gif/Creature5.gif",
             "/images/gif/Creature6.gif",
-            "/images/gif/Creature7.gif",
             "/images/gif/Creature8.gif",
             "/images/gif/Heal.gif",
     };

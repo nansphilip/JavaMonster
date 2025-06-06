@@ -3,10 +3,12 @@ package com.fantasyhospital.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.util.Singleton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,6 +21,9 @@ import org.springframework.stereotype.Component;
 public class CounterController implements Initializable {
 
     @FXML
+    public Label globalBudget;
+
+    @FXML
     private Label turnCounter;
 
     @FXML
@@ -28,6 +33,10 @@ public class CounterController implements Initializable {
     private Label deathCounter;
 
     private int turns = 0;
+
+    @Setter
+    @FXML
+    private Hospital hospital;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -58,6 +67,14 @@ public class CounterController implements Initializable {
     public void updateHealedCounter() {
         int healedCount = Singleton.getInstance().getCreatureHealStack().size();
         javafx.application.Platform.runLater(() -> healedCounter.setText(String.valueOf(healedCount)));
+    }
+
+    /**
+     * Met à jour le budget global de l'hopital
+     */
+    public void updateGlobalBudget(Hospital hospital) {
+        int budget = hospital.getGlobalBudget();
+        javafx.application.Platform.runLater(() -> globalBudget.setText(String.valueOf(budget)));
     }
 
     /**
