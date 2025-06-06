@@ -1,8 +1,9 @@
 package com.fantasyhospital.controller;
 
 import com.fantasyhospital.model.creatures.Doctor;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.view.GifCellView;
-import com.fantasyhospital.view.HarakiriCellView;
+import com.fantasyhospital.view.EventCellView;
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
 import org.springframework.stereotype.Component;
@@ -29,9 +30,17 @@ public class DoomController {
     }
 
     public void showHarakiriForDoctor(Doctor doctor) {
-        HarakiriCellView.show(doctor, this);
+        EventCellView.showHarakiri(doctor, this);
 
         javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(2));
+        delay.setOnFinished(event -> showGifInDoomBox());
+        delay.play();
+    }
+
+    public void showServiceClose(MedicalService medicalService) {
+        EventCellView.showServiceClose(medicalService, this);
+
+        javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
         delay.setOnFinished(event -> showGifInDoomBox());
         delay.play();
     }

@@ -26,10 +26,12 @@ public class GridMedicalServiceController {
 	private final StageManager stageManager;
 	private Hospital hospital;
 	private List<MedicalService> services;
+	private DoomController doomController;
 
 	@Lazy
-	public GridMedicalServiceController(StageManager stageManager) {
+	public GridMedicalServiceController(StageManager stageManager, DoomController doomController) {
 		this.stageManager = stageManager;
+		this.doomController = doomController;
 	}
 
 	@FXML
@@ -111,7 +113,7 @@ public class GridMedicalServiceController {
 				}
 
 				// Créer la vue du service médical
-				Pane serviceView = MedicalServiceCellView.createView(service, hospital, stageManager, this);
+				Pane serviceView = MedicalServiceCellView.createView(service, hospital, stageManager, this, doomController);
 
 				// Définir des dimensions fixes pour assurer 3 services par ligne
 				serviceView.setPrefWidth(cellWidth);

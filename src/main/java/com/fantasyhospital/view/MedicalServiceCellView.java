@@ -1,6 +1,7 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.config.StageManager;
+import com.fantasyhospital.controller.DoomController;
 import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.MedicalServiceDetailsController;
 import com.fantasyhospital.enums.BudgetType;
@@ -32,7 +33,9 @@ import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackgro
 
 public class MedicalServiceCellView {
 
-    public static Pane createView(MedicalService service, Hospital hospital, StageManager stageManager, GridMedicalServiceController gridMedicalServiceController) {
+    private DoomController doomController;
+
+    public static Pane createView(MedicalService service, Hospital hospital, StageManager stageManager, GridMedicalServiceController gridMedicalServiceController, DoomController doomController) {
         Pane pane = new Pane();
         pane.setStyle("""
                 -fx-background-color: #add8e6;
@@ -106,6 +109,8 @@ public class MedicalServiceCellView {
 
         // cas ou le service ferme
         if (service.isHasServiceToClose()) {
+            Platform.runLater(() -> doomController.showServiceClose(service));
+
             Platform.runLater(() -> gridMedicalServiceController.showCloseDoor(pane));
         }
 
