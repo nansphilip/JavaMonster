@@ -159,10 +159,9 @@ public class EvolutionGame {
 			log.info("Partie terminée, il n'y a plus aucune créature dans l'hopital..");
 			result = true;
 		} else if(hospital.getNbMedicalServicesExceptCryptQuarantine() == 0){
-			log.info("Partie terminée, l'hopital ferme, tous les services ont fermé...");
+			log.info("Partie terminée, l'hopital ferme, tous les services avaient mis la clé sous la porte faute de budget...");
 			result = true;
 		}
-		log.info("total services : {}", hospital.getNbMedicalServicesExceptCryptQuarantine());
 		return result;
 	}
 
