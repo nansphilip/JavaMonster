@@ -239,22 +239,59 @@ public class DoctorsCellView extends ListCell<Doctor> {
     }
 
     private void showDoctorPopup(Doctor doctor) {
-        Stage popup = new Stage();
-        popup.initModality(Modality.APPLICATION_MODAL);
-        popup.setTitle("Détails du docteur");
+        VBox box = new VBox(10);
+        box.setPadding(new Insets(10));
+        box.setStyle("-fx-background-color: #ffffff;");
+        box.setAlignment(Pos.TOP_CENTER);
 
-        Label nameLabel = new Label("Nom : " + doctor.getFullName());
-        Label ageLabel = new Label("Âge : " + doctor.getAge());
-        Label moraleLabel = new Label("Moral : " + doctor.getMorale() + "/100");
-        Label serviceLabel = new Label("Service : " + doctor.getMedicalService());
+        // Chargement de l'image (selon la spécialité ou par défaut)
+        String imagePath = "/images/races/doctor.png";
+        Image image = new Image(getClass().getResourceAsStream(imagePath));
+        Image transparentImage = removePngBackground(image);
+        Image croppedImage = cropImage(transparentImage);
 
-        VBox detailContent = new VBox(10, nameLabel, ageLabel, moraleLabel, serviceLabel);
-        detailContent.setPadding(new Insets(10));
+        ImageView doctorImageView = new ImageView(croppedImage);
+        doctorImageView.setPreserveRatio(true);
+        doctorImageView.setFitHeight(80);
 
-        Scene scene = new Scene(detailContent, 300, 200);
-        popup.setScene(scene);
-        popup.showAndWait();
+        // Icône de genre
+        ImageView genderView = new ImageView(getGenderImageView(doctor.getSex()));
+        genderView.setFitHeight(14);
+        genderView.setFitWidth(14);
+        Label genderLabel = new Label("Genre : " + doctor.getSex().getLabel());
+        HBox genderBox = new HBox(5, genderView, genderLabel);
+        genderBox.setAlignment(Pos.CENTER);
+
+        // Icône de moral
+        ImageView moraleView = new ImageView(getMoraleImageView(doctor.getMorale()));
+        moraleView.setFitHeight(10);
+        moraleView.setFitWidth(65);
+        Label moraleLabel = new Label("Moral (" + doctor.getMorale() + "/100)");
+        HBox moraleBox = new HBox(5, moraleView, moraleLabel);
+        moraleBox.setAlignment(Pos.CENTER);
+
+        // Infos personnelles
+        Label name = new Label("Nom : " + doctor.getFullName());
+        Label age = new Label("Âge : " + doctor.getAge());
+        Label height = new Label("Taille : " + doctor.getHeight() + " cm");
+        Label weight = new Label("Poids : " + doctor.getWeight() + " kg");
+        Label service = new Label("Service : " + doctor.getMedicalService().getName());
+
+        // Assemblement
+        box.getChildren().addAll(
+                doctorImageView,
+                name,
+                age,
+                height,
+                weight,
+                genderBox,
+                moraleBox,
+                service
+        );
+
+        DetailsCellView.show("Détails du docteur", box, 350, 400);
     }
+
 
     private void showDoctorMenu(MouseEvent event, Doctor doctor) {
         ContextMenu contextMenu = new ContextMenu();

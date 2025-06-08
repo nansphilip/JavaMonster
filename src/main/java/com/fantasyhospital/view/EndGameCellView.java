@@ -20,7 +20,7 @@ public class EndGameCellView extends VBox {
     private HBox topRow;
 
     public EndGameCellView() {
-        super(5); // spacing vertical
+        super(5);
 
         creatureImageView = new ImageView();
         creatureImageView.setPreserveRatio(true);
