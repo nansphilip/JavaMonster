@@ -32,6 +32,9 @@ public class CounterController implements Initializable {
     @FXML
     private Label deathCounter;
 
+    @FXML
+    private Label doctorsDeathCounter;
+
     private int turns = 0;
 
     @Setter
@@ -51,6 +54,7 @@ public class CounterController implements Initializable {
         setTurnCounter(0);
         updateHealedCounter();
         updateDeathCounter();
+        updateDeathDoctorsCounter();
     }
 
     /**
@@ -83,6 +87,15 @@ public class CounterController implements Initializable {
     public void updateDeathCounter() {
         int deathCount = Singleton.getInstance().getCreatureDieStack().size();
         javafx.application.Platform.runLater(() -> deathCounter.setText(String.valueOf(deathCount)));
+    }
+
+    /**
+     * Met à jour le compteur de décès à partir du Singleton
+     *
+     */
+    public void updateDeathDoctorsCounter() {
+        int deathDoctorCount = Singleton.getInstance().getDoctorStack().size();
+        javafx.application.Platform.runLater(() -> doctorsDeathCounter.setText(String.valueOf(deathDoctorCount)));
     }
 
     /**
