@@ -18,7 +18,7 @@
 
     <!-- Titre -->
     <Label text="STATISTIQUES"
-           style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14px; -fx-underline: true;" />
+           style="-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 14px; -fx-underline: true;"/>
 
     <!-- Budget global -->
     <HBox spacing="10" alignment="CENTER_LEFT"
@@ -26,8 +26,9 @@
         <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
             <Image url="@../images/counter/BudgetChest.png"/>
         </ImageView>
-        <Label text="Budget global : " style="-fx-text-fill: white; -fx-font-weight: bold;" />
-        <Label fx:id="globalBudget" text="0" style="-fx-text-fill: #ff3333; -fx-font-weight: bold; -fx-font-size: 16px;" />
+        <Label text="Budget global : " style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Label fx:id="globalBudget" text="0"
+               style="-fx-text-fill: #ff3333; -fx-font-weight: bold; -fx-font-size: 16px;"/>
     </HBox>
 
     <!-- Tours -->
@@ -36,37 +37,43 @@
         <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
             <Image url="@../images/counter/Hourglass.png"/>
         </ImageView>
-        <Label text="Tours : " style="-fx-text-fill: white; -fx-font-weight: bold;" />
-        <Label fx:id="turnCounter" text="0" style="-fx-text-fill: yellow; -fx-font-weight: bold; -fx-font-size: 16px;" />
+        <Label text="Tours : " style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Label fx:id="turnCounter" text="0" style="-fx-text-fill: yellow; -fx-font-weight: bold; -fx-font-size: 16px;"/>
     </HBox>
 
     <!-- Soignées -->
     <HBox spacing="10" alignment="CENTER_LEFT"
-          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;">
+          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;"
+          onMouseClicked="#onHealedCounterClicked">
         <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
             <Image url="@../images/counter/Healed.png"/>
         </ImageView>
-        <Label text="Soignées : " style="-fx-text-fill: white; -fx-font-weight: bold;" />
-        <Label fx:id="healedCounter" text="0" style="-fx-text-fill: #00ff00; -fx-font-weight: bold; -fx-font-size: 16px;" />
+        <Label text="Soignées : " style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Label fx:id="healedCounter" text="0"
+               style="-fx-text-fill: #00ff00; -fx-font-weight: bold; -fx-font-size: 16px;"/>
     </HBox>
 
     <!-- Décès créatures -->
     <HBox spacing="10" alignment="CENTER_LEFT"
-          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;">
+          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;"
+          onMouseClicked="#onDeathCounterClicked">
         <ImageView fitHeight="32" fitWidth="32" scaleX="1.5" scaleY="1.5" preserveRatio="true">
             <Image url="@../images/counter/DeathCreature.png"/>
         </ImageView>
-        <Label text="Décès créatures : " style="-fx-text-fill: white; -fx-font-weight: bold;" />
-        <Label fx:id="deathCounter" text="0" style="-fx-text-fill: #ff3333; -fx-font-weight: bold; -fx-font-size: 16px;" />
+        <Label text="Décès créatures : " style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Label fx:id="deathCounter" text="0"
+               style="-fx-text-fill: #ff3333; -fx-font-weight: bold; -fx-font-size: 16px;"/>
     </HBox>
 
     <!-- Décès docteurs -->
     <HBox spacing="10" alignment="CENTER_LEFT"
-          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;">
+          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;"
+          onMouseClicked="#onDeathDoctorCounterClicked">
         <ImageView fitHeight="32" fitWidth="32" scaleX="1.5" scaleY="1.5" preserveRatio="true">
             <Image url="@../images/counter/DeathDoctor.png"/>
         </ImageView>
-        <Label text="Décès docteurs : " style="-fx-text-fill: white; -fx-font-weight: bold;" />
-        <Label fx:id="doctorsDeathCounter" text="0" style="-fx-text-fill: #ff3333; -fx-font-weight: bold; -fx-font-size: 16px;" />
+        <Label text="Décès docteurs : " style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+        <Label fx:id="doctorsDeathCounter" text="0"
+               style="-fx-text-fill: #ff3333; -fx-font-weight: bold; -fx-font-size: 16px;"/>
     </HBox>
 </HBox>

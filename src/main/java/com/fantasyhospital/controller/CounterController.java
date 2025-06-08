@@ -4,12 +4,25 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.fantasyhospital.model.Hospital;
+import com.fantasyhospital.model.creatures.Doctor;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.util.Singleton;
+import com.fantasyhospital.view.EndGameCellView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+import javafx.scene.control.ListView;
+import java.util.Stack;
+import javafx.scene.control.ListCell;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+
+import static com.fantasyhospital.util.CropImageUtils.cropImage;
+import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
 /**
  * Contrôleur pour gérer l'affichage et la mise à jour des compteurs statistiques du jeu.
@@ -125,5 +138,72 @@ public class CounterController implements Initializable {
      */
     public int getDeathCount() {
         return Singleton.getInstance().getCreatureDieStack().size();
+    }
+
+    @FXML
+    private  void onHealedCounterClicked() {
+        showListDialog("Liste des créatures soignées", Singleton.getInstance().getCreatureHealStack());
+    }
+
+    @FXML
+    private  void onDeathCounterClicked() {
+        showListDialog("Liste des créatures décédées", Singleton.getInstance().getCreatureDieStack());
+    }
+
+    @FXML
+    private  void onDeathDoctorCounterClicked() {
+        showListDialog("Liste des docteurs décédés", Singleton.getInstance().getDoctorStack());
+    }
+
+    // TODO : REVOIR L'AFFICHAGE !
+
+    private <T> void showListDialog(String title, Stack<T> stack) {
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle(title);
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+
+        ListView<T> listView = new ListView<>();
+        listView.getItems().addAll(stack);
+
+        listView.setCellFactory(param -> new ListCell<T>() {
+            private final EndGameCellView cellView = new EndGameCellView();
+
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    if (item instanceof Creature) {
+                        Creature creature = (Creature) item;
+                        String imagePath = "/images/races/" + creature.getRace().toLowerCase() + ".png";
+                        Image image = new Image(getClass().getResourceAsStream(imagePath));
+                        Image transparent = removePngBackground(image);
+                        Image cropped = cropImage(transparent);
+                        cellView.getCreatureImageView().setImage(cropped);
+                        cellView.getName().setText(creature.getFullName());
+                        cellView.getAgeLabel().setText("Age: " + creature.getAge());
+                        setGraphic(cellView);
+                    } else if (item instanceof Doctor) {
+                        Doctor doctor = (Doctor) item;
+                        Image image = new Image(getClass().getResourceAsStream("/images/races/doctor.png"));
+                        Image transparent = removePngBackground(image);
+                        Image cropped = cropImage(transparent);
+                        cellView.getCreatureImageView().setImage(cropped);
+                        cellView.getName().setText(doctor.getFullName());
+                        cellView.getAgeLabel().setText("Age: " + doctor.getAge());
+                        setGraphic(cellView);
+                    }
+                }
+            }
+        });
+
+        listView.setStyle("-fx-control-inner-background: #2a2a2a;");
+
+        Scene scene = new Scene(listView, 400, 300);
+        scene.getStylesheets().add("/css/styles.css");
+
+        dialogStage.setScene(scene);
+        dialogStage.showAndWait();
     }
 }
