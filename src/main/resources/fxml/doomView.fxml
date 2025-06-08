@@ -8,10 +8,10 @@
       xmlns="http://javafx.com/javafx/21.0.2"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.fantasyhospital.controller.DoomController"
-      prefWidth="200" prefHeight="200"
-      minWidth="200" minHeight="200"
-      maxWidth="200" maxHeight="200">
+      prefWidth="300" prefHeight="300"
+      minWidth="300" minHeight="300"
+      maxWidth="300" maxHeight="300">
 
-    <StackPane fx:id="doomContainer" prefWidth="128" prefHeight="128">
+    <StackPane fx:id="doomContainer" prefWidth="300" prefHeight="300">
     </StackPane>
 </VBox>

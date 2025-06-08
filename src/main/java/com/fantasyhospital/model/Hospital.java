@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.fantasyhospital.enums.ServiceNameType;
+import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
@@ -13,6 +14,7 @@ import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import com.fantasyhospital.observer.MoralObserver;
+import com.fantasyhospital.util.Singleton;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -132,6 +134,9 @@ public class Hospital {
 
                 // Remove the service
                 removeService(medicalService);
+
+                Singleton instance = Singleton.getInstance();
+                instance.addRoomToStack(medicalService, StackType.MEDICAL_SERVICE);
 
                 log.info("Le service {} ferme car il avait un budget trop catastrophique, le capitalisme frappe à nouveau...", medicalService.getName());
             }

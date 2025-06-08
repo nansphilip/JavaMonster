@@ -14,22 +14,27 @@
         <Insets top="10" right="10" bottom="10" left="10"/>
     </padding>
 
-    <Label text="Résumé des statistiques :" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+    <Label text="Résumé des statistiques :" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
 
     <HBox spacing="20">
         <VBox spacing="5">
-            <Label text="Créatures mortes" style="-fx-font-weight: bold;" />
+            <Label text="Créatures mortes" style="-fx-font-weight: bold;"/>
             <ListView fx:id="listViewCreaturesDead" prefHeight="150" prefWidth="200"/>
         </VBox>
 
         <VBox spacing="5">
-            <Label text="Créatures soignées" style="-fx-font-weight: bold;" />
+            <Label text="Créatures soignées" style="-fx-font-weight: bold;"/>
             <ListView fx:id="listViewCreaturesHealed" prefHeight="150" prefWidth="200"/>
         </VBox>
 
         <VBox spacing="5">
-            <Label text="Docteurs morts" style="-fx-font-weight: bold;" />
+            <Label text="Docteurs morts" style="-fx-font-weight: bold;"/>
             <ListView fx:id="listViewDoctorsDead" prefHeight="150" prefWidth="200"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Services médicaux fermés" style="-fx-font-weight: bold;"/>
+            <ListView fx:id="listMedicalServicesClosed" prefHeight="150" prefWidth="200"/>
         </VBox>
     </HBox>
 

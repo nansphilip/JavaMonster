@@ -2,6 +2,8 @@ package com.fantasyhospital.view;
 
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
+import com.fantasyhospital.model.creatures.TriageResident;
+import com.fantasyhospital.model.creatures.VIPPatient;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
 
@@ -319,7 +321,7 @@ public class CreatureCellView extends ListCell<Creature> {
         ImageView genderView = new ImageView(getGenderImageView(creature.getSex()));
         genderView.setFitHeight(14);
         genderView.setFitWidth(14);
-        Label genderLabel = new Label("Genre : " + creature.getSex());
+        Label genderLabel = new Label("Genre : " + creature.getSex().getLabel());
         HBox genderBox = new HBox(5, genderView, genderLabel);
         genderBox.setAlignment(Pos.CENTER);
 
@@ -330,8 +332,20 @@ public class CreatureCellView extends ListCell<Creature> {
         HBox moraleBox = new HBox(5, moraleView, moraleLabel);
         moraleBox.setAlignment(Pos.CENTER);
 
+        String type = "Type : ";
+        if (creature instanceof VIPPatient) {
+            type += "VIP";
+        } else if (creature instanceof TriageResident) {
+            type += "Résident en triage";
+        } else {
+            type += "";
+        }
+        Label typeLabel = new Label(type);
+
         Label name = new Label("Nom : " + creature.getFullName());
         Label age = new Label("Âge : " + creature.getAge());
+        Label height = new Label("Taille : " + creature.getHeight() + " cm");
+        Label weight = new Label("Poids : " + creature.getWeight() + " kg");
         Label diseases = new Label("Maladies :\n" + creature.getDiseases().stream()
                 .map(Disease::getFullName)
                 .reduce((d1, d2) -> d1 + "\n" + d2)
@@ -339,9 +353,9 @@ public class CreatureCellView extends ListCell<Creature> {
         diseases.setWrapText(true);
 
 
-        box.getChildren().addAll(largeCreatureImage, name, age, genderBox, moraleBox, diseases);
+        box.getChildren().addAll(largeCreatureImage, typeLabel, name, age,height, weight, genderBox, moraleBox, diseases);
 
-        DetailsCellView.show("Détails de la créature", box, 350, 350);
+        DetailsCellView.show("Détails de la créature", box, 350, 450);
     }
 }
 

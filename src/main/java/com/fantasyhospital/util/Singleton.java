@@ -4,6 +4,8 @@ import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +45,12 @@ public final class Singleton {
     private Stack<Doctor> doctorStack = new Stack<>();
 
     /**
+     * Collection de type Stack qui stocke les services qui ont fermé
+     */
+    @Getter
+    private Stack<MedicalService> medicalServiceStack = new Stack<>();
+
+    /**
      *  All stats for end game summary
      */
     @Getter
@@ -79,6 +87,15 @@ public final class Singleton {
     }
 
     /**
+     * Méthode pour ajouter une salle à la stack correspondante via le paramètre enum StackType
+     * @param room the medical service
+     * @param stackType le type de stack
+     */
+    public void addRoomToStack(Room room, StackType stackType){
+            medicalServiceStack.push((MedicalService) room);
+    }
+
+    /**
      * Méthode pour pop (retirer) une beast de la stack correspondante
      * @param stackType le type de stack
      * @return Beast la beast retirée
@@ -88,6 +105,7 @@ public final class Singleton {
             case DIE -> creatureDieStack.pop();
             case HEAL -> creatureHealStack.pop();
             case DOCTOR -> doctorStack.pop();
+            case MEDICAL_SERVICE -> null;
         };
     }
 
@@ -114,6 +132,7 @@ public final class Singleton {
             case DIE -> creatureDieStack.isEmpty();
             case HEAL -> creatureHealStack.isEmpty();
             case DOCTOR -> doctorStack.isEmpty();
+            case MEDICAL_SERVICE -> false;
         };
     }
 
@@ -146,6 +165,16 @@ public final class Singleton {
         while(!stackDoctor.isEmpty()){
             sb.append(stackDoctor.pop()).append("\n");
         }
+
+        sb.append("########################################\n");
+        sb.append("###### SERVICES MEDICAUX FERMES : ######\n");
+        sb.append("########################################\n");
+        Stack<MedicalService> stackMedicalService = new Stack<>();
+        stackMedicalService.addAll(medicalServiceStack);
+        while(!stackMedicalService.isEmpty()){
+            sb.append(stackMedicalService.pop()).append("\n");
+        }
+
         return sb.toString();
     }
 
@@ -154,6 +183,7 @@ public final class Singleton {
         summary.setCreaturesDead(creatureDieStack);
         summary.setCreaturesHealed(creatureHealStack);
         summary.setDoctorsDead(doctorStack);
+        summary.setMedicalServicesClosed(medicalServiceStack);
         return summary;
     }
 }
