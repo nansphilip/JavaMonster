@@ -10,6 +10,7 @@
             fx:id="waitingRoom"
             prefWidth="280.0"
             maxWidth="280.0"
+            maxHeight="520"
             style="-fx-background-color: #d3d3d3; -fx-border-color: #000000; -fx-border-width: 2;">
 
     <!-- Titre centré -->
