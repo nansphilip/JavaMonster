@@ -5,6 +5,7 @@ import com.fantasyhospital.controller.DoomController;
 import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.MedicalServiceDetailsController;
 import com.fantasyhospital.enums.BudgetType;
+import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
@@ -61,7 +62,7 @@ public class MedicalServiceCellView {
 
         topRow.getChildren().addAll(name, creatureCounter);
 
-        Label type = new Label("Type : " + service.getRoomType());
+        Label type = new Label("Type : " + RaceType.valueOf(service.getRoomType().toUpperCase()).getRace());
         type.setLayoutX(10);
         type.setLayoutY(60);
         type.setMaxWidth(160);

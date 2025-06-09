@@ -6,8 +6,12 @@ import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +19,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +102,9 @@ public class QuarantineCellView {
             Platform.runLater(() -> quarantineViewController.showCloseDoor(container));
         }
 
+        container.setCursor(Cursor.HAND);
+        container.setOnMouseClicked(event -> openDetailPanel(quarantine, container));
+
         return container;
     }
 
@@ -173,5 +182,28 @@ public class QuarantineCellView {
         }
 
         return hbox;
+    }
+
+    private void openDetailPanel(Quarantine quarantine, VBox container) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/quarantineDetailsListView.fxml"));
+            Parent root = loader.load();
+
+            Stage detailStage = new Stage();
+            detailStage.setTitle("Détails de la quarantaine");
+            detailStage.initModality(Modality.APPLICATION_MODAL);
+            detailStage.initOwner(container.getScene().getWindow());
+
+            double width = container.getScene().getWindow().getWidth() * 0.5;
+            double height = container.getScene().getWindow().getHeight() * 0.5;
+
+            detailStage.setWidth(width);
+            detailStage.setHeight(height);
+            detailStage.setScene(new Scene(root));
+            detailStage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

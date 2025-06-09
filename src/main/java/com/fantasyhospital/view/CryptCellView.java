@@ -6,13 +6,19 @@ import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +133,9 @@ public class CryptCellView {
         if (crypt.isHasServiceToClose()) {
             Platform.runLater(() -> cryptViewController.showCloseDoor(container));
         }
+
+        container.setCursor(Cursor.HAND);
+        container.setOnMouseClicked(event -> openDetailPanel(crypt, container));
 
         return container;
     }
@@ -287,5 +296,28 @@ public class CryptCellView {
         }
 
         return new Image(getClass().getResourceAsStream(temperatureImagePath));
+    }
+
+    private void openDetailPanel(Crypt crypt, VBox container) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cryptDetailsListView.fxml"));
+            Parent root = loader.load();
+
+            Stage detailStage = new Stage();
+            detailStage.setTitle("Détails de la crypte");
+            detailStage.initModality(Modality.APPLICATION_MODAL);
+            detailStage.initOwner(container.getScene().getWindow());
+
+            double width = container.getScene().getWindow().getWidth() * 0.5;
+            double height = container.getScene().getWindow().getHeight() * 0.5;
+
+            detailStage.setWidth(width);
+            detailStage.setHeight(height);
+            detailStage.setScene(new Scene(root));
+            detailStage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
