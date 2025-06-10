@@ -16,10 +16,6 @@ public class Werebeast extends TriageResident implements Contaminant {
     public Werebeast(CopyOnWriteArrayList<Disease> diseases) {
         super(diseases);
     }
-//
-//    public HommeBete(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Disease> diseases) {
-//        super(nom, sexe, poids, taille, age, moral, diseases);
-//    }
 
     @Override
     public boolean die(Room room) {

@@ -13,6 +13,20 @@ public abstract class BeastUtils {
 
 	protected static final Random RANDOM = new Random();
 
+	public static void setNameAvailableAgain(Creature creature){
+		String name = creature.getFullName();
+		switch (creature.getSex()){
+			case FEMALE:
+				FemaleNameType enumName = FemaleNameType.valueOf(name.toUpperCase());
+				enumName.setSelected(false);
+				break;
+			case MALE:
+				MaleNameType enumMaleName = MaleNameType.valueOf(name.toUpperCase());
+				enumMaleName.setSelected(false);
+				break;
+		}
+	}
+
 	/**
 	 * Generates a random name
 	 * @param genderType the gendertype given which will determine the type name picked

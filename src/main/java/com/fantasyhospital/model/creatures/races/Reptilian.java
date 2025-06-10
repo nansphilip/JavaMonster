@@ -15,7 +15,4 @@ public class Reptilian extends VIPPatient {
         super(diseases);
     }
 
-//    public Reptilien(String nomComplet, String sexe, int poids, int taille, int age, int moral, HashSet<Disease> diseases) {
-//        super(nomComplet, sexe, poids, taille, age, moral, diseases);
-//    }
 }

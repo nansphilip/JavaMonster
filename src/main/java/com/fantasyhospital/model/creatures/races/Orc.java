@@ -17,10 +17,6 @@ public class Orc extends TriageResident implements Contaminant {
         super(diseases);
     }
 
-//    public Orque(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Disease> diseases) {
-//        super(nom, sexe, poids, taille, age, moral, diseases);
-//    }
-
     @Override
     public boolean die(Room room) {
         super.die(room);

@@ -18,8 +18,9 @@ import static com.fantasyhospital.model.rooms.medicalservice.MedicalServiceUtils
 
 
 /**
- * Represents a specialized medical service in Fantasy Hospital.
+ * Represents a special room in Fantasy Hospital.
  * Inherits from Room and adds management of doctors and budget.
+ * All the creatures present in a medical service has to be of the same race
  */
 @Setter
 @Getter
@@ -37,6 +38,9 @@ public class MedicalService extends Room {
      */
     protected int budget;
 
+    /**
+     * Boolean, set to true if the service has to close (too poor budget), false otherwise.
+     */
     protected boolean hasServiceToClose = false;
 
     /**
@@ -93,8 +97,8 @@ public class MedicalService extends Room {
     }
 
     /**
-     * Recherche et retourne le médecin le plus faible moralement du service
-     * @return Medecin
+     * Search and returns the doctor with the lowest morale in the service.
+     * @return the doctor with the lowest morale, or null if there are no doctors
      */
     public Doctor getWeakerDoctor() {
         if(!doctors.isEmpty()){
@@ -109,12 +113,11 @@ public class MedicalService extends Room {
 
     /**
      * Transfer all the creatures to the waiting room
-     * If there is no doctor in the service, a new one appears, transfer creatures and then will die
+     * If there is no doctor in the service, a new one appears, transfer creatures and then will harakiri (sad story)
      */
     public void transferAllCreaturesToWaitingRoom(Hospital hospital) {
         Doctor doctor = null;
         if(this.doctors.isEmpty()) {
-            String race = this.getRoomType();
             doctor = new Doctor(this);
             doctor.addObserver(new MoralObserver(hospital));
             this.addDoctor(doctor);
@@ -125,14 +128,6 @@ public class MedicalService extends Room {
         Room waitingRoom = hospital.getWaitingRoom();
         doctor.transferGroup(this.creatures, this, waitingRoom, true);
     }
-
-    /**
-     * Revises the service's budget (to be completed).
-     */
-    public void reviseBudget(int value) {
-
-    }
-
 
     /**
      * Returns a textual representation of the medical service, its doctors,

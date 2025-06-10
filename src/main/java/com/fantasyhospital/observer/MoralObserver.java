@@ -1,7 +1,5 @@
 package com.fantasyhospital.observer;
 
-import com.fantasyhospital.enums.FemaleNameType;
-import com.fantasyhospital.enums.MaleNameType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
@@ -10,32 +8,35 @@ import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.setNameAvailableAgain;
+
 /**
- * Implémentation de l'interface Observer chargée de surveiller le moral des bêtes
- * Le notifier executera les actions potentielles qui découleraient d'un moral à 0 ou autres
+ * Implementation of the Observer interface that monitors the morale of creatures
+ * The notifier will execute potential actions that would result from a morale of 0 or other conditions
  */
 @Slf4j
 public class MoralObserver implements CreatureObserver {
 
     /**
-     * Attribut qui référence l'hospital pour surveiller une bête, et pouvoir la faire sortir de l'hospital
+     * The hospital to which this observer is attached
      */
     private Hospital hospital;
 
     // Constants of variation
     public static final int DECREASE_BUDGET = 15;
 
+    /**
+     * Constructor for the MoralObserver
+     * @param hospital The hospital to which this observer is attached
+     */
     public MoralObserver(Hospital hospital) {
         this.hospital = hospital;
     }
 
     /**
-     * Implémentation de la méthode onStateChanged
-     * Elle appelle la méthode vérifierMoral sur le médecin, qui vérifie si son moral n'est pas à 0
-     * et execute les méthodes si c'est le cas
-     * Elle vérifie le moral d'une créature avec la méthode verifierMoral, execute les actions potentielles
-     * et retire la créature de l'hopital si elle a trépassé
-     * @param beast la bête pour laquelle son moral évolue
+     * Implementation of the onStateChanged method. It calls the checkMorale method on the doctor, that checks if its moral is not at 0, and executes the method if it is
+     * Checks the creature moral with the checkMorale method, executes potential actions and removes the creature from the hospital if it has passed away
+     * @param beast the beast whose state has changed
      */
     @Override
     public void onStateChanged(Beast beast) {
@@ -58,17 +59,7 @@ public class MoralObserver implements CreatureObserver {
             }
 
             // Make the name of the creature available again
-            String name = creature.getFullName();
-            switch (creature.getSex()){
-                case FEMALE:
-                    FemaleNameType enumName = FemaleNameType.valueOf(name.toUpperCase());
-                    enumName.setSelected(false);
-                    break;
-                case MALE:
-                    MaleNameType enumMaleName = MaleNameType.valueOf(name.toUpperCase());
-                    enumMaleName.setSelected(false);
-                    break;
-            }
+            setNameAvailableAgain(creature);
         }
     }
 }

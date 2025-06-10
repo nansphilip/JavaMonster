@@ -6,23 +6,46 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Represents a room where the creatures are stacked
  */
-@Getter @Slf4j
+@Getter @Setter @Slf4j
 public class Room {
 
-    @Setter
+    /**
+     * Name of the room
+     */
     protected String name;
+
+    /**
+     * Area of the room in square meters
+     */
     protected double area;
+
+    /**
+     * Maximum number of creatures that can fit in the room
+     */
     protected final int MAX_CREATURE;
-    @Setter
+
+    /**
+     * List of creatures in the room, the list is thread-safe and doesn't allow null creatures nor duplicates
+     */
     protected CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
+
     public Random random = new Random();
 
+    /**
+     * Default Constructor for the Room class
+     * @param name name of the room
+     * @param area area of the room in square meters
+     * @param MAX_CREATURE maximum number of creatures that can fit in the room
+     */
     public Room(String name, double area, int MAX_CREATURE) {
         this.name = name;
         this.area = area;
@@ -30,9 +53,9 @@ public class Room {
     }
 
     /**
-     * Add a creature to the list of creature of the room
+     * Add a creature to the creatures list of the room if there is enough space
      * @param creature to add
-     * @return true if added, false else
+     * @return true if added, false otherwise (if the room is full)
      */
     public boolean addCreature(Creature creature){
         if (creatures.size() >= MAX_CREATURE) {
@@ -44,8 +67,8 @@ public class Room {
     }
 
     /**
-     * Renvoi le nombre de lits disponibles dans la salle
-     * @return
+     * Get the number of available beds in the room
+     * @return the number of available beds as int
      */
     public int getAvailableBeds(){
         return this.MAX_CREATURE - this.creatures.size();
@@ -54,32 +77,10 @@ public class Room {
     /**
      * Remove a creature from the list of the room
      * @param creature to remove
-     * @return true if removed, false else
+     * @return true if removed, false otherwise (if the creature was not in the room)
      */
     public boolean removeCreature(Creature creature){
         return this.creatures.remove(creature);
-    }
-
-    public void displayInfosService(){
-        log.info("\n{}", this);
-    }
-
-    public void displayInfosCreatures(){
-
-    }
-
-    /**
-     * Search and return the creature identified by this name
-     * @param creatureName name of the creature
-     * @return the creature if found, else null
-     */
-    public Creature getCreatureByName(String creatureName){
-        for(Creature creature : creatures){
-            if(creature.getFullName().equals(creatureName)){
-                return creature;
-            }
-        }
-        return null;
     }
 
     /**
@@ -92,13 +93,13 @@ public class Room {
         }
 
         List<Creature> creaturesSameRace = new ArrayList<>();
-        //instanciation d'une map à partir d'un enum (enumMap)
+
+        //instanciation d'une map à partir d'un enum (enumMap) pour compter le nombre de creatures associées a chaque race
         EnumMap<RaceType, Integer> map = new EnumMap<>(RaceType.class);
 
         for(Creature creature : creatures){
             RaceType race = RaceType.valueOf(creature.getRace().toUpperCase());
-            //Affecte l'int 1 si value est à null, sinon fait somme de 1 sur la valeur
-            map.merge(race, 1, Integer::sum);
+            map.merge(race, 1, Integer::sum); // merge : Affecte l'int 1 si value est à null, sinon fait somme de 1 sur la valeur
         }
 
         //Récupération de la race qui a le plus de créatures présentes dans la room

@@ -25,40 +25,35 @@ import org.springframework.stereotype.Component;
  * doctors, and global operations within the hospital.
  */
 @Slf4j
+@Setter @Getter
 public class Hospital {
 
     /**
      * Name of the hospital
      */
-    @Setter
-    @Getter
     private String name;
 
     /**
      * Maximum number of services the hospital can contain.
      */
-    @Getter
     private final int MAX_SERVICE_COUNT;
 
     /**
      * List of the hospital's services (rooms)
      */
-    @Setter
-    @Getter
     private List<Room> services = new ArrayList<Room>();
 
     //Constants
-    private static final int NB_AVERAGE_BUDGET_NEEDED = 75;
+    private static final int MIN_AVERAGE_BUDGET_NEEDED_TO_CREATE_SERVICE = 75;
 
     /**
-     * Creates a new hospital. Randomly generate the maximum number of services
-     * between 8 and 12 included.
+     * Creates a new hospital. The max number of services is set to 9.
      *
      * @param name the name of the hospital
      */
     public Hospital(String name) {
         this.name = name;
-        this.MAX_SERVICE_COUNT = 9; //6 + new Random().nextInt(3);
+        this.MAX_SERVICE_COUNT = 9;
     }
 
     /**
@@ -144,6 +139,37 @@ public class Hospital {
     }
 
     /**
+     * Calculate the average global budget of the hospital
+     * If it is over 70, creates a new service with a new doctor
+     */
+    public void reviewBudgetServiceCreate(){
+        int totalBudget = 0;
+        int nbMedicalServices = 0;
+        for(MedicalService medicalService : getMedicalServices()){
+            // If crypt, calls special method to get budget
+            totalBudget += medicalService instanceof Crypt ? ((Crypt) medicalService).getCryptBudget() : medicalService.getBudget();
+            if(medicalService instanceof Quarantine || medicalService instanceof Crypt){
+                continue;
+            }
+            nbMedicalServices++;
+        }
+
+        int averageBudget = Math.round((float) totalBudget / getMedicalServices().size());
+
+        // Creation of a new Service with a doctor if there is enough space in the hospital (- 3 avec salle attente et deux services medicaux speciaux)
+        if(averageBudget >= MIN_AVERAGE_BUDGET_NEEDED_TO_CREATE_SERVICE && nbMedicalServices < this.MAX_SERVICE_COUNT - 3){
+            MedicalService medicalService = new MedicalService();
+            Doctor doctor = new Doctor(medicalService);
+            doctor.addObserver(new MoralObserver(this));
+            medicalService.addDoctor(doctor);
+            this.addService(medicalService);
+            log.info("Le budget de l'hosto est remarquable, le service {} vient d'être créé avec le docteur {} !!",  medicalService.getName(), doctor.getFullName());
+        } else if(averageBudget >= MIN_AVERAGE_BUDGET_NEEDED_TO_CREATE_SERVICE && nbMedicalServices == this.MAX_SERVICE_COUNT - 3){
+            log.info("L'hôpital a atteint son nombre maximum de services, de nouveaux services ne peuvent pas être créés...");
+        }
+    }
+
+    /**
      * Calculate the global budget of the hospital
      */
     public int getGlobalBudget(){
@@ -159,39 +185,6 @@ public class Hospital {
     }
 
     /**
-     * Calculate the average global budget of the hospital
-     * If it is over 70, creates a new service with a new doctor
-     */
-    public void reviewBudgetServiceCreate(){
-        int totalBudget = 0;
-        int budgetQuarantine = 0;
-        int budgetCrypt = 0;
-        int nbMedicalServices = 0;
-        for(MedicalService medicalService : getMedicalServices()){
-            // If crypt, calls special method to get budget
-            totalBudget += medicalService instanceof Crypt ? ((Crypt) medicalService).getCryptBudget() : medicalService.getBudget();
-            if(medicalService instanceof Quarantine || medicalService instanceof Crypt){
-                continue;
-            }
-            nbMedicalServices++;
-        }
-
-        int averageBudget = Math.round((float) totalBudget / getMedicalServices().size());
-
-        // Creation of a new Service with a doctor if there is enough space in the hospital (- 3 avec salle attente et deux services medicaux speciaux)
-        if(averageBudget >= NB_AVERAGE_BUDGET_NEEDED && nbMedicalServices < this.MAX_SERVICE_COUNT - 3){
-            MedicalService medicalService = new MedicalService();
-            Doctor doctor = new Doctor(medicalService);
-            doctor.addObserver(new MoralObserver(this));
-            medicalService.addDoctor(doctor);
-            this.addService(medicalService);
-            log.info("Le budget de l'hosto est remarquable, le service {} vient d'être créé avec le docteur {} !!",  medicalService.getName(), doctor.getFullName());
-        } else if(averageBudget >= NB_AVERAGE_BUDGET_NEEDED && nbMedicalServices == this.MAX_SERVICE_COUNT - 3){
-            log.info("L'hôpital a atteint son nombre maximum de services, de nouveaux services ne peuvent pas être créés...");
-        }
-    }
-
-    /**
      * Displays the total number of doctors in the hospital.
      */
     public List<Doctor> getDoctorsList() {
@@ -202,31 +195,6 @@ public class Hospital {
             }
         }
         return allDoctors;
-    }
-
-    /**
-     * Displays all creatures present in all the hospital's services.
-     */
-    public void displayAllCreatures() {
-        for (Room room : this.services) {
-            for (Creature creature : room.getCreatures()) {
-                log.info("{}", creature);
-            }
-        }
-    }
-
-    /**
-     * Randomly modifies creatures (to be completed).
-     */
-    public void modifyRandomCreatures() {
-
-    }
-
-    /**
-     * Randomly modifies services (to be completed).
-     */
-    public void modifyRandomServices() {
-
     }
 
     /**
@@ -247,12 +215,6 @@ public class Hospital {
     }
 
     /**
-     * Starts the hospital simulation (to be completed).
-     */
-    public void simulation() {
-    }
-
-    /**
      * Returns the room where a given creature is located.
      *
      * @param creature the creature to search for
@@ -262,21 +224,6 @@ public class Hospital {
         for (Room room : this.services) {
             //log.info("room : {}", room.getNom());
             if (room.getCreatures().contains(creature)) {
-                return room;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Searches and returns a room by its name.
-     *
-     * @param name the name of the service to search for
-     * @return the searched room, or null if not found
-     */
-    public Room getRoomByName(String name) {
-        for (Room room : services) {
-            if (room.getName().equals(name)) {
                 return room;
             }
         }
@@ -312,18 +259,31 @@ public class Hospital {
     }
 
     /**
-     * Returns only the crypts in the hospital.
+     * Returns the crypt in the hospital.
      *
-     * @return List<Crypt>
+     * @return Crypt the crypt
      */
-    public List<Crypt> getCrypts() {
-        List<Crypt> cryptList = new ArrayList<>();
+    public Crypt getCrypt() {
         for (Room room : services) {
             if (room instanceof Crypt) {
-                cryptList.add((Crypt) room);
+                return (Crypt) room;
             }
         }
-        return cryptList;
+        return null;
+    }
+
+    /**
+     * Returns the quarantine in the hospital.
+     *
+     * @return Quarantine the quarantine
+     */
+    public Quarantine getQuarantine() {
+        for (Room room : services) {
+            if (room instanceof Quarantine) {
+                return (Quarantine) room;
+            }
+        }
+        return null;
     }
 
     /**

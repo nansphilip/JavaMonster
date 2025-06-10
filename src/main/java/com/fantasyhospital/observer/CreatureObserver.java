@@ -3,14 +3,13 @@ package com.fantasyhospital.observer;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 
 /**
- * Interface du patron du design pattern Observer
- * Il permet la notification aux observer à chaque modification de l'état d'une bête
+ * Interface for the Observer design pattern, allowing observers to be notified each time a beast's state changes.
  */
 public interface CreatureObserver {
 
     /**
-     * Méthode appelée à chaque modification (maladie, moral) d'une bête
-     * @param beast
+     * Method called each time a beast's state changes (illness, morale, etc.)
+     * @param beast the beast whose state has changed
      */
     void onStateChanged(Beast beast);
 }
