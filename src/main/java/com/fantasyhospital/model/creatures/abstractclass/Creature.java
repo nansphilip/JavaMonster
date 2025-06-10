@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  * Manages diseases, morale, reactions, and interactions with rooms.
  */
 @Slf4j
+@Getter @Setter
 public abstract class Creature extends Beast {
 
     // Constants
@@ -33,17 +34,16 @@ public abstract class Creature extends Beast {
     /**
      * Set of diseases contracted by the creature
      */
-    @Setter @Getter protected CopyOnWriteArrayList<Disease> diseases = new CopyOnWriteArrayList<>();
+    protected CopyOnWriteArrayList<Disease> diseases = new CopyOnWriteArrayList<>();
 
     /**
      * Number of howl the beast has done
      */
     private int howlCount;
 
-    @Getter
-    @Setter
     private boolean recentlyHealed = false;
 
+    // Attributes linked to observers
     private List<CreatureObserver> exitObservers = new ArrayList<>();
     private List<CreatureObserver> moralObservers = new ArrayList<>();
 

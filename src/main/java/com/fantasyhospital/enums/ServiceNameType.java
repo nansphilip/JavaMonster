@@ -1,9 +1,15 @@
 package com.fantasyhospital.enums;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Enum for the diferent medical services names in the hospital.
+ */
+@Getter
 public enum ServiceNameType {
     CARDIOLOGIE,
     PEDIATRIE,
@@ -28,20 +34,16 @@ public enum ServiceNameType {
 
     private boolean selected = false;
 
-    public boolean isSelected() {
-        return selected;
-    }
-
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
-    public static String getServiceName(String name){
-        ServiceNameType serviceNameEnum = ServiceNameType.valueOf(name.toUpperCase());
-        serviceNameEnum.setSelected(true);
-        return serviceNameEnum.name();
-    }
-
+    /**
+     * Returns a random available service name, marking it as selected.
+     * If all services are already selected, an exception is thrown.
+     *
+     * @return A randomly chosen service name in a capitalized format.
+     */
     public static String getRandomAvailable() {
         List<ServiceNameType> available = new ArrayList<>();
         for (ServiceNameType service : values()) {

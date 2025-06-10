@@ -39,12 +39,7 @@ public enum ActionType {
     /**
      * Healed creature
      */
-    CREATURE_TREATED(50),
-
-    /**
-     * Dead creature, demoralizing effect
-     */
-    DEAD_CREATURE_DEMORALIZING_EFFECT(-10);
+    CREATURE_TREATED(50);
 
     private final int moraleVariation;
 

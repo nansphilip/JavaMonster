@@ -39,7 +39,7 @@ public class Quarantine extends MedicalService {
 
 
     /**
-     * Surcharge de la méthode addCreature pour n'accepter que les créatures contaminantes
+     * Override de la méthode addCreature pour n'accepter que les créatures contaminantes
      * et respecter la limite de capacité
      */
     @Override

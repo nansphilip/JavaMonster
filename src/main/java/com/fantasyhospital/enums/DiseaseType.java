@@ -3,8 +3,8 @@ package com.fantasyhospital.enums;
 import lombok.Getter;
 
 /**
- * Enum listant les différents types de diseases possibles dans Fantasy
- * Hospital. Chaque disease a un nom complet et un impact sur le moral.
+ * Enum of the diferents disease types in the Fantasy
+ * Hospital. Each disease has a full name and a moral impact
  */
 @Getter
 public enum DiseaseType {
@@ -34,12 +34,18 @@ public enum DiseaseType {
      */
     NDMAD("Neo Diarrhée Monolithique Avec Débit", -5);
 
+    /**
+     * Full name of the disease
+     */
     private final String fullName;
+
+    /**
+     * Moral impact of the disease
+     */
     private final int moralImpact;
 
     DiseaseType(String fullName, int moralImpact) {
         this.fullName = fullName;
         this.moralImpact = moralImpact;
     }
-
 }

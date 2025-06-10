@@ -171,7 +171,7 @@ public class CreatureCellView extends ListCell<Creature> {
 
                 moraleAnimation = new TranslateTransition(Duration.millis(500), moraleTrendImageView);
                 moraleAnimation.setFromY(0);
-                moraleAnimation.setToY(-3); // vers le haut
+                moraleAnimation.setToY(-3);
                 moraleAnimation.setCycleCount(Animation.INDEFINITE);
                 moraleAnimation.setAutoReverse(true);
                 moraleAnimation.play();
@@ -182,7 +182,7 @@ public class CreatureCellView extends ListCell<Creature> {
 
                 moraleAnimation = new TranslateTransition(Duration.millis(500), moraleTrendImageView);
                 moraleAnimation.setFromY(0);
-                moraleAnimation.setToY(3); // vers le bas
+                moraleAnimation.setToY(3);
                 moraleAnimation.setCycleCount(Animation.INDEFINITE);
                 moraleAnimation.setAutoReverse(true);
                 moraleAnimation.play();
