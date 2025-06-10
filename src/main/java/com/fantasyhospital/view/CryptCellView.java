@@ -265,6 +265,7 @@ public class CryptCellView {
 
             Label nameLabel = new Label(doctor.getFullName());
             nameLabel.setStyle("-fx-font-size: 10px;");
+            nameLabel.setStyle("-fx-text-fill: white;");
 
             vbox.getChildren().addAll(imageView, nameLabel);
             hbox.getChildren().add(vbox);
