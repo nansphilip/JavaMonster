@@ -62,7 +62,13 @@ public class MedicalServiceCellView {
 
         topRow.getChildren().addAll(name, creatureCounter);
 
-        Label type = new Label("Type : " + RaceType.valueOf(service.getRoomType().toUpperCase()).getRace());
+        String raceString = service.getRoomType();
+        if(raceString == null){
+            raceString = "Race inconnue";
+        } else {
+            raceString = RaceType.valueOf(raceString.toUpperCase()).getRace();
+        }
+        Label type = new Label("Type : " + raceString);
         type.setLayoutX(10);
         type.setLayoutY(60);
         type.setMaxWidth(160);
