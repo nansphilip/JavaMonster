@@ -43,7 +43,7 @@
 
     <!-- Soignées -->
     <HBox spacing="10" alignment="CENTER_LEFT"
-          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;"
+          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px; -fx-cursor: hand;"
           onMouseClicked="#onHealedCounterClicked">
         <ImageView fitHeight="32" fitWidth="32" preserveRatio="true">
             <Image url="@../images/counter/Healed.png"/>
@@ -55,7 +55,7 @@
 
     <!-- Décès créatures -->
     <HBox spacing="10" alignment="CENTER_LEFT"
-          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;"
+          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px; -fx-cursor: hand;"
           onMouseClicked="#onDeathCounterClicked">
         <ImageView fitHeight="32" fitWidth="32" scaleX="1.5" scaleY="1.5" preserveRatio="true">
             <Image url="@../images/counter/DeathCreature.png"/>
@@ -67,7 +67,7 @@
 
     <!-- Décès docteurs -->
     <HBox spacing="10" alignment="CENTER_LEFT"
-          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px;"
+          style="-fx-background-color: #2a2a2a; -fx-padding: 5px; -fx-border-radius: 3px; -fx-cursor: hand;"
           onMouseClicked="#onDeathDoctorCounterClicked">
         <ImageView fitHeight="32" fitWidth="32" scaleX="1.5" scaleY="1.5" preserveRatio="true">
             <Image url="@../images/counter/DeathDoctor.png"/>
