@@ -4,17 +4,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.fantasyhospital.util.Singleton;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.fantasyhospital.EvolutionGame;
 import com.fantasyhospital.Simulation;
-import com.fantasyhospital.config.FxmlView;
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.controller.ConsoleLogController;
 import com.fantasyhospital.controller.CounterController;
+import com.fantasyhospital.controller.HospitalStructureController;
 import com.fantasyhospital.util.LogsUtils;
+import com.fantasyhospital.util.Singleton;
 
 import javafx.application.Platform;
 import javafx.css.PseudoClass;
@@ -25,7 +25,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
-import com.fantasyhospital.controller.HospitalStructureController;
 
 @Component
 public class ToolbarController implements Initializable {
@@ -35,7 +34,7 @@ public class ToolbarController implements Initializable {
 	private Button homeButton;
 
 	@FXML
-	private Button fullScreenButton;
+	private Button restartButton;
 
 	@FXML
 	private Button startSimulationButton;
@@ -74,31 +73,10 @@ public class ToolbarController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if (stageManager.isStageFullScreen()) {
-			setWindowedGraphicsAndAction();
-		} else {
-			setFullScreenGraphicsAndAction();
+		// Initialize restart button
+		if (restartButton != null) {
+			restartButton.setDisable(false);
 		}
-	}
-
-	public void goFullScreen() {
-		stageManager.switchToFullScreenMode();
-		setWindowedGraphicsAndAction();
-	}
-
-	public void goWindowed() {
-		stageManager.switchToWindowedMode();
-		setFullScreenGraphicsAndAction();
-
-	}
-
-	void setFullScreenGraphicsAndAction() {
-
-		fullScreenButton.pseudoClassStateChanged(minimizeIcon, false);
-		fullScreenButton.pseudoClassStateChanged(maximizeIcon, true);
-
-		fullScreenButton.setOnAction(e -> goFullScreen());
-
 	}
 
 	// Cette méthode permet d'écouter l'événement de fermeture de la fenêtre
@@ -107,12 +85,28 @@ public class ToolbarController implements Initializable {
 
 	}
 
-	public void setWindowedGraphicsAndAction() {
-
-		fullScreenButton.pseudoClassStateChanged(maximizeIcon, false);
-		fullScreenButton.pseudoClassStateChanged(minimizeIcon, true);
-
-		fullScreenButton.setOnAction(e -> goWindowed());
+	// Restart simulation method
+	@FXML
+	private void restartSimulation() {
+		consoleLogController.appendText("🔄 Restarting application...\n");
+		
+		// Clear console log
+		consoleLogController.clearConsole();
+		
+		// Restart simulation in background thread
+		new Thread(() -> {
+			simulation.restartSimulation();
+			Platform.runLater(() -> {
+				// Re-enable start button for new simulation
+				startSimulationButton.setDisable(false);
+				
+				// Reset all counters display
+				counterController.resetCounters();
+				
+				consoleLogController.appendText("✅ Application reset to welcome screen!\n");
+				consoleLogController.appendText("💡 Click 'Start' to begin a new simulation.\n");
+			});
+		}).start();
 	}
 
 	public void stop() {

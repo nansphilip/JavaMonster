@@ -26,9 +26,9 @@
             style="-fx-background-color: #ff8c00; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;"
     />
 
-    <Button fx:id="fullScreenButton"
-            text="Full Screen"
-            onAction="#goFullScreen"
+    <Button fx:id="restartButton"
+            text="Restart"
+            onAction="#restartSimulation"
             prefHeight="50.0"
             prefWidth="150.0"
             style="-fx-background-color: #444444; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;"

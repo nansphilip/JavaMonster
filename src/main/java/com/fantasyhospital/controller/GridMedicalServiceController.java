@@ -2,23 +2,23 @@ package com.fantasyhospital.controller;
 
 import java.util.List;
 
-import com.fantasyhospital.model.rooms.Room;
-import com.fantasyhospital.model.rooms.medicalservice.Crypt;
-import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
-import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
-import com.fantasyhospital.view.CloseDoorCellView;
-import javafx.scene.layout.Pane;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.Hospital;
+import com.fantasyhospital.model.rooms.Room;
+import com.fantasyhospital.model.rooms.medicalservice.Crypt;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
+import com.fantasyhospital.view.CloseDoorCellView;
 import com.fantasyhospital.view.MedicalServiceCellView;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 @Component
 public class GridMedicalServiceController {
@@ -159,6 +159,17 @@ public class GridMedicalServiceController {
 
 	public void showCloseDoor(Pane closeServiceDoor) {
 		CloseDoorCellView.show(closeServiceDoor);
+	}
+
+	/**
+	 * Clear all services from grid for restart
+	 */
+	public void clearServices() {
+		Platform.runLater(() -> {
+			gridPane.getChildren().clear();
+			hospital = null;
+			services = null;
+		});
 	}
 
 }

@@ -3,9 +3,6 @@ package com.fantasyhospital;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.fantasyhospital.enums.ServiceNameType;
-import com.fantasyhospital.model.rooms.medicalservice.MedicalServiceUtils;
-import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import org.springframework.stereotype.Service;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
@@ -13,13 +10,13 @@ import com.fantasyhospital.controller.HospitalStructureController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
-import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import com.fantasyhospital.observer.ExitObserver;
 import com.fantasyhospital.observer.MoralObserver;
 
@@ -114,4 +111,60 @@ public class Simulation {
         this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController, gridMedicalServiceController);
         jeu.runNextRound();
     }
+
+    /**
+     * Restart the simulation by stopping current one and resetting to welcome screen
+     */
+    public synchronized void restartSimulation() {
+        log.info("Stopping current simulation and returning to welcome screen...");
+        
+        // Stop current simulation
+        if (running) {
+            running = false;
+            
+            // Wait a bit for threads to finish
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.warn("Interrupted while waiting for simulation to stop");
+            }
+        }
+        
+        // Reset game reference
+        jeu = null;
+        
+        // Clear all UI controllers data
+        clearUIControllers();
+        
+        // Reset hospital structure to welcome screen
+        if (hospitalStructureController != null) {
+            hospitalStructureController.resetToWelcomeScreen();
+        }
+        
+        log.info("Application reset to welcome screen successfully");
+    }
+
+    /**
+     * Clear all UI controllers data for restart
+     */
+    private void clearUIControllers() {
+        log.info("Clearing UI controllers data...");
+        
+        if (listCreatureController != null) {
+            listCreatureController.clearCreatures();
+        }
+        if (listDoctorsController != null) {
+            listDoctorsController.clearDoctors();
+        }
+        if (waitingRoomController != null) {
+            waitingRoomController.clearWaitingRoom();
+        }
+        if (gridMedicalServiceController != null) {
+            gridMedicalServiceController.clearServices();
+        }
+        
+        log.info("UI controllers data cleared successfully");
+    }
+
 }

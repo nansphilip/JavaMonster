@@ -6,7 +6,7 @@
 
 ## Prérequis et installation
 
-- **Java JDK 17 ou supérieur**
+- **Java JDK**
 - **Maven** (gestionnaire de dépendances)
 - **SceneBuilder** (édition graphique des fichiers FXML)
 

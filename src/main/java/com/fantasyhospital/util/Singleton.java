@@ -1,16 +1,17 @@
 package com.fantasyhospital.util;
 
+import java.util.Stack;
+
 import com.fantasyhospital.enums.StackType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Beast;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Stack;
 
 /**
  * Classe qui implémente un design pattern Singleton
@@ -134,6 +135,17 @@ public final class Singleton {
             case DOCTOR -> doctorStack.isEmpty();
             case MEDICAL_SERVICE -> false;
         };
+    }
+
+    /**
+     * Clear all data for restart functionality
+     */
+    public void clearAllData() {
+        creatureDieStack.clear();
+        creatureHealStack.clear();
+        doctorStack.clear();
+        medicalServiceStack.clear();
+        endGameSummary = null;
     }
 
     public String getEndGameLog() {

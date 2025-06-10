@@ -4,20 +4,20 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.fantasyhospital.view.DoctorsCellView;
-import javafx.application.Platform;
-import lombok.Setter;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
+import com.fantasyhospital.view.DoctorsCellView;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import lombok.Setter;
 
 @Component
 public class ListDoctorsController {
@@ -70,5 +70,15 @@ public class ListDoctorsController {
 		this.hospital = hospital;
 		doctorsListView.setCellFactory(listView -> new DoctorsCellView(hospital, doomController));
 		loadDoctors();
+	}
+
+	/**
+	 * Clear all doctors from the list for restart
+	 */
+	public void clearDoctors() {
+		Platform.runLater(() -> {
+			observableDoctors.clear();
+			doctorsListView.refresh();
+		});
 	}
 }

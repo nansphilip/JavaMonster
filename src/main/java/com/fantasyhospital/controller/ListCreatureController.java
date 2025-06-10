@@ -7,7 +7,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import com.fantasyhospital.config.FxmlView;
 import com.fantasyhospital.config.StageManager;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -86,5 +85,15 @@ public class ListCreatureController {
 		this.hospital = hospital;
 		creatureListView.setCellFactory(listView -> new CreatureCellView(hospital));
 		loadCreatures();
+	}
+
+	/**
+	 * Clear all creatures from the list for restart
+	 */
+	public void clearCreatures() {
+		Platform.runLater(() -> {
+			observableCreatures.clear();
+			creatureListView.refresh();
+		});
 	}
 }

@@ -1,5 +1,9 @@
 package com.fantasyhospital.controller;
 
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.rooms.Room;
@@ -11,9 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class WaitingRoomController {
@@ -57,5 +58,15 @@ public class WaitingRoomController {
 
     public void setStage(Stage stage) {
         stage.setOnCloseRequest(event -> Platform.exit());
+    }
+
+    /**
+     * Clear waiting room for restart
+     */
+    public void clearWaitingRoom() {
+        Platform.runLater(() -> {
+            observableCreatures.clear();
+            waitingRoomListView.refresh();
+        });
     }
 }

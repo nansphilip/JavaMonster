@@ -1,22 +1,22 @@
 package com.fantasyhospital.controller;
 
-import com.fantasyhospital.model.Hospital;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-
-import lombok.Getter;
-import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import org.springframework.stereotype.Component;
+
+import com.fantasyhospital.model.Hospital;
+
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.beans.binding.Bindings;
+import lombok.Getter;
 
 @Component
 public class HospitalStructureController implements Initializable {
@@ -217,5 +217,52 @@ public class HospitalStructureController implements Initializable {
         if (quarantineViewIncludeController != null && hospital != null) {
             quarantineViewIncludeController.updateQuarantineView();
         }
+    }
+
+    /**
+     * Clear hospital data and reset to welcome screen for restart
+     */
+    public void clearHospital() {
+        // Reset game state (safe to do from any thread)
+        gameStarted = false;
+        hospital = null;
+
+        // UI operations must be done on JavaFX Application Thread
+        Platform.runLater(() -> {
+            // Show welcome screen again
+            if (welcomeContainer != null && !hospitalStructure.getChildren().contains(welcomeContainer)) {
+                hospitalStructure.getChildren().add(welcomeContainer);
+            }
+
+            // Hide waiting room if visible
+            if (waitingRoomView != null && hospitalStructure.getChildren().contains(waitingRoomView)) {
+                hospitalStructure.getChildren().remove(waitingRoomView);
+            }
+        });
+    }
+
+    /**
+     * Reset application to welcome screen (used for restart functionality)
+     */
+    public void resetToWelcomeScreen() {
+        // Reset game state
+        gameStarted = false;
+        hospital = null;
+
+        // Clear all singleton data (statistics)
+        com.fantasyhospital.util.Singleton.getInstance().clearAllData();
+
+        // UI operations must be done on JavaFX Application Thread
+        Platform.runLater(() -> {
+            // Show welcome screen again
+            if (welcomeContainer != null && !hospitalStructure.getChildren().contains(welcomeContainer)) {
+                hospitalStructure.getChildren().add(welcomeContainer);
+            }
+
+            // Hide waiting room if visible
+            if (waitingRoomView != null && hospitalStructure.getChildren().contains(waitingRoomView)) {
+                hospitalStructure.getChildren().remove(waitingRoomView);
+            }
+        });
     }
 }
