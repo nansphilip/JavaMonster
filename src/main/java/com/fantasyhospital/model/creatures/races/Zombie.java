@@ -26,14 +26,10 @@ public class Zombie extends TriageResident implements Regenerating {
         super(diseases);
     }
 
-//    public Zombie(String nom, String sexe, int poids, int taille, int age, int moral, HashSet<Disease> diseases) {
-//        super(nom, sexe, poids, taille, age, moral, diseases);
-//    }
-
     @Override
     public boolean die(Room room) {
         if(hasRegenerate && room instanceof Crypt) {
-            log.info("La créature {} avait déjà regénéré une fois, la crypte est implacable..",  this.fullName);
+            log.info("La créature {} avait déjà regénéré une fois dans la crypte, elle n'a malheureusement pas de seconde chance...tchao",  this.fullName);
             return true;
         }
         super.die(room);

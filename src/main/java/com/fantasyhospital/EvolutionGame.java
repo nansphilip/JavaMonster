@@ -127,11 +127,9 @@ public class EvolutionGame {
 	 * Do the actions for the crypt
 	 */
 	private void actionCrypte() {
-		List<Crypt> cryptList = hospital.getCrypts();
-		if (!cryptList.isEmpty()) {
-			for (Crypt crypt : cryptList) {
-				crypt.manageCrypt();
-			}
+		Crypt crypt = hospital.getCrypt();
+		if(crypt != null) {
+			crypt.manageCrypt();
 		}
 	}
 

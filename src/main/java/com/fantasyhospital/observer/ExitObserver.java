@@ -1,7 +1,6 @@
 package com.fantasyhospital.observer;
 
 import com.fantasyhospital.enums.FemaleNameType;
-import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.MaleNameType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -14,30 +13,32 @@ import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.setNameAvailableAgain;
 import static com.fantasyhospital.observer.MoralObserver.DECREASE_BUDGET;
 
 /**
- * Implémentation de l'interface Observer chargé de surveiller si une bête doit sortir de l'hopital
- * Soit parce qu'elle est soignée et n'a plus de maladie, soit parce qu'elle a trepassé
+ * Implementation of the Observer interface that monitors whether a beast should leave the hospital
+ * Either because it has been totally treated and no longer has any diseases, or because it has passed away.
  */
 @Slf4j
 public class ExitObserver implements CreatureObserver {
 
     /**
-     * Attribut qui référence l'hospital pour surveiller une bête, et pouvoir la faire sortir de l'hospital
+     * The hospital to which this observer is attached
      */
-    private Hospital hospital;
+    private final Hospital hospital;
 
-    // Constants of variation
-
+    /**
+     * Constructor for the ExitObserver
+     * @param hospital The hospital to which this observer is attached
+     */
     public ExitObserver(Hospital hospital) {
         this.hospital = hospital;
     }
 
     /**
-     * Implémentation de la méthode onStateChanged
-     * Elle appelle la méthode checkExitCreature
-     * @param bete
+     * Implementation of the onStateChanged method, that calls the checkExitCreature method
+     * @param beast The beast whose state has changed
      */
     @Override
     public void onStateChanged(Beast beast) {
@@ -46,20 +47,19 @@ public class ExitObserver implements CreatureObserver {
 
 
     /**
-     * Méthode qui vérifie si une créature doit sortir de l'hopital
-     * Elle appelle la méthode hasCreatureToLeaveHospital, cette dernière retourne true si c'est le cas
-     * Elle applique également depression sur le médecin le plus faible si la créature a trépassé
-     * @param creature
+     * Checks if the creature should leave the hospital. If the creature is a regenerating type, the depression is applied to the doctor
+     * even if the creature doesn't die effectively.
+     * @param creature The creature to check
      */
     private void checkExitCreature(Creature creature) {
         Room salleCreature = this.hospital.getRoomOfCreature(creature);
-        //Si la créature est déjà sortie de l'hopital
         if(salleCreature == null){
             return;
         }
 
-        //Avant de potentiellement faire trepasser la creature, si regenerant, on check si creature va mourir
-        //Si va mourir, on appliquera depression sur medecin
+        //Avant de potentiellement faire trepasser la creature, si c'est un regenerant, on check si creature va mourir
+        //Si ce check était fait après, la créature n'aurait possiblement plus la maladie lethale ou autre (regenerant)
+        //Si va mourir, on applique depression sur medecin
         boolean isDead = false;
         if(Regenerating.class.isAssignableFrom(creature.getClass())){
             if(creature instanceof Zombie zombie){
@@ -94,17 +94,7 @@ public class ExitObserver implements CreatureObserver {
             salleCreature.removeCreature(creature);
 
             // Make the name of the creature available again
-            String name = creature.getFullName();
-            switch (creature.getSex()){
-                case FEMALE:
-                    FemaleNameType enumName = FemaleNameType.valueOf(name.toUpperCase());
-                    enumName.setSelected(false);
-                    break;
-                case MALE:
-                    MaleNameType enumMaleName = MaleNameType.valueOf(name.toUpperCase());
-                    enumMaleName.setSelected(false);
-                    break;
-            }
+            setNameAvailableAgain(creature);
         }
 
         //Si regenerant qui meurt mais reste quand même dans l'hopital après avoir regénéré, applique depression a medecin

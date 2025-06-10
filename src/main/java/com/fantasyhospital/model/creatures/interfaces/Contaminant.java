@@ -5,16 +5,25 @@ import com.fantasyhospital.model.disease.Disease;
 import com.fantasyhospital.model.rooms.Room;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Interface of the contaminant creatures
+ * Its particularity is that it can contaminate other creatures
+ */
 public interface Contaminant {
 
     Logger logger = LoggerFactory.getLogger(Contaminant.class);
 
+    /**
+     * Default method of the interface shared with all implementations
+     * Contaminates a creature with a random disease it has in the list of diseases
+     * If the creature has only one disease, it will lower the level of this disease to 5
+     * @param CreatureDying the creature that is dying
+     * @param room the room where the creature is dying
+     */
     default void contaminate(Creature CreatureDying, Room room){
-        //Body de la mtéthode contaminer commune à toutes les classes de l'interface
-        //On récupère une disease au hasard, mais qui n'est pas au niveau max
-        //Si il n'en avait qu'une, on baisse le niveau de la maladie à 5
         CopyOnWriteArrayList<Disease> diseases = CreatureDying.getDiseases();
         Disease disease = CreatureDying.getRandomDisease();
         for(Disease m : diseases){

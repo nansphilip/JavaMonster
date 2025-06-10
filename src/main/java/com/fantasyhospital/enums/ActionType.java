@@ -42,9 +42,9 @@ public enum ActionType {
     CREATURE_TREATED(50),
 
     /**
-     * Dead creature, demoralizing effect
+     * Creature demoralized by the death of another creature
      */
-    DEAD_CREATURE_DEMORALIZING_EFFECT(-10);
+    CREATURE_DEMORALIZED(-10);
 
     private final int moraleVariation;
 

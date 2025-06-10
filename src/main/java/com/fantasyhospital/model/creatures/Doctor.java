@@ -40,12 +40,11 @@ public class Doctor extends Beast {
 	/**
 	 * Race/type of the doctor (e.g., Lycanthrope)
 	 */
-	@Setter
-	@Getter
 	protected String race;
 
-	@Getter
-	@Setter
+	/**
+	 * Boolean indicating if the doctor has harakiri yet
+	 */
 	private boolean harakiriTriggered = false;
 
 	/**
@@ -54,17 +53,28 @@ public class Doctor extends Beast {
 	protected MedicalService medicalService;
 
 	/**
-	 * Liste d'observer qui sont appelés pour être notifiés d'un changement de moral du médecin
+	 * List of observers that monitor the doctor's state
 	 */
 	private List<CreatureObserver> observers = new ArrayList<>();
 
+	/**
+	 * Boolean indicating if the doctor has moved this turn.
+	 */
 	private boolean hasMovedThisTurn = false;
 
 	// Constants of modification
 	public static final int INCREASE_BUDGET_SERVICE = 2;
 
 	/**
-	 * Constructs a doctor with their characteristics and assigned service.
+	 * Default Constructor that creates a doctor with their characteristics and assigned service.
+	 * @param name
+	 * @param sex
+	 * @param weight
+	 * @param height
+	 * @param age
+	 * @param morale
+	 * @param race
+	 * @param medicalService
 	 */
 	public Doctor(String name, GenderType sex, int weight, int height, int age, int morale, String race, MedicalService medicalService) {
 		super(name, sex, weight, height, age, morale);
@@ -73,6 +83,10 @@ public class Doctor extends Beast {
 		this.previousMorale = morale;
 	}
 
+	/**
+	 * Constructor that generates a random doctor in a medical service.
+	 * @param medicalService the medical service to which the doctor is assigned
+	 */
 	public Doctor(MedicalService medicalService) {
 		super(generateRandomRace(), generateRandomSex(), generateWeight(), generateHeight(), generateAge(), generateMorale());
 		this.fullName = "Dr. " + generateRandomName(this.sex);
@@ -89,7 +103,7 @@ public class Doctor extends Beast {
 	}
 
 	/**
-	 * Ajoute observer à la liste d'observer
+	 * Add the observer to the list of observers that monitor the doctor's state.
 	 *
 	 * @param creatureObserver
 	 */
@@ -98,9 +112,9 @@ public class Doctor extends Beast {
 	}
 
 	/**
-	 * Notifie les observer que l'état du médecin a changé
+	 * Notify all observers that the doctor's state has changed.
 	 */
-	public void notifyObservers() {
+	private void notifyObservers() {
 		for (CreatureObserver observer : observers) {
 			observer.onStateChanged(this);
 		}
@@ -159,14 +173,14 @@ public class Doctor extends Beast {
 		// Si son service médical est vide, il essaie de transférer une créature de la room d'attente vers son service.
 		// Il doit chercher un service du type de la créature, sinon choisir une autre créature.
 		if (listeCreatures.isEmpty()) {
-			Room waitingRoom = hospital.getRoomByName("Room d'attente");
+			Room waitingRoom = hospital.getWaitingRoom();
 			if (waitingRoom != null) {
 				//Il reste des creatures dans la salle d'attente à soigner, il essaie d'en transférer le plus grand nombre de la même race.
 				if (!waitingRoom.getCreatures().isEmpty()) {
 					List<Creature> creaturesToTransfer = waitingRoom.getAllCreaturesOfSameRace();
 					if (creaturesToTransfer != null) {
 						if (authorizedToGoToCrypt(creaturesToTransfer)) {
-							if (transferToSpecialService(hospital, "Crypt", creaturesToTransfer, waitingRoom)) {
+							if (transferToSpecialService(hospital.getCrypt(), creaturesToTransfer, waitingRoom)) {
 								return;
 							}
 							if (!this.medicalService.getName().equals("Quarantaine")) {
@@ -175,7 +189,7 @@ public class Doctor extends Beast {
 							}
 						}
 						if (authorizedToGoToQuarantine(creaturesToTransfer)) {
-							if (transferToSpecialService(hospital, "Quarantaine", creaturesToTransfer, waitingRoom)) {
+							if (transferToSpecialService(hospital.getQuarantine(), creaturesToTransfer, waitingRoom)) {
 								MedicalService quarantine = hospital.getMedicalServiceByName("Quarantaine");
 								goTo(this.medicalService, quarantine);
 								return;
@@ -236,22 +250,30 @@ public class Doctor extends Beast {
 
 	}
 
-
-	public boolean authorizedToGoToCrypt(List<Creature> creatures) {
+	/**
+	 * Checks if the list of creatures is authorized to go to the Crypt.
+	 * @param creatures
+	 * @return true if it is authorized, false otherwise
+	 */
+	private boolean authorizedToGoToCrypt(List<Creature> creatures) {
 		return creatures.getFirst().getRace().equals("Zombie") || creatures.getFirst().getRace().equals("Vampire");
 	}
 
-
-	public boolean authorizedToGoToQuarantine(List<Creature> creatures) {
+	/**
+	 * Checks if the list of creatures is authorized to go to the Quarantine.
+	 * @param creatures
+	 * @return true if it is authorized, false otherwise
+	 */
+	private boolean authorizedToGoToQuarantine(List<Creature> creatures) {
 		return creatures.getFirst().getRace().equals("Orc") || creatures.getFirst().getRace().equals("Werebeast") || creatures.getFirst().getRace().equals("Lycanthrope") || creatures.getFirst().getRace().equals("Vampire");
 	}
 
 	/**
-	 * Déplace un docteur dans un autre service
+	 * Move the doctor from one medical service to another.
 	 *
-	 * @param roomFrom le service dont part le medecin.
-	 * @param roomTo   le service où va le médecin.
-	 * @return true si ça a marché
+	 * @param roomFrom the medical service from which the doctor is leaving.
+	 * @param roomTo the medical service to which the doctor is going.
+	 * @return true if the move was successful, false otherwise.
 	 */
 	public void goTo(MedicalService roomFrom, MedicalService roomTo) {
 		roomFrom.removeDoctor(this);
@@ -261,7 +283,10 @@ public class Doctor extends Beast {
 		log.info("Le docteur {} part du service {} et va dans le service {}", this.fullName, roomFrom.getName(), roomTo.getName());
 	}
 
-	public void doctorWait() {
+	/**
+	 * Makes the doctor wait when there are no actions to perform.
+	 */
+	private void doctorWait() {
 		log.info("Le dr {} n'a rien à faire...", this);
 	}
 
@@ -271,16 +296,13 @@ public class Doctor extends Beast {
 	 * @param creature the creature to heal
 	 * @param disease  the disease to heal
 	 */
-	public void heal(Creature creature, Disease disease) {
+	private void heal(Creature creature, Disease disease) {
 		if (disease == null) {
 			log.error("[medecin][soigner()] La créature {} n'a pas de disease", creature.getFullName());
 			return;
 		}
 
-		// On récupère la room où se trouve la créature pour le passage à beCured
-		MedicalService medicalService = this.medicalService;
-
-		if (!creature.beCured(disease, medicalService)) {
+		if (!creature.beCured(disease, this.medicalService)) {
 			log.error("[medecin][soigner()] La créature {} ne possédait pas la disease {}", creature.getFullName(), disease.getName());
 		} else {
 			int heal = ActionType.DOCTOR_HEALS.getMoraleVariation();
@@ -291,41 +313,48 @@ public class Doctor extends Beast {
 			creature.setMorale(Math.min(creature.getMorale() + healCreature, 100));
 
 			// The value of the budget increase by healing the creature
-			medicalService.setBudget(Math.min(medicalService.getBudget() + INCREASE_BUDGET_SERVICE, 100));
+			this.medicalService.setBudget(Math.min(this.medicalService.getBudget() + INCREASE_BUDGET_SERVICE, 100));
 			log.info("Le médecin {} soigne la maladie {} de {} ! (+{} pts pour la créature et +{} pts pour le médecin)", this.getFullName(), disease.getName(), creature.getFullName(), healCreature, heal);
-			log.info("Le soin fait augmenter le budget du service {} de {} points ({} pts)", medicalService.getName(), INCREASE_BUDGET_SERVICE, medicalService.getBudget());
+			log.info("Le soin fait augmenter le budget du service {} de {} points ({} pts)", this.medicalService.getName(), INCREASE_BUDGET_SERVICE, this.medicalService.getBudget());
 		}
 	}
 
-	public boolean transferToSpecialService(Hospital hospital, String serviceName, List<Creature> creaturesToTransfer, Room waitingRoom) {
-		Room room = hospital.getRoomByName(serviceName);
-		if (room == null) {
+	/**
+	 * Transfers a group of creatures to a special service (Crypt or Quarantine) if the conditions are met.
+	 * The method checks if the service has available beds and if the creatures are authorized to go there.
+	 * @param service the medical service to which the creatures are transferred
+	 * @param creaturesToTransfer the list of creatures to transfer
+	 * @param waitingRoom the waiting room from which the creatures are transferred
+	 * @return true if the transfer was successful, false otherwise
+	 */
+	private boolean transferToSpecialService(MedicalService service, List<Creature> creaturesToTransfer, Room waitingRoom) {
+		if(service == null){
 			return false;
 		}
-		if (room.getAvailableBeds() > 0) {
-			if (room.getName().equals("Crypt")) {
+		if (service.getAvailableBeds() > 0) {
+			if (service.getName().equals("Crypt")) {
 				if (authorizedToGoToCrypt(creaturesToTransfer)) {
-					if (!room.getCreatures().isEmpty()) {
-						if (Objects.equals(creaturesToTransfer.getFirst().getRace(), room.getRoomType())) {
-							transferGroup(creaturesToTransfer, waitingRoom, room, false);
+					if (!service.getCreatures().isEmpty()) {
+						if (Objects.equals(creaturesToTransfer.getFirst().getRace(), service.getRoomType())) {
+							transferGroup(creaturesToTransfer, waitingRoom, service, false);
 							return true;
 						}
 						return false;
 					}
-					transferGroup(creaturesToTransfer, waitingRoom, room, false);
+					transferGroup(creaturesToTransfer, waitingRoom, service, false);
 					return true;
 				}
 			}
-			if (room.getName().equals("Quarantaine")) {
+			if (service.getName().equals("Quarantaine")) {
 				if (authorizedToGoToQuarantine(creaturesToTransfer)) {
-					if (!room.getCreatures().isEmpty()) {
-						if (Objects.equals(creaturesToTransfer.getFirst().getRace(), room.getRoomType())) {
-							transferGroup(creaturesToTransfer, waitingRoom, room, false);
+					if (!service.getCreatures().isEmpty()) {
+						if (Objects.equals(creaturesToTransfer.getFirst().getRace(), service.getRoomType())) {
+							transferGroup(creaturesToTransfer, waitingRoom, service, false);
 							return true;
 						}
 						return false;
 					}
-					transferGroup(creaturesToTransfer, waitingRoom, room, false);
+					transferGroup(creaturesToTransfer, waitingRoom, service, false);
 					return true;
 				}
 			}
@@ -336,46 +365,11 @@ public class Doctor extends Beast {
 	}
 
 	/**
-	 * Transfers a creature from one room to another if the conditions are met.
-	 *
-	 * @param creature the creature to transfer
-	 * @param roomFrom the room to transfer from
-	 * @param roomTo   the room to transfer to
-	 * @return true if the transfer was successful, false otherwise
-	 */
-	public boolean transfer(Creature creature, Room roomFrom, Room roomTo) {
-		//Check si il y a bien de la place dans la room de destination
-		if (roomTo.getCreatures().size() >= roomTo.getMAX_CREATURE()) {
-			log.info("Le service de destination était déjà plein...");
-			return false;
-		}
-
-		// Vérification que la créature est bien dans la room
-		CopyOnWriteArrayList<Creature> creaturesRoom = roomFrom.getCreatures();
-		if (!creaturesRoom.contains(creature)) {
-			log.error("[medecin][transferer()] La créature {} à transférer n'est pas présente dans la room {}.", creature.getFullName(), roomFrom.getName());
-			return false;
-		}
-		String roomType = roomTo.getRoomType();
-		//Si la room de destination n'est pas vide, on vérifie que la race de la creature correspond au type de la room
-		if (!roomTo.getCreatures().isEmpty()) {
-			if (!creature.getRace().equals(roomType)) {
-				log.error("[medecin][transferer()] Transfert impossible, le type du service de destination ({}) n'est pas du type de la créature ({}).", roomType, creature.getRace());
-				return false;
-			}
-		}
-		log.info("Le médecin {} transfère {} de {} vers {}.", this.fullName, creature.getFullName(), roomFrom.getName(), roomTo.getName());
-		return roomFrom.removeCreature(creature) && roomTo.addCreature(creature);
-	}
-
-	/**
 	 * Transfers a list of creature from one room to another if the conditions are met.
 	 * All the creatures have to be the same race
-	 *
 	 * @param creatures the creatures to transfer
 	 * @param roomFrom  the room to transfer from
 	 * @param roomTo    the room to transfer to
-	 * @return true if the transfer was successful, false otherwise
 	 */
 	public void transferGroup(List<Creature> creatures, Room roomFrom, Room roomTo, boolean transferWaitingRoom) {
 		//Check si il y a bien de la place dans la room de destination
@@ -418,7 +412,7 @@ public class Doctor extends Beast {
 
 	/**
 	 * Checks the doctor's morale. If it reaches zero, the doctor leaves the service.
-	 *
+	 * Adds the doctor to the stack of doctors who died
 	 * @return false if the doctor has left, true otherwise
 	 */
 	public boolean checkMorale() {
@@ -456,7 +450,7 @@ public class Doctor extends Beast {
 	}
 
 	/**
-	 * Réinitialise l'état du médecin pour un nouveau tour
+	 * Resets the doctor's state for a new turn.
 	 */
 	public void resetForNewTurn() {
 		this.hasMovedThisTurn = false;

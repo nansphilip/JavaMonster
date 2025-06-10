@@ -4,6 +4,10 @@ import java.util.Random;
 
 import static com.fantasyhospital.enums.ServiceNameType.getRandomAvailable;
 
+/**
+ * Utility class for generating random values related to medical services.
+ * This class provides methods to generate random budgets, areas, and service names.
+ */
 public abstract class MedicalServiceUtils {
 
     //Constants

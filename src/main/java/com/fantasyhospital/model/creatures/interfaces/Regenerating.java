@@ -15,6 +15,9 @@ public interface Regenerating {
 
     Logger logger = LoggerFactory.getLogger(Regenerating.class);
 
+    //Constants
+    public static final double BE_HEALED_CHANCE = 0.5;
+
     /**
      * Make the creature regenerate when it dies
      * If it had only one disease, it has 50% to leave the hospital cured, or to get sick by a random disease
@@ -22,7 +25,7 @@ public interface Regenerating {
      * @return true if it has to get out of the hospital, false otherwise
      */
     default boolean regenerate(Creature creature) {
-        //Supprime disease qui l'a tué
+        //Supprime disease qui l'a tué pour ne pas boucler infiniment
         Disease disease = creature.getHighLevelDisease();
         creature.getDiseases().remove(disease);
         //Regénère avec les diseases qu'il avait
@@ -31,7 +34,7 @@ public interface Regenerating {
             return false;
         }
         //si il avait 1 seule disease, 50% chance attraper autre disease ou sortir hopital
-        if(Math.random() > 0.5){
+        if(Math.random() < BE_HEALED_CHANCE) {
             disease = new Disease();
             creature.getDiseases().add(disease);
             logger.info("La créature {} revient à la vie, elle contracte la disease {} en regénérant.", creature.getFullName(), disease.getName());
@@ -57,9 +60,13 @@ public interface Regenerating {
         return creature.getDiseases().size() >= 4;
     }
 
+    /**
+     * Special method to cure a creature in the crypt (when it waits 3 tours with a temperature enough cool
+     * @param creature the creature to cure
+     * @param medicalService the crypt
+     */
     default void cureCreatureInCrypt(Creature creature, MedicalService medicalService) {
         CopyOnWriteArrayList<Disease> list = new CopyOnWriteArrayList<>(creature.getDiseases());
-        //list = creature.getDiseases();
         for(Disease disease : list){
             creature.beCured(disease, medicalService);
         }

@@ -1,9 +1,17 @@
 package com.fantasyhospital.enums;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Enums for female names used in the hospital simulation.
+ * When a name is selected, it cannot be used again until it is reset (when a creature or doctor dies)
+ * This enum provides a method to get a random name available
+ */
+@Getter
 public enum FemaleNameType {
     GERMAINE, GEORGETTE, YVONNE, PAULETTE, RAYMONDE, LUCIENNE, ANDREE, MARCELLE,
     HENRIETTE, SIMONE, DENISE, SUZANNE, RENEE, FERNANDE, BERTHE, JEANNE, MARGUERITE,
@@ -15,14 +23,14 @@ public enum FemaleNameType {
 
     private boolean selected = false;
 
-    public boolean isSelected() {
-        return selected;
-    }
-
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
+    /**
+     * Pick a random name available in the enum
+     * @return the name in String format
+     */
     public static String getRandomAvailable() {
         List<FemaleNameType> available = new ArrayList<>();
         for (FemaleNameType name : values()) {
@@ -31,9 +39,9 @@ public enum FemaleNameType {
             }
         }
 
+        // If there is no name available, return default name
         if (available.isEmpty()) {
             return "Mickael Martin Nevot";
-            //throw new IllegalStateException("Tous les prénoms féminins ont été utilisés !");
         }
 
         FemaleNameType chosen = available.get(new Random().nextInt(available.size()));

@@ -1,11 +1,11 @@
 package com.fantasyhospital.model.rooms.medicalservice;
 
-import com.fantasyhospital.enums.BudgetType;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.interfaces.Regenerating;
 import com.fantasyhospital.model.disease.Disease;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.Objects;
@@ -15,16 +15,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.fantasyhospital.model.creatures.Doctor.INCREASE_BUDGET_SERVICE;
 
 /**
- * Class of the special room crypt
- * The airflow regulate the temperature to 20°C when it works, or reduce by 10°C each tour if the temperature is over 20°C
+ * Class of the special MedicalService crypt
+ * The airflow regulate the temperature to 20°C when it works, or reduce by a random int each tour if the temperature is over 20°C
  * The temperature rise randomly between 2 and 10°C by tour if the airflow is broken
- * There is 25% chance that a creature repair the airflow when broken each tour
- * There is 30% chance that the airflow break down each tour
- * If a creature waits 3 tours (non consecutivly) in the crypt with a maximum temperature of 30°C, it is completely cured
+ * There is 25% chance that a creature repairs the airflow when it is broken each tour
+ * There is 30% chance that the airflow breaks down each tour
+ * If a creature waits 3 tours (non consecutivly) in the crypt with a maximum temperature of 30°C, it is completely cured and gets out of the hospital
  * If the temperature rises over 30°C, creatures have 50% to get sick (1 disease)
- * If the temperature rises at maximum, 50°C, they likely to get sick (1 disease)
+ * If the temperature rises at maximum (50°C), they get sick (1 disease)
  */
-@Slf4j 
+@Slf4j @Getter @Setter
 public final class Crypt extends MedicalService {
 
     // Temperature constants
@@ -48,53 +48,48 @@ public final class Crypt extends MedicalService {
     private static final int DECREASE_CALCUL_BUDGET = 5;
 
     /**
-     * Airflow, true if working false otherwise
-     * -- GETTER --
-     *  Retourne l'état actuel du système de ventilation
-     *
-     * @return true si le système fonctionne, false sinon
-
+     * Airflow, true if it is working, false otherwise
      */
-    @Getter
     private boolean airflow;
+
     /**
-     * -- GETTER --
-     *  Retourne la température actuelle de la crypte
-     *
-     * @return température en degrés Celsius
+     * The temperature of the crypt
      */
-    @Getter
     private int temperature;
 
     /**
-     * The list of the creatures of the crypt, associated with the int number of tour they are waiting in the crypt with temperature < 30°C
+     * The HashMap of the creatures of the crypt, associating each creature with the int number of tour they are waiting in the crypt with temperature < 30°C
+     * The collection is thread-safe to allow concurrent modifications
      */
     private final ConcurrentHashMap<Creature, Integer> creatureWaitNbTour = new ConcurrentHashMap<>();
     
     private final Random random = new Random();
 
+    /**
+     * Default Constructor of the Crypt
+     * @param name the name of the crypt
+     * @param area the area of the crypt
+     * @param MAX_CAPACITY the maximum capacity of the crypt
+     * @param budget the budget of the crypt
+     */
     public Crypt(String name, double area, int MAX_CAPACITY, int budget) {
         super(name, area, MAX_CAPACITY, budget);
         this.airflow = true;
         this.temperature = MIN_TEMPERATURE;
     }
 
-    // Ajout des getters manquants
-
     /**
-     * Retourne la map des créatures et de leur nombre de tours d'attente
-     * @return la map des créatures et de leur nombre de tours d'attente
+     * Get the HashMap of the creatures
+     * @return the HashMap
      */
     public Map<Creature, Integer> getCreatureWaitNbTour() {
         return creatureWaitNbTour;
     }
 
     /**
-     * Adds a creature to the crypt if it implements Regenerating interface and there's space available.
-     *
-     * @param creature the creature to add to the service
+     * Adds a creature to the crypt if it implements Regenerating interface and there's space available in the crypt
+     * @param creature the creature to add to the crypt
      * @return true if the creature was successfully added, false otherwise
-     * @throws NullPointerException if creature is null
      */
     @Override
     public boolean addCreature(Creature creature) {
@@ -119,10 +114,8 @@ public final class Crypt extends MedicalService {
 
     /**
      * Remove a creature from the crypt
-     *
      * @param creature to remove
      * @return true if removed, false else
-     * @throws NullPointerException if creature is null
      */
     @Override
     public boolean removeCreature(Creature creature) {
@@ -152,17 +145,17 @@ public final class Crypt extends MedicalService {
     }
 
     /**
-     * Make the airflow break down
+     * Make the airflow be broken
      */
-    public void airflowBreakDown() {
+    private void airflowBreakDown() {
         this.airflow = false;
         log.info("Ah shit, here we go again. La clim est tombé en panne");
     }
 
     /**
-     * Make the airflow repaired
+     * Make the airflow be repaired
      */
-    public void airflowRepair() {
+    private void airflowRepair() {
         this.airflow = true;
         log.info("Un ouvrier regénérant répare la clim !");
     }
@@ -174,14 +167,14 @@ public final class Crypt extends MedicalService {
     public void manageTemperature() {
         int previousTemperature = this.temperature;
         
-        if (this.airflow && this.temperature > MIN_TEMPERATURE) { // The airflow doesnt work and the temperature is above min temp
+        if (this.airflow && this.temperature > MIN_TEMPERATURE) { // The airflow doesn't work and the temperature is above min temp
             int coolingRate = Math.min(TEMPERATURE_DECREASE_RATE, (this.temperature - MIN_TEMPERATURE) / 2 + 1);
             this.temperature = Math.max(MIN_TEMPERATURE, this.temperature - coolingRate);
             
             if (previousTemperature != this.temperature) {
                 log.info("La clim fait baisser la température de la crypte : {}°C (-{}°C)", temperature, previousTemperature - temperature);
             }
-        } else if (!this.airflow && this.temperature < MAX_TEMPERATURE) {
+        } else if (!this.airflow && this.temperature < MAX_TEMPERATURE) { // The airflow is broken and the temperature is below max temp
             // More gradual increase based on current temperature
             int maxIncrease = Math.min(MAX_TEMPERATURE_INCREASE, (MAX_TEMPERATURE - this.temperature) / 5 + 1);
             int increase = MIN_TEMPERATURE_INCREASE + random.nextInt(Math.max(1,maxIncrease - MIN_TEMPERATURE_INCREASE + 1));
@@ -195,9 +188,9 @@ public final class Crypt extends MedicalService {
 
     /**
      * Manage the airflow according to the rules of the crypt
-     * Repair chance scales with the number of creatures present in the crypt (more creatures = higher chance)
+     * Repair chance scales with the number of creatures present in the crypt (the more creatures are present in the crypt the higher chance of repair)
      */
-    public void manageAirFlow() {
+    private void manageAirFlow() {
         if (this.airflow && random.nextDouble() < AIRFLOW_BREAKDOWN_CHANCE) {
             airflowBreakDown();
         } else if (!this.airflow) {
@@ -214,7 +207,7 @@ public final class Crypt extends MedicalService {
     /**
      * Manage creatures according to the rules of the crypt (to get sick)
      */
-    public void manageCreatures(){
+    private void manageCreatures(){
         if(this.creatures.isEmpty()){
             return;
         }
@@ -240,7 +233,7 @@ public final class Crypt extends MedicalService {
     }
 
     /**
-     * Compare the temperature to get the chance to get sick for the creatures
+     * Analyze the temperature to get the chance to get sick for the creatures
      * If temperature is enough cool, chance is 0
      * @return the chance
      */
@@ -257,7 +250,7 @@ public final class Crypt extends MedicalService {
     }
 
     /**
-     * Manage all the crypt
+     * Manage every aspect of the crypt
      */
     public void manageCrypt(){
         manageAirFlow();

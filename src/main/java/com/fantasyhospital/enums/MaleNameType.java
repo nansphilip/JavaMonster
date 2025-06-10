@@ -1,9 +1,16 @@
 package com.fantasyhospital.enums;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Enums for the male names used in the game.
+ * This enum provides a method to get a random name available
+ */
+@Getter
 public enum MaleNameType {
     LUCIEN, JACQUES, MARCEL, FERNAND, ALBERT, LEON, RAYMOND, GASTON, HENRI, MAURICE,
     ROGER, RENE, ANDRE, GEORGES, PAUL, EMILE, ERNEST, EUGENE, ARMAND, ANATOLE,
@@ -14,14 +21,14 @@ public enum MaleNameType {
 
     private boolean selected = false;
 
-    public boolean isSelected() {
-        return selected;
-    }
-
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
 
+    /**
+     * Pick a random name available in the enum
+     * @return the name in String format
+     */
     public static String getRandomAvailable() {
         List<MaleNameType> available = new ArrayList<>();
         for (MaleNameType name : values()) {
@@ -30,9 +37,9 @@ public enum MaleNameType {
             }
         }
 
+        // If there is no name available, return default name
         if (available.isEmpty()) {
             return "Mickael Martin Nevot";
-            //throw new IllegalStateException("Tous les prénoms masculins ont été utilisés !");
         }
 
         MaleNameType chosen = available.get(new Random().nextInt(available.size()));

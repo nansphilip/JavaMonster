@@ -1,34 +1,49 @@
 package com.fantasyhospital.model.rooms.medicalservice;
 
+import com.fantasyhospital.enums.BudgetType;
+import com.fantasyhospital.model.creatures.abstractclass.Creature;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import com.fantasyhospital.enums.BudgetType;
-import com.fantasyhospital.model.creatures.abstractclass.Creature;
-
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
-@Getter
-@Slf4j
+/**
+ * Class of the special MedicalService Quarantine
+ * This service is used to isolate creatures that are contaminated. It only accepts contaminating creatures. The disease's level of a creature in
+ * the quarantine cannot increase, but creatures can still lose control
+ */
+@Getter @Slf4j
 public class Quarantine extends MedicalService {
 
-
+    /**
+     * Indicates if the quarantine is isolated from the rest of the hospital
+     * This is true for all quarantines
+     */
     private final boolean isolation;
 
+    /**
+     * List of contaminating races that can be put in quarantine
+     */
     public static final List<String> CONTAMINATING_RACES = Arrays.asList("Orc", "Werebeast", "Lycanthrope", "Vampire");
 
     /**
-     * Crée une salle de quarantaine liée à un service médical parent
-     * La capacité maximale est automatiquement calculée à 10% de celle du service parent
+     * Default Constructor for the Quarantine class
+     * @param name
+     * @param area
+     * @param MAX_CAPACITY
+     * @param budgetType
      */
     public Quarantine(String name, double area,int MAX_CAPACITY, int budgetType) {
-        // La capacité maximale est de 10% de celle du service médical parent
         super(name, area, MAX_CAPACITY, budgetType);
         this.isolation = true;
     }
 
+    /**
+     * Gets a random race from the contaminating races list
+     * @return the race as String
+     */
     public static String getRandomContaminatingRace() {
         if (CONTAMINATING_RACES.isEmpty()) {
             return null; // Ou gérer autrement si la liste peut être vide
@@ -39,8 +54,7 @@ public class Quarantine extends MedicalService {
 
 
     /**
-     * Surcharge de la méthode addCreature pour n'accepter que les créatures contaminantes
-     * et respecter la limite de capacité
+     * Overrides of the addCreature method to only accept contaminating creatures and respect the capacity limit
      */
     @Override
     public boolean addCreature(Creature creature) {
@@ -63,35 +77,13 @@ public class Quarantine extends MedicalService {
     }
 
     /**
-     * Vérifie si la race est contaminante
+     * Checks if the race given in parameter is a contaminating race
+     * @param race the race to check
+     * @return true if it is, false otherwise
      */
     private boolean isContaminatingRace(String race) {
         return CONTAMINATING_RACES.contains(race);
     }
-    
-    /**
-     * Détermine si une créature peut contaminer d'autres créatures
-     * @param creature La créature à vérifier
-     * @return false si la créature est en quarantaine, true sinon
-     */
-    public boolean canCreatureContaminate(Creature creature) {
-        // Si la créature est dans cette quarantaine, elle ne peut pas contaminer
-        return !this.creatures.contains(creature);
-    }
-    
-    /**
-     * Détermine si le moral d'une créature peut changer
-     * @param creature La créature à vérifier
-     * @return false si la créature est en quarantaine, true sinon
-     */
-    public boolean canCreatureMoraleChange(Creature creature) {
-        // Si la créature est dans cette quarantaine, son moral ne change pas
-        return !this.creatures.contains(creature);
-    }
-    
-    /**
-     * Retourne le service médical parent de cette quarantaine
-     */
 
     @Override
     public String toString() {

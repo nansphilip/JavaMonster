@@ -1,9 +1,6 @@
 package com.fantasyhospital.model.creatures.abstractclass;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.fantasyhospital.enums.ActionType;
@@ -24,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  * Manages diseases, morale, reactions, and interactions with rooms.
  */
 @Slf4j
+@Getter @Setter
 public abstract class Creature extends Beast {
 
     // Constants
@@ -33,17 +31,19 @@ public abstract class Creature extends Beast {
     /**
      * Set of diseases contracted by the creature
      */
-    @Setter @Getter protected CopyOnWriteArrayList<Disease> diseases = new CopyOnWriteArrayList<>();
+    protected CopyOnWriteArrayList<Disease> diseases = new CopyOnWriteArrayList<>();
 
     /**
      * Number of howl the beast has done
      */
     private int howlCount;
 
-    @Getter
-    @Setter
+    /**
+     * Boolean, true if the creature has been recently healed, false otherwise
+     */
     private boolean recentlyHealed = false;
 
+    // Attributes linked to observers
     private List<CreatureObserver> exitObservers = new ArrayList<>();
     private List<CreatureObserver> moralObservers = new ArrayList<>();
 
@@ -64,12 +64,12 @@ public abstract class Creature extends Beast {
     }
 
     /**
-     * La créature s'emporte et peut contaminer une autre créature de la salle.
-     * Elle a 30% de chance de trépasser en s'emportant
-     * Si la créature est en quarantaine, elle ne peut pas contaminer d'autres créatures
-     * @return true si creature trepasse, false sinon
+     * The creature lose control and can contaminate an other creature in the room
+     * It has 40% chance of trepassing while losing control
+     * If it is in quarantine, it can't contaminate an other creature
+     * @return true if creature trepasses, false otherwise
      */
-    public boolean loseControl(Room room) {
+    private boolean loseControl(Room room) {
         if (room.getCreatures().isEmpty()) {
             return false;
         }
@@ -94,7 +94,7 @@ public abstract class Creature extends Beast {
             return true;
         }
 
-        //15% de chance de contaminer creature lorsqu'il s'emporte
+        //30% de chance de contaminer creature lorsqu'il s'emporte
         if(Math.random() < CONTAMINATE_WHEN_LOSING_CONTROL_CHANCE){
             Creature creature = room.getRandomCreatureWithoutThisOne(this);
             Disease disease = this.getRandomDisease();
@@ -114,7 +114,7 @@ public abstract class Creature extends Beast {
 
     /**
      * Checks the creature's morale and triggers reactions if necessary.
-     * @return true si la créature trépasse, false sinon
+     * @return true if creature trepasses, false otherwise
      */
     public boolean checkMorale(Room room) {
         if(room == null){
@@ -134,8 +134,7 @@ public abstract class Creature extends Beast {
     }
 
     /**
-     * Checks the creature's health (death if lethal disease or too many diseases).
-     *
+     * Checks the creature's health (it dies if it has a lethal disease or too many diseases).
      * @return true if the creature should leave the room (death), false otherwise.
      */
     public boolean hasCreatureToleaveHospital(Room room){
@@ -177,12 +176,18 @@ public abstract class Creature extends Beast {
         this.moralObservers.add(creatureObserver);
     }
 
+    /**
+     * Method that notifies the exit observers when a creature can possibly die or when healed (and so have to leave hospital)
+     */
     public void notifyExitObservers() {
         for (CreatureObserver observer : this.exitObservers) {
             observer.onStateChanged(this);
         }
     }
 
+    /**
+     * Method that notifies the moral observers when the moral of a creature changes
+     */
     public void notifyMoralObservers() {
         for (CreatureObserver observer : this.moralObservers) {
             observer.onStateChanged(this);
@@ -206,19 +211,11 @@ public abstract class Creature extends Beast {
     }
 
     /**
-     * Modify the moral of the creature
-     */
-    // @Override
-    // public void setMorale(int morale) {
-    //     this.morale = morale;
-    // }
-
-    /**
      * Cures the creature of a given disease and give moral points
      * (moral doesn't change if in quarantine)
-     * @param disease La maladie à soigner
-     * @param medicalService La salle où se trouve la créature (pour vérifier si c'est une quarantaine)
-     * @return true if the disease was removed.
+     * @param disease The disease to be cured
+     * @param medicalService The medical service where the creature is curently
+     * @return true if the disease was removed, false it had not the disease
      */
     public boolean beCured(Disease disease, MedicalService medicalService) {
         if(!this.diseases.contains(disease)){

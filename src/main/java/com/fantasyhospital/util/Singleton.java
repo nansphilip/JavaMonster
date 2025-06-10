@@ -14,41 +14,36 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Classe qui implémente un design pattern Singleton
- * Le but est de partager une seule instance de cette classe dans toute l'application
- * On peut ainsi ajouter les créatures trépassées et soignées aux attributs de type Stack (pile)
- * Pour ensuite afficher ces créatures à la fin du jeu
+ * Class that implements a Singleton design pattern. The purpose is to share a single instance of this class throughout the application.
+ * We can thus add deceased and healed creatures, doctors that had harakiri and medical services that had closed to the stack attributes
+ * It allows us to display these creatures at the end of the game.
  */
-@Slf4j
+@Slf4j @Getter @Setter
 public final class Singleton {
 
     /**
-     * Instance unique de cette classe
+     * Unic instance of the Singleton class
      */
     private static Singleton instance;
 
     /**
-     * Collection de type Stack qui stocke les créatures qui ont trépassé
+     * Stack collection that stores creatures that have died
      */
-    @Getter
     private Stack<Creature> creatureDieStack = new Stack<>();
 
     /**
-     * Collection de type Stack qui stocke les créatures qui ont été soignées
+     * Stack collection that stores creatures that have been completely healed
      */
-    @Getter
     private Stack<Creature> creatureHealStack = new Stack<>();
 
     /**
-     * Collection de type Stack qui stocke les médecins qui ont été harakiri
+     * Stack collection that stores doctors that have committed harakiri
      */
-    @Getter
     private Stack<Doctor> doctorStack = new Stack<>();
 
     /**
-     * Collection de type Stack qui stocke les services qui ont fermé
+     * Stack collection that stores medical services that have closed
      */
-    @Getter
     private Stack<MedicalService> medicalServiceStack = new Stack<>();
 
     /**
