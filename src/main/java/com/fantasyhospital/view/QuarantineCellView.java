@@ -1,5 +1,6 @@
 package com.fantasyhospital.view;
 
+import com.fantasyhospital.controller.MedicalServiceDetailsController;
 import com.fantasyhospital.controller.QuarantineViewController;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -186,8 +187,12 @@ public class QuarantineCellView {
 
     private void openDetailPanel(Quarantine quarantine, VBox container) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/quarantineDetailsListView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/medicalServiceDetailsListView.fxml"));
             Parent root = loader.load();
+
+            // On suppose que le contrôleur accepte un setQuarantine(Quarantine q)
+            MedicalServiceDetailsController controller = loader.getController();
+            controller.setQuarantine(quarantine);
 
             Stage detailStage = new Stage();
             detailStage.setTitle("Détails de la quarantaine");

@@ -1,6 +1,7 @@
 package com.fantasyhospital.view;
 
 import com.fantasyhospital.controller.CryptViewController;
+import com.fantasyhospital.controller.MedicalServiceDetailsController;
 import com.fantasyhospital.enums.BudgetType;
 import com.fantasyhospital.model.creatures.Doctor;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
@@ -300,8 +301,12 @@ public class CryptCellView {
 
     private void openDetailPanel(Crypt crypt, VBox container) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cryptDetailsListView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/medicalServiceDetailsListView.fxml"));
             Parent root = loader.load();
+
+            // On suppose que le contrôleur accepte un setQuarantine(Quarantine q)
+            MedicalServiceDetailsController controller = loader.getController();
+            controller.setCrypt(crypt);
 
             Stage detailStage = new Stage();
             detailStage.setTitle("Détails de la crypte");
