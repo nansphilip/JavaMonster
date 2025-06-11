@@ -9,13 +9,6 @@ public enum FxmlView {
 		}
 	},
 
-	MINI_LOGO {
-		@Override
-		public String getFxmlPath() {
-			return "/fxml/logoMiniView.fxml";
-		}
-	},
-
 	LIST_CREATURE {
 		@Override
 		public String getFxmlPath() {

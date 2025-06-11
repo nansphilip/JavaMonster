@@ -5,16 +5,31 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
 <VBox spacing="20"
       alignment="CENTER"
       xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.fantasyhospital.controller.LogoViewController"
-      style="-fx-background-color: #1e1e1e; -fx-padding: 40px;">
+      style="-fx-background-color: #1e1e1e;">
 
-    <ImageView fitWidth="400" preserveRatio="true">
-        <Image url="/images/logo/Logo.jpg"/>
-    </ImageView>
+    <StackPane fx:id="stackPane" alignment="CENTER" VBox.vgrow="ALWAYS">
+        <ImageView fx:id="backgroundImage"
+                   preserveRatio="true"/>
+
+
+        <ImageView fx:id="dialogueImage"
+                   fitWidth="400"
+                   preserveRatio="true">
+            <Image url="/images/dialogue/DialogueNevot.jpg"/>
+        </ImageView>
+
+        <Text fx:id="dialogueText"
+              wrappingWidth="360"
+              style="-fx-fill: white; -fx-font-size: 14px;"
+              translateX="80" />
+    </StackPane>
 
     <Button text="Start Game"
             onAction="#startGame"
