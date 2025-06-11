@@ -53,7 +53,8 @@ public enum ServiceNameType {
         }
 
         if (available.isEmpty()) {
-            throw new IllegalStateException("Tous les services hospitaliers ont été utilisés !");
+            return "Service NEVOT";
+            //throw new IllegalStateException("Tous les services hospitaliers ont été utilisés !");
         }
 
         ServiceNameType chosen = available.get(new Random().nextInt(available.size()));

@@ -3,6 +3,8 @@ package com.fantasyhospital;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.fantasyhospital.model.creatures.abstractclass.BeastUtils;
+import com.fantasyhospital.model.rooms.medicalservice.MedicalServiceUtils;
 import org.springframework.stereotype.Service;
 
 import com.fantasyhospital.controller.GridMedicalServiceController;
@@ -137,6 +139,10 @@ public class Simulation {
         
         // Clear all UI controllers data
         clearUIControllers();
+
+        //Reset enums names for creatures and services
+        BeastUtils.reinitializeNames();
+        MedicalServiceUtils.reinitializeServiceNames();
         
         // Reset hospital structure to welcome screen
         if (hospitalStructureController != null) {
@@ -145,7 +151,7 @@ public class Simulation {
         
         log.info("Application reset to welcome screen successfully");
 
-        //On appelle le pote garbage collector pour libérer la mémoire et supprimer les objets du projet
+        //On appelle l'ami garbage collector pour libérer la mémoire et supprimer les objets du projet
         System.gc();
     }
 

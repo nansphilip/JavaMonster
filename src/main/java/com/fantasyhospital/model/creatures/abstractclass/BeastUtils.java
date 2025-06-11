@@ -72,6 +72,14 @@ public abstract class BeastUtils {
 	}
 
 	/**
+	 * Reinitializes the names of the enums to not selected
+	 */
+	public static void reinitializeNames() {
+		Arrays.stream(MaleNameType.values()).forEach(name -> name.setSelected(false));
+		Arrays.stream(FemaleNameType.values()).forEach(name -> name.setSelected(false));
+	}
+
+	/**
 	 * Generates a random GenderType
 	 * @return the GenderType
 	 */

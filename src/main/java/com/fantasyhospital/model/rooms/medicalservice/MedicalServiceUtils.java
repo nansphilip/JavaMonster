@@ -1,5 +1,7 @@
 package com.fantasyhospital.model.rooms.medicalservice;
 
+import com.fantasyhospital.enums.ServiceNameType;
+
 import java.util.Random;
 
 import static com.fantasyhospital.enums.ServiceNameType.getRandomAvailable;
@@ -40,4 +42,12 @@ public abstract class MedicalServiceUtils {
         return getRandomAvailable();
     }
 
+    /**
+     * Reinitializes all the enum names to not selected
+     */
+    public static void reinitializeServiceNames() {
+        for (ServiceNameType service : ServiceNameType.values()) {
+            service.setSelected(false);
+        }
+    }
 }
