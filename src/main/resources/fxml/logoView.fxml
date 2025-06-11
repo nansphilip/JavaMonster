@@ -16,8 +16,9 @@
 
     <StackPane fx:id="stackPane" alignment="CENTER" VBox.vgrow="ALWAYS">
         <ImageView fx:id="backgroundImage"
-                   preserveRatio="true"/>
-
+                   preserveRatio="false"
+                   fitWidth="Infinity"
+                   fitHeight="Infinity"/>
 
         <ImageView fx:id="dialogueImage"
                    fitWidth="400"
@@ -29,9 +30,11 @@
               wrappingWidth="360"
               style="-fx-fill: white; -fx-font-size: 14px;"
               translateX="80" />
+        <Button text="Start Game"
+                onAction="#startGame"
+                style="-fx-background-color: #00aa00; -fx-text-fill: white; -fx-font-size: 16px;"
+                translateY="120" />
     </StackPane>
 
-    <Button text="Start Game"
-            onAction="#startGame"
-            style="-fx-background-color: #00aa00; -fx-text-fill: white; -fx-font-size: 16px;" />
+
 </VBox>
