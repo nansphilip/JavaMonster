@@ -10,23 +10,43 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
+/**
+ * Manages the main application stage and scene switching.
+ */
 @Component
 public class StageManager {
 
+	/**
+	 * Manages the main application stage and scene switching.
+	 */
 	@Getter
     private final Stage primaryStage;
 	private final FxmlLoader fxmlLoader;
 
+	/**
+	 * Constructs the StageManager with the given FxmlLoader and primary Stage.
+	 *
+	 * @param fxmlLoader the FxmlLoader bean
+	 * @param primaryStage the main application stage
+	 */
 	public StageManager(FxmlLoader fxmlLoader,
 		Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.fxmlLoader = fxmlLoader;
 	}
 
+	/**
+	 * Switches the stage to maximized mode.
+	 */
 	public void switchToMaximizedMode() {
 		primaryStage.setMaximized(true);
 	}
 
+	/**
+	 * Switches the scene to the specified FXML view.
+	 *
+	 * @param view the FxmlView to display
+	 */
 	public void switchScene(final FxmlView view) {
 		primaryStage.setMinWidth(1200);
 		primaryStage.setMinHeight(800);
@@ -37,24 +57,18 @@ public class StageManager {
 		Parent rootNode = loadRootNode(view.getFxmlPath());
 
 		Scene scene = new Scene(rootNode);
-//		String stylesheet = Objects.requireNonNull(getClass()
-//				.getResource("/styles/styles.css"))
-//			.toExternalForm();
-//
-//		scene.getStylesheets().add(stylesheet);
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
-	public void switchToNextScene(final FxmlView view) {
-
-		Parent rootNode = loadRootNode(view.getFxmlPath());
-		primaryStage.getScene().setRoot(rootNode);
-
-		primaryStage.show();
-	}
-
+	/**
+	 * Loads the root node from the given FXML path.
+	 *
+	 * @param fxmlPath the FXML file path
+	 * @return the root node
+	 * @throws RuntimeException if loading fails
+	 */
 	private Parent loadRootNode(String fxmlPath) {
 		Parent rootNode;
 		try {
@@ -64,21 +78,4 @@ public class StageManager {
 		}
 		return rootNode;
 	}
-
-    public void switchToFullScreenMode() {
-		primaryStage.setFullScreen(true);
-	}
-
-	public void switchToWindowedMode() {
-		primaryStage.setFullScreen(false);
-	}
-
-	public boolean isStageFullScreen() {
-		return primaryStage.isFullScreen();
-	}
-
-	public void exit() {
-		primaryStage.close();
-	}
-
 }

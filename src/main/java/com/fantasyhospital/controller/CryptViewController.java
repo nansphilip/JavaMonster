@@ -7,36 +7,38 @@ import com.fantasyhospital.view.CryptCellView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
-
+/**
+ * Controller for the Crypt view in the Fantasy Hospital application.
+ * This controller manages the display and interaction with the Crypt medical service room.
+ */
 @Component
 public class CryptViewController {
 
+
+    /**
+     * The GridPane that contains the crypt view.
+     */
     @FXML
     private GridPane cryptGridPane;
 
     private Crypt crypt;
-    private final Random random = new Random();
 
     /**
-     * Initialise la vue de la crypte
+     * Initializes the CryptViewController.
+     * This method is called by the JavaFX framework after the FXML file has been loaded.
      */
     @FXML
     public void initialize() {
-        // Initialisation de base de la grille
-//        if (cryptGridPane != null) {
-//            cryptGridPane.getChildren().clear();
-//            cryptGridPane.setStyle("-fx-background-color: #202020; -fx-border-color: #444444; -fx-border-width: 1px; -fx-background-image: url('/images/tiles/FloorCrypt.png')");
-//        }
     }
 
     /**
-     * Configure l'hôpital et trouve la crypte
-     * @param hospital l'hôpital contenant la crypte
+     * Sets the hospital and retrieves the crypt from its services.
+     * This method is called to initialize the controller with the hospital context.
+     *
+     * @param hospital the hospital containing the crypt service
      */
     public void setHospital(Hospital hospital) {
         // Rechercher la crypte dans les services de l'hôpital
@@ -50,8 +52,9 @@ public class CryptViewController {
     }
 
     /**
-     * Configure la crypte et met à jour l'affichage
-     * @param crypt la crypte à afficher
+     * Sets the crypt instance and updates the view.
+     *
+     * @param crypt the Crypt instance to set
      */
     public void setCrypt(Crypt crypt) {
         this.crypt = crypt;
@@ -60,7 +63,8 @@ public class CryptViewController {
     }
 
     /**
-     * Met à jour l'affichage de la crypte
+     * Updates the crypt view by clearing the existing content and rendering the new view.
+     * This method is called whenever the crypt data changes.
      */
     public void updateCryptView() {
         Platform.runLater(() -> {
@@ -68,7 +72,7 @@ public class CryptViewController {
 
             cryptGridPane.getChildren().clear();
 
-            // Appel à ta vue custom
+
             CryptCellView view = new CryptCellView(crypt,crypt.getDoctors(), this);
             VBox viewContent = view.render();
 
@@ -76,6 +80,12 @@ public class CryptViewController {
         });
     }
 
+    /**
+     * Displays the close door view for the crypt.
+     * This method is called to show the close door interface when needed.
+     *
+     * @param closeServiceDoor the VBox containing the close door view
+     */
     public void showCloseDoor(VBox closeServiceDoor) {
         CloseDoorCellView.show(closeServiceDoor);
     }

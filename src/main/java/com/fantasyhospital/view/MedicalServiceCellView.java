@@ -27,22 +27,33 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
+/**
+ * MedicalServiceCellView is a utility class that provides a method to create a view for a medical service in the hospital.
+ * It displays the service's name, type, budget, beds, and doctors, and allows interaction to view more details.
+ */
 public class MedicalServiceCellView {
 
-    private DoomController doomController;
-
+    /**
+     * Creates a view for the given medical service.
+     *
+     * @param service                      the medical service to display
+     * @param hospital                     the hospital where the service is located
+     * @param stageManager                 the stage manager for managing stages
+     * @param gridMedicalServiceController the controller for the grid of medical services
+     * @param doomController               the controller for handling doom events
+     * @return a Pane containing the view of the medical service
+     */
     public static Pane createView(MedicalService service, Hospital hospital, StageManager stageManager, GridMedicalServiceController gridMedicalServiceController, DoomController doomController) {
         Pane pane = new Pane();
         pane.setStyle("""
-                -fx-background-color: #add8e6;
-                -fx-border-color: #000000;
-                -fx-border-width: 1;
-            """);
+                    -fx-background-color: #add8e6;
+                    -fx-border-color: #000000;
+                    -fx-border-width: 1;
+                """);
         pane.setPrefSize(210.0, 290.0);
         pane.setCursor(Cursor.HAND);
 
@@ -63,7 +74,7 @@ public class MedicalServiceCellView {
         topRow.getChildren().addAll(name, creatureCounter);
 
         String raceString = service.getRoomType();
-        if(raceString == null){
+        if (raceString == null) {
             raceString = "Race inconnue";
         } else {
             raceString = RaceType.valueOf(raceString.toUpperCase()).getRace();
@@ -124,27 +135,50 @@ public class MedicalServiceCellView {
         return pane;
     }
 
+    /**
+     * Creates a view for the beds in the medical service.
+     *
+     * @param numberOfBeds the number of beds in the service
+     * @param budgetType   the budget type of the service
+     * @param service      the medical service to display
+     * @return a FlowPane containing the bed images
+     */
     public static FlowPane createBedsView(int numberOfBeds, BudgetType budgetType, MedicalService service) {
         generateBedImagePathsIfNeeded(numberOfBeds, budgetType, service);
         return buildBedsPane(service);
     }
 
+    /**
+     * Generates bed image paths based on the budget type and number of beds.
+     * This method populates the service with the appropriate bed image paths.
+     *
+     * @param numberOfBeds the number of beds to generate images for
+     * @param budgetType   the budget type of the medical service
+     * @param service      the medical service to update with bed image paths
+     */
     private static void generateBedImagePathsIfNeeded(int numberOfBeds, BudgetType budgetType, MedicalService service) {
-            List<String> generated = new ArrayList<>();
-            for (int i = 0; i < numberOfBeds; i++) {
-                String bedImagePath = switch (budgetType) {
-                    case INSUFFISANT, EXCELLENT -> getRandomImage(new String[]{"/images/room/Bed.png"});
-                    case MEDIOCRE -> getRandomImage(new String[]{"/images/room/Bed.png", "/images/room/BedBlood.png", "/images/room/BedBones.png"});
-                    case FAIBLE -> getRandomImage(new String[]{"/images/room/BedBlood.png", "/images/room/BedBones.png"});
-                    case CORRECT -> getRandomImage(new String[]{"/images/room/Bed.png", "/images/room/BedBlood.png"});
-                    case BON -> getRandomImage(new String[]{"/images/room/Bed.png"});
-                    case INEXISTANT -> "/images/room/Bed.png";
-                };
-                generated.add(bedImagePath);
-            }
-            service.setBedImagePaths(generated);
+        List<String> generated = new ArrayList<>();
+        for (int i = 0; i < numberOfBeds; i++) {
+            String bedImagePath = switch (budgetType) {
+                case INSUFFISANT, EXCELLENT -> getRandomImage(new String[]{"/images/room/Bed.png"});
+                case MEDIOCRE ->
+                        getRandomImage(new String[]{"/images/room/Bed.png", "/images/room/BedBlood.png", "/images/room/BedBones.png"});
+                case FAIBLE -> getRandomImage(new String[]{"/images/room/BedBlood.png", "/images/room/BedBones.png"});
+                case CORRECT -> getRandomImage(new String[]{"/images/room/Bed.png", "/images/room/BedBlood.png"});
+                case BON -> getRandomImage(new String[]{"/images/room/Bed.png"});
+                case INEXISTANT -> "/images/room/Bed.png";
+            };
+            generated.add(bedImagePath);
+        }
+        service.setBedImagePaths(generated);
     }
 
+    /**
+     * Builds a FlowPane containing the bed images for the medical service.
+     *
+     * @param service the medical service containing the bed image paths
+     * @return a FlowPane with bed images and creature images if available
+     */
     private static FlowPane buildBedsPane(MedicalService service) {
         FlowPane flowPane = new FlowPane();
         flowPane.setHgap(5);
@@ -184,11 +218,24 @@ public class MedicalServiceCellView {
         return flowPane;
     }
 
+    /**
+     * Returns a random image path from the provided options.
+     *
+     * @param options an array of image paths to choose from
+     * @return a randomly selected image path
+     */
     private static String getRandomImage(String[] options) {
-		int randomIndex = (int) (Math.random() * options.length);
-		return options[randomIndex];
-	}
+        int randomIndex = (int) (Math.random() * options.length);
+        return options[randomIndex];
+    }
 
+    /**
+     * Opens a detail panel for the given medical service.
+     *
+     * @param service      the medical service to display details for
+     * @param hospital     the hospital where the service is located
+     * @param stageManager the stage manager for managing stages
+     */
     private static void openDetailPanel(MedicalService service, Hospital hospital, StageManager stageManager) {
         VBox detailBox = new VBox(10);
         detailBox.setStyle("-fx-background-color: #ffffff;");
@@ -225,6 +272,12 @@ public class MedicalServiceCellView {
         }
     }
 
+    /**
+     * Creates a horizontal box containing images of doctors associated with the medical service.
+     *
+     * @param doctors the list of doctors to display
+     * @return an HBox containing the doctor images and names
+     */
     private static HBox createDoctorImages(List<Doctor> doctors) {
         HBox hbox = new HBox(5);
         hbox.setPadding(new Insets(0));

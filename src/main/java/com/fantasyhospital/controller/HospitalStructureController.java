@@ -1,12 +1,6 @@
 package com.fantasyhospital.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import org.springframework.stereotype.Component;
-
 import com.fantasyhospital.model.Hospital;
-
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -17,51 +11,110 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
+/**
+ * Controller for managing the hospital structure, including the welcome screen,
+ * waiting room, crypt, and quarantine views.
+ * <p>
+ * This controller initializes the hospital structure UI and manages the game state.
+ * </p>
+ */
 @Component
 public class HospitalStructureController implements Initializable {
 
+    /**
+     * The Pane representing the hospital structure in the UI.
+     */
     @FXML
     private Pane hospitalStructure;
     private StackPane welcomeContainer;
     private Pane waitingRoomView;
+
+    /**
+     * Controller for the waiting room view.
+     * This controller is responsible for managing the waiting room UI and interactions.
+     */
     @Getter
     private WaitingRoomController waitingRoomController;
+
+    /**
+     * Initializes the waiting room view and its controller.
+     */
     @FXML
     private Pane medicalServiceInclude;
 
+    /**
+     * Controller for the medical service view.
+     * This controller manages the medical services available in the hospital.
+     */
     @FXML
     private Pane cryptViewInclude;
+
+    /**
+     * Controller for the crypt view.
+     * This controller manages the crypt medical service room.
+     */
     @FXML
     private CryptViewController cryptViewIncludeController;
 
+    /**
+     * Controller for the quarantine view.
+     * This controller manages the quarantine medical service room.
+     */
     @FXML
     private Pane quarantineViewInclude;
+
+    /**
+     * Controller for the quarantine view.
+     * This controller manages the quarantine medical service room.
+     */
     @FXML
     private QuarantineViewController quarantineViewIncludeController;
 
+    /**
+     * Pane that includes the waiting room view.
+     * This pane is used to display the waiting room in the hospital structure.
+     */
     @FXML
     private Pane waitingRoomInclude;
 
+    /**
+     * Controller for the waiting room view.
+     * This controller manages the waiting room UI and interactions.
+     */
     @FXML
     private WaitingRoomController waitingRoomIncludeController;
 
+    /**
+     * Indicates whether the game has started.
+     * This flag is used to track the game state.
+     */
     @Getter
     private boolean gameStarted = false;
+
+    /**
+     * The hospital instance containing the game data.
+     * This instance is used to manage the hospital's state and operations.
+     */
     @Getter
     private Hospital hospital;
 
+    /**
+     * Initializes the hospital structure controller.
+     * This method is called by the JavaFX framework after the FXML file has been loaded.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Création d'un conteneur pour l'écran de bienvenue
+
         welcomeContainer = new StackPane();
 
-        // Ajout de l'image en arrière-plan
         try {
             ImageView backgroundLogo = new ImageView(new Image(getClass().getResourceAsStream("/images/logo/Logo.jpg")));
-            backgroundLogo.setPreserveRatio(false); // Permettre à l'image de s'adapter parfaitement
-
-            // Lier les dimensions exactes de l'image à celles du conteneur hospitalStructure
+            backgroundLogo.setPreserveRatio(false);
             backgroundLogo.fitWidthProperty().bind(hospitalStructure.widthProperty());
             backgroundLogo.fitHeightProperty().bind(hospitalStructure.heightProperty());
 
@@ -70,58 +123,46 @@ public class HospitalStructureController implements Initializable {
             System.err.println("Impossible de charger l'image de logo: " + e.getMessage());
         }
 
-        // Création du Label de bienvenue par-dessus l'image
+
         Label welcomeText = new Label("Bienvenue à l'Hôpital Fantastique !");
         welcomeText.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: white; " +
                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
         welcomeContainer.getChildren().add(welcomeText);
 
-        // Faire correspondre exactement le conteneur welcome avec hospitalStructure
         welcomeContainer.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.3));
         welcomeContainer.prefHeightProperty().bind(hospitalStructure.heightProperty());
 
-        // Placer le conteneur exactement aux mêmes coordonnées que l'hospitalStructure
         welcomeContainer.setLayoutX(0);
         welcomeContainer.setLayoutY(0);
 
-        // Ajout du conteneur au Pane
         hospitalStructure.getChildren().add(welcomeContainer);
 
-        // Ajuster le positionnement et la taille de la crypte
         if (cryptViewInclude != null) {
-            // Position X: à droite avec une marge fixe
             cryptViewInclude.layoutXProperty().bind(
                     hospitalStructure.widthProperty().subtract(cryptViewInclude.prefWidthProperty()).subtract(20)
             );
 
-            // Position Y: simplement une marge depuis le haut
             cryptViewInclude.layoutYProperty().set(20);
 
-            // Limiter la taille de la crypte
             cryptViewInclude.prefWidthProperty().bind(hospitalStructure.widthProperty().multiply(0.18)); // Réduire à 18%
             cryptViewInclude.setPrefHeight(250);
         }
 
         if (quarantineViewInclude != null && cryptViewInclude != null) {
-            // Position X : même que la crypte
             quarantineViewInclude.layoutXProperty().bind(
                     cryptViewInclude.layoutXProperty()
             );
 
-            // Position Y : juste en dessous de la crypte avec un petit espacement
             quarantineViewInclude.layoutYProperty().bind(
                     cryptViewInclude.layoutYProperty().add(cryptViewInclude.prefHeightProperty()).add(20) // 10px d'espace
             );
 
-            // Taille identique ou ajustée
             quarantineViewInclude.prefWidthProperty().bind(
                     cryptViewInclude.prefWidthProperty()
             );
-
             quarantineViewInclude.setPrefHeight(250);
         }
 
-        // Positionnement et dimensionnement des services médicaux
         if (medicalServiceInclude != null) {
             medicalServiceInclude.layoutXProperty().bind(
                     Bindings.max(
@@ -150,12 +191,20 @@ public class HospitalStructureController implements Initializable {
         }
     }
 
+    /**
+     * Displays the welcome message on the hospital structure.
+     * This method is called to show the welcome screen when the application starts.
+     */
     public void hideWelcomeMessage() {
         if (welcomeContainer != null && hospitalStructure.getChildren().contains(welcomeContainer)) {
             hospitalStructure.getChildren().remove(welcomeContainer);
         }
     }
 
+    /**
+     * Starts the game by hiding the welcome message and displaying the waiting room.
+     * This method is called when the user is ready to start playing.
+     */
     public void startGame() {
         // Supprimer le message de bienvenue
         hideWelcomeMessage();
@@ -169,10 +218,7 @@ public class HospitalStructureController implements Initializable {
     }
 
     /**
-     * Transmet l'objet hôpital au contrôleur de la salle d'attente
-     * pour afficher les créatures dans la salle d'attente
-     *
-     * @param hospital L'hôpital contenant les données des créatures
+     * sets the hospital instance and updates the waiting room, crypt, and quarantine views.
      */
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
@@ -180,21 +226,16 @@ public class HospitalStructureController implements Initializable {
             waitingRoomIncludeController.setHospital(hospital);
         }
 
-        // Mise à jour de la vue de la crypte
         if (cryptViewIncludeController != null) {
             cryptViewIncludeController.setHospital(hospital);
         }
 
-        // Mise à jour de la vue de la crypte
         if (quarantineViewIncludeController != null) {
             quarantineViewIncludeController.setHospital(hospital);
         }
     }
 
-    /**
-     * Met à jour l'affichage de la salle d'attente et de la crypte avec les données actuelles
-     * Doit être appelée après chaque tour de jeu
-     */
+
     public void updateWaitingRoom() {
         if (waitingRoomController != null && hospital != null) {
             waitingRoomController.updateWaitingRoom();
@@ -202,7 +243,7 @@ public class HospitalStructureController implements Initializable {
     }
 
     /**
-     * Met à jour l'affichage de la crypte avec les données actuelles
+     * Updates the crypt view with the current hospital data.
      */
     public void updateCrypt() {
         if (cryptViewIncludeController != null && hospital != null) {
@@ -211,7 +252,7 @@ public class HospitalStructureController implements Initializable {
     }
 
     /**
-     * Met à jour l'affichage de la crypte avec les données actuelles
+     * Updates the quarantine view with the current hospital data.
      */
     public void updateQuarantine() {
         if (quarantineViewIncludeController != null && hospital != null) {
@@ -223,18 +264,14 @@ public class HospitalStructureController implements Initializable {
      * Clear hospital data and reset to welcome screen for restart
      */
     public void clearHospital() {
-        // Reset game state (safe to do from any thread)
         gameStarted = false;
         hospital = null;
 
-        // UI operations must be done on JavaFX Application Thread
         Platform.runLater(() -> {
-            // Show welcome screen again
             if (welcomeContainer != null && !hospitalStructure.getChildren().contains(welcomeContainer)) {
                 hospitalStructure.getChildren().add(welcomeContainer);
             }
 
-            // Hide waiting room if visible
             if (waitingRoomView != null && hospitalStructure.getChildren().contains(waitingRoomView)) {
                 hospitalStructure.getChildren().remove(waitingRoomView);
             }
@@ -245,21 +282,16 @@ public class HospitalStructureController implements Initializable {
      * Reset application to welcome screen (used for restart functionality)
      */
     public void resetToWelcomeScreen() {
-        // Reset game state
         gameStarted = false;
         hospital = null;
 
-        // Clear all singleton data (statistics)
         com.fantasyhospital.util.Singleton.getInstance().clearAllData();
 
-        // UI operations must be done on JavaFX Application Thread
         Platform.runLater(() -> {
-            // Show welcome screen again
             if (welcomeContainer != null && !hospitalStructure.getChildren().contains(welcomeContainer)) {
                 hospitalStructure.getChildren().add(welcomeContainer);
             }
-
-            // Hide waiting room if visible
+            
             if (waitingRoomView != null && hospitalStructure.getChildren().contains(waitingRoomView)) {
                 hospitalStructure.getChildren().remove(waitingRoomView);
             }

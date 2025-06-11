@@ -1,8 +1,22 @@
 package com.fantasyhospital.util;
-import javafx.scene.image.*;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+
+/**
+ * Utility class for cropping images, specifically designed to handle images with transparency.
+ * It crops the image to remove any transparent borders, returning a new cropped image.
+ */
 public class CropImageUtils {
 
+    /**
+     * Crops the given image by removing transparent borders.
+     *
+     * @param transparentImage the image to crop, which may contain transparent pixels
+     * @return a new image that is cropped to remove transparent borders
+     */
     public static Image cropImage(Image transparentImage) {
 
         WritableImage writableImage = new WritableImage((int) transparentImage.getWidth(), (int) transparentImage.getHeight());

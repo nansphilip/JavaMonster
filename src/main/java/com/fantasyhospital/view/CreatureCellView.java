@@ -6,7 +6,6 @@ import com.fantasyhospital.model.creatures.TriageResident;
 import com.fantasyhospital.model.creatures.VIPPatient;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.disease.Disease;
-
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
@@ -23,6 +22,10 @@ import javafx.util.Duration;
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
+/**
+ * CreatureCellView is a custom ListCell for displaying information about a Creature in the Fantasy Hospital application.
+ * It shows the creature's image
+ */
 public class CreatureCellView extends ListCell<Creature> {
     private HBox topRow;
     private HBox nameGenderAgeBox;
@@ -47,6 +50,12 @@ public class CreatureCellView extends ListCell<Creature> {
     private Hospital hospital;
 
 
+    /**
+     * Constructor for CreatureCellView.
+     * Initializes the UI components and sets up the layout for displaying creature information.
+     *
+     * @param hospital The hospital instance to which this cell belongs, used for retrieving room information.
+     */
     public CreatureCellView(Hospital hospital) {
         super();
         this.hospital = hospital;
@@ -101,7 +110,7 @@ public class CreatureCellView extends ListCell<Creature> {
 
         diseasesBox = new VBox(2);
 
-        moraleBox = new HBox(5,moraleTrendImageView, moraleImageView, moraleLabel);
+        moraleBox = new HBox(5, moraleTrendImageView, moraleImageView, moraleLabel);
         moraleBox.setAlignment(Pos.CENTER_LEFT);
 
         lifeAndDiseasesBox = new VBox(2, moraleBox, diseasesBox);
@@ -143,10 +152,17 @@ public class CreatureCellView extends ListCell<Creature> {
         });
     }
 
+    /**
+     * Updates the cell with the given creature's information.
+     * This method is called by the ListView to update the display of each cell.
+     *
+     * @param creature The creature to display in this cell.
+     * @param empty    Indicates whether the cell is empty or not.
+     */
     @Override
     protected void updateItem(Creature creature, boolean empty) {
         String roomName = "";
-        
+
         super.updateItem(creature, empty);
         if (creature == null || empty) {
             setGraphic(null);
@@ -232,7 +248,7 @@ public class CreatureCellView extends ListCell<Creature> {
             name.setText(creature.getFullName());
             ageLabel.setText("(" + creature.getAge() + ")");
             roomLabel.setText(roomName);
-            
+
             moraleLabel.setText("Moral (" + creature.getMorale() + "/100)");
 //            detailsLabel.setText(creature.toString());
             setGraphic(content);
@@ -240,6 +256,12 @@ public class CreatureCellView extends ListCell<Creature> {
         }
     }
 
+    /**
+     * Returns the image view for the morale level of the creature.
+     *
+     * @param morale The morale level of the creature.
+     * @return An ImageView representing the morale level.
+     */
     private Image getMoraleImageView(int morale) {
         String moraleImagePath;
 
@@ -266,6 +288,12 @@ public class CreatureCellView extends ListCell<Creature> {
         return new Image(getClass().getResourceAsStream(moraleImagePath));
     }
 
+    /**
+     * Returns the image view
+     *
+     * @param genderType
+     * @return
+     */
     private Image getGenderImageView(GenderType genderType) {
         String genderImagePath;
 
@@ -279,6 +307,12 @@ public class CreatureCellView extends ListCell<Creature> {
         return new Image(getClass().getResourceAsStream(genderImagePath));
     }
 
+    /**
+     * Returns the image representing the disease level.
+     *
+     * @param level The disease level.
+     * @return An Image representing the disease level.
+     */
     private Image getDiseaseLevelImage(int level) {
         String imagePath;
 
@@ -303,6 +337,11 @@ public class CreatureCellView extends ListCell<Creature> {
         return new Image(getClass().getResourceAsStream(imagePath));
     }
 
+    /**
+     * Opens a detail panel to display detailed information about the selected creature.
+     *
+     * @param creature The creature for which to display details.
+     */
     private void openDetailPanel(Creature creature) {
         VBox box = new VBox(10);
         box.setPadding(new Insets(10));
@@ -353,7 +392,7 @@ public class CreatureCellView extends ListCell<Creature> {
         diseases.setWrapText(true);
 
 
-        box.getChildren().addAll(largeCreatureImage, typeLabel, name, age,height, weight, genderBox, moraleBox, diseases);
+        box.getChildren().addAll(largeCreatureImage, typeLabel, name, age, height, weight, genderBox, moraleBox, diseases);
 
         DetailsCellView.show("Détails de la créature", box, 350, 450);
     }

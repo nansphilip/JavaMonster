@@ -1,12 +1,5 @@
 package com.fantasyhospital.controller.ui;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.concurrent.ScheduledExecutorService;
-
-import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
-
 import com.fantasyhospital.EvolutionGame;
 import com.fantasyhospital.Simulation;
 import com.fantasyhospital.config.StageManager;
@@ -15,23 +8,24 @@ import com.fantasyhospital.controller.CounterController;
 import com.fantasyhospital.controller.HospitalStructureController;
 import com.fantasyhospital.util.LogsUtils;
 import com.fantasyhospital.util.Singleton;
-
 import javafx.application.Platform;
-import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.concurrent.ScheduledExecutorService;
+
+/**
+ * Controller for the main toolbar UI, handling simulation controls and log actions.
+ */
 @Component
 public class ToolbarController implements Initializable {
-
-	public ToolBar toolPane;
-	@FXML
-	private Button homeButton;
 
 	@FXML
 	private Button restartButton;
@@ -40,27 +34,27 @@ public class ToolbarController implements Initializable {
 	private Button startSimulationButton;
 
 	@FXML
-	private Button exitButton;
-
-	@FXML
 	private Button nextRoundButton;
-
-	@FXML
-	private TextArea logConsole;
 
 	private final ConsoleLogController consoleLogController;
 	private final StageManager stageManager;
 	private final CounterController counterController;
 
-	private static final PseudoClass maximizeIcon = PseudoClass.getPseudoClass("max");
-	private static final PseudoClass minimizeIcon = PseudoClass.getPseudoClass("min");
-
 	private ScheduledExecutorService scheduler;
 	private final Simulation simulation;
-	private EvolutionGame jeu;
 
 	private final HospitalStructureController hospitalStructureController;
 
+
+	/**
+	 * Constructs the ToolbarController with required dependencies.
+	 *
+	 * @param stageManager the StageManager bean
+	 * @param simulation the Simulation instance
+	 * @param consoleLogController the ConsoleLogController
+	 * @param hospitalStructureController the HospitalStructureController
+	 * @param counterController the CounterController
+	 */
 	@Lazy
 	public ToolbarController(StageManager stageManager, Simulation simulation, ConsoleLogController consoleLogController,
 	                          HospitalStructureController hospitalStructureController, CounterController counterController) {
@@ -71,6 +65,9 @@ public class ToolbarController implements Initializable {
 		this.counterController = counterController;
 	}
 
+	/**
+	 * Initializes the toolbar UI components.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Initialize restart button
@@ -79,13 +76,19 @@ public class ToolbarController implements Initializable {
 		}
 	}
 
-	// Cette méthode permet d'écouter l'événement de fermeture de la fenêtre
+	/**
+	 * Sets the stage and adds a close event handler.
+	 *
+	 * @param stage the primary Stage
+	 */
 	public void setStage(Stage stage) {
 		stage.setOnCloseRequest(event -> stop()); // Ajoute un gestionnaire pour la fermeture
 
 	}
 
-	// Restart simulation method
+	/**
+	 * Restarts the simulation and resets UI/logs.
+	 */
 	@FXML
 	private void restartSimulation() {
 		consoleLogController.appendText("🔄 Restarting application...\n");
@@ -109,6 +112,9 @@ public class ToolbarController implements Initializable {
 		}).start();
 	}
 
+	/**
+	 * Stops the scheduler and exits the application.
+	 */
 	public void stop() {
 		if (scheduler != null && !scheduler.isShutdown()) {
 			scheduler.shutdown();
@@ -116,6 +122,9 @@ public class ToolbarController implements Initializable {
 		Platform.exit();  // Ferme toutes les ressources JavaFX
 	}
 
+	/**
+	 * Starts the simulation if not already running.
+	 */
 	@FXML
 	private void startSimulation() {
 		if (simulation.isRunning()) {
@@ -135,11 +144,21 @@ public class ToolbarController implements Initializable {
 		}).start();
 	}
 
+	/**
+	 * Clears the console log and log file.
+	 *
+	 * @param actionEvent the action event
+	 */
 	public void clearLog(ActionEvent actionEvent) {
 		consoleLogController.clearConsole();
 		LogsUtils.clearLogFile();
 	}
 
+	/**
+	 * Handles the next round action, updates counters and UI.
+	 *
+	 * @param actionEvent the action event
+	 */
 	public void handleNextRound(ActionEvent actionEvent) {
 		EvolutionGame jeu = simulation.getJeu();
 		if (jeu == null) {

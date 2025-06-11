@@ -8,11 +8,9 @@ import com.fantasyhospital.model.rooms.medicalservice.Crypt;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import com.fantasyhospital.model.rooms.medicalservice.Quarantine;
 import com.fantasyhospital.view.CreatureCellView;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -24,35 +22,62 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Controller for displaying details of a medical service, quarantine, or crypt in the hospital.
+ * It shows the title, budget, list of creatures, and doctors associated with the selected service.
+ */
 @Component
 public class MedicalServiceDetailsController {
 
+    /**
+     * Label displaying the title of the medical service.
+     */
     @FXML
     private Label title;
 
+    /**
+     * Label displaying the budget of the medical service.
+     */
     @FXML
     private Label budget;
 
+    /**
+     * ListView displaying the creatures associated with the medical service.
+     */
     @FXML
     private ListView<Creature> medicalServiceListView;
 
+    /**
+     * VBox container for displaying the doctors associated with the medical service.
+     */
     @FXML
     private VBox doctorsContainer;
 
     private final ObservableList<Creature> observableCreatures = FXCollections.observableArrayList();
 
+    /**
+     * The hospital instance associated with this controller.
+     */
     @Setter
     private Hospital hospital;
     private MedicalService service;
     private Quarantine quarantine;
     private Crypt crypt;
 
+    /**
+     * Initializes the controller and sets up the ListView with a custom cell factory.
+     */
     @FXML
     public void initialize() {
         medicalServiceListView.setItems(observableCreatures);
         medicalServiceListView.setCellFactory(listView -> new CreatureCellView(hospital));
     }
 
+    /**
+     * Sets the medical service to be displayed in this controller.
+     *
+     * @param service the medical service to display
+     */
     public void setService(MedicalService service) {
         this.service = service;
         this.quarantine = null;
@@ -60,6 +85,11 @@ public class MedicalServiceDetailsController {
         updateView();
     }
 
+    /**
+     * Sets the quarantine to be displayed in this controller.
+     *
+     * @param quarantine the quarantine to display
+     */
     public void setQuarantine(Quarantine quarantine) {
         this.quarantine = quarantine;
         this.service = null;
@@ -67,6 +97,11 @@ public class MedicalServiceDetailsController {
         updateView();
     }
 
+    /**
+     * Sets the crypt to be displayed in this controller.
+     *
+     * @param crypt the crypt to display
+     */
     public void setCrypt(Crypt crypt) {
         this.quarantine = null;
         this.service = null;
@@ -74,17 +109,19 @@ public class MedicalServiceDetailsController {
         updateView();
     }
 
+    /**
+     * Sets the list of creatures to be displayed in the ListView.
+     *
+     * @param creatures the list of creatures to display
+     */
     public void setCreatures(List<Creature> creatures) {
         medicalServiceListView.setItems(FXCollections.observableArrayList(creatures));
     }
 
-    public void loadCreaturesFromService(MedicalService service) {
-        if (service != null) {
-            List<Creature> creatures = service.getCreatures();
-            Platform.runLater(() -> observableCreatures.setAll(creatures));
-        }
-    }
-
+    /**
+     * Updates the view with the current service, quarantine, or crypt details.
+     * This method updates the title, budget, list of creatures, and doctors.
+     */
     private void updateView() {
         if (service != null) {
             title.setText("Détails du service : " + service.getName());
@@ -104,6 +141,12 @@ public class MedicalServiceDetailsController {
         }
     }
 
+    /**
+     * Updates the doctors container with the list of doctors.
+     * If there are no doctors, it displays a message indicating that no doctors are available.
+     *
+     * @param doctors the list of doctors to display
+     */
     private void updateDoctors(List<Doctor> doctors) {
         doctorsContainer.getChildren().clear();
         if (doctors == null || doctors.isEmpty()) {

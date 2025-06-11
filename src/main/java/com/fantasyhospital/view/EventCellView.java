@@ -11,8 +11,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+/**
+ * EventCellView is a utility class that provides methods to display specific events in the DoomController's doom box.
+ * It shows animations and labels for events like a doctor committing harakiri or a medical service closing.
+ */
 public class EventCellView {
 
+    /**
+     * Displays a harakiri event for a doctor in the DoomController's doom box.
+     *
+     * @param doctor        the doctor who is committing harakiri
+     * @param doomController the DoomController instance to update the doom box
+     */
     public static void showHarakiri(Doctor doctor, DoomController doomController) {
         Image gif = new Image(EventCellView.class.getResource("/images/gif/Harakiri.gif").toExternalForm());
         ImageView imageView = new ImageView(gif);
@@ -34,6 +44,12 @@ public class EventCellView {
         delay.play();
     }
 
+    /**
+     * Displays a medical service closing event in the DoomController's doom box.
+     *
+     * @param medicalService the medical service that is closing
+     * @param doomController  the DoomController instance to update the doom box
+     */
     public static void showServiceClose(MedicalService medicalService, DoomController doomController) {
         Image gif = new Image(EventCellView.class.getResource("/images/gif/MedicalServiceBomb.gif").toExternalForm());
         ImageView imageView = new ImageView(gif);

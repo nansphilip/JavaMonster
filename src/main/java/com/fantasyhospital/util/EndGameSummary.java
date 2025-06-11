@@ -8,6 +8,10 @@ import lombok.Setter;
 
 import java.util.Stack;
 
+/**
+ * Represents a summary of the end game state in the Fantasy Hospital simulation.
+ * It contains stacks of dead creatures, healed creatures, dead doctors, and closed medical services.
+ */
 @Getter
 @Setter
 public class EndGameSummary {

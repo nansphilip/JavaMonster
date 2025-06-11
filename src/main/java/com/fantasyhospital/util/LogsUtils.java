@@ -6,7 +6,7 @@ import java.io.IOException;
 public class LogsUtils {
 
     /**
-     * Efface le contenu du fichier de log
+     * Erases the log file by opening it in write mode and clearing its contents.
      */
     public static void clearLogFile() {
         try (FileWriter writer = new FileWriter("logs/app.log", false)) {

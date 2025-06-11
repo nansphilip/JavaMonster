@@ -1,7 +1,15 @@
 package com.fantasyhospital.config;
 
+/**
+ * Enum representing available FXML views and their file paths.
+ */
 public enum FxmlView {
 
+
+
+	/**
+	 * Start view.
+	 */
 	START {
 		@Override
 		public String getFxmlPath() {
@@ -9,27 +17,9 @@ public enum FxmlView {
 		}
 	},
 
-	LIST_CREATURE {
-		@Override
-		public String getFxmlPath() {
-			return "/fxml/listCreatureView.fxml";
-		}
-	},
-
-	LIST_DOCTORS {
-		@Override
-		public String getFxmlPath() {
-			return "/fxml/listDoctorsView.fxml";
-		}
-	},
-
-	CREATURE_DETAILS {
-		@Override
-		public String getFxmlPath() {
-			return "/fxml/creatureDetails.fxml";
-		}
-	},
-
+	/**
+	 * End game log view.
+	 */
 	END_GAME_LOG {
 		@Override
 		public String getFxmlPath() {
@@ -37,6 +27,9 @@ public enum FxmlView {
 		}
 	},
 
+	/**
+	 * Main view.
+	 */
 	MAIN {
 		@Override
 		public String getFxmlPath() {
@@ -44,5 +37,10 @@ public enum FxmlView {
 		}
 	};
 
+	/**
+	 * Returns the FXML file path for the view.
+	 *
+	 * @return the FXML file path
+	 */
 	public abstract String getFxmlPath();
 }

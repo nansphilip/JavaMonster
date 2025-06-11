@@ -29,6 +29,10 @@ import java.util.Random;
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
+/**
+ * CryptCellView is a utility class that provides a method to create a graphical representation of a Crypt room.
+ * It displays the room's title, budget, type, beds with creatures, temperature, and doctors in the room.
+ */
 public class CryptCellView {
 
     private final Crypt crypt;
@@ -37,6 +41,13 @@ public class CryptCellView {
     private final List<Doctor> doctors;
     private final Random random = new Random();
 
+    /**
+     * Constructs a CryptCellView with the specified Crypt, list of Doctors, and CryptViewController.
+     *
+     * @param crypt               the Crypt room to be displayed
+     * @param doctors             the list of Doctors in the Crypt
+     * @param cryptViewController the controller for handling interactions with the Crypt view
+     */
     public CryptCellView(Crypt crypt, List<Doctor> doctors, CryptViewController cryptViewController) {
         this.crypt = crypt;
         this.doctors = doctors;
@@ -44,6 +55,11 @@ public class CryptCellView {
         generateBedImagePaths(crypt.getMAX_CREATURE());
     }
 
+    /**
+     * Generates a list of random bed image paths based on the maximum number of beds in the Crypt.
+     *
+     * @param max the maximum number of beds to generate image paths for
+     */
     private void generateBedImagePaths(int max) {
         bedImagePaths.clear();
         for (int i = 0; i < max; i++) {
@@ -51,6 +67,11 @@ public class CryptCellView {
         }
     }
 
+    /**
+     * Returns a random bed image path from a predefined set of options.
+     *
+     * @return a random bed image path
+     */
     private String getRandomCryptBedImage() {
         String[] options = {
                 "/images/room/BedBones.png",
@@ -60,6 +81,11 @@ public class CryptCellView {
         return options[random.nextInt(options.length)];
     }
 
+    /**
+     * Renders the Crypt view as a VBox containing various UI elements.
+     *
+     * @return a VBox containing the rendered Crypt view
+     */
     public VBox render() {
         VBox container = new VBox(8);
         container.setPadding(new Insets(10));
@@ -143,8 +169,7 @@ public class CryptCellView {
 
 
     /**
-     * Crée une vue graphique avec les lits et les créatures dessus
-     * @return un FlowPane contenant les images de lits avec les créatures
+     * Creates a FlowPane to display the beds in the Crypt.
      */
     private FlowPane createBedsView() {
         FlowPane pane = new FlowPane(5, 5);
@@ -220,33 +245,12 @@ public class CryptCellView {
         return pane;
     }
 
-
-//    private VBox createCreatureProgress() {
-//        VBox box = new VBox(5);
-//        Map<Creature, Integer> waiting = crypt.getCreatureWaitNbTour();
-//
-//        if (waiting == null || waiting.isEmpty()) return box;
-//
-//        for (Map.Entry<Creature, Integer> entry : waiting.entrySet()) {
-//            int tours = entry.getValue();
-//
-//            HBox hbox = new HBox(10);
-//            hbox.setAlignment(Pos.CENTER_LEFT);
-//
-//            ProgressBar bar = new ProgressBar(tours / 3.0);
-//            bar.setPrefWidth(30);
-//            bar.setMinWidth(30);
-//            bar.setPrefHeight(12);
-//            bar.setMinHeight(12);
-//            bar.setStyle("-fx-accent: #00ff77;");
-//
-//            hbox.getChildren().add(bar);
-//            box.getChildren().add(hbox);
-//        }
-//
-//        return box;
-//    }
-
+    /**
+     * Creates a horizontal box containing images of doctors and their names.
+     *
+     * @param doctors the list of doctors to display
+     * @return an HBox containing the doctor images and names
+     */
     private static HBox createDoctorImages(List<Doctor> doctors) {
         HBox hbox = new HBox(5);
         hbox.setPadding(new Insets(0));
@@ -274,6 +278,12 @@ public class CryptCellView {
         return hbox;
     }
 
+    /**
+     * Returns an image representing the temperature based on the given temperature value.
+     *
+     * @param temperature the temperature value
+     * @return an Image representing the temperature
+     */
     private Image getTemperatureImage(int temperature) {
         String temperatureImagePath;
 
@@ -300,6 +310,12 @@ public class CryptCellView {
         return new Image(getClass().getResourceAsStream(temperatureImagePath));
     }
 
+    /**
+     * Opens a detail panel for the Crypt, allowing users to view more information.
+     *
+     * @param crypt     the Crypt to display details for
+     * @param container the VBox container where the detail panel will be opened
+     */
     private void openDetailPanel(Crypt crypt, VBox container) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/medicalServiceDetailsListView.fxml"));

@@ -6,8 +6,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-
+/**
+ * CloseDoorCellView is a utility class that provides a method to display a close door image
+ * in a given Pane. It creates an ImageView with the close door image and adds it to the Pane.
+ */
 public class CloseDoorCellView {
+
+    /**
+     * Displays a close door image in the provided Pane.
+     *
+     * @param closePane the Pane where the close door image will be displayed
+     */
     public static void show(Pane closePane) {
 
         closePane.getChildren().clear();

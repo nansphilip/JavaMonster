@@ -7,18 +7,36 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 
+/**
+ * EndGameCellView is a custom view for displaying information about a creature at the end of the game.
+ * It includes an image of the creature, its name, and its age.
+ */
 public class EndGameCellView extends VBox {
 
+    /**
+     * ImageView for displaying the creature's image.
+     */
     @Getter
     private ImageView creatureImageView;
 
+    /**
+     * Labels for displaying the creature's name and age.
+     */
     @Getter
     private Label name;
+
+    /**
+     * Label for displaying the creature's age.
+     */
     @Getter
     private Label ageLabel;
 
     private HBox topRow;
 
+    /**
+     * Constructor for EndGameCellView.
+     * Initializes the layout and components for displaying the creature's information.
+     */
     public EndGameCellView() {
         super(5);
 

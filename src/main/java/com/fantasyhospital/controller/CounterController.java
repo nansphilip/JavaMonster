@@ -25,35 +25,59 @@ import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
 /**
- * Contrôleur pour gérer l'affichage et la mise à jour des compteurs statistiques du jeu.
- * - Compteur de tours de jeu
- * - Compteur de créatures soignées
- * - Compteur de décès
+ * Controller for managing the display and update of the game's statistical counters.
+ * <ul>
+ *   <li>Turn counter</li>
+ *   <li>Healed creatures counter</li>
+ *   <li>Deaths counter</li>
+ * </ul>
  */
 @Component
 public class CounterController implements Initializable {
 
+    /**
+     * Label displaying the hospital's global budget.
+     */
     @FXML
     public Label globalBudget;
 
+    /**
+     * Label displaying the number of turns.
+     */
     @FXML
     private Label turnCounter;
 
+    /**
+     * Label displaying the number of healed creatures.
+     */
     @FXML
     private Label healedCounter;
 
+    /**
+     * Label displaying the number of creature deaths.
+     */
     @FXML
     private Label deathCounter;
 
+    /**
+     * Label displaying the number of doctor deaths.
+     */
     @FXML
     private Label doctorsDeathCounter;
 
     private int turns = 0;
 
+
+    /**
+     * Reference to the current hospital.
+     */
     @Setter
     @FXML
     private Hospital hospital;
 
+    /**
+     * Initializes all counters to zero when the controller is loaded.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Initialisation des compteurs à 0
@@ -61,7 +85,7 @@ public class CounterController implements Initializable {
     }
 
     /**
-     * Réinitialise tous les compteurs à zéro
+     * Resets all counters to zero.
      */
     public void resetCounters() {
         setTurnCounter(0);
@@ -71,7 +95,7 @@ public class CounterController implements Initializable {
     }
 
     /**
-     * Incrémente le compteur de tours et met à jour l'affichage
+     * Increments the turn counter and updates the display.
      */
     public void incrementTurnCounter() {
         turns++;
@@ -79,7 +103,7 @@ public class CounterController implements Initializable {
     }
 
     /**
-     * Met à jour le compteur de créatures soignées à partir du Singleton
+     * Updates the healed creatures counter.
      */
     public void updateHealedCounter() {
         int healedCount = Singleton.getInstance().getCreatureHealStack().size();
@@ -87,7 +111,7 @@ public class CounterController implements Initializable {
     }
 
     /**
-     * Met à jour le budget global de l'hopital
+     * Updates the hospital's global budget counter.
      */
     public void updateGlobalBudget(Hospital hospital) {
         int budget = hospital.getGlobalBudget();
@@ -95,7 +119,7 @@ public class CounterController implements Initializable {
     }
 
     /**
-     * Met à jour le compteur de décès à partir du Singleton
+     * Updates the creature deaths counter.
      */
     public void updateDeathCounter() {
         int deathCount = Singleton.getInstance().getCreatureDieStack().size();
@@ -103,8 +127,7 @@ public class CounterController implements Initializable {
     }
 
     /**
-     * Met à jour le compteur de décès à partir du Singleton
-     *
+     * Updates the doctor deaths counter.
      */
     public void updateDeathDoctorsCounter() {
         int deathDoctorCount = Singleton.getInstance().getDoctorStack().size();
@@ -112,7 +135,7 @@ public class CounterController implements Initializable {
     }
 
     /**
-     * Définit directement la valeur du compteur de tours
+     * Sets the turn counter to a specific value.
      */
     public void setTurnCounter(int value) {
         turns = value;
@@ -120,36 +143,47 @@ public class CounterController implements Initializable {
     }
 
     /**
-     * Retourne la valeur actuelle du compteur de tours
+     * Returns the current turn count.
      */
     public int getTurnCount() {
         return turns;
     }
 
     /**
-     * Retourne le nombre actuel de créatures soignées depuis le Singleton
+     * Returns the current healed creatures count.
      */
     public int getHealedCount() {
         return Singleton.getInstance().getCreatureHealStack().size();
     }
 
     /**
-     * Retourne le nombre actuel de décès depuis le Singleton
+     * Returns the current creature deaths count.
      */
     public int getDeathCount() {
         return Singleton.getInstance().getCreatureDieStack().size();
     }
 
+    /**
+     * Displays the list of healed creatures in a dialog.
+     */
     @FXML
     private  void onHealedCounterClicked() {
         showListDialog("Liste des créatures soignées", Singleton.getInstance().getCreatureHealStack());
     }
 
+
+    /**
+     * Displays the list of dead creatures in a dialog.
+     */
     @FXML
     private  void onDeathCounterClicked() {
         showListDialog("Liste des créatures décédées", Singleton.getInstance().getCreatureDieStack());
     }
 
+
+    /**
+     * Displays the list of dead doctors in a dialog.
+     */
     @FXML
     private  void onDeathDoctorCounterClicked() {
         showListDialog("Liste des docteurs décédés", Singleton.getInstance().getDoctorStack());

@@ -8,13 +8,18 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+/**
+ * CounterCellView is a utility class that provides a method to create a circular counter view.
+ * It displays a number inside a circle with a specified radius and background color.
+ */
 public class CounterCellView {
 
     /**
      * Creates a circular counter with a centered number
+     *
      * @param number the number to display
      * @param radius the radius of the circle
-     * @param color the background color of the circle
+     * @param color  the background color of the circle
      * @return a StackPane containing the circle and the centered number
      */
     public static StackPane create(int number, double radius, Color color) {

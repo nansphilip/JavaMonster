@@ -30,6 +30,10 @@ import java.util.Random;
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
+/**
+ * QuarantineCellView is a custom view for displaying information about a quarantine room in the medical service.
+ * It includes details such as budget, type, beds, and doctors assigned to the quarantine.
+ */
 public class QuarantineCellView {
 
     private final Quarantine quarantine;
@@ -38,6 +42,13 @@ public class QuarantineCellView {
     private final List<Doctor> doctors;
     private final Random random = new Random();
 
+    /**
+     * Constructor for QuarantineCellView.
+     *
+     * @param quarantine               the quarantine room to display
+     * @param doctors                  the list of doctors assigned to the quarantine
+     * @param quarantineViewController the controller for handling quarantine view actions
+     */
     public QuarantineCellView(Quarantine quarantine, List<Doctor> doctors, QuarantineViewController quarantineViewController) {
         this.quarantine = quarantine;
         this.doctors = doctors;
@@ -45,6 +56,11 @@ public class QuarantineCellView {
         generateBedImagePaths(quarantine.getMAX_CREATURE());
     }
 
+    /**
+     * Generates a list of random bed image paths based on the maximum number of creatures in the quarantine.
+     *
+     * @param max the maximum number of beds to generate
+     */
     private void generateBedImagePaths(int max) {
         bedImagePaths.clear();
         for (int i = 0; i < max; i++) {
@@ -52,6 +68,11 @@ public class QuarantineCellView {
         }
     }
 
+    /**
+     * Returns a random bed image path for the quarantine room.
+     *
+     * @return a random bed image path
+     */
     private String getRandomQuarantineBedImage() {
         String[] options = {
                 "/images/room/BedBones.png",
@@ -60,6 +81,11 @@ public class QuarantineCellView {
         return options[random.nextInt(options.length)];
     }
 
+    /**
+     * Renders the quarantine cell view as a VBox containing all relevant information.
+     *
+     * @return a VBox containing the rendered quarantine cell view
+     */
     public VBox render() {
         VBox container = new VBox(8);
         container.setPadding(new Insets(10));
@@ -110,9 +136,7 @@ public class QuarantineCellView {
     }
 
     /**
-     * Crée une vue graphique avec les lits et les créatures dessus
-     *
-     * @return un FlowPane contenant les images de lits avec les créatures
+     * Creates a FlowPane to display the beds in the quarantine room.
      */
     private FlowPane createBedsView() {
         FlowPane pane = new FlowPane(5, 5);
@@ -158,6 +182,12 @@ public class QuarantineCellView {
         return pane;
     }
 
+    /**
+     * Creates a horizontal box (HBox) to display the images of doctors assigned to the quarantine.
+     *
+     * @param doctors the list of doctors to display
+     * @return an HBox containing the doctor images and names
+     */
     private static HBox createDoctorImages(List<Doctor> doctors) {
         HBox hbox = new HBox(5);
         hbox.setPadding(new Insets(0));
@@ -185,6 +215,12 @@ public class QuarantineCellView {
         return hbox;
     }
 
+    /**
+     * Opens a detail panel for the quarantine, displaying more information about it.
+     *
+     * @param quarantine the quarantine to display details for
+     * @param container  the container to attach the detail panel to
+     */
     private void openDetailPanel(Quarantine quarantine, VBox container) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/medicalServiceDetailsListView.fxml"));

@@ -24,17 +24,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 
 /**
- * Contrôleur JavaFX chargé d'afficher le contenu du fichier de log
- * (logs/app.log) dans la zone de texte de la fenêtre graphique.
+ * JavaFX controller responsible for displaying the log file content
+ * (`logs/app.log`) in the UI text area.
  * <p>
- * Ce contrôleur lit le fichier de log à l'initialisation de la vue et affiche
- * chaque ligne dans le composant TextArea nommé logConsole.
+ * Reads the log file at view initialization and displays each line
+ * in the `logConsole` TextArea component.
  * </p>
  */
 @Component
 public class ConsoleLogController implements Initializable {
 
 	private final Path logFilePath = Path.of("logs/app.log");
+
+	/**
+	 * The TextArea displaying the log content.
+	 */
 	@FXML
     public TextArea logConsole;
 
@@ -42,11 +46,20 @@ public class ConsoleLogController implements Initializable {
 
 	private final EvolutionGame evolutionGame;
 
+
+	/**
+	 * Constructs the controller with the game instance.
+	 *
+	 * @param evolutionGame the EvolutionGame instance
+	 */
 	public ConsoleLogController(EvolutionGame evolutionGame) {
 		this.evolutionGame = evolutionGame;
 	}
 
 
+	/**
+	 * Initializes the log console and starts the log file listener.
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		try {
@@ -69,6 +82,9 @@ public class ConsoleLogController implements Initializable {
 		}, 0, 1, TimeUnit.SECONDS);
 	}
 
+	/**
+	 * Listens for new lines in the log file and updates the console.
+	 */
 	class LogTailListener {
 
 		long filePointer;
@@ -116,18 +132,29 @@ public class ConsoleLogController implements Initializable {
 		}
 	}
 
+	/**
+	 * Clears the log console.
+	 */
 	public void clearConsole() {
 		if (logConsole != null) {
 			logConsole.setText("");
 		}
 	}
 
+	/**
+	 * Appends text to the log console.
+	 *
+	 * @param text the text to append
+	 */
 	public void appendText(String text) {
 		if (logConsole != null) {
 			javafx.application.Platform.runLater(() -> logConsole.appendText(text));
 		}
 	}
 
+	/**
+	 * Displays the end game log dialog.
+	 */
 	private void displayEndGameLog() {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(FxmlView.END_GAME_LOG.getFxmlPath()));

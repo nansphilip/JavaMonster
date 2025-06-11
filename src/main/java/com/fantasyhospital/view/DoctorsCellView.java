@@ -1,18 +1,16 @@
 package com.fantasyhospital.view;
 
-import com.fantasyhospital.util.Singleton;
 import com.fantasyhospital.controller.DoomController;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
-
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
+import com.fantasyhospital.util.Singleton;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -25,8 +23,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -34,6 +30,10 @@ import java.util.List;
 import static com.fantasyhospital.util.CropImageUtils.cropImage;
 import static com.fantasyhospital.util.RemovePngBackgroundUtils.removePngBackground;
 
+/**
+ * DoctorsCellView is a custom ListCell for displaying Doctor objects in a ListView.
+ * It shows the doctor's
+ */
 public class DoctorsCellView extends ListCell<Doctor> {
 
     private HBox content;
@@ -55,7 +55,13 @@ public class DoctorsCellView extends ListCell<Doctor> {
     private Hospital hospital;
     private DoomController doomController;
 
-
+    /**
+     * Constructor for DoctorsCellView.
+     * Initializes the UI components and sets up the layout.
+     *
+     * @param hospital       The hospital instance to access medical services.
+     * @param doomController The controller to handle interactions with the Doom feature.
+     */
     public DoctorsCellView(Hospital hospital, DoomController doomController) {
         super();
         this.hospital = hospital;
@@ -91,7 +97,7 @@ public class DoctorsCellView extends ListCell<Doctor> {
         moraleLabel = new Label();
         moraleLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: black; -fx-font-size: 10px;");
 
-        moraleBox = new HBox(5,moraleTrendImageView, moraleImageView, moraleLabel);
+        moraleBox = new HBox(5, moraleTrendImageView, moraleImageView, moraleLabel);
         moraleBox.setAlignment(Pos.CENTER_LEFT);
 
         lifeBox = new VBox(2, moraleBox);
@@ -128,6 +134,13 @@ public class DoctorsCellView extends ListCell<Doctor> {
         });
     }
 
+    /**
+     * Updates the cell with the given Doctor item.
+     * It sets the images, labels, and animations based on the doctor's properties.
+     *
+     * @param doctor The Doctor object to display in the cell.
+     * @param empty  Indicates whether the cell is empty or not.
+     */
     @Override
     protected void updateItem(Doctor doctor, boolean empty) {
         String roomName = "";
@@ -201,6 +214,13 @@ public class DoctorsCellView extends ListCell<Doctor> {
         }
     }
 
+    /**
+     * Returns an ImageView representing the morale of the doctor.
+     * The image is selected based on the doctor's morale value.
+     *
+     * @param morale The morale value of the doctor.
+     * @return An ImageView with the corresponding morale image.
+     */
     private Image getMoraleImageView(int morale) {
         String moraleImagePath;
 
@@ -227,6 +247,12 @@ public class DoctorsCellView extends ListCell<Doctor> {
         return new Image(getClass().getResourceAsStream(moraleImagePath));
     }
 
+    /**
+     * Returns an ImageView
+     *
+     * @param genderType
+     * @return
+     */
     private Image getGenderImageView(GenderType genderType) {
         String genderImagePath;
 
@@ -238,6 +264,12 @@ public class DoctorsCellView extends ListCell<Doctor> {
         return new Image(getClass().getResourceAsStream(genderImagePath));
     }
 
+    /**
+     * Displays a popup with detailed information about the doctor.
+     * It includes the doctor's image, personal details, and morale.
+     *
+     * @param doctor The Doctor object to display in the popup.
+     */
     private void showDoctorPopup(Doctor doctor) {
         VBox box = new VBox(10);
         box.setPadding(new Insets(10));
@@ -292,7 +324,13 @@ public class DoctorsCellView extends ListCell<Doctor> {
         DetailsCellView.show("Détails du docteur", box, 350, 400);
     }
 
-
+    /**
+     * Displays a context menu for the doctor, allowing the user to switch medical services.
+     * The menu contains items for each medical service that is not currently assigned to the doctor.
+     *
+     * @param event  The mouse event that triggered the context menu.
+     * @param doctor The Doctor object for which the context menu is displayed.
+     */
     private void showDoctorMenu(MouseEvent event, Doctor doctor) {
         ContextMenu contextMenu = new ContextMenu();
 

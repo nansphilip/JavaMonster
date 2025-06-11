@@ -7,20 +7,24 @@ import com.fantasyhospital.view.QuarantineCellView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
-
+/**
+ * Controller for displaying the Quarantine medical service in the Fantasy Hospital application.
+ * It manages the view of the quarantine service, including its layout and interaction with the hospital.
+ */
 @Component
 public class QuarantineViewController {
 
+    /**
+     * FXML annotation to link the GridPane defined in the FXML file to this controller.
+     * This grid pane will display the quarantine service.
+     */
     @FXML
     private GridPane quarantineGridPane;
 
     private Quarantine quarantine;
-    private final Random random = new Random();
 
     /**
      * Initialize quarantine service
@@ -31,9 +35,7 @@ public class QuarantineViewController {
     }
 
     /**
-     * Configure l'hôpital et trouve la quarantaine
-     *
-     * @param hospital l'hôpital contenant la quarantaine
+     * Configure the hospital and set the quarantine service if available.
      */
     public void setHospital(Hospital hospital) {
         if (hospital != null && hospital.getServices() != null) {
@@ -46,9 +48,7 @@ public class QuarantineViewController {
     }
 
     /**
-     * Configure la crypte et met à jour l'affichage
-     *
-     * @param quarantine la crypte à afficher
+     * Configure the quarantine service to be displayed.
      */
     public void setQuarantine(Quarantine quarantine) {
         this.quarantine = quarantine;
@@ -56,7 +56,7 @@ public class QuarantineViewController {
     }
 
     /**
-     * Met à jour l'affichage de la crypte
+     * Update the quarantine view by clearing the existing content
      */
     public void updateQuarantineView() {
         Platform.runLater(() -> {
@@ -71,6 +71,10 @@ public class QuarantineViewController {
         });
     }
 
+
+    /**
+     * Label displaying the crypt's temperature.
+     */
     public void showCloseDoor(VBox closeServiceDoor) {
         CloseDoorCellView.show(closeServiceDoor);
     }

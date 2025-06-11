@@ -1,8 +1,18 @@
 package com.fantasyhospital.util;
 import javafx.scene.image.*;
 
+/**
+ * Utility class for removing a specific background color (magenta) from PNG images.
+ * It replaces the magenta color with transparency, effectively removing it from the image.
+ */
 public class RemovePngBackgroundUtils {
 
+    /**
+     * Removes the magenta background from the given image.
+     *
+     * @param image the image from which to remove the magenta background
+     * @return a new image with the magenta background removed
+     */
     public static Image removePngBackground(Image image) {
         int width = (int) image.getWidth();
         int height = (int) image.getHeight();
