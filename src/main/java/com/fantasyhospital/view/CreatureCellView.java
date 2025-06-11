@@ -180,6 +180,7 @@ public class CreatureCellView extends ListCell<Creature> {
                 moraleAnimation.stop();
                 moraleTrendImageView.setTranslateY(0);
             }
+
             // Définir l'image de tendance du moral seulement si le moral a changé
             if (creature.isMoraleIncreasing()) {
                 moraleTrendImageView.setImage(new Image(getClass().getResourceAsStream("/images/morale/MoraleUp.png")));

@@ -231,9 +231,9 @@ public class Hospital {
     }
 
     /**
-     * Returns only the medical service rooms in the hospital.
+     * Returns a list of all medical services in the hospital.
      *
-     * @return List<MedicalService>
+     * @return the list of medical services
      */
     public List<MedicalService> getMedicalServices() {
         List<MedicalService> servicesList = new ArrayList<>();

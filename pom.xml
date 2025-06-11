@@ -112,6 +112,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.11.2</version>
 				<configuration>
+					<show>private</show>
 					<source>21</source>
 					<encoding>UTF-8</encoding>
 					<doclint>none</doclint>

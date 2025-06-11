@@ -284,7 +284,6 @@ public class Doctor extends Beast {
 	 *
 	 * @param roomFrom the medical service from which the doctor is leaving.
 	 * @param roomTo the medical service to which the doctor is going.
-	 * @return true if the move was successful, false otherwise.
 	 */
 	public void goTo(MedicalService roomFrom, MedicalService roomTo) {
 		roomFrom.removeDoctor(this);

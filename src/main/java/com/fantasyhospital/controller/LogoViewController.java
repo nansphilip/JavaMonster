@@ -21,8 +21,6 @@ public class LogoViewController {
 
     /**
      * Starts the game when the button is clicked.
-     *
-     * @param event the ActionEvent triggered by the button click
      */
     @FXML
     private Text dialogueText;

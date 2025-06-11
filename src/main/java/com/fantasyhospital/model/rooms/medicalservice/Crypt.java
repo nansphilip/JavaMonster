@@ -28,23 +28,35 @@ import static com.fantasyhospital.model.creatures.Doctor.INCREASE_BUDGET_SERVICE
 public final class Crypt extends MedicalService {
 
     // Temperature constants
+    /** Minimum temperature in °C maintained by the air conditioning when working properly */
     private static final int MIN_TEMPERATURE = 20;
+    /** Maximum temperature in °C allowing creatures to heal */
     private static final int HEALING_MAX_TEMPERATURE = 30;
+    /** Maximum possible temperature in °C inside the crypt */
     private static final int MAX_TEMPERATURE = 50;
+    /** Rate of temperature decrease in °C per turn when air conditioning is working */
     private static final int TEMPERATURE_DECREASE_RATE = 10;
+    /** Minimum temperature increase in °C per turn when air conditioning is broken */
     private static final int MIN_TEMPERATURE_INCREASE = 2;
+    /** Maximum temperature increase in °C per turn when air conditioning is broken */
     private static final int MAX_TEMPERATURE_INCREASE = 10;
-    
+
     // Probability constants
+    /** Probability that the air conditioning breaks down each turn */
     private static final double AIRFLOW_BREAKDOWN_CHANCE = 0.30;
+    /** Base probability that a creature repairs the air conditioning */
     private static final double BASE_AIRFLOW_REPAIR_CHANCE = 0.25;
+    /** Probability that a creature catches a disease when temperature exceeds 30°C */
     private static final double HIGH_TEMPERATURE_DISEASE_CHANCE = 0.5;
+    /** Probability that a creature catches a disease when temperature reaches 50°C */
     private static final double MAX_TEMPERATURE_DISEASE_CHANCE = 1.0;
-    
+
     // Healing constants
+    /** Number of turns required for a creature to be healed in the crypt */
     private static final int REQUIRED_HEALING_TOURS = 3;
 
     // Budget constants
+    /** Budget modifier related to air conditioning status and temperature */
     private static final int DECREASE_CALCUL_BUDGET = 5;
 
     /**
@@ -58,7 +70,7 @@ public final class Crypt extends MedicalService {
     private int temperature;
 
     /**
-     * The HashMap of the creatures of the crypt, associating each creature with the int number of tour they are waiting in the crypt with temperature < 30°C
+     * The HashMap of the creatures of the crypt, associating each creature with the int number of tour they are waiting in the crypt with temperature less than 30°C
      * The collection is thread-safe to allow concurrent modifications
      */
     private final ConcurrentHashMap<Creature, Integer> creatureWaitNbTour = new ConcurrentHashMap<>();

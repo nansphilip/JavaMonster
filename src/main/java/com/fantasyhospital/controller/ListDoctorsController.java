@@ -27,7 +27,6 @@ public class ListDoctorsController {
     /**
      * Adds a doctor to the observable list and refreshes the ListView.
      *
-     * @param doctor the doctor to be added
      */
     @FXML
     private ListView<Doctor> doctorsListView;
