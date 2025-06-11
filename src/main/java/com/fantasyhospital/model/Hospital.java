@@ -44,7 +44,7 @@ public class Hospital {
     private List<Room> services = new ArrayList<Room>();
 
     //Constants
-    private static final int MIN_AVERAGE_BUDGET_NEEDED_TO_CREATE_SERVICE = 75;
+    private static final int MIN_AVERAGE_BUDGET_NEEDED_TO_CREATE_SERVICE = 70;
 
     /**
      * Creates a new hospital. The max number of services is set to 9.

@@ -211,6 +211,17 @@ public abstract class Creature extends Beast {
     }
 
     /**
+     * method of dying
+     *
+     * @param room the room where the beast is dying
+     * @return true if the creature gets out of the hospital, false otherwise (in the case of regenerating interface)
+     */
+    @Override
+    public boolean die(Room room) {
+        return true;
+    }
+
+    /**
      * Cures the creature of a given disease and give moral points
      * (moral doesn't change if in quarantine)
      * @param disease The disease to be cured

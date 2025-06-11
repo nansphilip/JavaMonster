@@ -23,7 +23,7 @@ public class MoralObserver implements CreatureObserver {
     private Hospital hospital;
 
     // Constants of variation
-    public static final int DECREASE_BUDGET = 15;
+    public static final int DECREASE_BUDGET = 8;
 
     /**
      * Constructor for the MoralObserver
@@ -47,6 +47,9 @@ public class MoralObserver implements CreatureObserver {
         Creature creature = (Creature) beast;
         Room room = hospital.getRoomOfCreature(creature);
         if(creature.checkMorale(room)){
+            // Make the name of the creature available again
+            setNameAvailableAgain(creature);
+
             room.removeCreature(creature);
             if(room instanceof MedicalService){
                 Doctor doc = ((MedicalService) room).getWeakerDoctor();
@@ -57,9 +60,6 @@ public class MoralObserver implements CreatureObserver {
                 medicalService.setBudget(Math.max(medicalService.getBudget() - DECREASE_BUDGET,0));
                 log.info("La mort de la créature {} fait perdre {} points de budget au service {} ({} pts)", creature.getFullName(), DECREASE_BUDGET, medicalService.getName(), medicalService.getBudget());
             }
-
-            // Make the name of the creature available again
-            setNameAvailableAgain(creature);
         }
     }
 }

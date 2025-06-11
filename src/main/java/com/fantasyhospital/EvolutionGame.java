@@ -4,8 +4,6 @@ import com.fantasyhospital.controller.GridMedicalServiceController;
 import com.fantasyhospital.controller.ListCreatureController;
 import com.fantasyhospital.controller.ListDoctorsController;
 import com.fantasyhospital.controller.WaitingRoomController;
-import com.fantasyhospital.enums.FemaleNameType;
-import com.fantasyhospital.enums.MaleNameType;
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.Hospital;
 import com.fantasyhospital.model.creatures.Doctor;
@@ -41,14 +39,13 @@ public class EvolutionGame {
 
     //Constants for the random evolutions
     private static final double GET_NEW_DISEASE_CHANCE = 0.1;
-    private static final int DECREASE_DISEASE_MORAL = 5;
     private static final double EVOLVE_LEVEL_DISEASE_CHANCE = 0.1;
     private static final double EVOLVE_BUDGET_CHANCE = 0.05;
     private static final double ADD_CREATURE_CHANCE = 0.95;
     private static final double ADD_DOCTOR_CHANCE = 0.02;
     private static final double EVOLVE_MORAL_CHANCE = 0.05;
     private static final int VARIATION_MORAL_LEVEL = 30;
-	private static final int NB_RANDOM_ADD_CREATURE = 8;
+	private static final int NB_RANDOM_ADD_CREATURE = 6;
 
 	public EvolutionGame(Hospital hospital, ListCreatureController listCreatureController, ListDoctorsController listDoctorsController, WaitingRoomController waitingRoomController, GridMedicalServiceController gridMedicalServiceController) {
 		this.hospital = hospital;
@@ -98,17 +95,12 @@ public class EvolutionGame {
 		if (gridMedicalServiceController != null) {
 			gridMedicalServiceController.updateServicesList();
 		}
-		// Pour voir la fin de partie
-//		if (round == 10) {
-//			return true;
-//		}
-		//hospital.displayServices();
+
 		return false;
 	}
 
 	public void showEndGame() {
 		logEndGame();
-		//log.info(Singleton.getInstance().getEndGameLog());
 	}
 
 	/**
@@ -134,7 +126,7 @@ public class EvolutionGame {
 	}
 
 	/**
-	 * Check all the medical services's budget, if the budget is at 0 the medical service close
+	 * Check all the medical service's budget, if the budget is at 0 the medical service close
 	 */
 	private void reviewHospitalBudget(){
 		hospital.checkBudgetServices();
@@ -230,7 +222,6 @@ public class EvolutionGame {
 
 	/**
 	 * Makes all creatures wait with the associated effects.
-	 * Les créatures en quarantaine n'attendent pas (leur moral est figé)
 	 */
 	private void doCreaturesWait() {
 		for (Room room : hospital.getServices()) {
@@ -240,6 +231,9 @@ public class EvolutionGame {
 		}
 	}
 
+	/**
+	 * Reset the doctors for the new turn
+	 */
 	private void resetDoctors() {
 		for (MedicalService service : hospital.getMedicalServices()) {
 			for (Doctor doctor : service.getDoctors()) {
@@ -295,7 +289,7 @@ public class EvolutionGame {
 	 * Add a random creature to a random service with a random disease with a random level by 95% chance
 	 */
 	private void addCreatureRandomly() {
-		int nbCreatures = new Random().nextInt(NB_RANDOM_ADD_CREATURE);
+		int nbCreatures = 4 + new Random().nextInt(NB_RANDOM_ADD_CREATURE);
 		for (int i = 0; i < nbCreatures; i++) {
 			if (Math.random() < ADD_CREATURE_CHANCE) {
 
@@ -360,14 +354,14 @@ public class EvolutionGame {
 					creature.addExitObserver(new ExitObserver(hospital));
 					creature.addMoralObserver(new MoralObserver(hospital));
 					room.addCreature(creature);
-					log.info("Une créature sauvage apparait dans le service {}, bienvenue {} !", room.getName(), creature.getFullName());
+					//log.info("Une créature sauvage apparait dans le service {}, bienvenue {} !", room.getName(), creature.getFullName());
 				}
 			}
 		}
 	}
 
 	/**
-	 * Add a new doctor randomly (4% chance) to a random medical service
+	 * Add a new doctor randomly (2% chance) to a random medical service
 	 */
 	private void addDoctorRandomly() {
 		// Ajout médecin aléatoire

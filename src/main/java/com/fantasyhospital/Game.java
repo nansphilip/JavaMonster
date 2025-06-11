@@ -2,7 +2,6 @@ package com.fantasyhospital;
 
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.fantasyhospital.enums.RaceType;
 import com.fantasyhospital.model.creatures.abstractclass.Creature;
 import com.fantasyhospital.model.creatures.races.Elf;
@@ -17,9 +16,7 @@ import com.fantasyhospital.model.disease.Disease;
 
 /**
  * Utility class for randomly generating creatures in the Fantasy Hospital simulation.
- * <p>
  * Provides a static method to create a creature of a random race, with at least one initial disease.
- * </p>
  */
 public class Game {
 

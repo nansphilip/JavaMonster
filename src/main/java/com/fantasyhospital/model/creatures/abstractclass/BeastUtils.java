@@ -4,6 +4,7 @@ import com.fantasyhospital.enums.FemaleNameType;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.MaleNameType;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -15,6 +16,10 @@ public abstract class BeastUtils {
 
 	public static void setNameAvailableAgain(Creature creature){
 		String name = creature.getFullName();
+		if(Objects.equals(name, "Mickael Martin Nevot")) {
+			// This is a special case, the name is reserved for the inspirator of the project
+			return;
+		}
 		switch (creature.getSex()){
 			case FEMALE:
 				FemaleNameType enumName = FemaleNameType.valueOf(name.toUpperCase());

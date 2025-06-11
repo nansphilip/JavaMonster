@@ -58,8 +58,8 @@ public final class Singleton {
     }
 
     /**
-     * Méthode qui instancie la classe Singleton si elle n'existe pas encore
-     * Ou retourne l'instance si elle a déjà été instanciée
+     * Method that instantiates the Singleton class if it does not already exist
+     * Or returns the instance if it has already been instantiated
      * @return Singleton
      */
     public static Singleton getInstance(){
@@ -70,9 +70,9 @@ public final class Singleton {
     }
 
     /**
-     * Méthode pour ajouter une beast à la stack correspondante via le paramètre enum StackType
+     * Method to add a beast to the stack corresponding to the StackType parameter
      * @param beast the beast
-     * @param stackType le type de stack
+     * @param stackType the type of stack
      */
     public void addBeastToStack(Beast beast, StackType stackType){
         switch (stackType){
@@ -83,7 +83,7 @@ public final class Singleton {
     }
 
     /**
-     * Méthode pour ajouter une salle à la stack correspondante via le paramètre enum StackType
+     * Method to add a medical service to the stack corresponding to the StackType parameter
      * @param room the medical service
      * @param stackType le type de stack
      */
@@ -92,23 +92,9 @@ public final class Singleton {
     }
 
     /**
-     * Méthode pour pop (retirer) une beast de la stack correspondante
-     * @param stackType le type de stack
-     * @return Beast la beast retirée
-     */
-    public Beast popBeastFromStack(StackType stackType){
-        return switch (stackType) {
-            case DIE -> creatureDieStack.pop();
-            case HEAL -> creatureHealStack.pop();
-            case DOCTOR -> doctorStack.pop();
-            case MEDICAL_SERVICE -> null;
-        };
-    }
-
-    /**
-     * Récupère le dernier Doctor de la stack DOCTOR sans le retirer (ou le remet aussitôt).
+     * Picks the last doctor from the stack without removing it (or puts it back immediately).
      *
-     * @return le dernier médecin mort ou null si la stack est vide
+     * @return the doctor at the top of the stack, or null if the stack is empty
      */
     public synchronized Doctor peekDoctorStack() {
         if (!doctorStack.isEmpty()) {
@@ -116,20 +102,6 @@ public final class Singleton {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Méthode qui retourne true si la stack correspondate est vide, false sinon
-     * @param stackType le type de stack
-     * @return boolean
-     */
-    public boolean isStackEmpty(StackType stackType){
-        return switch (stackType) {
-            case DIE -> creatureDieStack.isEmpty();
-            case HEAL -> creatureHealStack.isEmpty();
-            case DOCTOR -> doctorStack.isEmpty();
-            case MEDICAL_SERVICE -> false;
-        };
     }
 
     /**

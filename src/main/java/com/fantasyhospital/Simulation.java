@@ -70,9 +70,9 @@ public class Simulation {
             listDoctorsController.addDoctor(doctor);
         }
 
-        Crypt crypt = new Crypt("Crypt", 50, 2, new Random().nextInt(100));
+        Crypt crypt = new Crypt("Crypt", 50, 2, 60 + new Random().nextInt(40));
 //        crypt.setBudget(0);
-        Quarantine quarantine = new Quarantine("Quarantaine", 50, 2, new Random().nextInt(100));
+        Quarantine quarantine = new Quarantine("Quarantaine", 50, 2, 60 + new Random().nextInt(40));
 //        quarantine.setBudget(0);
         // Create a waiting room
         Room roomAttente = new Room("Room d'attente", 70, 100);

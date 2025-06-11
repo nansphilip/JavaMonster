@@ -13,6 +13,9 @@ import com.fantasyhospital.model.rooms.Room;
 import com.fantasyhospital.model.rooms.medicalservice.MedicalService;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.setNameAvailableAgain;
 import static com.fantasyhospital.observer.MoralObserver.DECREASE_BUDGET;
 
@@ -27,6 +30,12 @@ public class ExitObserver implements CreatureObserver {
      * The hospital to which this observer is attached
      */
     private final Hospital hospital;
+
+    /**
+     * Set of creatures that have already been processed to avoid double processing
+     * This is useful to prevent the same creature from being processed multiple times (infinite loop), especially for contaminating or regenerating creatures
+     */
+    private Set<Creature> processedCreatures = new HashSet<>();
 
     /**
      * Constructor for the ExitObserver
@@ -57,6 +66,11 @@ public class ExitObserver implements CreatureObserver {
             return;
         }
 
+        // Ajout d'une vérification pour voir si on a déjà traité la créature courante dans ce tour (pour éviter loop infinie)
+        if(processedCreatures.contains(creature)) {
+            return;
+        }
+
         //Avant de potentiellement faire trepasser la creature, si c'est un regenerant, on check si creature va mourir
         //Si ce check était fait après, la créature n'aurait possiblement plus la maladie lethale ou autre (regenerant)
         //Si va mourir, on applique depression sur medecin
@@ -71,34 +85,41 @@ public class ExitObserver implements CreatureObserver {
             }
         }
 
-        boolean getsOut = creature.hasCreatureToleaveHospital(salleCreature);
+        boolean getsOut = false;
+        try {
+            processedCreatures.add(creature);
 
-        //Si creature meurt, médecin le plus faible du service perd du moral
-        if(getsOut){
-            //On vérifie que la créature a bien trépassé et non soignée, c'est à dire qu'elle a des maladies
-            if(!creature.getDiseases().isEmpty()){
-                if(salleCreature instanceof MedicalService){
-                    Doctor doctor = ((MedicalService) salleCreature).getWeakerDoctor();
-                    if(doctor != null){
-                        doctor.depression();
-                    } else {
-                        log.info("Il n'y avait aucun médecin à déprimer dans le service.");
+            getsOut = creature.hasCreatureToleaveHospital(salleCreature);
+
+            //Si creature meurt, médecin le plus faible du service perd du moral
+            if(getsOut){
+                //On vérifie que la créature a bien trépassé et non soignée, c'est à dire qu'elle a des maladies
+                if(!creature.getDiseases().isEmpty()){
+                    if(salleCreature instanceof MedicalService){
+                        Doctor doctor = ((MedicalService) salleCreature).getWeakerDoctor();
+                        if(doctor != null){
+                            doctor.depression();
+                        } else {
+                            log.info("Il n'y avait aucun médecin à déprimer dans le service.");
+                        }
+                    }
+                    // Decrease the budget of the service if it was in a medical service
+                    if(salleCreature instanceof MedicalService medicalService){
+                        medicalService.setBudget(Math.max(medicalService.getBudget() - DECREASE_BUDGET,0));
+                        log.info("La mort de la créature {} fait perdre {} points de budget au service {} ({} pts)", creature.getFullName(), DECREASE_BUDGET, medicalService.getName(), medicalService.getBudget());
                     }
                 }
-                // Decrease the budget of the service if it was in a medical service
-                if(salleCreature instanceof MedicalService medicalService){
-                    medicalService.setBudget(Math.max(medicalService.getBudget() - DECREASE_BUDGET,0));
-                    log.info("La mort de la créature {} fait perdre {} points de budget au service {} ({} pts)", creature.getFullName(), DECREASE_BUDGET, medicalService.getName(), medicalService.getBudget());
-                }
-            }
-            salleCreature.removeCreature(creature);
+                // Make the name of the creature available again
+                setNameAvailableAgain(creature);
 
-            // Make the name of the creature available again
-            setNameAvailableAgain(creature);
+                salleCreature.removeCreature(creature);
+            }
+        } finally {
+            processedCreatures.remove(creature);
         }
 
         //Si regenerant qui meurt mais reste quand même dans l'hopital après avoir regénéré, applique depression a medecin
-        if(isDead){
+        if(isDead && !getsOut){
             if(salleCreature instanceof MedicalService){
                 Doctor doctor = ((MedicalService) salleCreature).getWeakerDoctor();
                 if(doctor != null) doctor.depression();

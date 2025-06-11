@@ -32,7 +32,7 @@ public class Zombie extends TriageResident implements Regenerating {
             log.info("La créature {} avait déjà regénéré une fois dans la crypte, elle n'a malheureusement pas de seconde chance...tchao",  this.fullName);
             return true;
         }
-        super.die(room);
+        log.info("La créature {} meurt...", this.fullName);
         hasRegenerate = true;
         return regenerate(this);
     }
