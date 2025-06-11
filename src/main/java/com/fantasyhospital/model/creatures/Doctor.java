@@ -103,6 +103,17 @@ public class Doctor extends Beast {
 	}
 
 	/**
+	 * method of dying
+	 *
+	 * @param room the room where the beast is dying
+	 * @return true if the creature gets out of the hospital, false otherwise (in the case of regenerating interface)
+	 */
+	@Override
+	public boolean die(Room room) {
+		return false;
+	}
+
+	/**
 	 * Add the observer to the list of observers that monitor the doctor's state.
 	 *
 	 * @param creatureObserver
@@ -287,7 +298,7 @@ public class Doctor extends Beast {
 	 * Makes the doctor wait when there are no actions to perform.
 	 */
 	private void doctorWait() {
-		log.info("Le dr {} n'a rien à faire...", this);
+		log.info("Le docteur {} n'a rien à faire...", this.fullName);
 	}
 
 	/**
@@ -442,6 +453,7 @@ public class Doctor extends Beast {
 	public void haraKiri() {
 		this.harakiriTriggered = true;
 		this.medicalService.removeDoctor(this);
+		this.die(this.medicalService);
 	}
 
 	@Override

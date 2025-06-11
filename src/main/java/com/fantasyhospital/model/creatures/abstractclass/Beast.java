@@ -76,9 +76,6 @@ import static com.fantasyhospital.model.creatures.abstractclass.BeastUtils.gener
      * @param room the room where the beast is dying
      * @return true if the creature gets out of the hospital, false otherwise (in the case of regenerating interface)
      */
-    public boolean die(Room room) {
-        log.info("La créature {} vient de mourir...", this.fullName);
-        return true;
-    }
+    public abstract boolean die(Room room);
 }
 

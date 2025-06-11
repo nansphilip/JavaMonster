@@ -72,7 +72,7 @@ public class Quarantine extends MedicalService {
 
         // Ajouter la créature (sans vérifier la race comme dans MedicalService)
         creatures.add(creature);
-        log.info("La créature {} a été mise en quarantaine", creature.getFullName());
+        //log.info("La créature {} a été mise en quarantaine", creature.getFullName());
         return true;
     }
 

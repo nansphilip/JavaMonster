@@ -181,8 +181,6 @@ public final class Crypt extends MedicalService {
             this.temperature = Math.min(MAX_TEMPERATURE, this.temperature + increase);
             
             log.info("La température augmente dans la crypt : {}°C (+{}°C) !", this.temperature, this.temperature - previousTemperature);
-        } else {
-            log.info("Température : {}°C Clim : {}", this.temperature, this.airflow ? "fonctionnelle" : "en panne");
         }
     }
 

@@ -33,10 +33,11 @@ public class Vampire extends VIPPatient implements Regenerating, Contaminant, De
             log.info("La créature {} avait déjà regénéré une fois dans la crypte, elle n'a malheureusement pas de seconde chance...tchao",  this.fullName);
             return true;
         }
-        super.die(room);
+        log.info("La créature {} meurt...", this.fullName);
         contaminate(this, room);
         demoralize(this, room);
         hasRegenerate = true;
         return regenerate(this);
     }
+
 }
