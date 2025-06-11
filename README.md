@@ -62,3 +62,4 @@ mvn clean test
 - [Sujet et consignes détaillées](docs/instruction)
 - [Exigences et barème](docs/requirements)
 - [Règles du jeu](docs/rules)
+- Repository GitHub : [Fantasy Hospital]https://github.com/nansphilip/JavaMonster

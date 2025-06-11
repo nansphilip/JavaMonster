@@ -82,8 +82,11 @@ public class ToolbarController implements Initializable {
 	 * @param stage the primary Stage
 	 */
 	public void setStage(Stage stage) {
-		stage.setOnCloseRequest(event -> stop()); // Ajoute un gestionnaire pour la fermeture
+		stage.setOnCloseRequest(event -> {
+			stop(); // Ajoute un gestionnaire pour la fermeture
 
+			System.exit(0); // Ferme l'application proprement
+		});
 	}
 
 	/**
