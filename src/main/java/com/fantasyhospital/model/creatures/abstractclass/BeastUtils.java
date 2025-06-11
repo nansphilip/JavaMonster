@@ -3,13 +3,16 @@ package com.fantasyhospital.model.creatures.abstractclass;
 import com.fantasyhospital.enums.FemaleNameType;
 import com.fantasyhospital.enums.GenderType;
 import com.fantasyhospital.enums.MaleNameType;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
 /**
  * Utils abstract class that give utils methods associated to the beast class
  */
+@Slf4j
 public abstract class BeastUtils {
 
 	protected static final Random RANDOM = new Random();
@@ -20,6 +23,22 @@ public abstract class BeastUtils {
 			// This is a special case, the name is reserved for the inspirator of the project
 			return;
 		}
+
+		//Cas particulier des non binaires, on essaie de remettre le prenom de l'enum pour les male puis female
+		try {
+			MaleNameType enumMaleName = MaleNameType.valueOf(name.toUpperCase());
+			enumMaleName.setSelected(false);
+			return;
+		} catch (IllegalArgumentException ignored) {
+		}
+
+		try {
+			FemaleNameType enumName = FemaleNameType.valueOf(name.toUpperCase());
+			enumName.setSelected(false);
+			return;
+		} catch (IllegalArgumentException ignored) {
+		}
+
 		switch (creature.getSex()){
 			case FEMALE:
 				FemaleNameType enumName = FemaleNameType.valueOf(name.toUpperCase());
