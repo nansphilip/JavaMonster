@@ -54,6 +54,8 @@ public class Simulation {
         // Set running to true
         running = true;
 
+        clearUIControllers();
+
         // Create a list of creatures (thread-safe)
         CopyOnWriteArrayList<Creature> creatures = new CopyOnWriteArrayList<>();
 
@@ -83,7 +85,6 @@ public class Simulation {
             creature.addExitObserver(new ExitObserver(hospital));
             creature.addMoralObserver(new MoralObserver(hospital));
             creatures.add(creature);
-            //log.info("Créature générée : {}", creature);
 
             // TODO: use patientRepository ?
             listCreatureController.addCreature(creature);
@@ -109,7 +110,7 @@ public class Simulation {
 
         // Evolution game loop
         this.jeu = new EvolutionGame(hospital, listCreatureController, listDoctorsController, waitingRoomController, gridMedicalServiceController);
-        jeu.runNextRound();
+        //jeu.runNextRound();
     }
 
     /**
@@ -143,6 +144,9 @@ public class Simulation {
         }
         
         log.info("Application reset to welcome screen successfully");
+
+        //On appelle le pote garbage collector pour libérer la mémoire et supprimer les objets du projet
+        System.gc();
     }
 
     /**
