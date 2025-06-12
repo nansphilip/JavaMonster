@@ -72,5 +72,5 @@ mvn clean test
 ### Diagramme était-transition
 ![UML Diagram](<./diagrammes%20UML/Etats-transitions.png>)
 
-### Diagramme d'activité
-![UML Diagram](<./diagrammes%20UML/Diagramme_dactivite.png>)
+### Diagramme cas utilisation
+![UML Diagram](<./diagrammes%20UML/Diagramme_cas_utilisation.jpg>)
