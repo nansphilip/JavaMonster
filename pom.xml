@@ -60,6 +60,16 @@
 			<version>5.4.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-graphics</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>FantasyHospital</finalName>
@@ -101,6 +111,9 @@
 				<version>0.0.8</version>
 				<configuration>
 					<mainClass>com.fantasyhospital.FantasyHospitalApplication</mainClass>
+					<options>
+						<option>--add-opens=javafx.graphics/javafx.stage=ALL-UNNAMED</option>
+					</options>
 				</configuration>
 			</plugin>
 		</plugins>
