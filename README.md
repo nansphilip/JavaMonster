@@ -58,7 +58,7 @@ mvn clean test
 - `src/main/resources/` : frontend
 
 ### Documentation et ressources
-- [README du modèle (classes, héritages, interfaces...)](docs/models.md)
+- [README du modèle (classes, héritages, interfaces...)](docs/tree.md)
 - [Sujet et consignes détaillées](docs/instruction)
 - [Exigences et barème](docs/requirements)
 - [Règles du jeu](docs/rules)
