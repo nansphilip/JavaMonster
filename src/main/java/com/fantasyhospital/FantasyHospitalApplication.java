@@ -1,5 +1,7 @@
 package com.fantasyhospital;
 
+import com.fantasyhospital.controller.ui.ToolbarController;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -32,12 +34,31 @@ public class FantasyHospitalApplication extends Application {
 			applicationContext.getBean(FxmlLoader.class),
 			primaryStage);
 		showMainScene();
+
+		primaryStage.setOnCloseRequest(event -> {
+			event.consume(); // consume empeche fermeture immediate de l'app
+
+			try {
+				ToolbarController toolbarController = applicationContext.getBean(ToolbarController.class);
+				if (toolbarController != null) {
+					toolbarController.stop();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			// Appel de la méthode stop de l'application pour fermer le contexte Spring
+			this.stop();
+
+			Platform.exit();
+			System.exit(0);
+		});
 	}
 
 	@Override
 	public void stop() {
 		applicationContext.close();
-		stage.close();
+		//stage.close();
 	}
 
 	private void showMainScene() {

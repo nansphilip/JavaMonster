@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Controller for the main toolbar UI, handling simulation controls and log actions.
@@ -82,11 +83,11 @@ public class ToolbarController implements Initializable {
 	 * @param stage the primary Stage
 	 */
 	public void setStage(Stage stage) {
-		stage.setOnCloseRequest(event -> {
-			stop(); // Ajoute un gestionnaire pour la fermeture
-
-			System.exit(0); // Ferme l'application proprement
-		});
+//		stage.setOnCloseRequest(event -> {
+//			stop(); // Ajoute un gestionnaire pour la fermeture
+//
+//			System.exit(0);
+//		});
 	}
 
 	/**
@@ -116,13 +117,25 @@ public class ToolbarController implements Initializable {
 	}
 
 	/**
-	 * Stops the scheduler and exits the application.
+	 * Stops the scheduler
 	 */
 	public void stop() {
+		if(simulation != null){
+			if(simulation.isRunning() || simulation.getJeu() != null){
+				simulation.restartSimulation();
+			}
+		}
 		if (scheduler != null && !scheduler.isShutdown()) {
 			scheduler.shutdown();
+			try {
+				if (!scheduler.awaitTermination(2, TimeUnit.SECONDS)) {
+					scheduler.shutdownNow();
+				}
+			} catch (InterruptedException e) {
+				scheduler.shutdownNow();
+				Thread.currentThread().interrupt();
+			}
 		}
-		Platform.exit();  // Ferme toutes les ressources JavaFX
 	}
 
 	/**
