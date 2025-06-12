@@ -63,3 +63,14 @@ mvn clean test
 - [Exigences et barème](docs/requirements)
 - [Règles du jeu](docs/rules)
 - Repository GitHub : [Fantasy Hospital]https://github.com/nansphilip/JavaMonster
+
+## UML
+
+### Diagramme de classes
+![UML Diagram](<./diagrammes%20UML/Diagramme_de_classe.png>)
+
+### Diagramme était-transition
+![UML Diagram](<./diagrammes%20UML/Etats-transitions.png>)
+
+### Diagramme d'activité
+![UML Diagram](<./diagrammes%20UML/Diagramme_dactivite.png>)
