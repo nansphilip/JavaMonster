@@ -51,6 +51,16 @@ java -jar target/FantasyHospital.jar
 mvn clean test
 ```
 
+### Générer la documentation
+
+```sh
+mvn javadoc:javadoc
+```
+
+Deux fichiers HTML sont générés dans le dossier `target/reports/apidocs` :
+- `index.html` : page d'accueil de la documentation
+- `index-all.html` : liste des classes de la documentation
+
 ## Architecture du projet
 
 - `src/main/java/com/fantasyhospital/` : backend
