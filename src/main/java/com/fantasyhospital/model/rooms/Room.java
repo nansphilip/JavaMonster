@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -142,14 +139,26 @@ public class Room {
      * @return the random creature, null if creatures are empty
      */
     public Creature getRandomCreatureWithoutThem(List<Creature> creaturesToExclude){
-        CopyOnWriteArrayList<Creature> creaturesCopy = new CopyOnWriteArrayList<>(this.creatures);
-        for(Creature creature : creaturesToExclude){
-            creaturesCopy.remove(creature);
+        List<Creature> creaturesToReturn = new ArrayList<>(this.creatures);
+        Iterator<Creature> iterator = creaturesToReturn.iterator();
+        while(iterator.hasNext()){
+            Creature creature = iterator.next();
+            if(creaturesToExclude.contains(creature)){
+                iterator.remove();
+            }
         }
-        if(creaturesCopy.isEmpty()){
+        if(creaturesToReturn.isEmpty()){
             return null;
         }
-        return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
+        return creaturesToReturn.get(random.nextInt(creaturesToReturn.size()));
+//        CopyOnWriteArrayList<Creature> creaturesCopy = new CopyOnWriteArrayList<>(this.creatures);
+//        for(Creature creature : creaturesToExclude){
+//            creaturesCopy.remove(creature);
+//        }
+//        if(creaturesCopy.isEmpty()){
+//            return null;
+//        }
+        //return creaturesCopy.get(random.nextInt(creaturesCopy.size()));
     }
 
     /**
